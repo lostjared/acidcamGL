@@ -139,7 +139,6 @@ int main(int argc, char **argv) {
     int opt = 0;
     int device = 0;
     bool full = false;
-   
     
     while((opt = getopt(argc, argv, "c:r:d:fhv")) != -1) {
         switch(opt) {
@@ -245,8 +244,12 @@ int main(int argc, char **argv) {
                     
                     switch(e.key.keysym.sym) {
                         case SDLK_LEFT:
+                            if(ac::alpha_increase > 0)
+                                ac::alpha_increase -= 0.1;
                             break;
                         case SDLK_RIGHT:
+                            if(ac::alpha_increase < 4.0)
+                                ac::alpha_increase += 0.1;
                             break;
                         case SDLK_UP:
                             if(current_filter > 0)
