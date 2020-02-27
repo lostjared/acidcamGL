@@ -43,9 +43,7 @@ void new_gluOrtho2D(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top
     glOrtho(left, right, bottom, top, -1, 1);
 }
 
-void new_gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
-                   GLfloat centerx, GLfloat centery, GLfloat centerz,
-                   GLfloat upx, GLfloat upy, GLfloat upz)
+void new_gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,GLfloat centerx, GLfloat centery, GLfloat centerz,GLfloat upx, GLfloat upy, GLfloat upz)
 {
     GLfloat m[16];
     GLfloat x[3], y[3], z[3];
