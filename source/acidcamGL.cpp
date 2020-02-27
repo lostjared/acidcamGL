@@ -173,13 +173,10 @@ int main(int argc, char **argv) {
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-    
     int full_val = 0;
     if(full == true)
         full_val = SDL_WINDOW_FULLSCREEN_DESKTOP;
-    
     window = SDL_CreateWindow("acidcamGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, full_val | SDL_WINDOW_OPENGL);
-    
     context = SDL_GL_CreateContext(window);
     glewExperimental = GL_TRUE;
     glewInit();
@@ -228,7 +225,6 @@ int main(int argc, char **argv) {
                     break;
             }
         }
-        
         SDL_GL_SwapWindow(window);
     }
     glDeleteTextures(1, &background_texture);
