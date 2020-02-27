@@ -7,22 +7,22 @@
 #include<unistd.h>
 
 GLfloat frontFace[] = {
-        -1.0f, -1.0f, 1.0f, // front face
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f
+    -1.0f, -1.0f, 1.0f, // front face
+    1.0f, 1.0f, 1.0f,
+    -1.0f, 1.0f, 1.0f,
+    -1.0f, -1.0f, 1.0f,
+    1.0f, -1.0f, 1.0f,
+    1.0f, 1.0f, 1.0f
 };
 
 GLfloat frontTexture[] = {
-        0, 0, // front
-        1, 1,
-        0, 1,
-
-        0, 0,
-        1, 0,
-        1, 1,
+    0, 0, // front
+    1, 1,
+    0, 1,
+    
+    0, 0,
+    1, 0,
+    1, 1,
 };
 
 cv::VideoCapture cap;
@@ -131,11 +131,18 @@ int current_filter = 0;
 int main(int argc, char **argv) {
     ac::init();
     int w = 1280, h = 720;
+    int cw = 1280, ch = 720;
     int opt = 0;
     int device = 0;
     bool full = false;
+    std::cout << "acidcamGL: loaded\n";
     
-    while((opt = getopt(argc, argv, "r:d:f")) != -1) {
+    if(argc == 1) {
+        std::cout << "acidcamGL arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n\n";
+        exit(EXIT_SUCCESS);
+    }
+    
+    while((opt = getopt(argc, argv, "c:r:d:f")) != -1) {
         switch(opt) {
             case 'f':
                 full = true;
@@ -157,6 +164,24 @@ int main(int argc, char **argv) {
                     std::cerr << "Invalid resolution..\n";
                     exit(EXIT_FAILURE);
                 }
+                std::cout << "Setting Resolution at: " << w << "x" << h << "\n";
+            }
+                break;
+            case 'c': {
+                std::string pos = optarg;
+                if(pos.rfind("x") == std::string::npos) {
+                    std::cerr << "Invalid format for resolution string...1920x1080 is proper.\n";
+                    exit(EXIT_FAILURE);
+                }
+                std::string left=pos.substr(0, pos.rfind("x"));
+                std::string right=pos.substr(pos.rfind("x")+1, pos.length());
+                cw = atoi(left.c_str());
+                ch = atoi(right.c_str());
+                if(w <= 0 || h <= 0) {
+                    std::cerr << "Invalid resolution..\n";
+                    exit(EXIT_FAILURE);
+                }
+                std::cout << "Desired Camera Resolution: " << w << "x" << h << "\n";
             }
                 break;
         }
@@ -186,6 +211,11 @@ int main(int argc, char **argv) {
         std::cerr << "Could not open capture device...\n";
         exit(EXIT_FAILURE);
     }
+    cap.set(cv::CAP_PROP_FRAME_WIDTH, cw);
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT, ch);
+    cw = cap.get(cv::CAP_PROP_FRAME_WIDTH);
+    ch = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+    std::cout << "Final Camera Resolution: " << cw << "x" << ch << "\n";
     cv::Mat frame;
     cap.read(frame);
     genTextureFromMat(frame, background_texture);
@@ -250,7 +280,7 @@ void render() {
     cv::flip(out, frame, 0);
     ac::CallFilter(ac::solo_filter[current_filter], frame);
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows, GL_BGR, GL_UNSIGNED_BYTE, frame.ptr());
-     
+    
     glDisable(GL_DEPTH_TEST);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
