@@ -6,6 +6,10 @@
 #include<iostream>
 #include<unistd.h>
 
+
+static const std::string version_info="1.0";
+
+
 GLfloat frontFace[] = {
     -1.0f, -1.0f, 1.0f, // front face
     1.0f, 1.0f, 1.0f,
@@ -135,15 +139,18 @@ int main(int argc, char **argv) {
     int opt = 0;
     int device = 0;
     bool full = false;
-    std::cout << "acidcamGL: loaded\n";
+   
     
-    if(argc == 1) {
-        std::cout << "acidcamGL arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n\n";
-        exit(EXIT_SUCCESS);
-    }
-    
-    while((opt = getopt(argc, argv, "c:r:d:f")) != -1) {
+    while((opt = getopt(argc, argv, "c:r:d:fhv")) != -1) {
         switch(opt) {
+            case 'h':
+                std::cout << "acidcamGL " << version_info << " arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h this message\n\n";
+                exit(EXIT_SUCCESS);
+                break;
+            case 'v':
+                std::cout << "acidcamGL " << version_info << "\n";
+                exit(EXIT_SUCCESS);
+                break;
             case 'f':
                 full = true;
                 break;
@@ -203,6 +210,7 @@ int main(int argc, char **argv) {
     context = SDL_GL_CreateContext(window);
     glewExperimental = GL_TRUE;
     glewInit();
+    std::cout << "acidcamGL " << version_info << ": loaded\n";
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     SDL_GL_MakeCurrent(window, context);
     SDL_GetWindowSize(window, &width, &height);
