@@ -222,6 +222,7 @@ int main(int argc, char **argv) {
         
         SDL_GL_SwapWindow(window);
     }
+    glDeleteTextures(1, &background_texture);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
     SDL_Quit();
