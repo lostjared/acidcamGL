@@ -135,8 +135,13 @@ int main(int argc, char **argv) {
     int w = 1280, h = 720;
     int opt = 0;
     int device = 0;
-    while((opt = getopt(argc, argv, "r:d:")) != -1) {
+    bool full = false;
+    
+    while((opt = getopt(argc, argv, "r:d:f")) != -1) {
         switch(opt) {
+            case 'f':
+                full = true;
+                break;
             case 'd':
                 device = atoi(optarg);
                 break;
@@ -169,7 +174,11 @@ int main(int argc, char **argv) {
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
     
-    window = SDL_CreateWindow("acidcamGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, SDL_WINDOW_OPENGL);
+    int full_val = 0;
+    if(full == true)
+        full_val = SDL_WINDOW_FULLSCREEN_DESKTOP;
+    
+    window = SDL_CreateWindow("acidcamGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, full_val | SDL_WINDOW_OPENGL);
     
     context = SDL_GL_CreateContext(window);
     glewExperimental = GL_TRUE;
