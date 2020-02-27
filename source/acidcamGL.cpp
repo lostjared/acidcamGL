@@ -102,7 +102,6 @@ void new_gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,
     glTranslatef(-eyex, -eyey, -eyez);
 }
 
-
 SDL_Window *window;
 SDL_GLContext context;
 int width, height;
@@ -125,7 +124,6 @@ void genTextureFromMat(cv::Mat &frame, GLuint &tex) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame.ptr());
 }
 
@@ -133,13 +131,10 @@ void render();
 int current_filter = 0;
 
 int main(int argc, char **argv) {
-    
     ac::init();
-    
     int w = 1280, h = 720;
     int opt = 0;
     int device = 0;
-    
     while((opt = getopt(argc, argv, "r:d:")) != -1) {
         switch(opt) {
             case 'd':
@@ -163,12 +158,10 @@ int main(int argc, char **argv) {
                 break;
         }
     }
-    
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
         std::cerr << "Error initilizing SDL: " << SDL_GetError() << "\n";
         exit(-1);
     }
-    
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
@@ -182,10 +175,8 @@ int main(int argc, char **argv) {
     glewExperimental = GL_TRUE;
     glewInit();
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
-    
     SDL_GL_MakeCurrent(window, context);
     SDL_GetWindowSize(window, &width, &height);
-    
     cap.open(device);
     if(!cap.isOpened()) {
         std::cerr << "Could not open capture device...\n";
