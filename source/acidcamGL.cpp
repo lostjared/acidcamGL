@@ -107,6 +107,7 @@ void new_gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez,GLfloat centerx, GLf
 SDL_Window *window;
 SDL_GLContext context;
 int width, height;
+SDL_Joystick *stick = 0;
 
 void resize(int w, int h) {
     if(w <= 0 || h <= 0) w = 1, h = 1;
@@ -139,8 +140,9 @@ int main(int argc, char **argv) {
     int opt = 0;
     int device = 0;
     bool full = false;
+    int joy_index = -1;
     
-    while((opt = getopt(argc, argv, "c:r:d:fhv")) != -1) {
+    while((opt = getopt(argc, argv, "c:r:d:fhvj:")) != -1) {
         switch(opt) {
             case 'h':
                 std::cout << "acidcamGL " << version_info << " arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
@@ -190,12 +192,25 @@ int main(int argc, char **argv) {
                 std::cout << "Desired Camera Resolution: " << w << "x" << h << "\n";
             }
                 break;
+            case 'j':
+                joy_index = atoi(optarg);
+                break;
         }
     }
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
         std::cerr << "Error initilizing SDL: " << SDL_GetError() << "\n";
         exit(-1);
     }
+    
+    if(joy_index != -1) {
+        stick = SDL_JoystickOpen(joy_index);
+        if(!stick) {
+            std::cerr << "acidcamGL: error could not open joystick: " << joy_index << "\n";
+        }
+        SDL_JoystickEventState(SDL_ENABLE);
+    }
+    
+    
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
@@ -259,6 +274,32 @@ int main(int argc, char **argv) {
                             if(current_filter < ac::solo_filter.size()-1)
                                 current_filter++;
                             break;
+                        case SDL_JOYBUTTONDOWN:
+                            switch(e.jbutton.button) {
+                                case 0:
+                                    if(current_filter > 0)
+                                        --current_filter;
+                                    break;
+                                case 1:
+                                    if(current_filter < ac::solo_filter.size()-1)
+                                        current_filter++;
+                                    
+                                    break;
+                                case 2:
+                                    if(ac::alpha_increase > 0)
+                                        ac::alpha_increase -= 0.1;
+                                    break;
+                                case 3:
+                                    if(ac::alpha_increase < 4.0)
+                                        ac::alpha_increase += 0.1;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            
+                            break;
+                        case SDL_JOYBUTTONUP:
+                            break;
                     }
                     
                     break;
@@ -269,6 +310,7 @@ int main(int argc, char **argv) {
     glDeleteTextures(1, &background_texture);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
+    if(stick != 0) SDL_JoystickClose(stick);
     SDL_Quit();
 }
 
