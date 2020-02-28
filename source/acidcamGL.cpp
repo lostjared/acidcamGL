@@ -132,6 +132,7 @@ void genTextureFromMat(cv::Mat &frame, GLuint &tex) {
 
 void render();
 int current_filter = 0;
+std::string filename;
 
 int main(int argc, char **argv) {
     ac::init();
@@ -142,8 +143,11 @@ int main(int argc, char **argv) {
     bool full = false;
     int joy_index = -1;
     
-    while((opt = getopt(argc, argv, "c:r:d:fhvj:")) != -1) {
+    while((opt = getopt(argc, argv, "i:c:r:d:fhvj:")) != -1) {
         switch(opt) {
+            case 'i':
+                filename = optarg;
+                break;
             case 'h':
                 std::cout << "acidcamGL " << version_info << " arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
                 exit(EXIT_SUCCESS);
@@ -210,7 +214,6 @@ int main(int argc, char **argv) {
         SDL_JoystickEventState(SDL_ENABLE);
     }
     
-    
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
@@ -228,16 +231,26 @@ int main(int argc, char **argv) {
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     SDL_GL_MakeCurrent(window, context);
     SDL_GetWindowSize(window, &width, &height);
-    cap.open(device);
-    if(!cap.isOpened()) {
-        std::cerr << "Could not open capture device...\n";
-        exit(EXIT_FAILURE);
+    if(filename.length()==0) {
+        cap.open(device);
+        if(!cap.isOpened()) {
+            std::cerr << "Could not open capture device...\n";
+            exit(EXIT_FAILURE);
+        }
+        cap.set(cv::CAP_PROP_FRAME_WIDTH, cw);
+        cap.set(cv::CAP_PROP_FRAME_HEIGHT, ch);
+        cw = cap.get(cv::CAP_PROP_FRAME_WIDTH);
+        ch = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+    } else {
+        cap.open(filename);
+        if(!cap.isOpened()) {
+            std::cerr << "Error could not open file: " << filename << "\n";
+            exit(EXIT_FAILURE);
+        }
+        cw = cap.get(cv::CAP_PROP_FRAME_WIDTH);
+        ch = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     }
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, cw);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, ch);
-    cw = cap.get(cv::CAP_PROP_FRAME_WIDTH);
-    ch = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-    std::cout << "Final Camera Resolution: " << cw << "x" << ch << "\n";
+    std::cout << "Final Capture Resolution: " << cw << "x" << ch << "\n";
     cv::Mat frame;
     cap.read(frame);
     genTextureFromMat(frame, background_texture);
@@ -246,6 +259,7 @@ int main(int argc, char **argv) {
     resize(width, height);
     SDL_Event e;
     bool active = true;
+    std::string num;
     while(active) {
         render();
         while(SDL_PollEvent(&e)) {
@@ -274,33 +288,32 @@ int main(int argc, char **argv) {
                             if(current_filter < ac::solo_filter.size()-1)
                                 current_filter++;
                             break;
-                        case SDL_JOYBUTTONDOWN:
-                            switch(e.jbutton.button) {
-                                case 0:
-                                    if(current_filter > 0)
-                                        --current_filter;
-                                    break;
-                                case 1:
-                                    if(current_filter < ac::solo_filter.size()-1)
-                                        current_filter++;
-                                    
-                                    break;
-                                case 2:
-                                    if(ac::alpha_increase > 0)
-                                        ac::alpha_increase -= 0.1;
-                                    break;
-                                case 3:
-                                    if(ac::alpha_increase < 4.0)
-                                        ac::alpha_increase += 0.1;
-                                    break;
-                                default:
-                                    break;
-                            }
+                    }
+                    
+                case SDL_JOYBUTTONDOWN:
+                    switch(e.jbutton.button) {
+                        case 0:
+                            if(current_filter > 0)
+                                --current_filter;
+                            break;
+                        case 1:
+                            if(current_filter < ac::solo_filter.size()-1)
+                                current_filter++;
                             
                             break;
-                        case SDL_JOYBUTTONUP:
+                        case 2:
+                            if(ac::alpha_increase > 0)
+                                ac::alpha_increase -= 0.1;
+                            break;
+                        case 3:
+                            if(ac::alpha_increase < 4.0)
+                                ac::alpha_increase += 0.1;
+                            break;
+                        default:
                             break;
                     }
+                    
+                case SDL_JOYBUTTONUP:
                     
                     break;
             }
@@ -326,8 +339,18 @@ void render() {
     glBindTexture(GL_TEXTURE_2D, background_texture);
     cv::Mat frame;
     if(!cap.read(frame)) {
-        std::cout << "acidcamGL: capture device closed...\n";
-        exit(EXIT_SUCCESS);
+        if(filename.length()==0) {
+            std::cout << "acidcamGL: capture device closed...\n";
+            exit(EXIT_SUCCESS);
+        }
+        else {
+            cap.open(filename);
+            if(!cap.isOpened()) {
+                std::cerr << "Error loading file...\n";
+                exit(EXIT_FAILURE);
+            }
+            cap.read(frame);
+        }
     }
     cv::Mat out = frame.clone();
     cv::flip(out, frame, 0);
