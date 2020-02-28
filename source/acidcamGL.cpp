@@ -143,7 +143,7 @@ int main(int argc, char **argv) {
     while((opt = getopt(argc, argv, "c:r:d:fhv")) != -1) {
         switch(opt) {
             case 'h':
-                std::cout << "acidcamGL " << version_info << " arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h this message\n\n";
+                std::cout << "acidcamGL " << version_info << " arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
                 exit(EXIT_SUCCESS);
                 break;
             case 'v':
@@ -284,8 +284,8 @@ void render() {
     glBindTexture(GL_TEXTURE_2D, background_texture);
     cv::Mat frame;
     if(!cap.read(frame)) {
-        exit(0);
-        cap.read(frame);
+        std::cout << "acidcamGL: capture device closed...\n";
+        exit(EXIT_SUCCESS);
     }
     cv::Mat out = frame.clone();
     cv::flip(out, frame, 0);
