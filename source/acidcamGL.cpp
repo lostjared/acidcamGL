@@ -285,7 +285,7 @@ int main(int argc, char **argv) {
                                 --current_filter;
                             break;
                         case SDLK_DOWN:
-                            if(current_filter < ac::solo_filter.size()-1)
+                            if(current_filter < static_cast<int>(ac::solo_filter.size()-1))
                                 current_filter++;
                             break;
                     }
@@ -297,7 +297,7 @@ int main(int argc, char **argv) {
                                 --current_filter;
                             break;
                         case 1:
-                            if(current_filter < ac::solo_filter.size()-1)
+                            if(current_filter < static_cast<int>(ac::solo_filter.size()-1))
                                 current_filter++;
                             
                             break;
@@ -356,7 +356,6 @@ void render() {
     cv::flip(out, frame, 0);
     ac::CallFilter(ac::solo_filter[current_filter], frame);
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows, GL_BGR, GL_UNSIGNED_BYTE, frame.ptr());
-    
     glDisable(GL_DEPTH_TEST);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
