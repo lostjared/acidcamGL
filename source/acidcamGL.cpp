@@ -295,10 +295,14 @@ int main(int argc, char **argv) {
                         case 0:
                             if(current_filter > 0)
                                 --current_filter;
+                            
+                            std::cout << "Changed to: " << ac::solo_filter[current_filter] << "\n";
                             break;
                         case 1:
                             if(current_filter < static_cast<int>(ac::solo_filter.size()-1))
                                 current_filter++;
+                            
+                            std::cout << "Changed to: " << ac::solo_filter[current_filter] << "\n";
                             
                             break;
                         case 2:
