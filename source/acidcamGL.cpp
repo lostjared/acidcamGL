@@ -272,53 +272,62 @@ int main(int argc, char **argv) {
                         active = false;
                     
                     switch(e.key.keysym.sym) {
-                        case SDLK_LEFT:
+                        case SDLK_LEFT: {
                             if(ac::alpha_increase > 0)
                                 ac::alpha_increase -= 0.1;
+                            std::cout << "Alpha decreased: " << ac::alpha_increase << "\n";
+                        }
                             break;
-                        case SDLK_RIGHT:
+                        case SDLK_RIGHT: {
                             if(ac::alpha_increase < 4.0)
                                 ac::alpha_increase += 0.1;
+                            std::cout << "Alpha increased: " << ac::alpha_increase << "\n";
+                                                    
+                        }
                             break;
                         case SDLK_UP:
-                            if(current_filter > 0)
+                            if(current_filter > 0) {
                                 --current_filter;
+                                std::cout << "Changed to: " << ac::solo_filter[current_filter] << "\n";
+                                                        
+                            }
                             break;
                         case SDLK_DOWN:
-                            if(current_filter < static_cast<int>(ac::solo_filter.size()-1))
+                            if(current_filter < static_cast<int>(ac::solo_filter.size()-1)) {
                                 current_filter++;
+                                std::cout << "Changed to: " << ac::solo_filter[current_filter] << "\n";
+                                                        
+                            }
                             break;
                     }
                     
                 case SDL_JOYBUTTONDOWN:
                     switch(e.jbutton.button) {
                         case 0:
-                            if(current_filter > 0)
+                            if(stick != 0 && current_filter > 0) {
                                 --current_filter;
-                            
-                            std::cout << "Changed to: " << ac::solo_filter[current_filter] << "\n";
+                            }
                             break;
                         case 1:
-                            if(current_filter < static_cast<int>(ac::solo_filter.size()-1))
+                            if(stick != 0 && current_filter < static_cast<int>(ac::solo_filter.size()-1)) {
                                 current_filter++;
-                            
-                            std::cout << "Changed to: " << ac::solo_filter[current_filter] << "\n";
-                            
+                            }
                             break;
                         case 2:
-                            if(ac::alpha_increase > 0)
+                            if(stick != 0 && ac::alpha_increase > 0) {
                                 ac::alpha_increase -= 0.1;
+                            }
                             break;
                         case 3:
-                            if(ac::alpha_increase < 4.0)
+                            if(stick != 0 && ac::alpha_increase < 4.0) {
                                 ac::alpha_increase += 0.1;
+                            }
                             break;
                         default:
                             break;
                     }
                     
                 case SDL_JOYBUTTONUP:
-                    
                     break;
             }
         }
