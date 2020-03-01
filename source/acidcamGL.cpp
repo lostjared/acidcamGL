@@ -258,6 +258,7 @@ int main(int argc, char **argv) {
     glClearDepth(1.0f);
     resize(width, height);
     SDL_Event e;
+    int max_filter = static_cast<int>(ac::solo_filter.size());
     bool active = true;
     std::string num;
     while(active) {
@@ -288,15 +289,15 @@ int main(int argc, char **argv) {
                         case SDLK_UP:
                             if(current_filter > 0) {
                                 --current_filter;
-                                std::cout << "Changed to: " << ac::solo_filter[current_filter] << "\n";
+                                std::cout << "Changed to: [" << current_filter << "/" << max_filter << "] " << ac::solo_filter[current_filter] << "\n";
                                                         
                             }
                             break;
                         case SDLK_DOWN:
                             if(current_filter < static_cast<int>(ac::solo_filter.size()-1)) {
                                 current_filter++;
-                                std::cout << "Changed to: " << ac::solo_filter[current_filter] << "\n";
-                                                        
+                                std::cout << "Changed to: [" << current_filter << "/" << max_filter << "] " << ac::solo_filter[current_filter] << "\n";
+
                             }
                             break;
                     }
