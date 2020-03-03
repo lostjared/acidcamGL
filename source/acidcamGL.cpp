@@ -153,7 +153,7 @@ int main(int argc, char **argv) {
                 exit(EXIT_SUCCESS);
                 break;
             case 'v':
-                std::cout << "acidcamGL " << version_info << "\n";
+                std::cout << "acidcamGL " << version_info << "\nwritten by Jared Bruni\n";
                 exit(EXIT_SUCCESS);
                 break;
             case 'f':
