@@ -275,13 +275,13 @@ int main(int argc, char **argv) {
                     switch(e.key.keysym.sym) {
                         case SDLK_LEFT: {
                             if(ac::alpha_increase > 0)
-                                ac::alpha_increase -= 0.1;
+                                ac::alpha_increase -= 0.05;
                             std::cout << "Alpha decreased: " << ac::alpha_increase << "\n";
                         }
                             break;
                         case SDLK_RIGHT: {
                             if(ac::alpha_increase < 4.0)
-                                ac::alpha_increase += 0.1;
+                                ac::alpha_increase += 0.05;
                             std::cout << "Alpha increased: " << ac::alpha_increase << "\n";
                                                     
                         }
@@ -289,14 +289,14 @@ int main(int argc, char **argv) {
                         case SDLK_UP:
                             if(current_filter > 0) {
                                 --current_filter;
-                                std::cout << "Changed to: [" << current_filter << "/" << max_filter << "] " << ac::solo_filter[current_filter] << "\n";
+                                std::cout << "Filter Changed to: [" << current_filter << "/" << max_filter << "] " << ac::solo_filter[current_filter] << "\n";
                                                         
                             }
                             break;
                         case SDLK_DOWN:
                             if(current_filter < static_cast<int>(ac::solo_filter.size()-1)) {
                                 current_filter++;
-                                std::cout << "Changed to: [" << current_filter << "/" << max_filter << "] " << ac::solo_filter[current_filter] << "\n";
+                                std::cout << "Filter Changed to: [" << current_filter << "/" << max_filter << "] " << ac::solo_filter[current_filter] << "\n";
 
                             }
                             break;
@@ -316,12 +316,12 @@ int main(int argc, char **argv) {
                             break;
                         case 2:
                             if(stick != 0 && ac::alpha_increase > 0) {
-                                ac::alpha_increase -= 0.1;
+                                ac::alpha_increase -= 0.05;
                             }
                             break;
                         case 3:
                             if(stick != 0 && ac::alpha_increase < 4.0) {
-                                ac::alpha_increase += 0.1;
+                                ac::alpha_increase += 0.05;
                             }
                             break;
                         default:
