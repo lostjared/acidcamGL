@@ -7,7 +7,7 @@
 #include<unistd.h>
 
 
-static const std::string version_info="1.0";
+static const std::string version_info="v1.0";
 
 
 GLfloat frontFace[] = {
@@ -273,6 +273,20 @@ int main(int argc, char **argv) {
                         active = false;
                     
                     switch(e.key.keysym.sym) {
+                        case SDLK_EQUALS:
+                            if(current_filter + 10 < static_cast<int>(ac::solo_filter.size())) {
+                                current_filter += 10;
+                                std::cout << "Filter Changed to: [" << current_filter << "/" << max_filter << "] " << ac::solo_filter[current_filter] << "\n";
+
+                            }
+                            
+                            break;
+                        case SDLK_MINUS:
+                            if(current_filter - 10 > 0) {
+                                current_filter -= 10;
+                                std::cout << "Filter Changed to: [" << current_filter << "/" << max_filter << "] " << ac::solo_filter[current_filter] << "\n";
+                            }
+                            break;
                         case SDLK_LEFT: {
                             if(ac::alpha_increase > 0)
                                 ac::alpha_increase -= 0.05;
