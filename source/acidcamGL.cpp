@@ -338,6 +338,16 @@ int main(int argc, char **argv) {
                                 ac::alpha_increase += 0.05;
                             }
                             break;
+                        case 5:
+                            if(stick != 0 && current_filter + 10 < static_cast<int>(ac::solo_filter.size())) {
+                                current_filter += 10;
+                            }
+                            break;
+                        case 6:
+                            if(stick != 0 && current_filter - 10 > 0) {
+                                current_filter -= 10;
+                            }
+                            break;
                         default:
                             break;
                     }
