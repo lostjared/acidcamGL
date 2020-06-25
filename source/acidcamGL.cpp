@@ -214,22 +214,22 @@ int main(int argc, char **argv) {
         SDL_JoystickEventState(SDL_ENABLE);
     }
     
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
-    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    
     int full_val = 0;
     if(full == true)
         full_val = SDL_WINDOW_FULLSCREEN_DESKTOP;
     window = SDL_CreateWindow("acidcamGL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, full_val | SDL_WINDOW_OPENGL);
     context = SDL_GL_CreateContext(window);
-    glewExperimental = GL_TRUE;
-    glewInit();
+    SDL_GL_MakeCurrent(window, context);
+    if(glewInit() != GLEW_OK) {
+        std::cerr << "Error initializing GLEW:\n";
+        exit(EXIT_FAILURE);
+    }
     std::cout << "acidcamGL " << version_info << ": loaded\n";
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
-    SDL_GL_MakeCurrent(window, context);
     SDL_GetWindowSize(window, &width, &height);
     if(filename.length()==0) {
         cap.open(device);
