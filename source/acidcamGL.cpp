@@ -5,7 +5,7 @@
 #include<cstdio>
 #include<iostream>
 #include<unistd.h>
-
+#include"gl_shader.hpp"
 
 static const std::string version_info="v1.0";
 
