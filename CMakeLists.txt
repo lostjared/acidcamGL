@@ -37,7 +37,7 @@ find_package(Threads REQUIRED)
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR} ${OpenCV_INCLUDE_DIRS} ${OpenGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${SDL2_INCLUDE_DIRS})
 link_directories(/usr/local/lib /usr/lib)
 
-add_executable(acidcamGL ${CMAKE_SOURCE_DIR}/source/acidcamGL.cpp)
+add_executable(acidcamGL ${CMAKE_SOURCE_DIR}/source/acidcamGL.cpp ${CMAKE_SOURCE_DIR}/source/gl_shader.cpp)
 target_link_libraries(acidcamGL ${OPENGL_gl_LIBRARY} ${GLEW_SHARED_LIBRARIES} GLEW Threads::Threads SDL2 ${GLEW_LIBARIES} ${OpenCV_LIBS} acidcam)
 target_compile_options(acidcamGL PRIVATE ${COMPILER_FLAGS})
 
