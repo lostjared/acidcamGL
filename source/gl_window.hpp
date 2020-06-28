@@ -6,19 +6,18 @@
 #include<GL/glew.h>
 #include<GLFW/glfw3.h>
 
-class glWindow {
-public:
-    int create(bool full, std::string name, int w, int h);
-    virtual void init() = 0;
-    virtual void update(double timeval) = 0;
-    void loop();
-    GLFWwindow *win() const { return window; }
-private:
-    GLFWwindow *window;
-};
-
-
-
+namespace acidcam {
+    class glWindow {
+    public:
+        int create(bool full, std::string name, int w, int h);
+        virtual void init() = 0;
+        virtual void update(double timeval) = 0;
+        void loop();
+        GLFWwindow *win() const { return window; }
+    private:
+        GLFWwindow *window;
+    };
+}
 
 #endif
 
