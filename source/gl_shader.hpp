@@ -13,6 +13,13 @@ public:
     bool checkError();
     GLuint createProgram(const char *vert, const char *frag);
     GLuint createProgramFromFile(const std::string &vert, const std::string &frag);
+    
+    bool loadProgram(const std::string &text1, const std::string &text2);
+    
+    int id() const { return shader_id; }
+    void useProgram();
+private:
+    int shader_id;
 };
 
 #endif

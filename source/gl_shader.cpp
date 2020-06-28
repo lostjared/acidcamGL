@@ -96,3 +96,14 @@ GLuint ShaderProgram::createProgramFromFile(const std::string &vert, const std::
     stream2 << f.rdbuf();
     return createProgram(stream1.str().c_str(), stream2.str().c_str());
 }
+
+bool ShaderProgram::loadProgram(const std::string &v, const std::string &f) {
+    shader_id = createProgramFromFile(v,f);
+    if(shader_id)
+        return true;
+    return false;
+}
+
+void ShaderProgram::useProgram() {
+    glUseProgram(shader_id);
+}

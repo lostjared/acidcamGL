@@ -406,9 +406,7 @@ int main(int argc, char **argv) {
         cw = cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     }
-    
     camera_id = device;
-    
     if(!glfwInit()) {
         exit(EXIT_FAILURE);
     }
