@@ -22,14 +22,11 @@ namespace acidcam {
         GLuint vao[numVAOs];
         GLuint vbo[numVBOs];
         ShaderProgram program;
-        float cameraX, cameraY, cameraZ;
-        float cube_x, cube_y, cube_z;
         GLuint mv_loc, proj_loc;
         int width, height;
         float aspect;
         glm::mat4 p_mat, v_mat, m_mat, mv_mat, r_mat;
         GLuint texture;
-        float pos_z;
         float color_alpha_r, color_alpha_g, color_alpha_b;
     public:
         
@@ -38,13 +35,6 @@ namespace acidcam {
                 std::cerr << "Error creating shader program..\n";
                 exit(EXIT_FAILURE);
             }
-            cameraX = 0;
-            cameraY = 0;
-            cameraZ = 0;
-            cube_x = 0.0f;
-            cube_y = -2.0f;
-            cube_z = 0.0f;
-            pos_z = -2.0f;
             color_alpha_r = 0.1;
             color_alpha_g = 0.2;
             color_alpha_b = 0.3;
@@ -113,21 +103,15 @@ namespace acidcam {
             GLuint calpha_b = glGetUniformLocation(program.id(),"value_alpha_b");
             GLuint c_index = glGetUniformLocation(program.id(),"index_value");
             GLuint c_tf = glGetUniformLocation(program.id(),"time_f");
-            v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, cameraY, -cameraZ));
+            v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
             m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
             
-            if(rotate == true)
-                r_mat = glm::rotate(glm::mat4(1.0f), 16.00f*(float)timeval,glm::vec3(0.0f, 0.0f, 1.0f));
+/*            if(rotate == true)
+                r_mat = glm::rotate(glm::mat4(1.0f), 16.00f*(float)timeval,glm::vec3(0.0f, 0.0f, 1.0f)); */
             
             //r_mat = glm::rotate(r_mat, 1.75f*(float)timeval,glm::vec3(1.0f, 0.0f, 0.0f));
             //r_mat = glm::rotate(r_mat, 1.75f*(float)timeval, glm::vec3(0.0f, 0.0f, 1.0f));
-            if(rotate == true) {
-                m_mat = m_mat * r_mat;
-            }
             mv_mat = v_mat * m_mat;
-            
-            glUniformMatrix4fv(mv_loc, 1, GL_FALSE, glm::value_ptr(mv_mat));
-            glUniformMatrix4fv(proj_loc, 1, GL_FALSE, glm::value_ptr(p_mat));
             
             glUniformMatrix4fv(mv_loc, 1, GL_FALSE, glm::value_ptr(mv_mat));
             glUniformMatrix4fv(proj_loc, 1, GL_FALSE, glm::value_ptr(p_mat));
@@ -174,7 +158,6 @@ namespace acidcam {
             glEnable(GL_LEQUAL);
             
             glDrawArrays(GL_TRIANGLES,0,6);
-            
         }
         
         GLuint createShaderProgram() {
