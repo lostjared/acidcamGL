@@ -25,7 +25,7 @@ namespace acidcam {
         GLuint mv_loc, proj_loc;
         int width, height;
         float aspect;
-        glm::mat4 p_mat, v_mat, m_mat, mv_mat, r_mat;
+        glm::mat4 p_mat, v_mat, m_mat, mv_mat;
         GLuint texture;
         float color_alpha_r, color_alpha_g, color_alpha_b;
     public:
