@@ -17,11 +17,9 @@ std::string filename;
 
 
 class MainWindow : public glWindow {
-    GLuint renderingProgram;
     GLuint vao[numVAOs];
     GLuint vbo[numVBOs];
     ShaderProgram program;
-    
     float cameraX, cameraY, cameraZ;
     float cube_x, cube_y, cube_z;
     GLuint mv_loc, proj_loc;
@@ -34,7 +32,7 @@ class MainWindow : public glWindow {
 public:
 
     virtual void init() override {
-        renderingProgram = createShaderProgram();
+        createShaderProgram();
         cameraX = 0;
         cameraY = 0;
         cameraZ = 8.0f;
@@ -182,22 +180,22 @@ public:
     virtual void update(double timeval) override {
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glUseProgram(renderingProgram);
+        program.useProgram();
         
-        mv_loc = glGetUniformLocation(renderingProgram, "mv_matrix");
-        proj_loc = glGetUniformLocation(renderingProgram,"proj_matrix");
+        mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
+        proj_loc = glGetUniformLocation(program.id(),"proj_matrix");
         
-        GLuint samp = glGetUniformLocation(renderingProgram,"samp");
+        GLuint samp = glGetUniformLocation(program.id(),"samp");
         
-        GLuint calpha_r = glGetUniformLocation(renderingProgram,"value_alpha_r");
+        GLuint calpha_r = glGetUniformLocation(program.id(),"value_alpha_r");
         
-        GLuint calpha_g = glGetUniformLocation(renderingProgram,"value_alpha_g");
+        GLuint calpha_g = glGetUniformLocation(program.id(),"value_alpha_g");
         
-        GLuint calpha_b = glGetUniformLocation(renderingProgram,"value_alpha_b");
+        GLuint calpha_b = glGetUniformLocation(program.id(),"value_alpha_b");
         
-        GLuint c_index = glGetUniformLocation(renderingProgram,"index_value");
+        GLuint c_index = glGetUniformLocation(program.id(),"index_value");
         
-        GLuint c_tf = glGetUniformLocation(renderingProgram,"time_f");
+        GLuint c_tf = glGetUniformLocation(program.id(),"time_f");
         
         cameraZ = 0.0;
         static float alpha = 1.0f;
@@ -276,8 +274,10 @@ public:
     }
     
     GLuint createShaderProgram() {
-        GLuint vfProgram = program.createProgramFromFile("vertex.glsl", "frag.glsl");
-        return vfProgram;
+        if(program.loadProgram("vertex.glsl", "frag.glsl")) {
+            return program.id();
+        }
+        return 0;
     }
     
     void keypress(int key, int scancode, int action, int mode) {
