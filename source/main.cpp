@@ -34,7 +34,10 @@ namespace acidcam {
     public:
         
         virtual void init() override {
-            createShaderProgram();
+            if(createShaderProgram() == 0) {
+                std::cerr << "Error creating shader program..\n";
+                exit(EXIT_FAILURE);
+            }
             cameraX = 0;
             cameraY = 0;
             cameraZ = 0;
