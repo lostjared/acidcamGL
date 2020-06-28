@@ -1,0 +1,19 @@
+
+#generic Makefile for macOS
+
+OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
+CFLAGS= -std=c++11 -O2 `pkg-config glfw3 glew opencv4 --cflags` -DNO_SCREEN_GRAB -I./include
+LDFLAGS= `pkg-config glfw3 glew opencv4 --libs` -framework OpenGL -framework Cocoa -framework IOKit
+
+%.o: %.cpp
+	$(CXX) $(CFLAGS) $< -c -o $@
+
+example: $(OBJ)
+	$(CXX) -std=c++11 -o example $(OBJ) $(LDFLAGS)
+
+all: example
+
+.PHONY: clean
+clean:
+	rm -f example *.o
+

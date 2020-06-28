@@ -20,24 +20,24 @@ set(CMAKE_CXX_STANDARD_REQURIED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-list(APPEND COMPILER_FLAGS "-Wall" "-pedantic" "-ansi" "-Ofast")
+list(APPEND COMPILER_FLAGS "-Ofast")
 else()
 message(STATUS "Debug Mode")
-list(APPEND COMPILER_FLAGS "-Wall" "-pedantic" "-ansi")
+list(APPEND COMPILER_FLAGS "-g")
 endif()
 
 
 find_package(OpenCV REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
-find_package(SDL2 REQUIRED)
+find_package(glfw3 REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(Threads REQUIRED)
 
-include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_SOURCE_DIR} ${OpenCV_INCLUDE_DIRS} ${OpenGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${SDL2_INCLUDE_DIRS})
+include_directories(${CMAKE_SOURCE_DIR}  ${CMAKE_SOURCE_DIR} ${OpenCV_INCLUDE_DIRS} ${OpenGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${GLFW3_INCLUDE_DIRS})
 link_directories(/usr/local/lib /usr/lib)
 
-add_executable(acidcamGL ${CMAKE_SOURCE_DIR}/source/acidcamGL.cpp ${CMAKE_SOURCE_DIR}/source/gl_shader.cpp)
-target_link_libraries(acidcamGL ${OPENGL_gl_LIBRARY} ${GLEW_SHARED_LIBRARIES} GLEW Threads::Threads SDL2 ${GLEW_LIBARIES} ${OpenCV_LIBS} acidcam)
+add_executable(acidcamGL ${CMAKE_SOURCE_DIR}/source/main.cpp ${CMAKE_SOURCE_DIR}/source/gl_shader.cpp ${CMAKE_SOURCE_DIR}/source/gl_window.cpp)
+target_link_libraries(acidcamGL ${OPENGL_gl_LIBRARY} ${GLEW_SHARED_LIBRARIES} GLEW Threads::Threads glfw ${GLEW_LIBARIES} ${OpenCV_LIBS} acidcam)
 target_compile_options(acidcamGL PRIVATE ${COMPILER_FLAGS})
 
