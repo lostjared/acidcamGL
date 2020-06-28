@@ -25,7 +25,5 @@ void glWindow::loop() {
         glfwPollEvents();
     }
     glfwDestroyWindow(window);
-    glfwTerminate();
-    exit(EXIT_SUCCESS);
 }
 

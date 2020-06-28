@@ -416,5 +416,6 @@ int main(int argc, char **argv) {
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
 
     main_window.loop();
-    return 0;
+    glfwTerminate();
+    return EXIT_SUCCESS;
 }
