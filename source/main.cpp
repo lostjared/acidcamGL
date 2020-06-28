@@ -412,7 +412,7 @@ int main(int argc, char **argv) {
     if(!glfwInit()) {
         exit(EXIT_FAILURE);
     }
-    main_window.create("Cube Demo", 2560, 1440);
+    main_window.create(full, "acidcamGL", w, h);
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
