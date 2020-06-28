@@ -35,7 +35,7 @@ public:
         createShaderProgram();
         cameraX = 0;
         cameraY = 0;
-        cameraZ = 8.0f;
+        cameraZ = 0;
         cube_x = 0.0f;
         cube_y = -2.0f;
         cube_z = 0.0f;
@@ -44,53 +44,14 @@ public:
         color_alpha_g = 0.2;
         color_alpha_b = 0.3;
         
-        GLfloat vertices[] = { -1.0f, -1.0f, 1.0f, // front face
+        GLfloat vertices[] = {
+            -1.0f, -1.0f, 1.0f, // front face
             1.0f, 1.0f, 1.0f,
             -1.0f, 1.0f, 1.0f,
             
             -1.0f, -1.0f, 1.0f,
             1.0f, -1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            
-            -1.0f, -1.0f, -1.0f, // left side
-            -1.0f, -1.0f, 1.0f,
-            -1.0f, 1.0f, -1.0f,
-            
-            -1.0f, 1.0f, -1.0f,
-            -1.0f, -1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-            
-            -1.0f, 1.0f, -1.0f, // top
-            -1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-            
-            -1.0f, -1.0f, -1.0f, // bottom
-            -1.0f, -1.0f, 1.0f,
-            1.0f, -1.0f, 1.0f,
-            
-            1.0f, -1.0f, 1.0f,
-            1.0f, -1.0f, -1.0f,
-            -1.0f, -1.0f, -1.0f,
-            
-            1.0f, -1.0f, -1.0f, // right
-            1.0f, -1.0f, 1.0f,
-            1.0f, 1.0f, -1.0f,
-            
-            1.0f, 1.0f, -1.0f,
-            1.0f, -1.0f, 1.0f,
-            1.0f, 1.0f, 1.0f,
-            
-            -1.0f, -1.0f, -1.0f, // back face
-            1.0f, 1.0f, -1.0f,
-            -1.0f, 1.0f, -1.0f,
-            
-            -1.0f, -1.0f, -1.0f,
-            1.0f, -1.0f, -1.0f,
-            1.0f, 1.0f, -1.0f,
+            1.0f, 1.0f, 1.0f
         };
         
         GLfloat texCoords[] = {
@@ -101,46 +62,6 @@ public:
             0, 0,
             1, 0,
             1, 1,
-            
-            0, 0, // left
-            1, 0,
-            0, 1,
-            
-            0, 1,
-            1, 0,
-            1, 1,
-            
-            0,0, // top
-            0,1,
-            1,1,
-            
-            1, 1,
-            1, 0,
-            0, 0,
-            
-            0, 0,// bottom
-            0, 1,
-            1, 1,
-            
-            1,1,
-            1,0,
-            0,0,
-            
-            0,0,// right
-            1,0,
-            0,1,
-            
-            0,1,
-            1,0,
-            1,1,
-            
-            0,0, // back
-            1,1,
-            0,1,
-            
-            0,0,
-            1,0,
-            1,1
         };
         
         glGenVertexArrays(1, vao);
@@ -162,6 +83,7 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        
         cv::Mat frame;
         
         cap.open(camera_id);
@@ -181,35 +103,15 @@ public:
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         program.useProgram();
-        
         mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
         proj_loc = glGetUniformLocation(program.id(),"proj_matrix");
-        
         GLuint samp = glGetUniformLocation(program.id(),"samp");
-        
         GLuint calpha_r = glGetUniformLocation(program.id(),"value_alpha_r");
-        
         GLuint calpha_g = glGetUniformLocation(program.id(),"value_alpha_g");
-        
         GLuint calpha_b = glGetUniformLocation(program.id(),"value_alpha_b");
-        
         GLuint c_index = glGetUniformLocation(program.id(),"index_value");
-        
         GLuint c_tf = glGetUniformLocation(program.id(),"time_f");
-        
-        cameraZ = 0.0;
-        static float alpha = 1.0f;
-        static float inc = -0.001f;
-        cameraZ += alpha;
-        static int dir = 1;
-        alpha += inc;
-        if(cameraZ < -0.8)
-            inc = 0.001f;
-        if(cameraZ > 0.1)
-            inc = -0.001f;
-        
         v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, cameraY, -cameraZ));
-        
         m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
         
             if(rotate == true)
@@ -269,7 +171,7 @@ public:
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_LEQUAL);
         
-        glDrawArrays(GL_TRIANGLES,0,36);
+        glDrawArrays(GL_TRIANGLES,0,6);
 
     }
     
