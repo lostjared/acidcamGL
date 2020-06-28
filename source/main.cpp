@@ -8,6 +8,8 @@
 //#include<opencv2/opencv.hpp>
 #include<unistd.h>
 
+#define version_info "v1.0"
+
 namespace acidcam {
     
     static constexpr int numVAOs = 1;
@@ -235,11 +237,11 @@ int main(int argc, char **argv) {
                 acidcam::filename = optarg;
                 break;
             case 'h':
-                std::cout << "acidcamGL " << " arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
+                std::cout << "acidcamGL " << version_info << " arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
                 exit(EXIT_SUCCESS);
                 break;
             case 'v':
-                std::cout << "acidcamGL " << "\nwritten by Jared Bruni\n";
+                std::cout << "acidcamGL " << version_info << "\nwritten by Jared Bruni\n";
                 exit(EXIT_SUCCESS);
                 break;
             case 'f':
