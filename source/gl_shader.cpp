@@ -4,6 +4,10 @@
 
 namespace acidcam {
     
+    ShaderProgram::ShaderProgram() : shader_id{0} {
+        
+    }
+    
     int ShaderProgram::printShaderLog(GLuint shader) {
         int len = 0;
         int ch = 0;
