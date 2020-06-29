@@ -140,7 +140,6 @@ namespace acidcam {
                 exit(EXIT_FAILURE);
             }
             cv::flip(frame, frame, 0);
-            
             glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows, GL_BGR, GL_UNSIGNED_BYTE, frame.ptr());
             
             glActiveTexture(GL_TEXTURE0);
@@ -218,13 +217,13 @@ namespace acidcam {
                     std::ostringstream fs;
                     fs << text << "/" << s;
                     ShaderProgram p;
-                    std::cout << "compiling [" << s << "]\n";
+                    std::cout << "Compiling [" << s << "] ";
                     if(p.loadProgram("vertex.glsl", fs.str())==false) {
                         std::cerr << "Error could not load: " << fs.str() << "\n";
                         exit(EXIT_FAILURE);
                     }
                     shaders.push_back(p);
-                    std::cout << "[ OK... ]\n";
+                    std::cout << "-  Success... \n";
                 }
             }
             file.close();
