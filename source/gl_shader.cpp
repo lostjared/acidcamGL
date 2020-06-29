@@ -8,6 +8,15 @@ namespace acidcam {
         
     }
     
+    ShaderProgram::ShaderProgram(GLuint id) : shader_id{id} {
+        
+    }
+    
+    ShaderProgram &ShaderProgram::operator=(const ShaderProgram &p) {
+        shader_id = p.shader_id;
+        return *this;
+    }
+    
     int ShaderProgram::printShaderLog(GLuint shader) {
         int len = 0;
         int ch = 0;

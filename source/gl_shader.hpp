@@ -10,6 +10,8 @@ namespace acidcam {
     class ShaderProgram {
     public:
         ShaderProgram();
+        ShaderProgram(GLuint id);
+        ShaderProgram &operator=(const ShaderProgram &p);        
         int printShaderLog(GLuint err);
         void printProgramLog(int p);
         bool checkError();
@@ -21,7 +23,7 @@ namespace acidcam {
         void useProgram();
         
     private:
-        int shader_id;
+        GLuint shader_id;
     };
 }
 #endif
