@@ -38,11 +38,6 @@ namespace acidcam {
     public:
         
         virtual void init() override {
-            if(createShaderProgram() == 0) {
-                std::cerr << "Error creating shader program..\n";
-                exit(EXIT_FAILURE);
-            }
-            
             mode = Mode::AC_NEW;
             color_alpha_r = 0.1;
             color_alpha_g = 0.2;
@@ -94,8 +89,6 @@ namespace acidcam {
             }
             cap.read(frame);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
-            
-            
         }
         
         int index = 0;
@@ -163,13 +156,6 @@ namespace acidcam {
             glUniform1f(calpha_g, color_alpha_g);
             glUniform1f(calpha_b, color_alpha_b);
             glDrawArrays(GL_TRIANGLES,0,6);
-        }
-        
-        GLuint createShaderProgram() {
-            if(program.loadProgram("vertex.glsl", "frag.glsl")) {
-                return program.id();
-            }
-            return 0;
         }
         
         void keypress(int key, int scancode, int action, int mode) {
