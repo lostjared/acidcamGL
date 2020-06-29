@@ -101,6 +101,10 @@ namespace acidcam {
         int index = 0;
         bool rotate = false;
         
+        void setShader(int index) {
+            program = shaders[index];
+        }
+        
         virtual void update(double timeval) override {
             glClearColor(0.0, 0.0, 0.0, 1.0);
             glClearDepth(1.0);
@@ -338,11 +342,11 @@ int main(int argc, char **argv) {
     }
     
     main_window.create(full, "acidcamGL", w, h);
-    
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
     main_window.loadShaders(shader_path);
+    main_window.setShader(0);
     main_window.loop();
     glfwTerminate();
     return EXIT_SUCCESS;
