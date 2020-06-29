@@ -15,6 +15,7 @@ namespace acidcam {
         glfwMakeContextCurrent(window);
         if(glewInit()!=GLEW_OK)
             exit(EXIT_FAILURE);
+        
         glfwSwapInterval(1);
         init();
         return 1;
@@ -29,4 +30,15 @@ namespace acidcam {
         glfwDestroyWindow(window);
     }
     
+    bool checkForError() {
+        bool e = false;
+        int glErr = glGetError();
+        while(glErr != GL_NO_ERROR) {
+            std::cout << "GL Error: " << glErr << "\n";
+            std::cout << "Error String: " << glewGetErrorString(glErr) << "\n";
+            e = true;
+            glErr = glGetError();
+        }
+        return e;
+    }
 }

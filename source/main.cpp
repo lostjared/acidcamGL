@@ -7,11 +7,15 @@
 #include"acidcam/ac.h"
 #include<unistd.h>
 #include<vector>
+#include<sstream>
+#include<string>
+#include<fstream>
 
 #define version_info "v1.0"
 
 namespace acidcam {
     
+
     static constexpr int numVAOs = 1;
     static constexpr int numVBOs = 2;
     cv::VideoCapture cap;
@@ -30,6 +34,7 @@ namespace acidcam {
         GLuint texture;
         float color_alpha_r, color_alpha_g, color_alpha_b;
         Mode mode;
+        std::vector<ShaderProgram> shaders;
     public:
         
         virtual void init() override {
@@ -37,6 +42,7 @@ namespace acidcam {
                 std::cerr << "Error creating shader program..\n";
                 exit(EXIT_FAILURE);
             }
+            
             mode = Mode::AC_NEW;
             color_alpha_r = 0.1;
             color_alpha_g = 0.2;
@@ -68,7 +74,7 @@ namespace acidcam {
             glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
             glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
             glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
-            
+
             glfwGetFramebufferSize(win(), &width, &height);
             aspect = (float)width/(float)height;
             
@@ -76,11 +82,11 @@ namespace acidcam {
             
             glGenTextures(1, &texture);
             glBindTexture(GL_TEXTURE_2D, texture);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            
             cv::Mat frame;
             if(!cap.isOpened()) {
                 std::cerr << "Error opening camera/file..\n";
@@ -88,6 +94,8 @@ namespace acidcam {
             }
             cap.read(frame);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
+            
+            
         }
         
         int index = 0;
@@ -95,6 +103,7 @@ namespace acidcam {
         
         virtual void update(double timeval) override {
             glClearColor(0.0, 0.0, 0.0, 1.0);
+            glClearDepth(1.0);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             program.useProgram();
             mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
@@ -108,11 +117,6 @@ namespace acidcam {
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
             m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
             
-/*            if(rotate == true)
-                r_mat = glm::rotate(glm::mat4(1.0f), 16.00f*(float)timeval,glm::vec3(0.0f, 0.0f, 1.0f)); */
-            
-            //r_mat = glm::rotate(r_mat, 1.75f*(float)timeval,glm::vec3(1.0f, 0.0f, 0.0f));
-            //r_mat = glm::rotate(r_mat, 1.75f*(float)timeval, glm::vec3(0.0f, 0.0f, 1.0f));
             mv_mat = v_mat * m_mat;
             
             glUniformMatrix4fv(mv_loc, 1, GL_FALSE, glm::value_ptr(mv_mat));
@@ -155,10 +159,6 @@ namespace acidcam {
             glUniform1f(calpha_r, color_alpha_r);
             glUniform1f(calpha_g, color_alpha_g);
             glUniform1f(calpha_b, color_alpha_b);
-            
-            glEnable(GL_DEPTH_TEST);
-            glEnable(GL_LEQUAL);
-            
             glDrawArrays(GL_TRIANGLES,0,6);
         }
         
@@ -196,8 +196,36 @@ namespace acidcam {
             glViewport(0, 0, newWidth, newHeight);
             p_mat = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
         }
+        
+        void loadShaders(const std::string &text) {
+            std::ostringstream stream;
+            stream << text << "/" << "index.txt";
+            std::fstream file;
+            file.open(stream.str(), std::ios::in) ;
+            if(!file.is_open()) {
+                std::cerr << "Error could not open: " << stream.str() << "\n";
+                exit(EXIT_FAILURE);
+            }
+            
+            while(!file.eof()) {
+                std::string s;
+                std::getline(file, s);
+                if(file) {
+                    std::ostringstream fs;
+                    fs << text << "/" << s;
+                    ShaderProgram p;
+                    std::cout << "compiling [" << s << "]\n";
+                    if(p.loadProgram("vertex.glsl", fs.str())==false) {
+                        std::cerr << "Error could not load: " << fs.str() << "\n";
+                        exit(EXIT_FAILURE);
+                    }
+                    shaders.push_back(p);
+                    std::cout << "[ OK... ]\n";
+                }
+            }
+            file.close();
+        }
     };
-    
 }
 acidcam::AcidCam_Window main_window;
 
@@ -210,7 +238,9 @@ void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
 }
 
 int main(int argc, char **argv) {
-    
+    if(!glfwInit()) {
+        exit(EXIT_FAILURE);
+    }
     ac::init();
     int w = 1280, h = 720;
     int cw = 1280, ch = 720;
@@ -218,9 +248,13 @@ int main(int argc, char **argv) {
     int device = 0;
     bool full = false;
     int joy_index = -1;
+    std::string shader_path;
     
-    while((opt = getopt(argc, argv, "i:c:r:d:fhvj:")) != -1) {
+    while((opt = getopt(argc, argv, "i:c:r:d:fhvj:s:")) != -1) {
         switch(opt) {
+            case 's':
+                shader_path = optarg;
+                break;
             case 'i':
                 acidcam::filename = optarg;
                 break;
@@ -277,6 +311,12 @@ int main(int argc, char **argv) {
                 break;
         }
     }
+    
+    if(shader_path.length()==0) {
+        std::cerr << "Error: must provide path to shaders...\n";
+        exit(EXIT_FAILURE);
+    }
+    
     if(acidcam::filename.length()==0) {
         acidcam::cap.open(device);
         if(!acidcam::cap.isOpened()) {
@@ -297,14 +337,12 @@ int main(int argc, char **argv) {
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     }
     
-    if(!glfwInit()) {
-        exit(EXIT_FAILURE);
-    }
     main_window.create(full, "acidcamGL", w, h);
+    
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
-    
+    main_window.loadShaders(shader_path);
     main_window.loop();
     glfwTerminate();
     return EXIT_SUCCESS;

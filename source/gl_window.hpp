@@ -17,6 +17,8 @@ namespace acidcam {
     private:
         GLFWwindow *window;
     };
+    
+    bool checkForError();
 }
 
 #endif
