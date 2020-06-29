@@ -5,8 +5,8 @@
 #include"glm/gtc/type_ptr.hpp"
 #include"glm/gtc/matrix_transform.hpp"
 #include"acidcam/ac.h"
-//#include<opencv2/opencv.hpp>
 #include<unistd.h>
+#include<vector>
 
 #define version_info "v1.0"
 
@@ -17,6 +17,7 @@ namespace acidcam {
     cv::VideoCapture cap;
     std::string filename;
     
+    enum class Mode { AC_OLD, AC_NEW };
     
     class AcidCam_Window : public glWindow {
         GLuint vao[numVAOs];
@@ -28,6 +29,7 @@ namespace acidcam {
         glm::mat4 p_mat, v_mat, m_mat, mv_mat;
         GLuint texture;
         float color_alpha_r, color_alpha_g, color_alpha_b;
+        Mode mode;
     public:
         
         virtual void init() override {
@@ -35,10 +37,10 @@ namespace acidcam {
                 std::cerr << "Error creating shader program..\n";
                 exit(EXIT_FAILURE);
             }
+            mode = Mode::AC_NEW;
             color_alpha_r = 0.1;
             color_alpha_g = 0.2;
             color_alpha_b = 0.3;
-            
             GLfloat vertices[] = {
                 -1.0f, -1.0f, 1.0f, // front face
                 1.0f, 1.0f, 1.0f,
