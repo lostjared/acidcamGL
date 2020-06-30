@@ -20,6 +20,7 @@ namespace acidcam {
     static constexpr int numVBOs = 2;
     cv::VideoCapture cap;
     std::string filename;
+    bool print_text = false;
     
     enum class Mode { AC_OLD, AC_NEW };
     
@@ -134,14 +135,17 @@ namespace acidcam {
                 std::cout << "Camera closed...\n";
                 exit(EXIT_FAILURE);
             }
-            cv::flip(frame, frame, 0);
-            
             if(shader_index == 0) {
                 if(index >= 0 && index < ac::solo_filter.size()-1) {
                     ac::CallFilter(ac::solo_filter[index], frame);
+                    if(print_text == true) {
+                        std::ostringstream stream;
+                        stream << ac::solo_filter[index];
+                        cv::putText(frame, stream.str(),cv::Point(40, 40),cv::FONT_HERSHEY_DUPLEX,1.0,CV_RGB(255, 255, 255), 2);
+                    }
                 }
             }
-            
+            cv::flip(frame, frame, 0);
             glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows, GL_BGR, GL_UNSIGNED_BYTE, frame.ptr());
             
             glActiveTexture(GL_TEXTURE0);
@@ -264,8 +268,11 @@ int main(int argc, char **argv) {
     int joy_index = -1;
     std::string shader_path;
     
-    while((opt = getopt(argc, argv, "i:c:r:d:fhvj:s:")) != -1) {
+    while((opt = getopt(argc, argv, "pi:c:r:d:fhvj:s:")) != -1) {
         switch(opt) {
+            case 'p':
+                acidcam::print_text = true;
+                break;
             case 's':
                 shader_path = optarg;
                 break;
