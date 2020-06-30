@@ -21,9 +21,7 @@ namespace acidcam {
     cv::VideoCapture cap;
     std::string filename;
     bool print_text = false;
-    
-    enum class Mode { AC_OLD, AC_NEW };
-    
+ 
     class AcidCam_Window : public glWindow {
         GLuint vao[numVAOs];
         GLuint vbo[numVBOs];
@@ -34,13 +32,11 @@ namespace acidcam {
         glm::mat4 p_mat, v_mat, m_mat, mv_mat;
         GLuint texture;
         float color_alpha_r, color_alpha_g, color_alpha_b;
-        Mode mode;
         std::vector<ShaderProgram> shaders;
         int shader_index;
     public:
         
         virtual void init() override {
-            mode = Mode::AC_NEW;
             shader_index = 0;
             color_alpha_r = 0.1;
             color_alpha_g = 0.2;
