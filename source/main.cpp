@@ -19,7 +19,7 @@ namespace acidcam {
     static constexpr int numVAOs = 1;
     static constexpr int numVBOs = 2;
     cv::VideoCapture cap;
-    std::string filename;
+    
     bool print_text = false;
  
     class AcidCam_Window : public glWindow {
@@ -256,6 +256,7 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     ac::init();
+    std::string filename;
     int w = 1280, h = 720;
     int cw = 1280, ch = 720;
     int opt = 0;
@@ -273,7 +274,7 @@ int main(int argc, char **argv) {
                 shader_path = optarg;
                 break;
             case 'i':
-                acidcam::filename = optarg;
+                filename = optarg;
                 break;
             case 'h':
                 std::cout << "acidcamGL " << version_info << " arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
@@ -334,7 +335,7 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     
-    if(acidcam::filename.length()==0) {
+    if(filename.length()==0) {
         acidcam::cap.open(device);
         if(!acidcam::cap.isOpened()) {
             std::cerr << "Could not open capture device...\n";
@@ -345,9 +346,9 @@ int main(int argc, char **argv) {
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     } else {
-        acidcam::cap.open(acidcam::filename);
+        acidcam::cap.open(filename);
         if(!acidcam::cap.isOpened()) {
-            std::cerr << "Error could not open file: " << acidcam::filename << "\n";
+            std::cerr << "Error could not open file: " << filename << "\n";
             exit(EXIT_FAILURE);
         }
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
