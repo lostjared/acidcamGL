@@ -325,7 +325,7 @@ int main(int argc, char **argv) {
                     std::cerr << "Invalid resolution..\n";
                     exit(EXIT_FAILURE);
                 }
-                std::cout << "Desired Camera Resolution: " << w << "x" << h << "\n";
+                std::cout << "Desired Camera Resolution: " << cw << "x" << ch << "\n";
             }
                 break;
             case 'j':
@@ -333,12 +333,10 @@ int main(int argc, char **argv) {
                 break;
         }
     }
-    
     if(shader_path.length()==0) {
         std::cerr << "Error: must provide path to shaders...\n";
         exit(EXIT_FAILURE);
     }
-    
     if(filename.length()==0) {
         acidcam::cap.open(device);
         if(!acidcam::cap.isOpened()) {
@@ -358,6 +356,7 @@ int main(int argc, char **argv) {
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     }
+    std::cout << "Camera Resolution: " << cw << "x" << ch << "\n";
     main_window.create(full, "acidcamGL", w, h);
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     glfwSetKeyCallback(main_window.win(), key_callback);
