@@ -35,10 +35,12 @@ namespace acidcam {
         float color_alpha_r, color_alpha_g, color_alpha_b;
         Mode mode;
         std::vector<ShaderProgram> shaders;
+        int shader_index;
     public:
         
         virtual void init() override {
             mode = Mode::AC_NEW;
+            shader_index = 0;
             color_alpha_r = 0.1;
             color_alpha_g = 0.2;
             color_alpha_b = 0.3;
@@ -133,6 +135,13 @@ namespace acidcam {
                 exit(EXIT_FAILURE);
             }
             cv::flip(frame, frame, 0);
+            
+            if(shader_index == 0) {
+                if(index >= 0 && index < ac::solo_filter.size()-1) {
+                    ac::CallFilter(ac::solo_filter[index], frame);
+                }
+            }
+            
             glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows, GL_BGR, GL_UNSIGNED_BYTE, frame.ptr());
             
             glActiveTexture(GL_TEXTURE0);
@@ -170,8 +179,24 @@ namespace acidcam {
                         
                         break;
                     case GLFW_KEY_RIGHT:
-                        if(index < 2)
+                        if(index < ac::solo_filter.size()-1)
                             ++index;
+                        break;
+                    case GLFW_KEY_UP:
+                        
+                        if(shader_index > 0) {
+                            --shader_index;
+                            setShader(shader_index);
+                        }
+                        
+                        break;
+                    case GLFW_KEY_DOWN:
+                        
+                        if(shader_index < shaders.size()-1) {
+                            shader_index++;
+                            setShader(shader_index);
+                        }
+                        
                         break;
                     case GLFW_KEY_A:
                         rotate = (rotate == true) ? false : true;
