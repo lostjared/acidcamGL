@@ -20,8 +20,7 @@ namespace acidcam {
     static constexpr int numVBOs = 2;
     cv::VideoCapture cap;
     
-    bool print_text = false;
- 
+   
     class AcidCam_Window : public glWindow {
         GLuint vao[numVAOs];
         GLuint vbo[numVBOs];
@@ -34,9 +33,11 @@ namespace acidcam {
         float color_alpha_r, color_alpha_g, color_alpha_b;
         std::vector<ShaderProgram> shaders;
         int shader_index;
+        bool print_text;
     public:
         
         virtual void init() override {
+            print_text = false;
             shader_index = 0;
             color_alpha_r = 0.1;
             color_alpha_g = 0.2;
@@ -95,6 +96,10 @@ namespace acidcam {
         
         void setShader(int index) {
             program = shaders[index];
+        }
+        
+        void setPrintText(bool b) {
+            print_text = b;
         }
         
         virtual void update(double timeval) override {
@@ -264,11 +269,12 @@ int main(int argc, char **argv) {
     bool full = false;
     int joy_index = -1;
     std::string shader_path;
+    bool print_text = false;
     
     while((opt = getopt(argc, argv, "pi:c:r:d:fhvj:s:")) != -1) {
         switch(opt) {
             case 'p':
-                acidcam::print_text = true;
+                print_text = true;
                 break;
             case 's':
                 shader_path = optarg;
@@ -360,6 +366,7 @@ int main(int argc, char **argv) {
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
     main_window.loadShaders(shader_path);
     main_window.setShader(0);
+    main_window.setPrintText(print_text);
     main_window.loop();
     glfwTerminate();
     return EXIT_SUCCESS;
