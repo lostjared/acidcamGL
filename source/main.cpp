@@ -15,13 +15,11 @@
 
 namespace acidcam {
     
-
-    static constexpr int numVAOs = 1;
-    static constexpr int numVBOs = 2;
     cv::VideoCapture cap;
     
-   
     class AcidCam_Window : public glWindow {
+        static constexpr int numVAOs = 1;
+        static constexpr int numVBOs = 2;
         GLuint vao[numVAOs];
         GLuint vbo[numVBOs];
         ShaderProgram program;
