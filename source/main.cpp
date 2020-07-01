@@ -308,7 +308,7 @@ int main(int argc, char **argv) {
                     std::cerr << "Invalid resolution..\n";
                     exit(EXIT_FAILURE);
                 }
-                std::cout << "Setting Resolution at: " << w << "x" << h << "\n";
+                std::cout << "Setting Window Resolution at: " << w << "x" << h << "\n";
             }
                 break;
             case 'c': {
@@ -325,7 +325,7 @@ int main(int argc, char **argv) {
                     std::cerr << "Invalid resolution..\n";
                     exit(EXIT_FAILURE);
                 }
-                std::cout << "Desired Camera Resolution: " << cw << "x" << ch << "\n";
+                std::cout << "Desired Capture Resolution: " << cw << "x" << ch << "\n";
             }
                 break;
             case 'j':
