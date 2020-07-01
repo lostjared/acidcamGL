@@ -18,10 +18,6 @@ uniform float time_f;
 void main(void)
 {
     color = texture(samp, tc);
-    ivec3 source;
-    for(int i = 0; i < 3; ++i) {
-        source[i] = int(255 * color[i]);
-    }
     color[0] += timeval*cos(0.1489*tc[0]);
     color[1] += timeval*sin(0.1482*tc[1]);
     ivec3 int_color;
