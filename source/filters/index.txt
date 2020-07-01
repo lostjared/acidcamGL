@@ -3,3 +3,4 @@ flash.glsl
 timeflash.glsl
 gradient.glsl
 cos_sin.glsl
+rgb_time.glsl
