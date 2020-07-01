@@ -1,3 +1,4 @@
 acidcam.glsl
 flash.glsl
 timeflash.glsl
+gradient.glsl
