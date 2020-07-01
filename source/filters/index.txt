@@ -2,3 +2,4 @@ acidcam.glsl
 flash.glsl
 timeflash.glsl
 gradient.glsl
+cos_sin.glsl
