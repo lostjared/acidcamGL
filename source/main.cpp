@@ -356,7 +356,7 @@ int main(int argc, char **argv) {
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     }
-    std::cout << "Actual Camera/File Resolution: " << cw << "x" << ch << "\n";
+    std::cout << "Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "\n";
     main_window.create(full, "acidcamGL", w, h);
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     glfwSetKeyCallback(main_window.win(), key_callback);
