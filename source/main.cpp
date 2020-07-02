@@ -228,16 +228,17 @@ namespace acidcam {
                 std::string s;
                 std::getline(file, s);
                 if(file) {
-                    std::ostringstream fs;
-                    fs << text << "/" << s;
+                    std::ostringstream fs1,fs2;
+                    fs1 << text << "/" << s;
+                    fs2 << text << "/vertex.glsl";
                     ShaderProgram p;
                     std::cout << "Compiling [" << s << "] ";
-                    if(p.loadProgram("vertex.glsl", fs.str())==false) {
-                        std::cerr << "Error could not load: " << fs.str() << "\n";
+                    if(p.loadProgram(fs2.str(), fs1.str())==false) {
+                        std::cerr << "Error could not load: " << fs1.str() << "\n";
                         exit(EXIT_FAILURE);
                     }
+                    std::cout << "\n";
                     shaders.push_back(p);
-                    std::cout << "-  Success... \n";
                 }
             }
             file.close();
