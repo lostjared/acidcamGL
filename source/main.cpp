@@ -268,9 +268,13 @@ int main(int argc, char **argv) {
     int joy_index = -1;
     std::string shader_path;
     bool print_text = false;
+    double fps = 24.0;
     
-    while((opt = getopt(argc, argv, "pi:c:r:d:fhvj:s:")) != -1) {
+    while((opt = getopt(argc, argv, "u:pi:c:r:d:fhvj:s:")) != -1) {
         switch(opt) {
+            case 'u':
+                fps = atof(optarg);
+                break;
             case 'p':
                 print_text = true;
                 break;
@@ -345,8 +349,10 @@ int main(int argc, char **argv) {
         }
         acidcam::cap.set(cv::CAP_PROP_FRAME_WIDTH, cw);
         acidcam::cap.set(cv::CAP_PROP_FRAME_HEIGHT, ch);
+        acidcam::cap.set(cv::CAP_PROP_FPS, fps);
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+        fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     } else {
         acidcam::cap.open(filename);
         if(!acidcam::cap.isOpened()) {
@@ -355,8 +361,9 @@ int main(int argc, char **argv) {
         }
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+        fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     }
-    std::cout << "Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "\n";
+    std::cout << "Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     main_window.create(full, "acidcamGL", w, h);
     std::cout << "acidcamGL: " << version_info << "\n";
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
