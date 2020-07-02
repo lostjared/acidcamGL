@@ -71,6 +71,7 @@ namespace acidcam {
         if(vertCompiled != 1) {
             std::cout << "Error on Vertex compile\n";
             printShaderLog(vShader);
+            return 0;
         }
         
         glCompileShader(fShader);
@@ -81,6 +82,7 @@ namespace acidcam {
         if(fragCompiled != 1) {
             std::cout << "Error on Fragment compile\n";
             printShaderLog(vShader);
+            return 0;
         }
         GLuint vfProgram = glCreateProgram();
         glAttachShader(vfProgram, vShader);
@@ -91,6 +93,7 @@ namespace acidcam {
         if(linked != 1) {
             std::cout << "Linking failed...\n";
             printProgramLog(vfProgram);
+            return 0;
         }
         return vfProgram;
     }
