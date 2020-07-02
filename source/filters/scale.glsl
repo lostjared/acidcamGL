@@ -11,7 +11,6 @@ in float timeval;
 in float alpha;
 out vec3 vpos;
 uniform float alpha_value;
-
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 uniform sampler2D samp;
@@ -28,15 +27,9 @@ void main(void)
     for(int i = 0; i < 3; ++i) {
         source[i] = int(255 * color[i]);
     }
-    
-    color[0] += tc[0];
-    color[1] += tc[1];
-    color[2] += tc[0]+tc[1];
-    
-    color[0] += 0.1*timeval;
-    color[1] += 0.3*timeval;
-    color[2] += 0.7*timeval;
-    
+    color[0] += color[0]*alpha;
+    color[1] += color[1]*alpha;
+    color[2] += color[2]*alpha;
     ivec3 int_color;
     for(int i = 0; i < 3; ++i) {
         int_color[i] = int(255 * color[i]);

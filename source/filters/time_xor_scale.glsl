@@ -7,7 +7,9 @@ in float alpha_g;
 in float alpha_b;
 in float current_index;
 in float timeval;
-
+in float alpha;
+out vec3 vpos;
+uniform float alpha_value;
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 uniform sampler2D samp;

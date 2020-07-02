@@ -33,9 +33,11 @@ namespace acidcam {
         int shader_index;
         bool print_text;
         bool debug;
+        float alpha;
     public:
         
         virtual void init() override {
+            alpha = 0.1f;
             debug = false;
             print_text = false;
             shader_index = 0;
@@ -118,6 +120,7 @@ namespace acidcam {
             GLuint calpha_b = glGetUniformLocation(program.id(),"value_alpha_b");
             GLuint c_index = glGetUniformLocation(program.id(),"index_value");
             GLuint c_tf = glGetUniformLocation(program.id(),"time_f");
+            GLuint alpha_pos = glGetUniformLocation(program.id(), "alpha_value");
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
             m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
             
@@ -166,12 +169,25 @@ namespace acidcam {
             if(color_alpha_b > 1.5f)
                 color_alpha_b = 0.1f;
             
+            if(program.name()=="scale") {
+                static bool idir = true;
+                if(idir == true) {
+                    alpha += 0.05f;
+                    if(alpha >= 10.0)
+                        idir = false;
+                } else {
+                    alpha -= 0.05f;
+                    if(alpha <= 0.1f)
+                        idir = true;
+                }
+            }
             glUniform1i(samp, 0);
             glUniform1f(c_index, (float)index);
             glUniform1f(c_tf, timeval);
             glUniform1f(calpha_r, color_alpha_r);
             glUniform1f(calpha_g, color_alpha_g);
             glUniform1f(calpha_b, color_alpha_b);
+            glUniform1f(alpha_pos, alpha);
             glDrawArrays(GL_TRIANGLES,0,6);
         }
         
@@ -266,7 +282,7 @@ void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
 }
 
 void print_help_message() {
-    std::cout << "acidcamGL " << version_info << " arguments:\n-e output debug strings\n-u fps\n-s shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
+    std::cout << "acidcamGL " << version_info << " arguments:\n-e output debug strings\n-u fps\n-s shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help messagecD\n\n";
 }
 
 int main(int argc, char **argv) {
