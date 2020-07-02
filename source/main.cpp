@@ -266,7 +266,7 @@ void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
 }
 
 void print_help_message() {
-    std::cout << "acidcamGL " << version_info << " arguments:\n-u fps\n-s shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
+    std::cout << "acidcamGL " << version_info << " arguments:\n-e output debug strings\n-u fps\n-s shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
 }
 
 int main(int argc, char **argv) {
