@@ -99,7 +99,7 @@ namespace acidcam {
         void setShader(int index) {
             program = shaders[index];
             if(debug) {
-                std::cout << "Shader loaded: " << program.name() << "\n";
+                std::cout << "Shader Program Loaded: " << program.name() << "\n";
             }
         }
         
@@ -202,13 +202,20 @@ namespace acidcam {
             if(action == GLFW_RELEASE) {
                 switch(key) {
                     case GLFW_KEY_LEFT:
-                        if(index > 0)
+                        if(index > 0) {
                             --index;
-                        
+                            if(debug) {
+                                std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                            }
+                        }
                         break;
                     case GLFW_KEY_RIGHT:
-                        if(index < ac::solo_filter.size()-1)
+                        if(index < ac::solo_filter.size()-1) {
                             ++index;
+                            if(debug) {
+                                std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                            }
+                        }
                         break;
                     case GLFW_KEY_UP:
                         
