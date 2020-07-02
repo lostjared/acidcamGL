@@ -254,7 +254,17 @@ void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
     main_window.resize(newWidth, newHeight);
 }
 
+void print_help_message() {
+    std::cout << "acidcamGL " << version_info << " arguments:\n-u fps\n-s shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
+}
+
 int main(int argc, char **argv) {
+    
+    if(argc == 1) {
+        print_help_message();
+        exit(EXIT_SUCCESS);
+    }
+    
     if(!glfwInit()) {
         exit(EXIT_FAILURE);
     }
@@ -285,7 +295,7 @@ int main(int argc, char **argv) {
                 filename = optarg;
                 break;
             case 'h':
-                std::cout << "acidcamGL " << version_info << " arguments:\n-u fps\n-s shader path\n\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
+                print_help_message();
                 exit(EXIT_SUCCESS);
                 break;
             case 'v':
