@@ -169,7 +169,7 @@ namespace acidcam {
             if(color_alpha_b > 1.5f)
                 color_alpha_b = 0.1f;
             
-            if(program.name()=="scale") {
+            if(program.name().find("scale") != std::string::npos) {
                 static bool idir = true;
                 if(idir == true) {
                     alpha += 0.05f;
