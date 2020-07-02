@@ -5,3 +5,4 @@ gradient.glsl
 cos_sin.glsl
 rgb_time.glsl
 rgb_time_xor.glsl
+time_xor_scale.glsl
