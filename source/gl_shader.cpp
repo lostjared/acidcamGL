@@ -14,6 +14,7 @@ namespace acidcam {
     
     ShaderProgram &ShaderProgram::operator=(const ShaderProgram &p) {
         shader_id = p.shader_id;
+        name_ = p.name_;
         return *this;
     }
     
@@ -121,6 +122,10 @@ namespace acidcam {
         if(shader_id)
             return true;
         return false;
+    }
+    
+    void ShaderProgram::setName(const std::string &n) {
+        name_ = n;
     }
     
     void ShaderProgram::useProgram() {

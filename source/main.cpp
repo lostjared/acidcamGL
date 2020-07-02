@@ -32,9 +32,11 @@ namespace acidcam {
         std::vector<ShaderProgram> shaders;
         int shader_index;
         bool print_text;
+        bool debug;
     public:
         
         virtual void init() override {
+            debug = false;
             print_text = false;
             shader_index = 0;
             color_alpha_r = 0.1;
@@ -94,6 +96,9 @@ namespace acidcam {
         
         void setShader(int index) {
             program = shaders[index];
+            if(debug) {
+                std::cout << "Shader loaded: " << program.name() << "\n";
+            }
         }
         
         void setPrintText(bool b) {
@@ -170,6 +175,10 @@ namespace acidcam {
             glDrawArrays(GL_TRIANGLES,0,6);
         }
         
+        void setDebug(bool d) {
+            debug = d;
+        }
+        
         void keypress(int key, int scancode, int action, int mode) {
             if(key == GLFW_KEY_ESCAPE)
                 exit(EXIT_SUCCESS);
@@ -238,6 +247,7 @@ namespace acidcam {
                         exit(EXIT_FAILURE);
                     }
                     std::cout << "\n";
+                    p.setName(s.substr(0, s.rfind(".")));
                     shaders.push_back(p);
                 }
             }
@@ -280,9 +290,13 @@ int main(int argc, char **argv) {
     std::string shader_path;
     bool print_text = false;
     double fps = 24.0;
+    bool debug_val = false;
     
-    while((opt = getopt(argc, argv, "u:pi:c:r:d:fhvj:s:")) != -1) {
+    while((opt = getopt(argc, argv, "eu:pi:c:r:d:fhvj:s:")) != -1) {
         switch(opt) {
+            case 'e':
+                debug_val = true;
+                break;
             case 'u':
                 fps = atof(optarg);
                 break;
@@ -380,6 +394,7 @@ int main(int argc, char **argv) {
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
+    main_window.setDebug(debug_val);
     main_window.loadShaders(shader_path);
     main_window.setShader(0);
     main_window.setPrintText(print_text);

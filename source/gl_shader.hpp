@@ -21,9 +21,11 @@ namespace acidcam {
         bool loadProgram(const std::string &text1, const std::string &text2);
         int id() const { return shader_id; }
         void useProgram();
-        
+        void setName(const std::string &n);
+        std::string name() const { return name_; }
     private:
         GLuint shader_id;
+        std::string name_;
     };
 }
 #endif
