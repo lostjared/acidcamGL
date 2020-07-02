@@ -285,7 +285,7 @@ int main(int argc, char **argv) {
                 filename = optarg;
                 break;
             case 'h':
-                std::cout << "acidcamGL " << version_info << " arguments:\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
+                std::cout << "acidcamGL " << version_info << " arguments:\n-u fps\n-s shader path\n\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
                 exit(EXIT_SUCCESS);
                 break;
             case 'v':
