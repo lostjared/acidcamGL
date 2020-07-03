@@ -34,9 +34,11 @@ namespace acidcam {
         bool print_text;
         bool debug;
         float alpha;
+        bool ac_on;
     public:
         
         virtual void init() override {
+            ac_on = false;
             alpha = 0.1f;
             debug = false;
             print_text = false;
@@ -142,7 +144,7 @@ namespace acidcam {
                 std::cout << "Camera closed...\n";
                 exit(EXIT_FAILURE);
             }
-            if(shader_index == 0) {
+            if(shader_index == 0 || ac_on == true) {
                 if(index >= 0 && index < ac::solo_filter.size()-1) {
                     ac::CallFilter(ac::solo_filter[index], frame);
                     if(print_text == true) {
@@ -201,6 +203,13 @@ namespace acidcam {
             
             if(action == GLFW_RELEASE) {
                 switch(key) {
+                    case GLFW_KEY_SPACE:
+                        ac_on = !ac_on;
+                        if(ac_on)
+                            std::cout << "acidcam: filters enabled...\n";
+                        else
+                            std::cout << "acidcam: filters disabled...\n";
+                        break;
                     case GLFW_KEY_LEFT:
                         if(index > 0) {
                             --index;
@@ -290,7 +299,7 @@ void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
 }
 
 void print_help_message() {
-    std::cout << "acidcamGL " << version_info << " arguments:\n-e output debug strings\n-u fps\n-s shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help messagecD\n\n";
+    std::cout << "acidcamGL " << version_info << " arguments:\n-g output debug strings\n-u fps\n-s shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help messagecD\n\n";
 }
 
 int main(int argc, char **argv) {
@@ -305,6 +314,7 @@ int main(int argc, char **argv) {
     }
     ac::init();
     std::string filename;
+    std::cout << "acidcamGL: " << version_info << "\n";
     int w = 1280, h = 720;
     int cw = 1280, ch = 720;
     int opt = 0;
@@ -315,10 +325,9 @@ int main(int argc, char **argv) {
     bool print_text = false;
     double fps = 24.0;
     bool debug_val = false;
-    
-    while((opt = getopt(argc, argv, "eu:pi:c:r:d:fhvj:s:")) != -1) {
+    while((opt = getopt(argc, argv, "gu:pi:c:r:d:fhvj:s:")) != -1) {
         switch(opt) {
-            case 'e':
+            case 'g':
                 debug_val = true;
                 break;
             case 'u':
@@ -414,8 +423,7 @@ int main(int argc, char **argv) {
     }
     std::cout << "Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     main_window.create(full, "acidcamGL", w, h);
-    std::cout << "acidcamGL: " << version_info << "\n";
-    std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
+     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
     main_window.setDebug(debug_val);
