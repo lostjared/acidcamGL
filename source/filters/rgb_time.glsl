@@ -27,7 +27,8 @@ void main(void)
     ivec3 int_color;
     for(int i = 0; i < 3; ++i) {
         int_color[i] = int(255 * color[i]);
-        int_color[i] = int_color[i]%255;
+        if(int_color[i] > 255)
+            int_color[i] = int_color[i]%255;
         color[i] = float(int_color[i])/255;
     }
 }

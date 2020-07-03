@@ -8,3 +8,4 @@ rgb_time_xor.glsl
 time_xor.glsl
 moving_gradient.glsl
 scale.glsl
+gradient_position.glsl
