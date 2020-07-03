@@ -8,7 +8,7 @@ in float alpha_b;
 in float current_index;
 in float timeval;
 in float alpha;
-out vec3 vpos;
+in vec3 vpos;
 uniform float alpha_value;
 
 uniform mat4 mv_matrix;
