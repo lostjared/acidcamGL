@@ -26,9 +26,11 @@ void main(void)
     for(int i = 0; i < 3; ++i) {
         source[i] = int(255 * color[i]);
     }
-    color[0] = (color[0]+(0.1*timeval)*0.8);
-    color[1] = (color[1]+(0.3*timeval)*0.8);
-    color[2] = (color[2]+(0.7*timeval)*0.8);
+    
+    color[0] = sin(color[0]+(tc[0]))*(timeval*alpha_r);
+    color[1] = cos(color[1]+(tc[1]))*(timeval*alpha_g);
+    color[2] = tan(color[2]+(tc[0]))*(timeval*alpha_b);
+    
     ivec3 int_color;
     for(int i = 0; i < 3; ++i) {
         int_color[i] = int(255 * color[i]);
