@@ -299,7 +299,7 @@ void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
 }
 
 void print_help_message() {
-    std::cout << "acidcamGL " << version_info << " arguments:\n-g output debug strings\n-u fps\n-s shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help messagecD\n\n";
+    std::cout << "acidcamGL " << version_info << " arguments:\n-g output debug strings\n-u fps\n-n print filter name\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
 }
 
 int main(int argc, char **argv) {
@@ -325,7 +325,7 @@ int main(int argc, char **argv) {
     bool print_text = false;
     double fps = 24.0;
     bool debug_val = false;
-    while((opt = getopt(argc, argv, "gu:pi:c:r:d:fhvj:s:")) != -1) {
+    while((opt = getopt(argc, argv, "gu:p:i:c:r:d:fhvj:sn")) != -1) {
         switch(opt) {
             case 'g':
                 debug_val = true;
@@ -333,10 +333,10 @@ int main(int argc, char **argv) {
             case 'u':
                 fps = atof(optarg);
                 break;
-            case 'p':
+            case 'n':
                 print_text = true;
                 break;
-            case 's':
+            case 'p':
                 shader_path = optarg;
                 break;
             case 'i':
