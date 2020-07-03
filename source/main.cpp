@@ -275,6 +275,7 @@ namespace acidcam {
                 }
             }
             file.close();
+            std::cout << "acidcam: Loaded " << shaders.size() << " Shaders...\n";
         }
     };
 }
