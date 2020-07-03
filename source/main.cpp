@@ -421,9 +421,9 @@ int main(int argc, char **argv) {
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     }
-    std::cout << "Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
-    main_window.create(full, "acidcamGL", w, h);
+     main_window.create(full, "acidcamGL", w, h);
      std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
+     std::cout << "Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
     main_window.setDebug(debug_val);
