@@ -269,12 +269,10 @@ namespace acidcam {
                         
                         break;
                     case GLFW_KEY_DOWN:
-                        
                         if(shader_index < shaders.size()-1) {
                             shader_index++;
                             setShader(shader_index);
                         }
-                        
                         break;
                     case GLFW_KEY_Q:
                         optx[0] -= 0.01f;
@@ -358,7 +356,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
 }
 
 void print_help_message() {
-    std::cout << "acidcamGL " << version_info << " arguments:\n-g output debug strings\n-u fps\n-n print filter name\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-v version\n-h help message\n\n";
+    std::cout << "acidcamGL " << version_info << " arguments:\n-g output debug strings\n-u fps\n-n print filter name\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n-h help message\n\n";
 }
 
 int main(int argc, char **argv) {
@@ -384,8 +382,15 @@ int main(int argc, char **argv) {
     bool print_text = false;
     double fps = 24.0;
     bool debug_val = false;
-    while((opt = getopt(argc, argv, "gu:p:i:c:r:d:fhvj:sn")) != -1) {
+    while((opt = getopt(argc, argv, "gu:p:i:c:r:d:fhvj:snl")) != -1) {
         switch(opt) {
+            case 'l':
+                std::cout << "Filters by Index: \n";
+                for(int i = 0; i < ac::solo_filter.size(); ++i) {
+                    std::cout << i << ": " << ac::solo_filter[i] << "\n";
+                }
+                exit(EXIT_SUCCESS);
+                break;
             case 'g':
                 debug_val = true;
                 break;
