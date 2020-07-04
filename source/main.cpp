@@ -73,7 +73,7 @@ namespace acidcam {
             glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
             glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
             glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
-
+            
             glfwGetFramebufferSize(win(), &width, &height);
             aspect = (float)width/(float)height;
             
@@ -197,12 +197,40 @@ namespace acidcam {
             debug = d;
         }
         
+        std::string input_string;
+        
+        void typeKey(unsigned int key) {
+            if(key >= '0' && key <= '9')
+                input_string += static_cast<char>(key);
+        }
+        
         void keypress(int key, int scancode, int action, int mode) {
             if(key == GLFW_KEY_ESCAPE)
                 exit(EXIT_SUCCESS);
             
             if(action == GLFW_RELEASE) {
                 switch(key) {
+                    case GLFW_KEY_F: {
+                        int val = atoi(input_string.c_str());
+                        if(val >= 0 && val <= ac::solo_filter.size()-1) {
+                            index = val;
+                            input_string = "";
+                            std::cout << "Filter: " << ac::solo_filter[index] << "\n";
+                        }
+                    }
+                        break;
+                    case GLFW_KEY_S: {
+                        int val = atoi(input_string.c_str());
+                        if(val >= 0 && val <= shaders.size()-1) {
+                            input_string = "";
+                            setShader(val);
+                        }
+                    }
+                        break;
+                    case GLFW_KEY_C: {
+                        input_string = "";
+                        break;
+                    }
                     case GLFW_KEY_SPACE:
                         ac_on = !ac_on;
                         if(ac_on)
@@ -296,6 +324,10 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
     main_window.resize(newWidth, newHeight);
+}
+
+void character_callback(GLFWwindow* window, unsigned int codepoint) {
+    main_window.typeKey(codepoint);
 }
 
 void print_help_message() {
@@ -421,11 +453,12 @@ int main(int argc, char **argv) {
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     }
-     main_window.create(full, "acidcamGL", w, h);
-     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
-     std::cout << "Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
+    main_window.create(full, "acidcamGL", w, h);
+    std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
+    std::cout << "Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
+    glfwSetCharCallback(main_window.win(), character_callback);
     main_window.setDebug(debug_val);
     main_window.loadShaders(shader_path);
     main_window.setShader(0);
