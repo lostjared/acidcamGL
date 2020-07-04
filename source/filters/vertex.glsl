@@ -10,6 +10,8 @@ out float alpha_b;
 out float current_index;
 out float timeval;
 out float alpha;
+out vec4 optx_val;
+uniform vec4 optx;
 
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
@@ -30,4 +32,5 @@ void main(void)
     timeval = time_f;
     alpha = alpha_value;
     vpos = pos;
+    optx_val = optx;
 }

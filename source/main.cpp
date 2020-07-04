@@ -109,6 +109,8 @@ namespace acidcam {
             print_text = b;
         }
         
+        glm::vec4 optx;
+        
         virtual void update(double timeval) override {
             glClearColor(0.0, 0.0, 0.0, 1.0);
             glClearDepth(1.0);
@@ -123,6 +125,9 @@ namespace acidcam {
             GLuint c_index = glGetUniformLocation(program.id(),"index_value");
             GLuint c_tf = glGetUniformLocation(program.id(),"time_f");
             GLuint alpha_pos = glGetUniformLocation(program.id(), "alpha_value");
+            
+            GLuint optx_pos = glGetUniformLocation(program.id(), "optx");
+            
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
             m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
             
@@ -190,6 +195,7 @@ namespace acidcam {
             glUniform1f(calpha_g, color_alpha_g);
             glUniform1f(calpha_b, color_alpha_b);
             glUniform1f(alpha_pos, alpha);
+            glUniform4fv(optx_pos, 4, glm::value_ptr(optx));
             glDrawArrays(GL_TRIANGLES,0,6);
         }
         
@@ -270,8 +276,29 @@ namespace acidcam {
                         }
                         
                         break;
-                    case GLFW_KEY_A:
-                        rotate = (rotate == true) ? false : true;
+                    case GLFW_KEY_Q:
+                        optx[0] -= 0.01f;
+                        break;
+                    case GLFW_KEY_W:
+                        optx[0] += 0.01f;
+                        break;
+                    case GLFW_KEY_E:
+                        optx[1] -= 0.01f;
+                        break;
+                    case GLFW_KEY_R:
+                        optx[1] += 0.01f;
+                        break;
+                    case GLFW_KEY_Y:
+                        optx[2] -= 0.01f;
+                        break;
+                    case GLFW_KEY_U:
+                        optx[2] += 0.01f;
+                        break;
+                    case GLFW_KEY_I:
+                        optx[3] -= 0.01f;
+                        break;
+                    case GLFW_KEY_O:
+                        optx[3] += 0.01f;
                         break;
                 }
             }

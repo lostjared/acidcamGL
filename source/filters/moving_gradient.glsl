@@ -10,6 +10,8 @@ in float current_index;
 in float timeval;
 in float alpha;
 in vec3 vpos;
+in vec4 optx_val;
+uniform vec4 optx;
 uniform float alpha_value;
 
 uniform mat4 mv_matrix;
