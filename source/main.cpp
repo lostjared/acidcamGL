@@ -11,6 +11,8 @@
 #include<string>
 #include<fstream>
 
+#include"keymap.hpp"
+
 #define version_info "v1.0"
 
 namespace acidcam {
@@ -36,6 +38,7 @@ namespace acidcam {
         float alpha;
         bool ac_on;
         glm::vec4 optx;
+        KeyMap mapped_keys;
     public:
         
         AcidCam_Window() = default;
@@ -114,6 +117,9 @@ namespace acidcam {
             print_text = b;
         }
         
+        void loadKeys(const std::string &n) {
+            mapped_keys.load(n);
+        }
         
         virtual void update(double timeval) override {
             glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -219,6 +225,14 @@ namespace acidcam {
                 exit(EXIT_SUCCESS);
             
             if(action == GLFW_RELEASE) {
+                int f = 0, s = 0;
+                if(mapped_keys.checkKey(key, f, s)) {
+                    index = f;
+                    std::cout << "Filter: " << ac::solo_filter[index] << "\n";
+                    setShader(s);
+                    return;
+                }
+                
                 switch(key) {
                     case GLFW_KEY_F: {
                         int val = atoi(input_string.c_str());
@@ -360,7 +374,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
 }
 
 void print_help_message() {
-    std::cout << "acidcamGL " << version_info << " arguments:\n-g output debug strings\n-u fps\n-n print filter name\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n-h help message\n\n";
+    std::cout << "acidcamGL " << version_info << " arguments:\n-k shortcut-key file\n-g output debug strings\n-u fps\n-n print filter name\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n-h help message\n\n";
 }
 
 int main(int argc, char **argv) {
@@ -384,8 +398,12 @@ int main(int argc, char **argv) {
     bool print_text = false;
     double fps = 24.0;
     bool debug_val = false;
-    while((opt = getopt(argc, argv, "gu:p:i:c:r:d:fhvj:snl")) != -1) {
+    std::string key_val;
+    while((opt = getopt(argc, argv, "gu:p:i:c:r:d:fhvj:snlk:")) != -1) {
         switch(opt) {
+            case 'k':
+                key_val = optarg;
+                break;
             case 'l':
                 std::cout << "Filters by Index: \n";
                 for(int i = 0; i < ac::solo_filter.size(); ++i) {
@@ -497,6 +515,8 @@ int main(int argc, char **argv) {
     main_window.loadShaders(shader_path);
     main_window.setShader(0);
     main_window.setPrintText(print_text);
+    if(key_val.length()>0)
+        main_window.loadKeys(key_val);
     main_window.loop();
     glfwTerminate();
     return EXIT_SUCCESS;
