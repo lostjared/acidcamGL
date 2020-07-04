@@ -35,9 +35,15 @@ namespace acidcam {
         bool debug;
         float alpha;
         bool ac_on;
+        glm::vec4 optx;
     public:
         
+        AcidCam_Window() = default;
+        AcidCam_Window(const AcidCam_Window &) = delete;
+        AcidCam_Window &operator=(const AcidCam_Window &) = delete;
+        
         virtual void init() override {
+            index = 0;
             ac_on = false;
             alpha = 0.1f;
             debug = false;
@@ -95,8 +101,7 @@ namespace acidcam {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
         }
         
-        int index = 0;
-        bool rotate = false;
+        int index;
         
         void setShader(int index) {
             program = shaders[index];
@@ -109,7 +114,6 @@ namespace acidcam {
             print_text = b;
         }
         
-        glm::vec4 optx;
         
         virtual void update(double timeval) override {
             glClearColor(0.0, 0.0, 0.0, 1.0);
@@ -360,12 +364,10 @@ void print_help_message() {
 }
 
 int main(int argc, char **argv) {
-    
     if(argc == 1) {
         print_help_message();
         exit(EXIT_SUCCESS);
     }
-    
     if(!glfwInit()) {
         exit(EXIT_FAILURE);
     }
