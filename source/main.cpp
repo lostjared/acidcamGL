@@ -97,7 +97,7 @@ namespace acidcam {
             
             cv::Mat frame;
             if(!cap.isOpened()) {
-                std::cerr << "Error opening camera/file..\n";
+                std::cerr << "acidcam: Error opening camera/file..\n";
                 exit(EXIT_FAILURE);
             }
             cap.read(frame);
@@ -109,7 +109,7 @@ namespace acidcam {
         void setShader(int index) {
             program = shaders[index];
             if(debug) {
-                std::cout << "Shader Program Loaded: " << program.name() << "\n";
+                std::cout << "acidcam: Shader Program Loaded: " << program.name() << "\n";
             }
         }
         
@@ -156,7 +156,7 @@ namespace acidcam {
             
             cv::Mat frame;
             if(!cap.read(frame)) {
-                std::cout << "Camera closed...\n";
+                std::cout << "acidcam: Capture device closed...\n";
                 exit(EXIT_FAILURE);
             }
             if(shader_index == 0 || ac_on == true) {
@@ -228,7 +228,7 @@ namespace acidcam {
                 int f = 0, s = 0;
                 if(mapped_keys.checkKey(key, f, s)) {
                     index = f;
-                    std::cout << "Filter: " << ac::solo_filter[index] << "\n";
+                    std::cout << "acidcam: Filter: " << ac::solo_filter[index] << "\n";
                     setShader(s);
                     return;
                 }
@@ -239,7 +239,7 @@ namespace acidcam {
                         if(val >= 0 && val <= ac::solo_filter.size()-1) {
                             index = val;
                             input_string = "";
-                            std::cout << "Filter: " << ac::solo_filter[index] << "\n";
+                            std::cout << "acidcam: Filter: " << ac::solo_filter[index] << "\n";
                         }
                     }
                         break;
@@ -332,7 +332,7 @@ namespace acidcam {
             std::fstream file;
             file.open(stream.str(), std::ios::in) ;
             if(!file.is_open()) {
-                std::cerr << "Error could not open: " << stream.str() << "\n";
+                std::cerr << "acidcam: Error could not open: " << stream.str() << "\n";
                 exit(EXIT_FAILURE);
             }
             
@@ -344,7 +344,7 @@ namespace acidcam {
                     fs1 << text << "/" << s;
                     fs2 << text << "/vertex.glsl";
                     ShaderProgram p;
-                    std::cout << "Compiling [" << s << "] ";
+                    std::cout << "acidcam: Compiling [" << s << "] ";
                     if(p.loadProgram(fs2.str(), fs1.str())==false) {
                         std::cerr << "Error could not load: " << fs1.str() << "\n";
                         exit(EXIT_FAILURE);
@@ -443,7 +443,7 @@ int main(int argc, char **argv) {
             case 'r': {
                 std::string pos = optarg;
                 if(pos.rfind("x") == std::string::npos) {
-                    std::cerr << "Invalid format for resolution string...1920x1080 is proper.\n";
+                    std::cerr << "acidcam: Invalid format for resolution string...1920x1080 is proper.\n";
                     exit(EXIT_FAILURE);
                 }
                 std::string left=pos.substr(0, pos.rfind("x"));
@@ -451,16 +451,16 @@ int main(int argc, char **argv) {
                 w = atoi(left.c_str());
                 h = atoi(right.c_str());
                 if(w <= 0 || h <= 0) {
-                    std::cerr << "Invalid resolution..\n";
+                    std::cerr << "acidcam: Invalid resolution..\n";
                     exit(EXIT_FAILURE);
                 }
-                std::cout << "Setting Window Resolution at: " << w << "x" << h << "\n";
+                std::cout << "acidcam: Setting Window Resolution at: " << w << "x" << h << "\n";
             }
                 break;
             case 'c': {
                 std::string pos = optarg;
                 if(pos.rfind("x") == std::string::npos) {
-                    std::cerr << "Invalid format for resolution string...1920x1080 is proper.\n";
+                    std::cerr << "acidcam: Invalid format for resolution string...1920x1080 is proper.\n";
                     exit(EXIT_FAILURE);
                 }
                 std::string left=pos.substr(0, pos.rfind("x"));
@@ -471,7 +471,7 @@ int main(int argc, char **argv) {
                     std::cerr << "Invalid resolution..\n";
                     exit(EXIT_FAILURE);
                 }
-                std::cout << "Desired Capture Resolution: " << cw << "x" << ch << "\n";
+                std::cout << "acidcam: Desired Capture Resolution: " << cw << "x" << ch << "\n";
             }
                 break;
             case 'j':
@@ -480,13 +480,13 @@ int main(int argc, char **argv) {
         }
     }
     if(shader_path.length()==0) {
-        std::cerr << "Error: must provide path to shaders...\n";
+        std::cerr << "acidcam: Error: must provide path to shaders...\n";
         exit(EXIT_FAILURE);
     }
     if(filename.length()==0) {
         acidcam::cap.open(device);
         if(!acidcam::cap.isOpened()) {
-            std::cerr << "Could not open capture device...\n";
+            std::cerr << "acidcam: Could not open capture device...\n";
             exit(EXIT_FAILURE);
         }
         acidcam::cap.set(cv::CAP_PROP_FRAME_WIDTH, cw);
@@ -498,7 +498,7 @@ int main(int argc, char **argv) {
     } else {
         acidcam::cap.open(filename);
         if(!acidcam::cap.isOpened()) {
-            std::cerr << "Error could not open file: " << filename << "\n";
+            std::cerr << "acidcam: Error could not open file: " << filename << "\n";
             exit(EXIT_FAILURE);
         }
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
@@ -507,7 +507,7 @@ int main(int argc, char **argv) {
     }
     main_window.create(full, "acidcamGL", w, h);
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
-    std::cout << "Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
+    std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
     glfwSetCharCallback(main_window.win(), character_callback);
