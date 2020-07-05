@@ -39,6 +39,7 @@ namespace acidcam {
         bool ac_on;
         glm::vec4 optx;
         KeyMap mapped_keys;
+        float movement_rate;
     public:
         
         AcidCam_Window() = default;
@@ -47,6 +48,7 @@ namespace acidcam {
         
         virtual void init() override {
             index = 0;
+            movement_rate = 0.1f;
             ac_on = false;
             alpha = 0.1f;
             debug = false;
@@ -295,28 +297,28 @@ namespace acidcam {
                         }
                         break;
                     case GLFW_KEY_Q:
-                        optx[0] -= 0.01f;
+                        optx[0] -= movement_rate;
                         break;
                     case GLFW_KEY_W:
-                        optx[0] += 0.01f;
+                        optx[0] += movement_rate;
                         break;
                     case GLFW_KEY_E:
-                        optx[1] -= 0.01f;
+                        optx[1] -= movement_rate;
                         break;
                     case GLFW_KEY_R:
-                        optx[1] += 0.01f;
+                        optx[1] += movement_rate;
                         break;
                     case GLFW_KEY_Y:
-                        optx[2] -= 0.01f;
+                        optx[2] -= movement_rate;
                         break;
                     case GLFW_KEY_U:
-                        optx[2] += 0.01f;
+                        optx[2] += movement_rate;
                         break;
                     case GLFW_KEY_I:
-                        optx[3] -= 0.01f;
+                        optx[3] -= movement_rate;
                         break;
                     case GLFW_KEY_O:
-                        optx[3] += 0.01f;
+                        optx[3] += movement_rate;
                         break;
                 }
             }
