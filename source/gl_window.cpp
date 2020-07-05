@@ -22,7 +22,8 @@ namespace acidcam {
     }
     
     void glWindow::loop() {
-        while(!glfwWindowShouldClose(window)) {
+        active = true;
+        while(!glfwWindowShouldClose(window) && active == true) {
             update(glfwGetTime());
             glfwSwapBuffers(window);
             glfwPollEvents();

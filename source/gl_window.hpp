@@ -16,6 +16,8 @@ namespace acidcam {
         GLFWwindow *win() const { return window; }
     private:
         GLFWwindow *window;
+    protected:
+        bool active;
     };
     
     bool checkForError();

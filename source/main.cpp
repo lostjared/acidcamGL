@@ -221,8 +221,10 @@ namespace acidcam {
         }
         
         void keypress(int key, int scancode, int action, int mode) {
-            if(key == GLFW_KEY_ESCAPE)
-                exit(EXIT_SUCCESS);
+            if(key == GLFW_KEY_ESCAPE) {
+                active = false;
+                return;
+            }
             
             if(action == GLFW_RELEASE) {
                 int f = 0, s = 0;
@@ -518,6 +520,7 @@ int main(int argc, char **argv) {
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
     main_window.loop();
+    std::cout << "acidcam: exited\n";
     glfwTerminate();
     return EXIT_SUCCESS;
 }
