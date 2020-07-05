@@ -378,7 +378,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
 }
 
 void print_help_message() {
-    std::cout << "\nWritten by Jared Bruni\narguments:\n-k shortcut-key file\n-g output debug strings\n-u fps\n-n print filter name\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n-h help message\n\n";
+    std::cout << "Written by Jared Bruni\narguments:\n-k shortcut-key file\n-g output debug strings\n-u fps\n-n print filter name\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n-h help message\n\n";
 }
 
 int main(int argc, char **argv) {
