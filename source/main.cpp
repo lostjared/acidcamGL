@@ -321,6 +321,9 @@ namespace acidcam {
                     case GLFW_KEY_O:
                         optx[3] += movement_rate;
                         break;
+                    case GLFW_KEY_T:
+                        optx = glm::vec4(0.5, 0.5, 0.5, 0.5);
+                        break;
                 }
             }
         }
