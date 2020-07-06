@@ -12,3 +12,4 @@ gradient_position.glsl
 timeval_alpha.glsl
 xcordstrobe.glsl
 color_bars.glsl
+rgb_control.glsl
