@@ -47,6 +47,7 @@ namespace acidcam {
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
         
         virtual void init() override {
+            optx = glm::vec4(0.5,0.5,0.5,0.5);
             index = 0;
             movement_rate = 0.1f;
             ac_on = false;
@@ -207,7 +208,7 @@ namespace acidcam {
             glUniform1f(calpha_g, color_alpha_g);
             glUniform1f(calpha_b, color_alpha_b);
             glUniform1f(alpha_pos, alpha);
-            glUniform4fv(optx_pos, 4, glm::value_ptr(optx));
+            glUniform4fv(optx_pos, 1, glm::value_ptr(optx));
             glDrawArrays(GL_TRIANGLES,0,6);
         }
         
