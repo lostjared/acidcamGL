@@ -49,7 +49,7 @@ namespace acidcam {
         virtual void init() override {
             optx = glm::vec4(0.5,0.5,0.5,0.5);
             index = 0;
-            movement_rate = 0.1f;
+            movement_rate = 0.05f;
             ac_on = false;
             alpha = 0.1f;
             debug = false;
