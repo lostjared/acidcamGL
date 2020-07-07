@@ -18,6 +18,7 @@ namespace acidcam {
         GLFWwindow *window;
     protected:
         bool active;
+        int window_width, window_height;
     };
     
     bool checkForError();

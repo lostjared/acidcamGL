@@ -10,6 +10,8 @@
 #include<sstream>
 #include<string>
 #include<fstream>
+#include<iomanip>
+#include<iostream>
 
 #include"keymap.hpp"
 
@@ -40,6 +42,7 @@ namespace acidcam {
         glm::vec4 optx;
         KeyMap mapped_keys;
         float movement_rate;
+        bool take_snapshot;
     public:
         
         AcidCam_Window() = default;
@@ -47,6 +50,7 @@ namespace acidcam {
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
         
         virtual void init() override {
+            take_snapshot = false;
             optx = glm::vec4(0.5,0.5,0.5,0.5);
             index = 0;
             movement_rate = 0.05f;
@@ -122,6 +126,26 @@ namespace acidcam {
         
         void loadKeys(const std::string &n) {
             mapped_keys.load(n);
+        }
+        
+        void takeSnapshot() {
+            static int index = 0;
+            ++index;
+            cv::Mat img;
+            img.create(window_height, window_width,CV_8UC3);
+            glPixelStorei(GL_PACK_ALIGNMENT, (img.step & 3) ? 1 : 4);
+            glPixelStorei(GL_PACK_ROW_LENGTH, (int)img.step/img.elemSize());
+            glReadPixels(0, 0, img.cols, img.rows, GL_RGB, GL_UNSIGNED_BYTE, img.data);
+            cv::Mat flipped;
+            cv::flip(img, flipped, 0);
+            cv::cvtColor(flipped, img, cv::COLOR_RGB2BGR);
+            time_t t = time(0);
+            struct tm *m;
+            m = localtime(&t);
+            std::ostringstream time_stream;
+            time_stream << "AcidCamGL_Snapshot." << "-" << (m->tm_year + 1900) << "." << std::setw(2) << std::setfill('0') << (m->tm_mon + 1) << "." << std::setw(2) << std::setfill('0') << m->tm_mday << "_" << std::setw(2) << std::setfill('0') << m->tm_hour << "." << std::setw(2) << std::setfill('0') << m->tm_min << "." << std::setw(2) << std::setfill('0') << m->tm_sec <<  "_" << flipped.cols << "x" << flipped.rows << "x" << index << ".png";
+            cv::imwrite(time_stream.str(), flipped);
+            std::cout << "acidcam: Wrote: " << time_stream.str() << "\n";
         }
         
         virtual void update(double timeval) override {
@@ -210,6 +234,11 @@ namespace acidcam {
             glUniform1f(alpha_pos, alpha);
             glUniform4fv(optx_pos, 1, glm::value_ptr(optx));
             glDrawArrays(GL_TRIANGLES,0,6);
+            
+            if(take_snapshot == true) {
+                takeSnapshot();
+                take_snapshot = false;
+            }
         }
         
         void setDebug(bool d) {
@@ -239,6 +268,9 @@ namespace acidcam {
                 }
                 
                 switch(key) {
+                    case GLFW_KEY_Z:
+                        take_snapshot = true;
+                        break;
                     case GLFW_KEY_F: {
                         int val = atoi(input_string.c_str());
                         if(val >= 0 && val <= ac::solo_filter.size()-1) {
@@ -513,6 +545,7 @@ int main(int argc, char **argv) {
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     }
+    
     main_window.create(full, "acidcamGL", w, h);
     std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";

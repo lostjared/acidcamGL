@@ -16,6 +16,9 @@ namespace acidcam {
         if(glewInit()!=GLEW_OK)
             exit(EXIT_FAILURE);
         
+        window_width = w;
+        window_height = h;
+        
         glfwSwapInterval(1);
         init();
         return 1;
