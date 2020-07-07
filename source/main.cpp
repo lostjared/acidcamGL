@@ -43,6 +43,7 @@ namespace acidcam {
         KeyMap mapped_keys;
         float movement_rate;
         bool take_snapshot;
+        std::string snapshot_prefix;
     public:
         
         AcidCam_Window() = default;
@@ -50,6 +51,7 @@ namespace acidcam {
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
         
         virtual void init() override {
+            snapshot_prefix="AcidCamGL_Snapshot";
             take_snapshot = false;
             optx = glm::vec4(0.5,0.5,0.5,0.5);
             index = 0;
@@ -124,6 +126,10 @@ namespace acidcam {
             print_text = b;
         }
         
+        void setPrefix(const std::string &s) {
+            snapshot_prefix = s;
+        }
+        
         void loadKeys(const std::string &n) {
             mapped_keys.load(n);
         }
@@ -143,7 +149,7 @@ namespace acidcam {
             struct tm *m;
             m = localtime(&t);
             std::ostringstream time_stream;
-            time_stream << "AcidCamGL_Snapshot" << "-" << (m->tm_year + 1900) << "." << std::setw(2) << std::setfill('0') << (m->tm_mon + 1) << "." << std::setw(2) << std::setfill('0') << m->tm_mday << "_" << std::setw(2) << std::setfill('0') << m->tm_hour << "." << std::setw(2) << std::setfill('0') << m->tm_min << "." << std::setw(2) << std::setfill('0') << m->tm_sec <<  "_" << flipped.cols << "x" << flipped.rows << "x" << index << ".png";
+            time_stream << snapshot_prefix << "-" << (m->tm_year + 1900) << "." << std::setw(2) << std::setfill('0') << (m->tm_mon + 1) << "." << std::setw(2) << std::setfill('0') << m->tm_mday << "_" << std::setw(2) << std::setfill('0') << m->tm_hour << "." << std::setw(2) << std::setfill('0') << m->tm_min << "." << std::setw(2) << std::setfill('0') << m->tm_sec <<  "_" << flipped.cols << "x" << flipped.rows << "x" << index << ".png";
             cv::imwrite(time_stream.str(), flipped);
             std::cout << "acidcam: Wrote: " << time_stream.str() << "\n";
         }
@@ -439,8 +445,13 @@ int main(int argc, char **argv) {
     double fps = 24.0;
     bool debug_val = false;
     std::string key_val;
-    while((opt = getopt(argc, argv, "gu:p:i:c:r:d:fhvj:snlk:")) != -1) {
+    std::string snapshot_prefix="AcidCamGL_Snapshot";
+    
+    while((opt = getopt(argc, argv, "gu:p:i:c:r:d:fhvj:snlk:e:")) != -1) {
         switch(opt) {
+            case 'e':
+                snapshot_prefix = optarg;
+                break;
             case 'k':
                 key_val = optarg;
                 break;
@@ -556,6 +567,7 @@ int main(int argc, char **argv) {
     main_window.loadShaders(shader_path);
     main_window.setShader(0);
     main_window.setPrintText(print_text);
+    main_window.setPrefix(snapshot_prefix);
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
     main_window.loop();
