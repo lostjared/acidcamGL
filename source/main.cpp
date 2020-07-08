@@ -44,6 +44,7 @@ namespace acidcam {
         float movement_rate;
         bool take_snapshot;
         std::string snapshot_prefix;
+        bool restore_black;
     public:
         
         AcidCam_Window() = default;
@@ -51,6 +52,7 @@ namespace acidcam {
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
         
         virtual void init() override {
+            restore_black = false;
             snapshot_prefix="AcidCamGL_Snapshot";
             take_snapshot = false;
             optx = glm::vec4(0.5,0.5,0.5,0.5);
@@ -130,6 +132,10 @@ namespace acidcam {
             snapshot_prefix = s;
         }
         
+        void setRestoreBlack(bool &b) {
+            restore_black = b;
+        }
+        
         void loadKeys(const std::string &n) {
             mapped_keys.load(n);
         }
@@ -195,6 +201,9 @@ namespace acidcam {
             if(shader_index == 0 || ac_on == true) {
                 if(index >= 0 && index < ac::solo_filter.size()-1) {
                     ac::CallFilter(ac::solo_filter[index], frame);
+                    if(restore_black == true) {
+                        ac::CallFilter("RestoreBlack", frame);
+                    }
                     if(print_text == true) {
                         std::ostringstream stream;
                         stream << ac::solo_filter[index];
@@ -446,9 +455,12 @@ int main(int argc, char **argv) {
     bool debug_val = false;
     std::string key_val;
     std::string snapshot_prefix="AcidCamGL_Snapshot";
-    
-    while((opt = getopt(argc, argv, "gu:p:i:c:r:d:fhvj:snlk:e:")) != -1) {
+    bool restore_black = false;
+    while((opt = getopt(argc, argv, "bgu:p:i:c:r:d:fhvj:snlk:e:")) != -1) {
         switch(opt) {
+            case 'b':
+                restore_black = true;
+                break;
             case 'e':
                 snapshot_prefix = optarg;
                 break;
@@ -568,6 +580,7 @@ int main(int argc, char **argv) {
     main_window.setShader(0);
     main_window.setPrintText(print_text);
     main_window.setPrefix(snapshot_prefix);
+    main_window.setRestoreBlack(restore_black);
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
     main_window.loop();
