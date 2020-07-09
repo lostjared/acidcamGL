@@ -173,7 +173,6 @@ namespace acidcam {
             GLuint c_index = glGetUniformLocation(program.id(),"index_value");
             GLuint c_tf = glGetUniformLocation(program.id(),"time_f");
             GLuint alpha_pos = glGetUniformLocation(program.id(), "alpha_value");
-            
             GLuint optx_pos = glGetUniformLocation(program.id(), "optx");
             
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
@@ -194,8 +193,8 @@ namespace acidcam {
             
             cv::Mat frame;
             if(!cap.read(frame)) {
-                std::cout << "acidcam: Capture device closed...\n";
-                exit(EXIT_FAILURE);
+                std::cout << "acidcam: Capture device closed exiting...\n";
+                exit(EXIT_SUCCESS);
             }
             if(shader_index == 0 || ac_on == true) {
                 if(index >= 0 && index < ac::solo_filter.size()-1) {
