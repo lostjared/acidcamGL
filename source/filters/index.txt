@@ -18,3 +18,4 @@ optxtime.glsl
 optxtime_tex.glsl
 optxtime_cos.glsl
 cos.glsl
+gradient_color.glsl
