@@ -96,7 +96,6 @@ namespace acidcam {
             
             glfwGetFramebufferSize(win(), &width, &height);
             aspect = (float)width/(float)height;
-            
             p_mat = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
             
             glGenTextures(1, &texture);
@@ -283,6 +282,14 @@ namespace acidcam {
                 }
                 
                 switch(key) {
+                    case GLFW_KEY_K:
+                        if(index+25 < ac::solo_filter.size()-1)
+                            index += 25;
+                        break;
+                    case GLFW_KEY_J:
+                        if(index-25 > 0)
+                            index -= 25;
+                        break;
                     case GLFW_KEY_Z:
                         take_snapshot = true;
                         break;
