@@ -405,7 +405,7 @@ namespace acidcam {
                     fs1 << text << "/" << s;
                     fs2 << text << "/vertex.glsl";
                     ShaderProgram p;
-                    std::cout << "acidcam: Compiling [" << s << "] ";
+                    std::cout << "acidcam: Compiling Shader [" << s << "] ";
                     if(p.loadProgram(fs2.str(), fs1.str())==false) {
                         std::cerr << "Error could not load: " << fs1.str() << "\n";
                         exit(EXIT_FAILURE);
