@@ -21,3 +21,4 @@ cos.glsl
 gradient_color.glsl
 sin.glsl
 tan.glsl
+rgbvar_inc.glsl
