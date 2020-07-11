@@ -150,6 +150,7 @@ namespace acidcam {
             cv::Mat flipped;
             cv::flip(img, flipped, 0);
             cv::cvtColor(flipped, img, cv::COLOR_RGB2BGR);
+            flipped = img.clone();
             time_t t = time(0);
             struct tm *m;
             m = localtime(&t);
