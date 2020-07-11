@@ -225,18 +225,15 @@ namespace acidcam {
                 color_alpha_g = 0.1f;
             if(color_alpha_b > 1.5f)
                 color_alpha_b = 0.1f;
-            
-            if(program.name().find("scale") != std::string::npos) {
-                static bool idir = true;
-                if(idir == true) {
-                    alpha += 0.05f;
-                    if(alpha >= 10.0)
-                        idir = false;
-                } else {
-                    alpha -= 0.05f;
-                    if(alpha <= 0.1f)
-                        idir = true;
-                }
+            static bool idir = true;
+            if(idir == true) {
+                alpha += 0.01f;
+                if(alpha >= 25.0)
+                    idir = false;
+            } else {
+                alpha -= 0.1f;
+                if(alpha <= 0.1f)
+                    idir = true;
             }
             glUniform1i(samp, 0);
             glUniform1f(c_index, (float)index);
