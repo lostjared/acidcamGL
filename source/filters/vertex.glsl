@@ -12,6 +12,8 @@ out float timeval;
 out float alpha;
 out vec4 optx_val;
 uniform vec4 optx;
+out vec4 random_value;
+uniform vec4 random_var;
 
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
@@ -19,6 +21,7 @@ uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
 uniform float alpha_value;
+
 
 uniform sampler2D samp;
 
@@ -33,4 +36,5 @@ void main(void)
     alpha = alpha_value;
     vpos = pos;
     optx_val = optx;
+    random_value = random_var;
 }

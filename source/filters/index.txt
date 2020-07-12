@@ -24,3 +24,4 @@ tan.glsl
 rgbvar_inc.glsl
 xorstrobe.glsl
 strobe_in_out.glsl
+random_strobe.glsl

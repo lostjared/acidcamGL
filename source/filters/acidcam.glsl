@@ -10,6 +10,8 @@ in float alpha;
 in vec3 vpos;
 in vec4 optx_val;
 uniform vec4 optx;
+in vec4 random_value;
+uniform vec4 random_var;
 
 uniform float alpha_value;
 uniform mat4 mv_matrix;

@@ -39,7 +39,7 @@ namespace acidcam {
         bool debug;
         float alpha;
         bool ac_on;
-        glm::vec4 optx;
+        glm::vec4 optx, random_var;
         KeyMap mapped_keys;
         float movement_rate;
         bool take_snapshot;
@@ -175,6 +175,7 @@ namespace acidcam {
             GLuint c_tf = glGetUniformLocation(program.id(),"time_f");
             GLuint alpha_pos = glGetUniformLocation(program.id(), "alpha_value");
             GLuint optx_pos = glGetUniformLocation(program.id(), "optx");
+            GLuint rand_pos = glGetUniformLocation(program.id(), "random_var");
             
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
             m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
@@ -235,7 +236,11 @@ namespace acidcam {
                 alpha -= 0.1f;
                 if(alpha <= 0.1f)
                     idir = true;
+            
             }
+            
+            random_var = glm::vec4(rand()%255, rand()%255, rand()%255, rand()%255);
+            
             glUniform1i(samp, 0);
             glUniform1f(c_index, (float)index);
             glUniform1f(c_tf, timeval);
@@ -244,6 +249,7 @@ namespace acidcam {
             glUniform1f(calpha_b, color_alpha_b);
             glUniform1f(alpha_pos, alpha);
             glUniform4fv(optx_pos, 1, glm::value_ptr(optx));
+            glUniform4fv(rand_pos, 1, glm::value_ptr(random_var));
             glDrawArrays(GL_TRIANGLES,0,6);
             
             if(take_snapshot == true) {
