@@ -47,6 +47,7 @@ namespace acidcam {
         bool restore_black;
         bool list_enabled;
         std::vector<int> var_list;
+        int var_index;
     public:
         
         AcidCam_Window() = default;
@@ -54,6 +55,7 @@ namespace acidcam {
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
         
         virtual void init() override {
+            var_index = 0;
             list_enabled = false;
             restore_black = false;
             snapshot_prefix="AcidCamGL_Snapshot";
@@ -143,7 +145,19 @@ namespace acidcam {
         }
         
         void loadList(const std::string &l) {
-            
+            std::fstream file;
+            file.open(l, std::ios::in);
+            while(!file.eof()) {
+                std::string s;
+                std::getline(file, s);
+                if(file) {
+                    if(s.length()>0) {
+                        int value = atoi(s.c_str());
+                        var_list.push_back(value);
+                    }
+                }
+            }
+            file.close();
         }
         
         void takeSnapshot() {
@@ -292,6 +306,13 @@ namespace acidcam {
                 }
                 
                 switch(key) {
+                    case GLFW_KEY_L:
+                        
+                        if(var_list.size()>0) {
+                            list_enabled = !list_enabled;
+                        }
+                        
+                        break;
                     case GLFW_KEY_K:
                         if(index+25 < ac::solo_filter.size()-1)
                             index += 25;
@@ -332,18 +353,41 @@ namespace acidcam {
                             std::cout << "acidcam: filters disabled...\n";
                         break;
                     case GLFW_KEY_LEFT:
-                        if(index > 0) {
-                            --index;
-                            if(debug) {
-                                std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                        if(list_enabled == false) {
+                            if(index > 0) {
+                                --index;
+                                if(debug) {
+                                    std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                                }
+                            }
+                        } else {
+                            if(var_index > 0)
+                                var_index -= 1;
+                            
+                            if(var_list[var_index] > 0 && var_list[var_index] < ac::solo_filter.size()) {
+                                index = var_list[var_index];
+                                if(debug) {
+                                    std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                                }
                             }
                         }
                         break;
                     case GLFW_KEY_RIGHT:
-                        if(index < ac::solo_filter.size()-1) {
-                            ++index;
-                            if(debug) {
-                                std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                        if(list_enabled == false) {
+                            if(index < ac::solo_filter.size()-1) {
+                                ++index;
+                                if(debug) {
+                                    std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                                }
+                            }
+                        } else {
+                            if(var_index < var_list.size())
+                                var_index += 1;
+                            if(var_list[var_index] > 0 && var_list[var_index] < ac::solo_filter.size()) {
+                                index = var_list[var_index];
+                                if(debug) {
+                                    std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                                }
                             }
                         }
                         break;
