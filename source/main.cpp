@@ -45,6 +45,8 @@ namespace acidcam {
         bool take_snapshot;
         std::string snapshot_prefix;
         bool restore_black;
+        bool list_enabled;
+        std::vector<int> var_list;
     public:
         
         AcidCam_Window() = default;
@@ -52,6 +54,7 @@ namespace acidcam {
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
         
         virtual void init() override {
+            list_enabled = false;
             restore_black = false;
             snapshot_prefix="AcidCamGL_Snapshot";
             take_snapshot = false;
@@ -137,6 +140,10 @@ namespace acidcam {
         
         void loadKeys(const std::string &n) {
             mapped_keys.load(n);
+        }
+        
+        void loadList(const std::string &l) {
+            
         }
         
         void takeSnapshot() {
@@ -466,8 +473,13 @@ int main(int argc, char **argv) {
     std::string key_val;
     std::string snapshot_prefix="AcidCamGL_Snapshot";
     bool restore_black = false;
-    while((opt = getopt(argc, argv, "bgu:p:i:c:r:d:fhvj:snlk:e:")) != -1) {
+    std::string list_var;
+    
+    while((opt = getopt(argc, argv, "bgu:p:i:c:r:d:fhvj:snlk:e:L:")) != -1) {
         switch(opt) {
+            case 'L':
+                list_var = optarg;
+                break;
             case 'b':
                 restore_black = true;
                 break;
@@ -585,6 +597,9 @@ int main(int argc, char **argv) {
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
     glfwSetCharCallback(main_window.win(), character_callback);
+    if(list_var.length()>0)
+        main_window.loadList(list_var);
+    
     main_window.setDebug(debug_val);
     main_window.loadShaders(shader_path);
     main_window.setShader(0);
