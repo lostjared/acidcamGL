@@ -220,7 +220,7 @@ namespace acidcam {
                 exit(EXIT_SUCCESS);
             }
             if(shader_index == 0 || ac_on == true) {
-                if(index >= 0 && index < ac::solo_filter.size()-1) {
+                if(index >= 0 && index < ac::solo_filter.size()-3) {
                     ac::CallFilter(ac::solo_filter[index], frame);
                     if(restore_black == true) {
                         ac::CallFilter("RestoreBlack", frame);
@@ -336,7 +336,7 @@ namespace acidcam {
                             index = 0;
                         break;
                     case GLFW_KEY_K:
-                        if(index+25 < ac::solo_filter.size()-1)
+                        if(index+25 < ac::solo_filter.size()-3)
                             index += 25;
                         break;
                     case GLFW_KEY_J:
@@ -348,7 +348,7 @@ namespace acidcam {
                         break;
                     case GLFW_KEY_F: {
                         int val = atoi(input_string.c_str());
-                        if(val >= 0 && val <= ac::solo_filter.size()-1) {
+                        if(val >= 0 && val <= ac::solo_filter.size()-3) {
                             index = val;
                             input_string = "";
                             std::cout << "acidcam: Filter: " << ac::solo_filter[index] << "\n";
@@ -396,7 +396,7 @@ namespace acidcam {
                         break;
                     case GLFW_KEY_RIGHT:
                         if(list_enabled == false) {
-                            if(index < ac::solo_filter.size()-1) {
+                            if(index < ac::solo_filter.size()-3) {
                                 ++index;
                                 if(debug) {
                                     std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
