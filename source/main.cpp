@@ -307,11 +307,25 @@ namespace acidcam {
                 
                 switch(key) {
                     case GLFW_KEY_L:
-                        
                         if(var_list.size()>0) {
+                            static int offset = 0;
                             list_enabled = !list_enabled;
+                            if(list_enabled == true && var_list[var_index] >= 0 && var_list[var_index] < ac::solo_filter.size()) {
+                                offset = index;
+                                index = var_list[var_index];
+                                std::cout << "acidcam: filter mode [list] enabled...\n";
+                                
+                            } else if(list_enabled == false) {
+                                index = offset;
+                                std::cout << "acidcam: filter mode [normal] restored...\n";
+                            }
                         }
+                        break;
+                    case GLFW_KEY_P:
+                        if(debug)
+                            std::cout << "acidcam: filter index reset...\n";
                         
+                        index = 0;
                         break;
                     case GLFW_KEY_K:
                         if(index+25 < ac::solo_filter.size()-1)
