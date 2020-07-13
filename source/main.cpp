@@ -321,11 +321,19 @@ namespace acidcam {
                             }
                         }
                         break;
+                    case GLFW_KEY_N:
+                        
+                        if(debug)
+                            std::cout << "acidcam: filter index set to end of list...\n";
+                        if(list_enabled == false)
+                            index = ac::solo_filter.size()-3;
+                        break;
                     case GLFW_KEY_P:
                         if(debug)
                             std::cout << "acidcam: filter index reset...\n";
                         
-                        index = 0;
+                        if(list_enabled == false)
+                            index = 0;
                         break;
                     case GLFW_KEY_K:
                         if(index+25 < ac::solo_filter.size()-1)
