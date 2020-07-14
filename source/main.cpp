@@ -414,12 +414,10 @@ namespace acidcam {
                         }
                         break;
                     case GLFW_KEY_UP:
-                        
                         if(shader_index > 0) {
                             --shader_index;
                             setShader(shader_index);
                         }
-                        
                         break;
                     case GLFW_KEY_DOWN:
                         if(shader_index < shaders.size()-1) {
@@ -674,6 +672,7 @@ int main(int argc, char **argv) {
     main_window.setRestoreBlack(restore_black);
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
+    std::cout << "acidcam: initialized...\n";
     main_window.loop();
     std::cout << "acidcam: exited\n";
     glfwTerminate();
