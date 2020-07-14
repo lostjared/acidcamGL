@@ -259,9 +259,7 @@ namespace acidcam {
                     idir = true;
             
             }
-            
             random_var = glm::vec4(rand()%255, rand()%255, rand()%255, rand()%255);
-            
             glUniform1i(samp, 0);
             glUniform1f(c_index, (float)index);
             glUniform1f(c_tf, timeval);
