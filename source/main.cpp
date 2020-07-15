@@ -163,15 +163,8 @@ namespace acidcam {
         void takeSnapshot() {
             static int index = 0;
             ++index;
-            cv::Mat img;
-            img.create(window_height, window_width,CV_8UC3);
-            glPixelStorei(GL_PACK_ALIGNMENT, (img.step & 3) ? 1 : 4);
-            glPixelStorei(GL_PACK_ROW_LENGTH, (int)img.step/img.elemSize());
-            glReadPixels(0, 0, img.cols, img.rows, GL_RGB, GL_UNSIGNED_BYTE, img.data);
             cv::Mat flipped;
-            cv::flip(img, flipped, 0);
-            cv::cvtColor(flipped, img, cv::COLOR_RGB2BGR);
-            flipped = img.clone();
+            readFrame(flipped);
             time_t t = time(0);
             struct tm *m;
             m = localtime(&t);
@@ -179,6 +172,17 @@ namespace acidcam {
             time_stream << snapshot_prefix << "-" << (m->tm_year + 1900) << "." << std::setw(2) << std::setfill('0') << (m->tm_mon + 1) << "." << std::setw(2) << std::setfill('0') << m->tm_mday << "_" << std::setw(2) << std::setfill('0') << m->tm_hour << "." << std::setw(2) << std::setfill('0') << m->tm_min << "." << std::setw(2) << std::setfill('0') << m->tm_sec <<  "_" << flipped.cols << "x" << flipped.rows << "x" << index << ".png";
             cv::imwrite(time_stream.str(), flipped);
             std::cout << "acidcam: Wrote: " << time_stream.str() << "\n";
+        }
+        
+        void readFrame(cv::Mat &frame) {
+            cv::Mat img;
+            img.create(window_height, window_width,CV_8UC3);
+            glPixelStorei(GL_PACK_ALIGNMENT, (img.step & 3) ? 1 : 4);
+            glPixelStorei(GL_PACK_ROW_LENGTH, (int)img.step/img.elemSize());
+            glReadPixels(0, 0, img.cols, img.rows, GL_RGB, GL_UNSIGNED_BYTE, img.data);
+            cv::Mat flipped;
+            cv::flip(img, flipped, 0);
+            cv::cvtColor(flipped, frame, cv::COLOR_RGB2BGR);
         }
         
         virtual void update(double timeval) override {
