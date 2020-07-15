@@ -34,6 +34,8 @@ namespace acidcam {
         GLuint texture;
         float color_alpha_r, color_alpha_g, color_alpha_b;
         std::vector<ShaderProgram> shaders;
+        cv::VideoWriter *writer;
+        bool writer_set = false;
         int shader_index;
         bool print_text;
         bool debug;
@@ -185,6 +187,17 @@ namespace acidcam {
             cv::cvtColor(flipped, frame, cv::COLOR_RGB2BGR);
         }
         
+        void setWriter(cv::VideoWriter *w) {
+            writer = w;
+            writer_set = true;
+        }
+        
+        void writeFrame() {
+            cv::Mat frame;
+            readFrame(frame);
+            writer->write(frame);
+        }
+        
         virtual void update(double timeval) override {
             glClearColor(0.0, 0.0, 0.0, 1.0);
             glClearDepth(1.0);
@@ -279,6 +292,8 @@ namespace acidcam {
                 takeSnapshot();
                 take_snapshot = false;
             }
+            if(writer_set == true)
+                writeFrame();
         }
         
         void setDebug(bool d) {
@@ -540,9 +555,13 @@ int main(int argc, char **argv) {
     std::string snapshot_prefix="AcidCamGL_Snapshot";
     bool restore_black = false;
     std::string list_var;
+    std::string output_file;
     
-    while((opt = getopt(argc, argv, "bgu:p:i:c:r:d:fhvj:snlk:e:L:")) != -1) {
+    while((opt = getopt(argc, argv, "bgu:p:i:c:r:d:fhvj:snlk:e:L:o:")) != -1) {
         switch(opt) {
+            case 'o':
+                output_file = optarg;
+                break;
             case 'L':
                 list_var = optarg;
                 break;
@@ -634,6 +653,9 @@ int main(int argc, char **argv) {
         std::cerr << "acidcam: Error: must provide path to shaders...\n";
         exit(EXIT_FAILURE);
     }
+    
+    cv::VideoWriter *writer = 0;
+    
     if(filename.length()==0) {
         acidcam::cap.open(device);
         if(!acidcam::cap.isOpened()) {
@@ -672,6 +694,16 @@ int main(int argc, char **argv) {
     main_window.setPrintText(print_text);
     main_window.setPrefix(snapshot_prefix);
     main_window.setRestoreBlack(restore_black);
+    if(output_file.length()>0) {
+        writer = new cv::VideoWriter();
+        writer->open(output_file, cv::VideoWriter::fourcc('a','v','c','1'), fps, cv::Size(w, h), true);
+        std::cout << "acidcam: output file " << output_file << " " << w << "x" << h << " " << fps << "\n";
+        if(!writer->isOpened()) {
+            std::cerr << "acidcam: Error opening video writer...\n";
+            exit(EXIT_FAILURE);
+        }
+        main_window.setWriter(writer);
+    }
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
     std::cout << "acidcam: initialized...\n";
