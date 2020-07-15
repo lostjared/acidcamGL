@@ -34,7 +34,7 @@ namespace acidcam {
         GLuint texture;
         float color_alpha_r, color_alpha_g, color_alpha_b;
         std::vector<ShaderProgram> shaders;
-        cv::VideoWriter *writer;
+        cv::VideoWriter writer;
         bool writer_set = false;
         int shader_index;
         bool print_text;
@@ -187,7 +187,7 @@ namespace acidcam {
             cv::cvtColor(flipped, frame, cv::COLOR_RGB2BGR);
         }
         
-        void setWriter(cv::VideoWriter *w) {
+        void setWriter(cv::VideoWriter w) {
             writer = w;
             writer_set = true;
         }
@@ -195,7 +195,7 @@ namespace acidcam {
         void writeFrame() {
             cv::Mat frame;
             readFrame(frame);
-            writer->write(frame);
+            writer.write(frame);
         }
         
         virtual void update(double timeval) override {
@@ -654,7 +654,7 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     
-    cv::VideoWriter *writer = 0;
+    cv::VideoWriter writer;
     
     if(filename.length()==0) {
         acidcam::cap.open(device);
@@ -695,9 +695,8 @@ int main(int argc, char **argv) {
     main_window.setPrefix(snapshot_prefix);
     main_window.setRestoreBlack(restore_black);
     if(output_file.length()>0) {
-        writer = new cv::VideoWriter();
-        writer->open(output_file, cv::VideoWriter::fourcc('a','v','c','1'), fps, cv::Size(w, h), true);
-        if(!writer->isOpened()) {
+        writer.open(output_file, cv::VideoWriter::fourcc('a','v','c','1'), fps, cv::Size(w, h), true);
+        if(!writer.isOpened()) {
             std::cerr << "acidcam: Error opening video writer...\n";
             exit(EXIT_FAILURE);
         }
