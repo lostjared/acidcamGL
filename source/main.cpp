@@ -697,11 +697,11 @@ int main(int argc, char **argv) {
     if(output_file.length()>0) {
         writer = new cv::VideoWriter();
         writer->open(output_file, cv::VideoWriter::fourcc('a','v','c','1'), fps, cv::Size(w, h), true);
-        std::cout << "acidcam: output file " << output_file << " " << w << "x" << h << " " << fps << "\n";
         if(!writer->isOpened()) {
             std::cerr << "acidcam: Error opening video writer...\n";
             exit(EXIT_FAILURE);
         }
+        std::cout << "acidcam: output file " << output_file << " " << w << "x" << h << " " << fps << "\n";
         main_window.setWriter(writer);
     }
     if(key_val.length()>0)
