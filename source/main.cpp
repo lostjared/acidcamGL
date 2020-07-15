@@ -527,7 +527,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
 }
 
 void print_help_message() {
-    std::cout << "Written by Jared Bruni\narguments:\n-k shortcut-key file\n-L playlist of filters\n-b restore black\n-g output debug strings\n-u fps\n-n print filter name\n-e snapshot prefix\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n-h help message\n\n";
+    std::cout << "Written by Jared Bruni\narguments:\n-h use h264 output\n-k shortcut-key file\n-L playlist of filters\n-b restore black\n-g output debug strings\n-u fps\n-n print filter name\n-e snapshot prefix\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n";
 }
 
 int main(int argc, char **argv) {
@@ -556,9 +556,12 @@ int main(int argc, char **argv) {
     bool restore_black = false;
     std::string list_var;
     std::string output_file;
-    
-    while((opt = getopt(argc, argv, "bgu:p:i:c:r:d:fhvj:snlk:e:L:o:")) != -1) {
+    bool h264 = false;
+    while((opt = getopt(argc, argv, "hbgu:p:i:c:r:d:fhvj:snlk:e:L:o:")) != -1) {
         switch(opt) {
+            case 'h':
+                h264 = true;
+                break;
             case 'o':
                 output_file = optarg;
                 break;
@@ -595,10 +598,6 @@ int main(int argc, char **argv) {
                 break;
             case 'i':
                 filename = optarg;
-                break;
-            case 'h':
-                print_help_message();
-                exit(EXIT_SUCCESS);
                 break;
             case 'v':
                 std::cout << "acidcamGL " << version_info << "\nwritten by Jared Bruni\n";
@@ -695,7 +694,10 @@ int main(int argc, char **argv) {
     main_window.setPrefix(snapshot_prefix);
     main_window.setRestoreBlack(restore_black);
     if(output_file.length()>0) {
-        writer.open(output_file, cv::VideoWriter::fourcc('a','v','c','1'), fps, cv::Size(w, h), true);
+        if(h264)
+            writer.open(output_file, cv::VideoWriter::fourcc('a','v','c','1'), fps, cv::Size(w, h), true);
+        else
+            writer.open(output_file, cv::VideoWriter::fourcc('m','p','4','v'), fps, cv::Size(w, h), true);
         if(!writer.isOpened()) {
             std::cerr << "acidcam: Error opening video writer...\n";
             exit(EXIT_FAILURE);
