@@ -679,7 +679,7 @@ int main(int argc, char **argv) {
     }
     
     main_window.create(full, "acidcamGL", w, h);
-    std::cout << "GL Version: " << glGetString(GL_VERSION) << "\n";
+    std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
