@@ -12,7 +12,7 @@ namespace acidcam {
 #endif
         if(record)
             glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        window = glfwCreateWindow(w, h, name.c_str(),(full == true) ? glfwGetPrimaryMonitor() : 0,0);
+        window = glfwCreateWindow(w, h, name.c_str(),(full == true && record == false) ? glfwGetPrimaryMonitor() : 0,0);
         if(!window) return 0;
         glfwMakeContextCurrent(window);
         if(glewInit()!=GLEW_OK)
