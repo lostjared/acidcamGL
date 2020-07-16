@@ -678,7 +678,7 @@ int main(int argc, char **argv) {
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     }
     
-    main_window.create(full, "acidcamGL", w, h);
+    main_window.create(((output_file.length()>0)?true:false), full, "acidcamGL", w, h);
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);

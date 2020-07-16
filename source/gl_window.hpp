@@ -9,7 +9,7 @@
 namespace acidcam {
     class glWindow {
     public:
-        int create(bool full, std::string name, int w, int h);
+        int create(bool record, bool full, std::string name, int w, int h);
         virtual void init() = 0;
         virtual void update(double timeval) = 0;
         void loop();
