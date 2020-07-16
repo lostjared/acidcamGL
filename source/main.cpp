@@ -702,13 +702,16 @@ int main(int argc, char **argv) {
             std::cerr << "acidcam: Error opening video writer...\n";
             exit(EXIT_FAILURE);
         }
-        std::cout << "acidcam: output file " << output_file << " " << w << "x" << h << " " << fps << "\n";
+        std::cout << "acidcam: record " << output_file << " " << w << "x" << h << " " << fps << "\n";
         main_window.setWriter(writer);
     }
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
     std::cout << "acidcam: initialized...\n";
     main_window.loop();
+    if(writer.isOpened())
+        std::cout << "acidcam: wrote to file [" << output_file << "]\n";
+    writer.release();
     std::cout << "acidcam: exited\n";
     glfwTerminate();
     return EXIT_SUCCESS;
