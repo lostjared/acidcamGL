@@ -1,6 +1,5 @@
 #include"gl_window.hpp"
 #include"gl_shader.hpp"
-
 #include"glm/glm.hpp"
 #include"glm/gtc/type_ptr.hpp"
 #include"glm/gtc/matrix_transform.hpp"
@@ -12,7 +11,6 @@
 #include<fstream>
 #include<iomanip>
 #include<iostream>
-
 #include"keymap.hpp"
 
 #define version_info "v1.0"
@@ -600,7 +598,7 @@ int main(int argc, char **argv) {
                 filename = optarg;
                 break;
             case 'v':
-                std::cout << "acidcamGL " << version_info << "\nwritten by Jared Bruni\n";
+                print_help_message();
                 exit(EXIT_SUCCESS);
                 break;
             case 'f':
