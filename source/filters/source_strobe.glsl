@@ -20,6 +20,8 @@ uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
 
+
+
 void main(void)
 {
     color = texture(samp, tc);
@@ -27,12 +29,21 @@ void main(void)
     for(int i = 0; i < 3; ++i) {
         source[i] = int(255 * color[i]);
     }
-    color[0] = color[0]*sin(tc[0] * timeval);
-    color[1] = color[1]*cos(tc[1] * timeval);
-    color[2] = color[2]*tan(tc[0] * timeval);
+
+    ivec4 r;
+    for(int i = 0; i < 3; ++i) {
+        r[i] = int(random_value[i]);
+        source[i] = ((source[i]/2)*r[i])/12;
+    }
+    
+    color[0] = tc[0]*color[0];
+    color[1] = tc[1]*color[1];
+    color[2] = tc[1]*color[2];
+    
     ivec3 int_color;
     for(int i = 0; i < 3; ++i) {
         int_color[i] = int(255 * color[i]);
+        int_color[i] = int_color[i]^source[i];
         if(int_color[i] > 255)
             int_color[i] = int_color[i]%255;
         color[i] = float(int_color[i])/255;
