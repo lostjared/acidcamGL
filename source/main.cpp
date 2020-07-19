@@ -525,7 +525,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
 }
 
 void print_help_message() {
-    std::cout << "Written by Jared Bruni\narguments:\n-h use h264 output\n-k shortcut-key file\n-L playlist of filters\n-b restore black\n-g output debug strings\n-u fps\n-n print filter name\n-e snapshot prefix\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n";
+    std::cout << "Written by Jared Bruni\narguments:\n-h use h264 output\n-o output mp4 filename\n-k shortcut-key file\n-L playlist of filters\n-b restore black\n-g output debug strings\n-u fps\n-n print filter name\n-e snapshot prefix\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n";
 }
 
 int main(int argc, char **argv) {

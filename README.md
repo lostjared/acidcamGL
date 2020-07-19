@@ -8,6 +8,7 @@ The program is controlled with the PC keyboard.
 Arguments:
 
 	-h use h264 output
+	-o output mp4 filename
 	-k shortcut-key file
 	-L playlist of filters
 	-b restore black
