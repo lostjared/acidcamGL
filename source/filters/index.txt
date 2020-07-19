@@ -32,3 +32,5 @@ red_strobe.glsl
 dark_square.glsl
 source_strobe.glsl
 green.glsl
+red.glsl
+blue.glsl
