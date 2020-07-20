@@ -490,7 +490,7 @@ namespace acidcam {
             while(!file.eof()) {
                 std::string s;
                 std::getline(file, s);
-                if(file) {
+                if(file && s.length() > 0) {
                     std::ostringstream fs1,fs2;
                     fs1 << text << "/" << s;
                     fs2 << text << "/vertex.glsl";
