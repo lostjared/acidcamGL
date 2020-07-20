@@ -525,7 +525,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
 }
 
 void print_help_message() {
-    std::cout << "Written by Jared Bruni\narguments:\n-h use h264 output\n-o output mp4 filename\n-k shortcut-key file\n-L playlist of filters\n-b restore black\n-g output debug strings\n-u fps\n-n print filter name\n-e snapshot prefix\n-p shader path\n-f fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n";
+    std::cout << "Written by Jared Bruni\narguments:\n-h use h264 output\n-o output mp4 filename\n-k shortcut-key file\n-L playlist of filters\n-b restore black\n-g output debug strings\n-u fps\n-n print filter name\n-e snapshot prefix\n-p shader path\n-f fullscreen\n-F force fullscreen\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n";
 }
 
 int main(int argc, char **argv) {
@@ -555,8 +555,16 @@ int main(int argc, char **argv) {
     std::string list_var;
     std::string output_file;
     bool h264 = false;
-    while((opt = getopt(argc, argv, "hbgu:p:i:c:r:d:fhvj:snlk:e:L:o:")) != -1) {
+    bool force_full = false;
+    int monitor = 0;
+    while((opt = getopt(argc, argv, "M:Fhbgu:p:i:c:r:d:fhvj:snlk:e:L:o:")) != -1) {
         switch(opt) {
+            case 'M':
+                monitor = atoi(optarg);
+                break;
+            case 'F':
+                force_full = true;
+                break;
             case 'h':
                 h264 = true;
                 break;
@@ -675,8 +683,12 @@ int main(int argc, char **argv) {
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     }
-    
-    main_window.create(((output_file.length()>0)?true:false), full, "acidcamGL", w, h);
+    if(force_full == true) {
+        w = 3840;
+        h = 2160;
+        main_window.create(false, true, "acidcamGL", w, h, monitor);
+    }
+    else main_window.create(((output_file.length()>0)?true:false), full, "acidcamGL", w, h, 0);
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
