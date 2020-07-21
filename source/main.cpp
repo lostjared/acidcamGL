@@ -688,7 +688,9 @@ int main(int argc, char **argv) {
         h = 2160;
         main_window.create(false, true, "acidcamGL", w, h, monitor);
     }
-    else main_window.create(((output_file.length()>0)?true:false), full, "acidcamGL", w, h, 0);
+    else {
+        main_window.create(((output_file.length()>0)?true:false), full, "acidcamGL", w, h, monitor);
+    }
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
@@ -696,7 +698,6 @@ int main(int argc, char **argv) {
     glfwSetCharCallback(main_window.win(), character_callback);
     if(list_var.length()>0)
         main_window.loadList(list_var);
-    
     main_window.setDebug(debug_val);
     main_window.loadShaders(shader_path);
     main_window.setShader(0);
