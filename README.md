@@ -44,3 +44,4 @@ Controls:
 	[DOWN] - Shader Index move down
 	Q,Q,E,R,Y,U,I,O - move movement rate
 	T - reset color offset
+	N - Jump to end of filter list
