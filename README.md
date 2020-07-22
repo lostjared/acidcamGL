@@ -17,7 +17,9 @@ Arguments:
 	-n print filter name
 	-e snapshot prefix
 	-p shader path
+	-M monitor index
 	-f fullscreen
+	-F force fullscreen in 4K
 	-d capture device
 	-r resolution 1920x1080
 	-c Camera resolution 1280x720
