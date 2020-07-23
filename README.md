@@ -58,7 +58,7 @@ an example file would be
 	Q 25 7
 If you saved this to keys.key you would use it with -k key like his:
 
-	./acidcaml -g -p filters -k keys.key
+	./acidcamGL -g -p filters -k keys.key
 
 Playlist file:
 
