@@ -77,5 +77,5 @@ save the file then when in the program press the L key to toggle the playlist on
 To use the playlist file its he same as the keys just with
 Use:
 
-	./acid -L playist.txt -g -p filters
+	./acidcamGL -L playist.txt -g -p filters
 
