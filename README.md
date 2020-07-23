@@ -77,5 +77,6 @@ then list them one after the other in a text file line by line like this:
 
 save the file then when in the program press the L key to toggle the playlist on and off and use the arrow keys to move through the list.
 To use the playlist file its he same as the keys just with
-use:
+
+Use:
 	./acid -L playist.txt -g -p filters
