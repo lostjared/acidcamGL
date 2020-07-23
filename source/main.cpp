@@ -337,7 +337,6 @@ namespace acidcam {
                         }
                         break;
                     case GLFW_KEY_N:
-                        
                         if(debug)
                             std::cout << "acidcam: filter index set to end of list...\n";
                         if(list_enabled == false)
