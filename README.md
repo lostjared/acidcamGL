@@ -59,12 +59,12 @@ an example file would be
 
 If you saved this to keys.key you would use it with -k key like his:
 
-./acidcaml -g -p filters -k keys.key
+	./acidcaml -g -p filters -k keys.key
 
 Playlist file:
 
 use:
-./acidcamGL -l
+	./acidcamGL -l
 
 to list the different filters
 then list them one after the other in a text file line by line like this:
