@@ -3,7 +3,7 @@
 This project is still in very early stages of development.
 This project is an implementation of Acid Cam using OpenGL/Shaders.
 It is designed more for visualizations or live streaming with OBS versus a Video Editor like the other versions of Acid Cam.
-The program is controlled with the PC keyboard.
+The program is controlled with the PC keyboard but, currently looking into MIDI.
 
 Arguments:
 
@@ -56,7 +56,6 @@ an example file would be
 
 	F 75 0
 	Q 25 7
-
 If you saved this to keys.key you would use it with -k key like his:
 
 	./acidcaml -g -p filters -k keys.key
@@ -74,9 +73,9 @@ then list them one after the other in a text file line by line like this:
 	19
 	28
 	1
-
 save the file then when in the program press the L key to toggle the playlist on and off and use the arrow keys to move through the list.
 To use the playlist file its he same as the keys just with
-
 Use:
+
 	./acid -L playist.txt -g -p filters
+
