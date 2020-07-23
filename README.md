@@ -57,6 +57,10 @@ an example file would be
 	F 75 0
 	Q 25 7
 
+If you saved this to keys.key you would use it with -k key like his:
+
+./acidcaml -g -p filters -k keys.key
+
 Playlist file:
 
 use:
@@ -72,3 +76,6 @@ then list them one after the other in a text file line by line like this:
 	1
 
 save the file then when in the program press the L key to toggle the playlist on and off and use the arrow keys to move through the list.
+To use the playlist file its he same as the keys just with
+use:
+	./acid -L playist.txt -g -p filters
