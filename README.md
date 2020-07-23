@@ -45,3 +45,31 @@ Controls:
 	Q,Q,E,R,Y,U,I,O - move movement rate
 	T - reset color offset
 	N - Jump to end of filter list
+
+Key shortcut format:
+
+in a text file add each line for the desired keyshort cuts in this format:
+
+key filter_index shader_index
+
+an example file would be
+
+F 75 0
+Q 25 7
+
+Playlist file:
+
+use:
+./acidcamGL -l
+
+to list the different filters
+then list them one after the other in a text file line by line like this:
+
+2
+4
+19
+28
+1
+
+save the file then when in the program press the L key to toggle the playlist on and off and use the arrow keys to move through the list.
+
