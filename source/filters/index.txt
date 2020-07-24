@@ -36,3 +36,4 @@ red.glsl
 blue.glsl
 darkred.glsl
 greenblue.glsl
+squares.glsl
