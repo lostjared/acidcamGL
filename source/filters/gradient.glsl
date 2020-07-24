@@ -27,7 +27,7 @@ in float restore_black_value;
 
 void main(void)
 {
-    if(restore_black == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
+    if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
     color[0] += (color[0]*alpha_r);
