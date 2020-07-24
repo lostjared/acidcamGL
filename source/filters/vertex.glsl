@@ -22,6 +22,8 @@ uniform float index_value;
 uniform float time_f;
 uniform float alpha_value;
 
+uniform float restore_black;
+out float restore_black_value;
 
 uniform sampler2D samp;
 
@@ -37,4 +39,5 @@ void main(void)
     vpos = pos;
     optx_val = optx;
     random_value = random_var;
+    restore_black_value = restore_black;
 }
