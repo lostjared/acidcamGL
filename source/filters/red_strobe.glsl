@@ -25,8 +25,13 @@ uniform float time_f;
 
 
 
+uniform float restore_black;
+in float restore_black_value;
+
 void main(void)
 {
+    if(restore_black == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
+        discard;
     color = texture(samp, tc);
     ivec3 source;
     for(int i = 0; i < 3; ++i) {

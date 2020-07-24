@@ -22,8 +22,13 @@ uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
 
+uniform float restore_black;
+in float restore_black_value;
+
 void main(void)
 {
+    if(restore_black == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
+        discard;
     color = texture(samp, tc);
     color[0] += timeval*cos(0.1489*tc[0]);
     color[1] += timeval*sin(0.1482*tc[1]);
