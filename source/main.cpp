@@ -212,6 +212,7 @@ namespace acidcam {
             GLuint alpha_pos = glGetUniformLocation(program.id(), "alpha_value");
             GLuint optx_pos = glGetUniformLocation(program.id(), "optx");
             GLuint rand_pos = glGetUniformLocation(program.id(), "random_var");
+            GLuint restore_blackx = glGetUniformLocation(program.id(), "restore_black");
             
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
             m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
@@ -284,6 +285,7 @@ namespace acidcam {
             glUniform1f(alpha_pos, alpha);
             glUniform4fv(optx_pos, 1, glm::value_ptr(optx));
             glUniform4fv(rand_pos, 1, glm::value_ptr(random_var));
+            glUniform1f(restore_blackx, ((restore_black == true) ? 1.0 : 0.0));
             glDrawArrays(GL_TRIANGLES,0,6);
             
             if(take_snapshot == true) {
