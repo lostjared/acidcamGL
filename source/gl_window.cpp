@@ -49,8 +49,8 @@ namespace acidcam {
         bool e = false;
         int glErr = glGetError();
         while(glErr != GL_NO_ERROR) {
-            std::cout << "GL Error: " << glErr << "\n";
-            std::cout << "Error String: " << glewGetErrorString(glErr) << "\n";
+            std::cout << "acidcam: GL Error: " << glErr << "\n";
+            std::cout << "acidcam: Error String: " << glewGetErrorString(glErr) << "\n";
             e = true;
             glErr = glGetError();
         }

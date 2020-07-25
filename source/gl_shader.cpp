@@ -26,7 +26,7 @@ namespace acidcam {
         if(len > 0) {
             log = new char [len+1];
             glGetShaderInfoLog(shader, len, &ch, log);
-            std::cout << "Shader: " << log << "\n";
+            std::cout << "acidcam: Shader: " << log << "\n";
             delete [] log;
         }
         return 0;
@@ -39,7 +39,7 @@ namespace acidcam {
         if(len > 0) {
             log = new char [len+1];
             glGetProgramInfoLog(p, len, &ch, log);
-            std::cout << "Program: " << log << "\n";
+            std::cout << "acidcam: Program: " << log << "\n";
             delete [] log;
         }
     }
@@ -47,8 +47,8 @@ namespace acidcam {
         bool e = false;
         int glErr = glGetError();
         while(glErr != GL_NO_ERROR) {
-            std::cout << "GL Error: " << glErr << "\n";
-            std::cout << "Error String: " << glewGetErrorString(glErr) << "\n";
+            std::cout << "acidcam: GL Error: " << glErr << "\n";
+            std::cout << "acidcam: Error String: " << glewGetErrorString(glErr) << "\n";
             e = true;
             glErr = glGetError();
         }
@@ -70,7 +70,7 @@ namespace acidcam {
         glGetShaderiv(vShader, GL_COMPILE_STATUS, &vertCompiled);
         
         if(vertCompiled != 1) {
-            std::cout << "Error on Vertex compile\n";
+            std::cout << "acidcam: Error on Vertex compile\n";
             printShaderLog(vShader);
             return 0;
         }
@@ -81,7 +81,7 @@ namespace acidcam {
         glGetShaderiv(fShader, GL_COMPILE_STATUS, &fragCompiled);
         
         if(fragCompiled != 1) {
-            std::cout << "Error on Fragment compile\n";
+            std::cout << "acidcam: Error on Fragment compile\n";
             printShaderLog(vShader);
             return 0;
         }
@@ -92,7 +92,7 @@ namespace acidcam {
         checkError();
         glGetProgramiv(vfProgram, GL_LINK_STATUS, &linked);
         if(linked != 1) {
-            std::cout << "Linking failed...\n";
+            std::cout << "acidcam: Linking failed...\n";
             printProgramLog(vfProgram);
             return 0;
         }
@@ -103,12 +103,12 @@ namespace acidcam {
         std::fstream v,f;
         v.open(vert, std::ios::in);
         if(!v.is_open()) {
-            std::cerr << "Error could not open file: " << vert << "\n";
+            std::cerr << "acidcam: Error could not open file: " << vert << "\n";
             exit(EXIT_FAILURE);
         }
         f.open(frag, std::ios::in);
         if(!f.is_open()) {
-            std::cerr << "Eror could not open file: " << frag << "\n";
+            std::cerr << "acidcam: Eror could not open file: " << frag << "\n";
             exit(EXIT_FAILURE);
         }
         std::ostringstream stream1, stream2;

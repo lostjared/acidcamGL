@@ -9,7 +9,7 @@ namespace acidcam {
         std::fstream file;
         file.open(name, std::ios::in);
         if(!file.is_open()) {
-            std::cerr << "Error opening file: " << name << "\n";
+            std::cerr << "acidcam: Error opening file: " << name << "\n";
             exit(EXIT_FAILURE);
         }
         
@@ -24,7 +24,7 @@ namespace acidcam {
                 if(key > 0) {
                     key = toupper(key);
                     setKey(key, filt, shade);
-                    std::cout << "Shortcut Key Set: " << key << "\n";
+                    std::cout << "acidcam: Shortcut Key Set: " << key << "\n";
                 }
             }
         }
