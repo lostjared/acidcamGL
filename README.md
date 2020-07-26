@@ -18,8 +18,8 @@ Arguments:
 	-e snapshot prefix
 	-p shader path
 	-M monitor index
-	-f fullscreen
-	-F force fullscreen in 4K
+	-f fullscreen (resize)
+	-F fullscreen (windowed mode)
 	-d capture device
 	-r resolution 1920x1080
 	-c Camera resolution 1280x720
