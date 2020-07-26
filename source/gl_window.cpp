@@ -3,7 +3,7 @@
 
 namespace acidcam {
     
-    int glWindow::create(bool record, bool full, std::string name, int w, int h, int monitor) {
+    int glWindow::create(bool record, bool full, bool resize, std::string name, int w, int h, int monitor) {
 #ifdef __APPLE__
         glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint (GLFW_CONTEXT_VERSION_MINOR, 1);
@@ -16,7 +16,7 @@ namespace acidcam {
         if(monitor > count)
             monitor = 0;
         
-        if(full == true) {
+        if(full == true && resize == false) {
             const GLFWvidmode* mode = glfwGetVideoMode(monitors[monitor]);
             glfwWindowHint(GLFW_RED_BITS, mode->redBits);
             glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);

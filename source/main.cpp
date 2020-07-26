@@ -686,12 +686,10 @@ int main(int argc, char **argv) {
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     }
     if(force_full == true) {
-        w = 3840;
-        h = 2160;
-        main_window.create(false, true, "acidcamGL", w, h, monitor);
+        main_window.create(false, true, false,"acidcamGL", w, h, monitor);
     }
     else {
-        main_window.create(((output_file.length()>0)?true:false), full, "acidcamGL", w, h, monitor);
+        main_window.create(((output_file.length()>0)?true:false), full,true, "acidcamGL", w, h, monitor);
     }
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
