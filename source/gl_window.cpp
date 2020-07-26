@@ -16,6 +16,14 @@ namespace acidcam {
         if(monitor > count)
             monitor = 0;
         
+        if(full == true) {
+            const GLFWvidmode* mode = glfwGetVideoMode(monitors[monitor]);
+            glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+            glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+            glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+            glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+        }
+        
         if(record)
             glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         window = glfwCreateWindow(w, h, name.c_str(),(full == true && record == false) ? monitors[monitor] : 0,0);
