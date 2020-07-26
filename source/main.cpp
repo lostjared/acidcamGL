@@ -362,6 +362,7 @@ namespace acidcam {
                     case GLFW_KEY_Z:
                         take_snapshot = true;
                         break;
+                    case GLFW_KEY_ENTER:
                     case GLFW_KEY_F: {
                         int val = atoi(input_string.c_str());
                         if(val >= 0 && val <= ac::solo_filter.size()-3) {
