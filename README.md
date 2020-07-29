@@ -47,6 +47,40 @@ Controls:
 	T - reset color offset
 	N - Jump to end of filter list
 
+Run the program:
+
+Full Screen Monitor 0
+
+	./acidcamGL -g -p filters -F -M 0
+
+or Monitor 1
+
+	./acidcamGL -g -p filters -F -M 1
+
+Windowed mode 1920x1080 Camera/Window
+
+	./acidcamGL -g -p filters -c 1920x1080 -r 1920x1080
+
+Windowed mode 1920x1080 Camera 1280x720
+
+	./acidcamGL -g -p filters -c 1280x720 -r 1920x1080
+
+Default Windowed  mode:
+
+	./acidcamGL -g -p filters 
+
+Default Fullscreen (Resize) mode:
+
+	./acidcamGL -g -p filters -f
+
+Default FullScreen (Windowed) mode:
+
+	./acidcamGL -g -p filers -F
+
+List all included filters by index:
+
+	./acidcamGL -l
+
 Key shortcut format:
 
 in a text file add each line for the desired keyshort cuts in this format:
