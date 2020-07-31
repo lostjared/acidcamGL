@@ -37,3 +37,4 @@ blue.glsl
 darkred.glsl
 greenblue.glsl
 squares.glsl
+random_colors.glsl
