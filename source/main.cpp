@@ -13,7 +13,7 @@
 #include<iostream>
 #include"keymap.hpp"
 
-#define version_info "v1.0"
+#define version_info "v1.0.001"
 
 namespace acidcam {
     
