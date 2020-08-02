@@ -1,4 +1,5 @@
 acidcam.glsl
+lightfade.glsl
 flash.glsl
 timeflash.glsl
 gradient.glsl
@@ -38,3 +39,4 @@ darkred.glsl
 greenblue.glsl
 rgbchecker.glsl
 random_colors.glsl
+
