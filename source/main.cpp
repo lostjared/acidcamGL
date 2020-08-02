@@ -144,6 +144,15 @@ namespace acidcam {
             mapped_keys.load(n);
         }
         
+        
+        int find_solo(const std::string &s) {
+            for(int i = 0; i < ac::solo_filter.size(); ++i) {
+                if(ac::solo_filter[i] == s)
+                    return i;
+            }
+            return -1;
+        }
+        
         void loadList(const std::string &l) {
             std::fstream file;
             file.open(l, std::ios::in);
@@ -152,12 +161,17 @@ namespace acidcam {
                 std::getline(file, s);
                 if(file) {
                     if(s.length()>0) {
-                        int value = atoi(s.c_str());
+                        int value = find_solo(s);
+                        if(value == -1) {
+                            std::cerr << "acidcam: Error could not find for playlist string: " << s << "\n";
+                            exit(EXIT_FAILURE);
+                        }
                         var_list.push_back(value);
                     }
                 }
             }
             file.close();
+            std::cout << "acidcam: Playlist loaded [" << var_list.size() << "] items...\n";
         }
         
         void takeSnapshot() {

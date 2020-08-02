@@ -1,5 +1,2 @@
-1
-9
-12
-45
-64
+StrobeEffect
+SelfScale
