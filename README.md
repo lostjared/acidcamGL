@@ -100,14 +100,13 @@ Playlist file:
 use:
 	./acidcamGL -l
 
+Playlist Now uses String names versus ID identifiers:
 to list the different filters
 then list them one after the other in a text file line by line like this:
 
-	2
-	4
-	19
-	28
-	1
+	StrobeEffect
+	SelfAlphaBlend
+
 save the file then when in the program press the L key to toggle the playlist on and off and use the arrow keys to move through the list.
 To use the playlist file its he same as the keys just with
 Use:
