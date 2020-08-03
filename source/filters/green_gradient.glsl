@@ -20,16 +20,8 @@ uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
 
-
-
 uniform float restore_black;
 in float restore_black_value;
-
-float random (vec2 st) {
-    return fract(sin(dot(st.xy,
-                         vec2(12.9898,78.233)))*
-        43758.5453123);
-}
 
 
 
@@ -42,9 +34,9 @@ void main(void)
     for(int i = 0; i < 3; ++i) {
         source[i] = int(255 * color[i]);
     }
-    vec2 st = gl_FragCoord.xy;
+    vec3 st = gl_FragCoord.xyz;
     for(int i = 0; i < 3; ++i) {
-        float f = 255/st[i];
+        float f = 2560/st[i];
         color[i] = color[i]*f;
     }
     // Assign a random value based on the integer coord

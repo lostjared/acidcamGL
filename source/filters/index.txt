@@ -1,6 +1,6 @@
 acidcam.glsl
 lightfade.glsl
-greenblend.glsl
+green_gradient_strobe.glsl
 flash.glsl
 timeflash.glsl
 gradient.glsl
@@ -40,4 +40,4 @@ darkred.glsl
 greenblue.glsl
 rgbchecker.glsl
 random_colors.glsl
-
+green_gradient.glsl

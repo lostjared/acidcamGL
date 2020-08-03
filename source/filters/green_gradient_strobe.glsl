@@ -42,13 +42,18 @@ void main(void)
     for(int i = 0; i < 3; ++i) {
         source[i] = int(255 * color[i]);
     }
-
     vec3 st = gl_FragCoord.xyz;
-    
     for(int i = 0; i < 3; ++i) {
-        float f = 1024/st[i];
-        color[i] = color[i]*f;
+        float f = 255/st[i];
+        color[i] = color[i]*f*alpha_r+alpha_g+alpha_b;
     }
-    
     // Assign a random value based on the integer coord
+    ivec3 int_color;
+    for(int i = 0; i < 3; ++i) {
+        int_color[i] = int(255 * color[i]);
+        int_color[i] = int_color[i]^source[i];
+        if(int_color[i] > 255)
+            int_color[i] = int_color[i]%255;
+        color[i] = float(int_color[i])/255;
+    }
 }
