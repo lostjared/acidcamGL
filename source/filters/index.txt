@@ -41,3 +41,4 @@ greenblue.glsl
 rgbchecker.glsl
 random_colors.glsl
 green_gradient.glsl
+weirdlines.glsl
