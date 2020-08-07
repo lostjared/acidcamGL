@@ -113,7 +113,8 @@ namespace acidcam {
             cv::Mat frame;
             if(!cap.isOpened()) {
                 std::cerr << "acidcam: Error opening camera/file..\n";
-                exit(EXIT_FAILURE);
+                active = false;
+                return;
             }
             cap.read(frame);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
@@ -164,7 +165,8 @@ namespace acidcam {
                         int value = find_solo(s);
                         if(value == -1) {
                             std::cerr << "acidcam: Error could not find for playlist string: " << s << "\n";
-                            exit(EXIT_FAILURE);
+                            active = false;
+                            return;
                         }
                         var_list.push_back(value);
                     }

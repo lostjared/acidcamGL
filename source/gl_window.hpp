@@ -14,6 +14,7 @@ namespace acidcam {
         virtual void update(double timeval) = 0;
         void loop();
         GLFWwindow *win() const { return window; }
+        void quit();
     private:
         GLFWwindow *window;
     protected:

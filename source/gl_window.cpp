@@ -55,6 +55,10 @@ namespace acidcam {
         glfwDestroyWindow(window);
     }
     
+    void glWindow::quit() {
+        active = false;
+    }
+    
     bool checkForError() {
         bool e = false;
         int glErr = glGetError();
