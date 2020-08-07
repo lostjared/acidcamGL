@@ -247,7 +247,8 @@ namespace acidcam {
             cv::Mat frame;
             if(!cap.read(frame)) {
                 std::cout << "acidcam: Capture device closed exiting...\n";
-                exit(EXIT_SUCCESS);
+                active = false;
+                return;
             }
             if(shader_index == 0 || ac_on == true) {
                 if(index >= 0 && index < ac::solo_filter.size()-3) {
