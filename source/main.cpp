@@ -113,7 +113,7 @@ namespace acidcam {
             cv::Mat frame;
             if(!cap.isOpened()) {
                 std::cerr << "acidcam: Error opening camera/file..\n";
-                active = false;
+                quit();
                 return;
             }
             cap.read(frame);
@@ -165,7 +165,7 @@ namespace acidcam {
                         int value = find_solo(s);
                         if(value == -1) {
                             std::cerr << "acidcam: Error could not find for playlist string: " << s << "\n";
-                            active = false;
+                            quit();
                             return;
                         }
                         var_list.push_back(value);
@@ -249,7 +249,7 @@ namespace acidcam {
             cv::Mat frame;
             if(!cap.read(frame)) {
                 std::cout << "acidcam: Capture device closed exiting...\n";
-                active = false;
+                quit();
                 return;
             }
             if(shader_index == 0 || ac_on == true) {
@@ -326,7 +326,7 @@ namespace acidcam {
         
         void keypress(int key, int scancode, int action, int mode) {
             if(key == GLFW_KEY_ESCAPE) {
-                active = false;
+                quit();
                 return;
             }
             
