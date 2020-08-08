@@ -253,7 +253,7 @@ namespace acidcam {
                 return;
             }
             if(shader_index == 0 || ac_on == true) {
-                if(index >= 0 && index < ac::solo_filter.size()-3) {
+                if(index >= 0 && index < ac::solo_filter.size()) {
                     ac::CallFilter(ac::solo_filter[index], frame);
                     if(restore_black == true) {
                         ac::CallFilter("RestoreBlack", frame);
