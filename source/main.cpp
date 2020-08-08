@@ -434,7 +434,7 @@ namespace acidcam {
                         break;
                     case GLFW_KEY_RIGHT:
                         if(list_enabled == false) {
-                            if(index < ac::solo_filter.size()-3) {
+                            if(index < ac::solo_filter.size()) {
                                 ++index;
                                 if(debug) {
                                     std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
