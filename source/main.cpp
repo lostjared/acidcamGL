@@ -324,6 +324,10 @@ namespace acidcam {
                 input_string += static_cast<char>(key);
         }
         
+        void setFilterIndex(const int &i) {
+            index = i;
+        }
+        
         void keypress(int key, int scancode, int action, int mode) {
             if(key == GLFW_KEY_ESCAPE) {
                 quit();
@@ -576,8 +580,16 @@ int main(int argc, char **argv) {
     bool h264 = false;
     bool force_full = false;
     int monitor = 0;
-    while((opt = getopt(argc, argv, "M:Fhbgu:p:i:c:r:d:fhvj:snlk:e:L:o:")) != -1) {
+    int set_index = 0;
+    while((opt = getopt(argc, argv, "S:M:Fhbgu:p:i:c:r:d:fhvj:snlk:e:L:o:")) != -1) {
         switch(opt) {
+            case 'S':
+                set_index = atoi(optarg);
+                if(set_index < 0 || set_index > ac::solo_filter.size()-1) {
+                    std::cout << "acidcam: Error invalid starting index...\n";
+                    exit(EXIT_FAILURE);
+                }
+                break;
             case 'M':
                 monitor = atoi(optarg);
                 break;
@@ -718,6 +730,7 @@ int main(int argc, char **argv) {
     main_window.setDebug(debug_val);
     main_window.loadShaders(shader_path);
     main_window.setShader(0);
+    main_window.setFilterIndex(set_index);
     main_window.setPrintText(print_text);
     main_window.setPrefix(snapshot_prefix);
     main_window.setRestoreBlack(restore_black);
