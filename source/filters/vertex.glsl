@@ -28,7 +28,8 @@ out float restore_black_value;
 uniform sampler2D samp;
 
 void main()
-{    gl_Position = proj_matrix * mv_matrix * vec4(pos,1.0);
+{
+    gl_Position = proj_matrix * mv_matrix * vec4(pos,1.0);
     tc = texCoord;
     alpha_r = value_alpha_r;
     alpha_g = value_alpha_g;
