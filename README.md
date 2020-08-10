@@ -75,7 +75,19 @@ Default Fullscreen (Resize) mode:
 
 Default FullScreen (Windowed) mode:
 
-	./acidcamGL -g -p filers -F
+	./acidcamGL -g -p filters -F
+
+Use Webcam Device by Index:
+	
+	./acidcamGL -g -p filters -d 1
+
+Use Video File as Input:
+
+	./acidcamGL -g -p filters -i file.mp4
+
+Record to MP4 file:
+
+	./acidcamGL -g -p filters -i file.mp4 -h -o outfile.mp4
 
 List all included filters by index:
 
