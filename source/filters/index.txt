@@ -1,5 +1,6 @@
 acidcam.glsl
 lightfade.glsl
+acidcolor.glsl
 green_gradient_strobe.glsl
 flash.glsl
 timeflash.glsl
