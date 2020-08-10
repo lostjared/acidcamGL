@@ -9,6 +9,7 @@ Arguments:
 
 	-h use H.264 output w/o uses MPEG-4
 	-o output mp4 filename
+	-S filter start index
 	-k shortcut-key file
 	-L playlist of filters
 	-b restore black
@@ -45,7 +46,6 @@ Controls:
 	[ENTER] - Jump to currently typed index (type index with number keys at anytime)
 	Q,Q,E,R,Y,U,I,O - move movement rate
 	T - reset color offset
-	N - Jump to end of filter list
 
 Run the program:
 
