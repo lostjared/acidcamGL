@@ -5,7 +5,7 @@ How to compile for macOS: https://youtu.be/UB_i1qTLGw8
 This project is still in very early stages of development.
 This project is an implementation of Acid Cam using OpenGL/Shaders.
 It is designed more for visualizations or live streaming with OBS versus a Video Editor like the other versions of Acid Cam.
-The program is controlled with the PC keyboard but, currently looking into MIDI.
+The program is controlled with the qwerty keyboard but, currently looking into MIDI.
 
 Arguments:
 
