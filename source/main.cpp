@@ -48,6 +48,7 @@ namespace acidcam {
         bool list_enabled;
         std::vector<int> var_list;
         int var_index;
+        bool repeat;
     public:
         
         AcidCam_Window() = default;
@@ -71,6 +72,7 @@ namespace acidcam {
             color_alpha_r = 0.1;
             color_alpha_g = 0.2;
             color_alpha_b = 0.3;
+            repeat = false;
             GLfloat vertices[] = {
                 -1.0f, -1.0f, 1.0f, // front face
                 1.0f, 1.0f, 1.0f,
@@ -248,9 +250,21 @@ namespace acidcam {
             
             cv::Mat frame;
             if(!cap.read(frame)) {
-                std::cout << "acidcam: Capture device closed exiting...\n";
-                quit();
-                return;
+                if(repeat == true && repeat_filename.length()>0) {
+                    cap.open(repeat_filename);
+                    if(cap.isOpened()) {
+                        cap.read(frame);
+                        std::cout << "acidcam: video loop...\n";
+                    } else {
+                        std::cout << "acidcam: Capture device closed exiting...\n";
+                        quit();
+                        return;
+                    }
+                } else {
+                    std::cout << "acidcam: Capture device closed exiting...\n";
+                    quit();
+                    return;
+                }
             }
             if(shader_index == 0 || ac_on == true) {
                 if(index >= 0 && index < ac::solo_filter.size()) {
@@ -315,6 +329,13 @@ namespace acidcam {
         
         void setDebug(bool d) {
             debug = d;
+        }
+        
+        std::string repeat_filename;
+        
+        void setRepeat(std::string fn, bool r) {
+            repeat = r;
+            repeat_filename = fn;
         }
         
         std::string input_string;
@@ -581,8 +602,12 @@ int main(int argc, char **argv) {
     bool force_full = false;
     int monitor = 0;
     int set_index = 0;
-    while((opt = getopt(argc, argv, "S:M:Fhbgu:p:i:c:r:d:fhvj:snlk:e:L:o:")) != -1) {
+    bool repeat = false;
+    while((opt = getopt(argc, argv, "S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:")) != -1) {
         switch(opt) {
+            case 'R':
+                repeat = true;
+                break;
             case 'S':
                 set_index = atoi(optarg);
                 if(set_index < 0 || set_index > ac::solo_filter.size()-1) {
@@ -728,6 +753,7 @@ int main(int argc, char **argv) {
     if(list_var.length()>0)
         main_window.loadList(list_var);
     main_window.setDebug(debug_val);
+    main_window.setRepeat(filename, repeat);
     main_window.loadShaders(shader_path);
     main_window.setShader(0);
     main_window.setFilterIndex(set_index);
