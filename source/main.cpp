@@ -571,8 +571,8 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
 constexpr unsigned long outstr_size = 44;
 std::string outstr_arr[outstr_size] = {
     "Written by Jared Bruni",
+    "    http://lostsidedead.com",
     "    Arguments:",
-    "    ",
     "    -h use H.264 output w/o uses MPEG-4",
     "    -o output mp4 filename",
     "    -S filter start index",
