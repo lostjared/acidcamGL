@@ -568,8 +568,57 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     main_window.typeKey(codepoint);
 }
 
+constexpr unsigned long outstr_size = 44;
+std::string outstr_arr[outstr_size] = {
+    "Written by Jared Bruni",
+    "    Arguments:",
+    "    ",
+    "    -h use H.264 output w/o uses MPEG-4",
+    "    -o output mp4 filename",
+    "    -S filter start index",
+    "    -k shortcut-key file",
+    "    -L playlist of filters",
+    "    -b restore black",
+    "    -g output debug strings",
+    "    -u fps",
+    "    -n print filter name",
+    "    -e snapshot prefix",
+    "    -p shader path",
+    "    -M monitor index",
+    "    -f fullscreen (resize)",
+    "    -F fullscreen (windowed mode)",
+    "    -d capture device",
+    "    -i input_video.mp4",
+    "    -R loop input video",
+    "    -r resolution 1920x1080",
+    "    -c Camera resolution 1280x720",
+    "    -l list filters",
+    "    -v version",
+    "    ",
+    "Controls:",
+    "    ",
+    "    L - enable disable playlist",
+    "    N - set index to the end",
+    "    P - index reset to zero",
+    "    K - jump forward index by 25",
+    "    J - jump backwar index by 25",
+    "    Z - take screenshot",
+    "    F - process keyboard input for index",
+    "    S - process keyboard input for shader",
+    "    C - clear keyboard input",
+    "    [SPACE] - Acid Cam filters enabled/disabled",
+    "    [LEFT] - Filter index move left",
+    "    [RIGHT] - filter index move right",
+    "    [UP] - Shader Index move up",
+    "    [DOWN] - Shader Index move down",
+    "    [ENTER] - Jump to currently typed index (type index with number keys at anytime)",
+    "     Q,Q,E,R,Y,U,I,O - move movement rate",
+    "     T - reset color offset;\"\""
+};
+
 void print_help_message() {
-    std::cout << "Written by Jared Bruni\nCommand line Arguments:\n-h use h264 output\n-o output mp4 filename\n-k shortcut-key file\n-L playlist of filters\n-b restore black\n-g output debug strings\n-u fps\n-n print filter name\n-e snapshot prefix\n-p shader path\n-M monitor index\n-f fullscreen\n-F force fullscreen in 4K\n-d capture device\n-r resolution 1920x1080\n-c Camera resolution 1280x720\n-l list filters\n-v version\n";
+    for(int i = 0; i < outstr_size; ++i)
+        std::cout << outstr_arr[i] << "\n";
 }
 
 int main(int argc, char **argv) {
