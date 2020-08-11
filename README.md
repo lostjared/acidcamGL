@@ -24,6 +24,8 @@ Arguments:
 	-f fullscreen (resize)
 	-F fullscreen (windowed mode)
 	-d capture device
+	-i input_video.mp4
+	-R loop input video
 	-r resolution 1920x1080
 	-c Camera resolution 1280x720
 	-l list filters
