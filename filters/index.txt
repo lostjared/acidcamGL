@@ -4,6 +4,8 @@ acidcolor.glsl
 acid_color2.glsl
 acidcolorrand.glsl
 colordivflash.glsl
+color_timeval.glsl
+grid_strobe.glsl
 green_gradient_strobe.glsl
 flash.glsl
 timeflash.glsl
