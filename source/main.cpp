@@ -778,6 +778,11 @@ int main(int argc, char **argv) {
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
+        if(output_file.length()>0) {
+            std::cerr << "acidcam: Error outuput file not supported for camera mode use OBS.\n";
+            output_file = "";
+            exit(EXIT_SUCCESS);
+        }
     } else {
         acidcam::cap.open(filename);
         if(!acidcam::cap.isOpened()) {
@@ -789,6 +794,10 @@ int main(int argc, char **argv) {
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     }
     if(force_full == true) {
+        if(output_file.length()>0) {
+            std::cerr << "fullscreen mode not suppported in video record mode, use OBS to record..\n";
+            exit(EXIT_FAILURE);
+        }
         main_window.create(false, true, false,"acidcamGL", w, h, monitor);
     }
     else {
