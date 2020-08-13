@@ -19,6 +19,7 @@ moving_gradient.glsl
 sheet.glsl
 colorsheet.glsl
 rightintwo.glsl
+bright.glsl
 scale.glsl
 gradient_position.glsl
 timeval_alpha.glsl
