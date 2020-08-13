@@ -39,6 +39,7 @@ rgbvar_inc.glsl
 xorstrobe.glsl
 strobe.glsl
 strobe_in_out.glsl
+random_square.glsl
 random_strobe.glsl
 random_strobe_time.glsl
 blue_strobe.glsl
