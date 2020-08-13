@@ -41,9 +41,9 @@ void main(void)
     vec4 col1 = texture(samp, cord1);
     vec4 col2 = texture(samp, cord2);
     vec4 col3 = texture(samp, cord3);
-    color[0] = (color[0]+col1[0]) * 0.8;
-    color[1] = (color[1]+col2[1]) * 0.8;
-    color[2] = (color[2]+col3[2]) * 0.8;
+    color[0] = (color[0]+col1[0]) * 0.9;
+    color[1] = (color[1]+col2[1]) * 0.9;
+    color[2] = (color[2]+col3[2]) * 0.9;
     ivec3 int_color;
     for(int i = 0; i < 3; ++i) {
         int_color[i] = int(255 * color[i]);
