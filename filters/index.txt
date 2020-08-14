@@ -1,5 +1,6 @@
 acidcam.glsl
 lightfade.glsl
+gradient_light.glsl
 acidcolor.glsl
 acid_color2.glsl
 acidcolorrand.glsl
