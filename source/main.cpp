@@ -639,6 +639,7 @@ int main(int argc, char **argv) {
     int cw = 1280, ch = 720;
     int opt = 0;
     int device = 0;
+    int start_shader = 0;
     bool full = false;
     int joy_index = -1;
     std::string shader_path;
@@ -655,8 +656,11 @@ int main(int argc, char **argv) {
     int monitor = 0;
     int set_index = 0;
     bool repeat = false;
-    while((opt = getopt(argc, argv, "S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:")) != -1) {
+    while((opt = getopt(argc, argv, "H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:")) != -1) {
         switch(opt) {
+            case 'H':
+                start_shader = atoi(optarg);
+                break;
             case 'R':
                 repeat = true;
                 break;
@@ -816,7 +820,7 @@ int main(int argc, char **argv) {
     main_window.setDebug(debug_val);
     main_window.setRepeat(filename, repeat);
     main_window.loadShaders(shader_path);
-    main_window.setShader(0);
+    main_window.setShader(start_shader);
     main_window.setFilterIndex(set_index);
     main_window.setPrintText(print_text);
     main_window.setPrefix(snapshot_prefix);
