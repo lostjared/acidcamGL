@@ -1,6 +1,7 @@
 acidcam.glsl
 lightfade.glsl
 lightfadedark.glsl
+purple_haze.glsl
 acidcolor.glsl
 acid_color2.glsl
 acidcolorrand.glsl

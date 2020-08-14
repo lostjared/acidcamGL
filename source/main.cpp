@@ -321,6 +321,7 @@ namespace acidcam {
             glUniform2f(loc, width, height);
             glDrawArrays(GL_TRIANGLES,0,6);
             
+            
             if(take_snapshot == true) {
                 takeSnapshot();
                 take_snapshot = false;
