@@ -26,6 +26,7 @@ gradient_position.glsl
 timeval_alpha.glsl
 xcordstrobe.glsl
 color_bars.glsl
+distort_light.glsl
 rgb_control.glsl
 rgb.glsl
 optxtime.glsl
