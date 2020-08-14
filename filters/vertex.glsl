@@ -21,10 +21,10 @@ uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
 uniform float alpha_value;
-
+uniform vec2 iResolution;
 uniform float restore_black;
 out float restore_black_value;
-
+out vec2 iResolution_;
 uniform sampler2D samp;
 
 void main()
@@ -41,4 +41,5 @@ void main()
     optx_val = optx;
     random_value = random_var;
     restore_black_value = restore_black;
+    iResolution_ = iResolution;
 }

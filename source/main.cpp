@@ -317,6 +317,8 @@ namespace acidcam {
             glUniform4fv(optx_pos, 1, glm::value_ptr(optx));
             glUniform4fv(rand_pos, 1, glm::value_ptr(random_var));
             glUniform1f(restore_blackx, ((restore_black == true) ? 1.0 : 0.0));
+            GLint loc = glGetUniformLocation(program.id(), "iResolution");
+            glUniform2f(loc, width, height);
             glDrawArrays(GL_TRIANGLES,0,6);
             
             if(take_snapshot == true) {
