@@ -33,14 +33,25 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
+    ivec3 source;
     for(int i = 0; i < 3; ++i) {
-        color[i] = color[i]*0.4;
+        source[i] = int(255 * color[i]);
     }
+
     vec2 pos = iResolution_.xy;
-    vec2 c = tc / pos;
-    vec4 col1 = texture(samp, c);
-    color = mix(color, col1, 0.5);
-    color[0] = color[0]/tc[0];
-    color[1] = color[1]/tc[1];
-    color[2] = color[2]/tc[0]+tc[1];
+    vec3 st = gl_FragCoord.zyx;
+    
+    for(int i = 0; i < 3; ++i) {
+        float f = (1024/st[i]);
+        color[i] = color[i]*f;
+    }
+    ivec3 int_color;
+    for(int i = 0; i < 3; ++i) {
+        int_color[i] = int(255 * color[i]);
+        int_color[i] = int_color[i]^source[i];
+        if(int_color[i] > 255)
+            int_color[i] = int_color[i]%255;
+        color[i] = float(int_color[i])/255;
+    }
 }
+
