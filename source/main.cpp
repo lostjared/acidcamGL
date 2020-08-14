@@ -571,7 +571,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     main_window.typeKey(codepoint);
 }
 
-constexpr unsigned long outstr_size = 44;
+constexpr unsigned long outstr_size = 45;
 std::string outstr_arr[outstr_size] = {
     "Written by Jared Bruni",
     "    http://lostsidedead.com",
@@ -579,6 +579,7 @@ std::string outstr_arr[outstr_size] = {
     "    -h use H.264 output w/o uses MPEG-4",
     "    -o output mp4 filename",
     "    -S filter start index",
+    "    -H shader start index",
     "    -k shortcut-key file",
     "    -L playlist of filters",
     "    -b restore black",
@@ -616,7 +617,7 @@ std::string outstr_arr[outstr_size] = {
     "    [DOWN] - Shader Index move down",
     "    [ENTER] - Jump to currently typed index (type index with number keys at anytime)",
     "     Q,Q,E,R,Y,U,I,O - move movement rate",
-    "     T - reset color offset;\"\""
+    "     T - reset color offset"
 };
 
 void print_help_message() {
