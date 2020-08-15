@@ -159,6 +159,10 @@ namespace acidcam {
         void loadList(const std::string &l) {
             std::fstream file;
             file.open(l, std::ios::in);
+            if(!file.is_open()) {
+                std::cerr << "acidcam: Error could not open playlist: " << l << "\n";
+                exit(EXIT_FAILURE);
+            }
             while(!file.eof()) {
                 std::string s;
                 std::getline(file, s);
