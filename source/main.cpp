@@ -571,7 +571,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     main_window.typeKey(codepoint);
 }
 
-constexpr unsigned long outstr_size = 45;
+constexpr unsigned long outstr_size = 46;
 std::string outstr_arr[outstr_size] = {
     "Written by Jared Bruni",
     "    http://lostsidedead.com",
@@ -597,6 +597,7 @@ std::string outstr_arr[outstr_size] = {
     "    -r resolution 1920x1080",
     "    -c Camera resolution 1280x720",
     "    -l list filters",
+    "    -t list filters no info",
     "    -v version",
     "    ",
     "Controls:",
@@ -657,7 +658,7 @@ int main(int argc, char **argv) {
     int monitor = 0;
     int set_index = 0;
     bool repeat = false;
-    while((opt = getopt(argc, argv, "H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:")) != -1) {
+    while((opt = getopt(argc, argv, "H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:t")) != -1) {
         switch(opt) {
             case 'H':
                 start_shader = atoi(optarg);
@@ -695,6 +696,12 @@ int main(int argc, char **argv) {
                 break;
             case 'k':
                 key_val = optarg;
+                break;
+            case 't':
+                for(int i = 0; i < ac::solo_filter.size(); ++i) {
+                    std::cout << ac::solo_filter[i] << "\n";
+                }
+                exit(EXIT_SUCCESS);
                 break;
             case 'l':
                 std::cout << "Filters by Index: \n";
