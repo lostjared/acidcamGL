@@ -30,6 +30,7 @@ Arguments:
 	-r resolution 1920x1080
 	-c Camera resolution 1280x720
 	-l list filters
+	-t list filters no info
 	-v version
 
 Controls:
