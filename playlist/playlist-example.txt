@@ -1,2 +1,4 @@
 StrobeEffect
-SelfScale
+StretchR_Right
+Histogram
+
