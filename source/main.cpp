@@ -630,6 +630,14 @@ void print_help_message() {
         std::cout << outstr_arr[i] << "\n";
 }
 
+int findFilter(std::string f) {
+    for(int i = 0; i < ac::solo_filter.size(); ++i) {
+         if(f == ac::solo_filter[i])
+            return i;
+    }
+    return -1;
+}
+
 int main(int argc, char **argv) {
     if(argc == 1) {
         print_help_message();
@@ -657,13 +665,17 @@ int main(int argc, char **argv) {
     bool restore_black = false;
     std::string list_var;
     std::string output_file;
+    std::string filter_string;
     bool h264 = false;
     bool force_full = false;
     int monitor = 0;
     int set_index = 0;
     bool repeat = false;
-    while((opt = getopt(argc, argv, "H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:t")) != -1) {
+    while((opt = getopt(argc, argv, "Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:t")) != -1) {
         switch(opt) {
+            case 'Z':
+                filter_string = optarg;
+                break;
             case 'H':
                 start_shader = atoi(optarg);
                 break;
@@ -833,6 +845,13 @@ int main(int argc, char **argv) {
     main_window.setRepeat(filename, repeat);
     main_window.loadShaders(shader_path);
     main_window.setShader(start_shader);
+    if(filter_string.length()>0) {
+        set_index = findFilter(filter_string);
+        if(set_index == -1) {
+            std::cerr << "acidcam: Error could not find filter: " << filter_string << "\n";
+            exit(EXIT_FAILURE);
+        }
+    }
     main_window.setFilterIndex(set_index);
     main_window.setPrintText(print_text);
     main_window.setPrefix(snapshot_prefix);
