@@ -9,6 +9,7 @@ colordivflash.glsl
 color_timeval.glsl
 grid_strobe.glsl
 grid_rand_strobe.glsl
+green_aura.glsl
 green_gradient_strobe.glsl
 flash.glsl
 timeflash.glsl
