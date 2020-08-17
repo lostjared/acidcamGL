@@ -66,7 +66,7 @@ Build the project
 
 Run the program:
 
-	./acidcamGL -g ../filters
+	./acidcamGL -g -p ../filters
 
 
 How to use the program:
