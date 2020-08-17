@@ -14,6 +14,7 @@ green_gradient_strobe.glsl
 flash.glsl
 timeflash.glsl
 gradient.glsl
+random_rgb.glsl
 cos_sin.glsl
 rgb_time.glsl
 rgb_time_xor.glsl
