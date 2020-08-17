@@ -171,9 +171,9 @@ namespace acidcam {
                         int value = find_solo(s);
                         if(value == -1) {
                             std::cerr << "acidcam: Error could not find for playlist string: " << s << "\n";
-                            quit();
-                            return;
-                        }
+                            //quit();
+                            //return;
+                        } else
                         var_list.push_back(value);
                     }
                 }
