@@ -575,8 +575,8 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     main_window.typeKey(codepoint);
 }
 
-constexpr unsigned long outstr_size = 46;
-std::string outstr_arr[outstr_size] = {
+constexpr unsigned long outstr_size = 47;
+std::string outstr_arr[] = {
     "Written by Jared Bruni",
     "    http://lostsidedead.com",
     "    Arguments:",
@@ -602,6 +602,7 @@ std::string outstr_arr[outstr_size] = {
     "    -c Camera resolution 1280x720",
     "    -l list filters",
     "    -t list filters no info",
+    "    -l list search",
     "    -v version",
     "    ",
     "Controls:",
@@ -671,7 +672,7 @@ int main(int argc, char **argv) {
     int monitor = 0;
     int set_index = 0;
     bool repeat = false;
-    while((opt = getopt(argc, argv, "Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:t")) != -1) {
+    while((opt = getopt(argc, argv, "Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
             case 'Z':
                 filter_string = optarg;
@@ -712,6 +713,14 @@ int main(int argc, char **argv) {
                 break;
             case 'k':
                 key_val = optarg;
+                break;
+            case 'Q': {
+                for(int i = 0; i < ac::solo_filter.size(); ++i) {
+                    if(ac::solo_filter[i].find(optarg) != std::string::npos)
+                        std::cout << ac::solo_filter[i] << "\n";
+                }
+                exit(EXIT_SUCCESS);
+            }
                 break;
             case 't':
                 for(int i = 0; i < ac::solo_filter.size(); ++i) {
@@ -785,6 +794,7 @@ int main(int argc, char **argv) {
                 std::cout << "acidcam: Desired Capture Resolution: " << cw << "x" << ch << "\n";
             }
                 break;
+                
             case 'j':
                 joy_index = atoi(optarg);
                 break;
