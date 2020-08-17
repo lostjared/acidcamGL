@@ -12,7 +12,7 @@ How to compile on macOS:
 
 This project reqeuires libacidcam,GLFW,GLEW,OpenGL,OpenCV
 
-First install homebrew: http://homebrew.sh
+First install homebrew: https://brew.sh
 
 Then install GLFLW,GLEW,OpenGL,OpenCV
 
