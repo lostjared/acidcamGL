@@ -16,7 +16,7 @@ First install homebrew: https://brew.sh
 
 Then install GLFLW,GLEW,OpenGL,OpenCV
 
-	brew install glfw glew opencv
+	brew install glfw3 glew opencv
 
 Dependending on what you have installed this could take quite some time.
 
