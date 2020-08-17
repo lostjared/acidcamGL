@@ -7,6 +7,69 @@ This project is an implementation of Acid Cam using OpenGL/Shaders.
 It is designed more for visualizations or live streaming with OBS versus a Video Editor like the other versions of Acid Cam.
 The program is controlled with the qwerty keyboard but, currently looking into MIDI.
 
+
+How to compile on macOS:
+
+This project reqeuires libacidcam,GLFW,GLEW,OpenGL,OpenCV
+
+First install homebrew: http://homebrew.sh
+
+Then install GLFLW,GLEW,OpenGL,OpenCV
+
+	brew install glfw glew opencv
+
+Dependending on what you have installed this could take quite some time.
+
+Next download libacidcam:
+
+	git clone https://github.com/lostjared/libacidcam.git
+
+Enter the directory
+
+	cd libacidcam
+
+Create a build directory
+
+	mkdir build && cd build
+
+Configure the project:
+	
+	cmake ..
+
+Build the project
+
+	make -j4
+
+Install the project:
+
+	sudo make install
+
+Next download acidcamGL:
+
+        git clone https://github.com/lostjared/acidcamGL.git
+
+Enter the directory
+
+        cd acidcamGL
+
+Create a build directory
+
+        mkdir build && cd build
+
+Configure the project:
+
+        cmake ..
+
+Build the project
+
+        make -j4
+
+Run the program:
+
+	./acidcamGL -g ../filters
+
+
+How to use the program:
 Arguments:
 
 	-h use H.264 output w/o uses MPEG-4
