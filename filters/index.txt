@@ -37,6 +37,7 @@ optxtime.glsl
 optxtime_tex.glsl
 optxtime_cos.glsl
 cos.glsl
+index_purple.glsl
 gradient_color.glsl
 sin.glsl
 tan.glsl
