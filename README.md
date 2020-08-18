@@ -74,6 +74,13 @@ Run the program:
 
 	./acidcamGL -g -p ../filters
 
+The default Resolution is:
+
+Camera: 1280x720
+FPS: 24 
+Window Size: 1280x720
+
+you can change that using arguments passed to the program
 
 How to use the program:
 Arguments:
@@ -155,6 +162,18 @@ Default FullScreen (Windowed) mode:
 Use Webcam Device by Index:
 	
 	./acidcamGL -g -p filters -d 1
+
+Use different frames per second:
+
+	./acidcamGL -g -p filters -u 30
+
+or (if supported by your USB 3.0 Webcam)
+ 
+	./acidcamGL -g -p filters -u 60
+
+or even better
+
+	./acidcamGL -g -p filters -u 60 -c 1920x1080 -r 1920x1080
 
 Use Video File as Input:
 
