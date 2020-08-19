@@ -125,6 +125,8 @@ Controls:
 	[RIGHT] - filter index move right
 	[UP] - Shader Index move up
 	[DOWN] - Shader Index move down
+	[<] - Decrease index of Color Map.
+	[>] - Increase index of Color Map.
 	[ENTER] - Jump to currently typed index (type index with number keys at anytime)
 	Q,Q,E,R,Y,U,I,O - move movement rate
 	T - reset color offset
