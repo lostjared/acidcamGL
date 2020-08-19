@@ -89,6 +89,7 @@ Arguments:
 	-o output mp4 filename
 	-S filter start index
 	-H shader start index
+	-C set color map
 	-k shortcut-key file
 	-L playlist of filters
 	-b restore black
