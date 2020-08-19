@@ -49,6 +49,7 @@ namespace acidcam {
         std::vector<int> var_list;
         int var_index;
         bool repeat;
+        int color_map;
     public:
         
         AcidCam_Window() = default;
@@ -56,6 +57,7 @@ namespace acidcam {
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
         
         virtual void init() override {
+            color_map = -1;
             var_index = 0;
             list_enabled = false;
             restore_black = false;
@@ -273,8 +275,18 @@ namespace acidcam {
             if(shader_index == 0 || ac_on == true) {
                 if(index >= 0 && index < ac::solo_filter.size()) {
                     ac::CallFilter(ac::solo_filter[index], frame);
+                    
+                    if(color_map != -1) {
+                        cv::Mat output_f1 = frame.clone();
+                        cv::applyColorMap(output_f1, frame, color_map);
+                    }
+                    
                     if(restore_black == true) {
                         ac::CallFilter("RestoreBlack", frame);
+                        if(color_map != -1) {
+                            cv::Mat output_f1 = frame.clone();
+                            cv::applyColorMap(output_f1, frame, color_map);
+                        }
                     }
                     if(print_text == true) {
                         std::ostringstream stream;
@@ -372,6 +384,14 @@ namespace acidcam {
                 }
                 
                 switch(key) {
+                    case GLFW_KEY_SEMICOLON:
+                        if(color_map > -1)
+                            color_map--;
+                        break;
+                    case GLFW_KEY_PERIOD:
+                        if(color_map < 21)
+                            color_map++;
+                        break;
                     case GLFW_KEY_L:
                         if(var_list.size()>0) {
                             static int offset = 0;
