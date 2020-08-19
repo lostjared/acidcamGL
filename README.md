@@ -1,5 +1,7 @@
 # acidcamGL
 
+This project requires a system a good enough graphics card to be running OpenGL 4.1 or greater. It will not work on lower specs.
+
 How to compile for macOS: 
 
 https://youtu.be/UB_i1qTLGw8
