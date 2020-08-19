@@ -2,18 +2,19 @@
 #generic Makefile for macOS
 
 OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
-CFLAGS= -std=c++11 -O2 `pkg-config glfw3 glew acidcam opencv4 --cflags` -DNO_SCREEN_GRAB -I./include
-LDFLAGS= `pkg-config glfw3 glew acidcam opencv4 --libs` -framework OpenGL -framework Cocoa -framework IOKit
+#OPECV_LIBS= ./static/*a
+CFLAGS= -std=c++11 -O2 `pkg-config glfw3 glew acidcam --cflags` -DNO_SCREEN_GRAB -I./macos/include
+LDFLAGS= `pkg-config glfw3 acidcam --libs` -framework VideoDecodeAcceleration  -lblas -lcblas -lclapack -llapack -lf77lapack -framework CoreVideo -framework CoreMedia -framework OpenGL -framework Cocoa -framework IOKit -framework AVKit -framework AVFoundation  -framework OpenCL  -lbz2  macos/cvlibs/*a
 
 %.o: %.cpp
 	$(CXX) $(CFLAGS) $< -c -o $@
 
-example: $(OBJ)
-	$(CXX) -std=c++11 -o example $(OBJ) $(LDFLAGS)
+acidcamGL: $(OBJ)
+	$(CXX) -std=c++11 -o acidcamGL $(OBJ) $(LDFLAGS)
 
 all: example
 
 .PHONY: clean
 clean:
-	rm -f example *.o
+	rm -f acidcamGL *.o
 
