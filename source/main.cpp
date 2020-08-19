@@ -357,6 +357,13 @@ namespace acidcam {
             repeat_filename = fn;
         }
         
+        void setColorMap(int map) {
+            color_map = map;
+            if(map != -1) {
+                std::cout << "acidccam: Set color map: " << map << "\n";
+            }
+        }
+        
         std::string input_string;
         
         void typeKey(unsigned int key) {
@@ -616,6 +623,7 @@ std::string outstr_arr[] = {
     "    -o output mp4 filename",
     "    -S filter start index",
     "    -H shader start index",
+    "    -C set color map",
     "    -k shortcut-key file",
     "    -L playlist of filters",
     "    -b restore black",
@@ -704,8 +712,12 @@ int main(int argc, char **argv) {
     int monitor = 0;
     int set_index = 0;
     bool repeat = false;
-    while((opt = getopt(argc, argv, "Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    int color_map = -1;
+    while((opt = getopt(argc, argv, "C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'C':
+                color_map = atoi(optarg);
+                break;
             case 'Z':
                 filter_string = optarg;
                 break;
@@ -898,6 +910,7 @@ int main(int argc, char **argv) {
     main_window.setPrintText(print_text);
     main_window.setPrefix(snapshot_prefix);
     main_window.setRestoreBlack(restore_black);
+    main_window.setColorMap(color_map);
     if(output_file.length()>0) {
         if(h264)
             writer.open(output_file, cv::VideoWriter::fourcc('a','v','c','1'), fps, cv::Size(w, h), true);
