@@ -384,13 +384,25 @@ namespace acidcam {
                 }
                 
                 switch(key) {
-                    case GLFW_KEY_SEMICOLON:
-                        if(color_map > -1)
+                    case GLFW_KEY_COMMA:
+                        
+                        if(color_map == 0) {
+                            std::cout << "acidcam: Color map disabled...\n";
+                            color_map = -1;
+                            return;
+                        }
+                        
+                        if(color_map > 0) {
                             color_map--;
+                        
+                            std::cout << "acidcam: Color Map Decreased to: " << color_map << "\n";
+                        }
                         break;
                     case GLFW_KEY_PERIOD:
-                        if(color_map < 21)
+                        if(color_map < 21) {
                             color_map++;
+                            std::cout << "acidcam: Color map increased to: " << color_map << "...\n";
+                        }
                         break;
                     case GLFW_KEY_L:
                         if(var_list.size()>0) {
