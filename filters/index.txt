@@ -11,6 +11,7 @@ acid_color2.glsl
 acidcolorrand.glsl
 colordivflash.glsl
 color_timeval.glsl
+gradient_shift.glsl
 grid_strobe.glsl
 grid_rand_strobe.glsl
 green_aura.glsl

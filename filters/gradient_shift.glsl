@@ -31,10 +31,23 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
+    ivec3 source;
+    for(int i = 0; i < 3; ++i) {
+        source[i] = int(255 * color[i]);
+    }
     vec2 pos = gl_FragCoord.xy / iResolution_.xy;
     vec4 l = vec4(alpha_r, alpha_g, alpha_b,1.0);
-    color = vec4(pos, random_value[0]/255, 1) * l * color * alpha;
+    color = vec4(pos.xy, random_value[0]/255, 1) * l * color * alpha;
+    ivec3 int_color;
+    for(int i = 0; i < 3; ++i) {
+        int_color[i] = int(255 * color[i]);
+        int_color[i] = int_color[i]^source[i];
+        if(int_color[i] > 255)
+            int_color[i] = int_color[i]%255;
+        color[i] = float(int_color[i])/255;
+    }
 }
+
 
 
 
