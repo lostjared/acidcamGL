@@ -2,6 +2,7 @@ acidcam.glsl
 whitelight.glsl
 lightfade.glsl
 lightfadedark.glsl
+green_move.glsl
 purple_fade.glsl
 purple_haze.glsl
 acidcolor.glsl
