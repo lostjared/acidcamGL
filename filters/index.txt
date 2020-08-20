@@ -1,5 +1,6 @@
 acidcam.glsl
 whitelight.glsl
+flash_gradient_strobe.glsl
 lightfade.glsl
 lightfadedark.glsl
 green_move.glsl
