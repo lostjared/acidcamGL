@@ -1,4 +1,5 @@
 acidcam.glsl
+whitelight.glsl
 lightfade.glsl
 lightfadedark.glsl
 purple_fade.glsl
