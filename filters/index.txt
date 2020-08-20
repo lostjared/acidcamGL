@@ -3,6 +3,7 @@ whitelight.glsl
 flash_gradient_strobe.glsl
 lightfade.glsl
 lightfadedark.glsl
+green_echo.glsl
 green_move.glsl
 purple_fade.glsl
 purple_haze.glsl
