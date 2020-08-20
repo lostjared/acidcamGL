@@ -313,13 +313,14 @@ namespace acidcam {
                 color_alpha_b = 0.1f;
             static bool idir = true;
             if(idir == true) {
-                alpha += 0.01f;
-                if(alpha >= 25.0)
+                alpha += 0.1f;
+                if(alpha >= 6.0)
                     idir = false;
             } else {
                 alpha -= 0.1f;
-                if(alpha <= 0.1f)
+                if(alpha <= 1.0f) {
                     idir = true;
+                }
             
             }
             random_var = glm::vec4(rand()%255, rand()%255, rand()%255, rand()%255);
