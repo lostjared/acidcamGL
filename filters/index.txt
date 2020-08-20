@@ -1,4 +1,5 @@
 acidcam.glsl
+test.glsl
 lightfade.glsl
 lightfadedark.glsl
 purple_haze.glsl

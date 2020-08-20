@@ -13,15 +13,18 @@ uniform vec4 optx;
 in vec4 random_value;
 uniform vec4 random_var;
 uniform float alpha_value;
+
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 uniform sampler2D samp;
 uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
+uniform vec2 iResolution;
 
 uniform float restore_black;
 in float restore_black_value;
+in vec2 iResolution_;
 
 void main(void)
 {
@@ -32,14 +35,22 @@ void main(void)
     for(int i = 0; i < 3; ++i) {
         source[i] = int(255 * color[i]);
     }
-    color[0] = color[0]*sin(tc[0] * timeval);
-    color[1] = color[1]*cos(tc[1] * timeval);
-    color[2] = color[2]*tan(tc[0] * timeval);
+    
+    vec2 pos = iResolution_.xy;
+    vec3 st = gl_FragCoord.zyx;
+    
+    for(int i = 0; i < 3; ++i) {
+        float f = (1024/st[i]);
+        color[i] = color[i]*f;
+    }
     ivec3 int_color;
     for(int i = 0; i < 3; ++i) {
         int_color[i] = int(255 * color[i]);
+        int_color[i] = int_color[i]^source[i];
         if(int_color[i] > 255)
             int_color[i] = int_color[i]%255;
         color[i] = float(int_color[i])/255;
     }
 }
+
+

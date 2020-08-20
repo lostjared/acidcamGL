@@ -1,4 +1,4 @@
-#version 410
+#version 330
 in vec2 tc;
 out vec4 color;
 in float alpha_r;
