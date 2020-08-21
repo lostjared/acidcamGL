@@ -619,7 +619,9 @@ namespace acidcam {
                 std::cerr << "acidcam: Error could not open: " << stream.str() << "\n";
                 exit(EXIT_FAILURE);
             }
-            
+           
+            int index = 0;
+                   
             while(!file.eof()) {
                 std::string s;
                 std::getline(file, s);
@@ -630,7 +632,7 @@ namespace acidcam {
                     fs1 << text << "/" << s;
                     fs2 << text << "/vertex.glsl";
                     ShaderProgram p;
-                    std::cout << "acidcam: Compiling Shader [" << s << "] ";
+                    std::cout << "acidcam: Compiling Shader " << index << " [" << s << "] ";
                     if(p.loadProgram(fs2.str(), fs1.str())==false) {
                         std::cerr << "Error could not load: " << fs1.str() << "\n";
                         exit(EXIT_FAILURE);
@@ -638,6 +640,7 @@ namespace acidcam {
                     std::cout << "\n";
                     p.setName(s.substr(0, s.rfind(".")));
                     shaders.push_back(p);
+                    ++index;
                 }
             }
             file.close();
