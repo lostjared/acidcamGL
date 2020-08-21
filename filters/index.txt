@@ -9,9 +9,11 @@ green_move.glsl
 purple_fade.glsl
 purple_haze.glsl
 purple_strobe.glsl
+material.glsl
 material_random.glsl
 material_psychedelic.glsl
 material_fade.glsl
+material_square.glsl
 purple_material.glsl
 material_strobe.glsl
 material_green_blend.glsl
