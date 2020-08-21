@@ -8,6 +8,7 @@ green_echo.glsl
 green_move.glsl
 purple_fade.glsl
 purple_haze.glsl
+material_psychedelic.glsl
 material_fade.glsl
 purple_material.glsl
 material_strobe.glsl
