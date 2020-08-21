@@ -527,7 +527,7 @@ namespace acidcam {
                             if(index > 0) {
                                 --index;
                                 if(debug) {
-                                    std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                                    std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
                                 }
                             }
                         } else {
@@ -537,7 +537,7 @@ namespace acidcam {
                             if(var_list[var_index] > 0 && var_list[var_index] < ac::solo_filter.size()) {
                                 index = var_list[var_index];
                                 if(debug) {
-                                    std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                                    std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
                                 }
                             }
                         }
@@ -547,7 +547,7 @@ namespace acidcam {
                             if(index < ac::solo_filter.size()) {
                                 ++index;
                                 if(debug) {
-                                    std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                                    std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
                                 }
                             }
                         } else {
@@ -556,7 +556,7 @@ namespace acidcam {
                             if(var_list[var_index] > 0 && var_list[var_index] < ac::solo_filter.size()) {
                                 index = var_list[var_index];
                                 if(debug) {
-                                    std::cout << "acidcam: " << ac::solo_filter[index] << "\n";
+                                    std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
                                 }
                             }
                         }
