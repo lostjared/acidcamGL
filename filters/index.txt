@@ -21,15 +21,12 @@ acidcolorrand.glsl
 colordivflash.glsl
 color_timeval.glsl
 gradient_shift.glsl
-grid_strobe.glsl
 grid_rand_strobe.glsl
 green_aura.glsl
 green_gradient_strobe.glsl
 flash.glsl
 timeflash.glsl
-gradient.glsl
 random_rgb.glsl
-cos_sin.glsl
 rgb_time.glsl
 rgb_time_xor.glsl
 time_xor.glsl
@@ -43,7 +40,6 @@ scale.glsl
 gradient_position.glsl
 timeval_alpha.glsl
 xcordstrobe.glsl
-color_bars.glsl
 distort_light.glsl
 rgb_control.glsl
 rgb.glsl
@@ -75,5 +71,9 @@ darkred.glsl
 greenblue.glsl
 rgbchecker.glsl
 random_colors.glsl
+gradient.glsl
+grid_strobe.glsl
 green_gradient.glsl
+color_bars.glsl
+cos_sin.glsl
 weirdlines.glsl
