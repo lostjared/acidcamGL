@@ -28,6 +28,7 @@ out float restore_black_value;
 out vec2 iResolution_;
 uniform sampler2D samp;
 uniform sampler2D mat_samp;
+uniform vec2 mat_size;
 
 void main()
 {

@@ -1,4 +1,3 @@
-
 #version 330
 in vec2 tc;
 out vec4 color;
@@ -26,6 +25,7 @@ in vec2 iResolution_;
 uniform vec2 iResolution;
 uniform float restore_black;
 in float restore_black_value;
+uniform vec2 mat_size;
 
 float random (vec2 st) {
     return fract(sin(dot(st.xy,
@@ -40,9 +40,25 @@ void main(void)
     color = texture(samp, tc);
     vec4 color2;
     color2 = texture(mat_samp, tc);
+    
+    ivec3 source;
+      for(int i = 0; i < 3; ++i) {
+          source[i] = int(255 * color2[i]);
+      }
 
-    color = color * color2;
+    
+    vec3 p = gl_FragCoord.xyz / vec3(mat_size.xy,1);
+    vec4 col = vec4(0.8, 0.6, 0.2, 1);
+    vec4 c = vec4(p, 1) * col;
+    color = color * color2 * cos(c) * (1.0+alpha);
+    color -= 1.0;
+    
+    ivec3 int_color;
+    for(int i = 0; i < 3; ++i) {
+        int_color[i] = int(255 * color[i]);
+        int_color[i] = int_color[i]^source[i];
+        if(int_color[i] > 255)
+            int_color[i] = int_color[i]%255;
+        color[i] = float(int_color[i])/255;
+    }
 }
-
-
-

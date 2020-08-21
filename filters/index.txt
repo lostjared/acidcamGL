@@ -10,6 +10,7 @@ purple_fade.glsl
 purple_haze.glsl
 purple_strobe.glsl
 material.glsl
+material_xor.glsl
 material_random.glsl
 material_psychedelic.glsl
 material_fade.glsl
