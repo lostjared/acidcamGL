@@ -651,7 +651,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     main_window.typeKey(codepoint);
 }
 
-constexpr unsigned long outstr_size = 47;
+constexpr unsigned long outstr_size = 49;
 std::string outstr_arr[] = {
     "Written by Jared Bruni",
     "    http://lostsidedead.com",
@@ -661,6 +661,7 @@ std::string outstr_arr[] = {
     "    -S filter start index",
     "    -H shader start index",
     "    -C set color map",
+    "    -T set material texture filename",
     "    -k shortcut-key file",
     "    -L playlist of filters",
     "    -b restore black",

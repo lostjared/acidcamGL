@@ -92,6 +92,7 @@ Arguments:
 	-S filter start index
 	-H shader start index
 	-C set color map
+	-T set material texture filename
 	-k shortcut-key file
 	-L playlist of filters
 	-b restore black
