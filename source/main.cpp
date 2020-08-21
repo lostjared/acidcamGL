@@ -133,6 +133,34 @@ namespace acidcam {
             }
         }
         
+        GLuint material = 0;
+        bool material_on = false;
+        
+        void genMaterial(std::string s) {
+            glGenTextures(1, &material);
+            glBindTexture(GL_TEXTURE_2D, material);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            
+            cv::Mat frame;
+            frame = cv::imread(s);
+            if(frame.empty()) {
+                std::cerr << "acidcam: Error could not load texture: " << s << "\n";
+                exit(EXIT_FAILURE);
+            }
+            
+            cv::Mat flipped;
+            cv::flip(frame, flipped, 0);
+            cv::cvtColor(flipped, frame, cv::COLOR_BGR2RGB);
+            
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
+            
+            std::cout << "acidcam: Successfully loaded material: " << s << "\n";
+            material_on = true;
+        }
+        
         void setPrintText(bool b) {
             print_text = b;
         }
@@ -228,6 +256,7 @@ namespace acidcam {
             mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
             proj_loc = glGetUniformLocation(program.id(),"proj_matrix");
             GLuint samp = glGetUniformLocation(program.id(),"samp");
+            GLuint mat_samp = glGetUniformLocation(program.id(),"mat_samp");
             GLuint calpha_r = glGetUniformLocation(program.id(),"value_alpha_r");
             GLuint calpha_g = glGetUniformLocation(program.id(),"value_alpha_g");
             GLuint calpha_b = glGetUniformLocation(program.id(),"value_alpha_b");
@@ -296,11 +325,15 @@ namespace acidcam {
                 }
             }
             cv::flip(frame, frame, 0);
-            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows, GL_BGR, GL_UNSIGNED_BYTE, frame.ptr());
-            
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture);
+
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows, GL_BGR, GL_UNSIGNED_BYTE, frame.ptr());
             
+            if(material_on) {
+                glActiveTexture(GL_TEXTURE1);
+                glBindTexture(GL_TEXTURE_2D, material);
+            }
             color_alpha_r += rand()%100 * 0.01f;
             color_alpha_g += rand()%100 * 0.01f;
             color_alpha_b += rand()%100 * 0.01f;
@@ -325,6 +358,7 @@ namespace acidcam {
             }
             random_var = glm::vec4(rand()%255, rand()%255, rand()%255, rand()%255);
             glUniform1i(samp, 0);
+            glUniform1i(mat_samp, 1);
             glUniform1f(c_index, (float)index);
             glUniform1f(c_tf, timeval);
             glUniform1f(calpha_r, color_alpha_r);
@@ -582,6 +616,8 @@ namespace acidcam {
                 std::string s;
                 std::getline(file, s);
                 if(file && s.length() > 0) {
+                    if(material_on == false && s.find("material") != std::string::npos)
+                        continue;
                     std::ostringstream fs1,fs2;
                     fs1 << text << "/" << s;
                     fs2 << text << "/vertex.glsl";
@@ -714,8 +750,12 @@ int main(int argc, char **argv) {
     int set_index = 0;
     bool repeat = false;
     int color_map = -1;
-    while((opt = getopt(argc, argv, "C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    std::string material;
+    while((opt = getopt(argc, argv, "T:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'T':
+                material  = optarg;
+                break;
             case 'C':
                 color_map = atoi(optarg);
                 break;
@@ -898,6 +938,10 @@ int main(int argc, char **argv) {
         main_window.loadList(list_var);
     main_window.setDebug(debug_val);
     main_window.setRepeat(filename, repeat);
+    
+     if(material.length()>0)
+           main_window.genMaterial(material);
+        
     main_window.loadShaders(shader_path);
     main_window.setShader(start_shader);
     if(filter_string.length()>0) {
@@ -912,6 +956,7 @@ int main(int argc, char **argv) {
     main_window.setPrefix(snapshot_prefix);
     main_window.setRestoreBlack(restore_black);
     main_window.setColorMap(color_map);
+     
     if(output_file.length()>0) {
         if(h264)
             writer.open(output_file, cv::VideoWriter::fourcc('a','v','c','1'), fps, cv::Size(w, h), true);

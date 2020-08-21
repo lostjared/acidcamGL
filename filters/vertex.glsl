@@ -2,6 +2,7 @@
 
 layout (location=0) in vec3 pos;
 layout (location=1) in vec2 texCoord;
+
 out vec2 tc;
 out vec3 vpos;
 out float alpha_r;
@@ -26,6 +27,7 @@ uniform float restore_black;
 out float restore_black_value;
 out vec2 iResolution_;
 uniform sampler2D samp;
+uniform sampler2D mat_samp;
 
 void main()
 {
