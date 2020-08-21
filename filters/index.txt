@@ -13,6 +13,7 @@ material_fade.glsl
 purple_material.glsl
 material_strobe.glsl
 material_green_blend.glsl
+material_grid.glsl
 acidcolor.glsl
 acid_color2.glsl
 acidcolorrand.glsl
