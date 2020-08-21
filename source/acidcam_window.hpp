@@ -135,6 +135,7 @@ namespace acidcam {
         
         GLuint material = 0;
         bool material_on = false;
+        float img_cols = 0, img_rows = 0;
         
         void genMaterial(std::string s) {
             glGenTextures(1, &material);
@@ -154,6 +155,9 @@ namespace acidcam {
             cv::Mat flipped;
             cv::flip(frame, flipped, 0);
             cv::cvtColor(flipped, frame, cv::COLOR_BGR2RGB);
+            
+            img_cols = frame.cols;
+            img_rows = frame.rows;
             
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
             
@@ -267,6 +271,9 @@ namespace acidcam {
             GLuint rand_pos = glGetUniformLocation(program.id(), "random_var");
             GLuint restore_blackx = glGetUniformLocation(program.id(), "restore_black");
             
+            GLuint material_size;
+            material_size = glGetUniformLocation(program.id(), "mat_size");
+                        
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
             m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
             
@@ -370,8 +377,9 @@ namespace acidcam {
             glUniform1f(restore_blackx, ((restore_black == true) ? 1.0 : 0.0));
             GLint loc = glGetUniformLocation(program.id(), "iResolution");
             glUniform2f(loc, width, height);
-            glDrawArrays(GL_TRIANGLES,0,6);
+            glUniform2f(material_size, img_cols, img_rows);
             
+            glDrawArrays(GL_TRIANGLES,0,6);
             
             if(take_snapshot == true) {
                 takeSnapshot();
