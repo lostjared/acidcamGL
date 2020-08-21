@@ -33,7 +33,7 @@ void main(void)
     vec4 color2 = texture(samp, tc / 2);
     vec4 color3 = texture(samp, tc/ 4);
     vec4 color4 = texture(samp, tc/ 8);
-    color = color * color2 * color3 * color4 * 8.0;
+    color = (color * 0.4) + (color2 * 0.4) + (color3 * 0.4) + (color4 * 0.4) ;
 }
 
 
