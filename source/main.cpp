@@ -116,6 +116,7 @@ int main(int argc, char **argv) {
     bool repeat = false;
     int color_map = -1;
     std::string material;
+    int res_w = 0, res_h = 0;
     while((opt = getopt(argc, argv, "T:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
             case 'T':
@@ -220,6 +221,8 @@ int main(int argc, char **argv) {
                 std::string right=pos.substr(pos.rfind("x")+1, pos.length());
                 w = atoi(left.c_str());
                 h = atoi(right.c_str());
+                res_w = w;
+                res_h = h;
                 if(w <= 0 || h <= 0) {
                     std::cerr << "acidcam: Invalid resolution..\n";
                     exit(EXIT_FAILURE);
@@ -283,8 +286,10 @@ int main(int argc, char **argv) {
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
-        w = cw;
-        h = ch;
+        if(res_w == 0 && res_h == 0) {
+            w = cw;
+            h = ch;
+        }
     }
     if(force_full == true) {
         main_window.create(false, true, false,"acidcamGL", w, h, monitor);
