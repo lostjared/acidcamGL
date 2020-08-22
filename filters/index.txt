@@ -1,6 +1,7 @@
 acidcam.glsl
 whitelight.glsl
 flash_gradient_strobe.glsl
+rgb_fade_xor.glsl
 echo.glsl
 lightfade.glsl
 lightfadedark.glsl
@@ -9,6 +10,7 @@ green_move.glsl
 purple_fade.glsl
 purple_haze.glsl
 purple_strobe.glsl
+rgb_fade.glsl
 material.glsl
 material_rgb.glsl
 material_xor.glsl
