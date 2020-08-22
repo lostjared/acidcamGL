@@ -608,6 +608,10 @@ namespace acidcam {
             aspect = (float)newWidth / (float)newHeight;
             glViewport(0, 0, newWidth, newHeight);
             p_mat = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
+            width = newWidth;
+            height = newHeight;
+            window_width = newWidth;
+            window_height = newHeight;
         }
         
         void loadShaders(const std::string &text) {
