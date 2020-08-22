@@ -26,6 +26,7 @@ material_color_grid.glsl
 material_grid.glsl
 material_boxes.glsl
 material_fill.glsl
+material_fill_white.glsl
 acidcolor.glsl
 acid_color2.glsl
 acidcolorrand.glsl
