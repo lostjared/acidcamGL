@@ -283,6 +283,8 @@ int main(int argc, char **argv) {
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
+        w = cw;
+        h = ch;
     }
     if(force_full == true) {
         main_window.create(false, true, false,"acidcamGL", w, h, monitor);
