@@ -279,6 +279,8 @@ namespace acidcam {
             GLuint optx_pos = glGetUniformLocation(program.id(), "optx");
             GLuint rand_pos = glGetUniformLocation(program.id(), "random_var");
             GLuint restore_blackx = glGetUniformLocation(program.id(), "restore_black");
+            GLuint inc_value_pos = glGetUniformLocation(program.id(), "inc_value");
+            
             
             GLuint material_size;
             material_size = glGetUniformLocation(program.id(), "mat_size");
@@ -373,10 +375,31 @@ namespace acidcam {
             
             }
             random_var = glm::vec4(rand()%255, rand()%255, rand()%255, rand()%255);
+            
+            static glm::vec4 inc_value(rand()%255, rand()%255, rand()%255, 1);
+            
+            static int inc_dir = 1;
+            
+            if(inc_dir == 1) {
+                for(int i = 0; i < 3; ++i) {
+                    ++inc_value[i];
+                    if(inc_value[i] >= 255)
+                        inc_dir = 0;
+                }
+            } else {
+                for(int i = 0; i < 3; ++i) {
+                    --inc_value[i];
+                    if(inc_value[i] <= 1) {
+                        inc_dir = 1;
+                        inc_value = glm::vec4(rand()%255, rand()%255, rand()%255, 1);
+                    }
+                }
+            }
             glUniform1i(samp, 0);
             glUniform1i(mat_samp, 1);
             glUniform1f(c_index, (float)index);
             glUniform1f(c_tf, timeval);
+            glUniform4fv(inc_value_pos, 1, glm::value_ptr(inc_value));
             glUniform1f(calpha_r, color_alpha_r);
             glUniform1f(calpha_g, color_alpha_g);
             glUniform1f(calpha_b, color_alpha_b);
