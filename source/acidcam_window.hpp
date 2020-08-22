@@ -241,15 +241,24 @@ namespace acidcam {
             cv::cvtColor(flipped, frame, cv::COLOR_RGB2BGR);
         }
         
-        void setWriter(cv::VideoWriter w) {
+        int writer_w = 0, writer_h = 0;
+        
+        void setWriter(cv::VideoWriter w, int writer_ww, int writer_hh) {
             writer = w;
             writer_set = true;
+            writer_w = writer_ww;
+            writer_h = writer_hh;
         }
         
         void writeFrame() {
             cv::Mat frame;
             readFrame(frame);
-            writer.write(frame);
+            if(window_width != writer_w && window_height != writer_h) {
+                cv::Mat re;
+                cv::resize(frame, re, cv::Size(writer_w, writer_h));
+                writer.write(re);
+            } else
+                writer.write(frame);
         }
         
         virtual void update(double timeval) override {
@@ -608,8 +617,6 @@ namespace acidcam {
             aspect = (float)newWidth / (float)newHeight;
             glViewport(0, 0, newWidth, newHeight);
             p_mat = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
-            width = newWidth;
-            height = newHeight;
             window_width = newWidth;
             window_height = newHeight;
         }

@@ -285,14 +285,10 @@ int main(int argc, char **argv) {
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
     }
     if(force_full == true) {
-        if(output_file.length()>0) {
-            std::cerr << "fullscreen mode not suppported in video record mode, use OBS to record..\n";
-            exit(EXIT_FAILURE);
-        }
         main_window.create(false, true, false,"acidcamGL", w, h, monitor);
     }
     else {
-        main_window.create(((output_file.length()>0)?true:false), full,true, "acidcamGL", w, h, monitor);
+        main_window.create(false, full,true, "acidcamGL", w, h, monitor);
     }
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
@@ -332,7 +328,7 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
         std::cout << "acidcam: record " << output_file << " " << w << "x" << h << " " << fps << "\n";
-        main_window.setWriter(writer);
+        main_window.setWriter(writer,w,h);
     }
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
