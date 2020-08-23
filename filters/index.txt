@@ -25,6 +25,7 @@ material_green_blend.glsl
 material_color_grid.glsl
 material_grid.glsl
 material_boxes.glsl
+material_tic_tac_toe.glsl
 material_fill.glsl
 material_fill_white.glsl
 acidcolor.glsl
