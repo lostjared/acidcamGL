@@ -48,19 +48,27 @@ void main(void)
     int y = int(gl_FragCoord.y);
     int w = int(iResolution_.x);
     int h = int(iResolution_.y);
-    int valuex = x/16;
-    int valuey = y/16;
+    int cx = int(inc_valuex.x);
+    int cy = int(inc_valuex.x);
     
-    if(x%16==0) {
+    int valuex = x/cx;
+    int valuey = y/cy;
+    
+    vec4 value = vec4(0.2, 0.4, 0.6, 1.0);
+    
+    if(x%cx==0) {
         //color = vec4(1,1,1,1);
-        color = color * color2 * alpha;
-    } else if(y%16==0) {
-        //color = vec4(1,1,1,1);
-        color = color * alpha;
+        color = color * color2 * value;
+    } else if(y%cy==0) {
+        color = color * color2 * value;
     } else {
         if(valuex%2==0)
-            color = color * color2 * alpha;
+            color = color * color2 * value;
         else if(valuey%2==0)
-            color = color * alpha;
+            color = color * color2 * random_value/255 * alpha;
+        else
+            color = color * color2 * value;
     }
+
+    color *= 4.0;
 }
