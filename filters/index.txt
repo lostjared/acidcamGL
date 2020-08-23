@@ -39,6 +39,7 @@ green_aura.glsl
 green_gradient_strobe.glsl
 flash.glsl
 timeflash.glsl
+random_rgb_strobe.glsl
 random_rgb.glsl
 rgb_time.glsl
 rgb_time_xor.glsl
