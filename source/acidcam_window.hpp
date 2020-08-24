@@ -50,6 +50,7 @@ namespace acidcam {
         int var_index;
         bool repeat;
         int color_map;
+        int blend_index;
     public:
         
         AcidCam_Window() = default;
@@ -57,6 +58,7 @@ namespace acidcam {
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
         
         virtual void init() override {
+            blend_index = 0;
             color_map = -1;
             var_index = 0;
             list_enabled = false;
@@ -322,7 +324,20 @@ namespace acidcam {
             }
             if(shader_index == 0 || ac_on == true) {
                 if(index >= 0 && index < ac::solo_filter.size()) {
+                    cv::Mat orig;
+                    
+                    if(blend_index > 0) {
+                        orig = frame.clone();
+                    }
+                    
                     ac::CallFilter(ac::solo_filter[index], frame);
+                 
+                    if(blend_index > 0) {
+                        cv::Mat copyf;
+                        double per = 1.0/(blend_index/10);
+                        ac::AlphaBlendDouble(frame, orig, copyf, per, 1.0-per);
+                        frame = copyf.clone();
+                    }
                     
                     if(color_map != -1) {
                         cv::Mat output_f1 = frame.clone();
@@ -614,6 +629,18 @@ namespace acidcam {
                                     std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
                                 }
                             }
+                        }
+                        break;
+                    case GLFW_KEY_MINUS:
+                        if(blend_index > 0) {
+                            blend_index -= 10;
+                            std::cout << "acidcam: Blend Index Set to: " << blend_index << ".\n";
+                        }
+                        break;
+                    case GLFW_KEY_EQUAL:
+                        if(blend_index < 100) {
+                            blend_index += 10;
+                            std::cout << "acidcam: Blend Index Set to: " << blend_index << ".\n";
                         }
                         break;
                     case GLFW_KEY_UP:
