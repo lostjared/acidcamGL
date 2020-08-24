@@ -224,8 +224,14 @@ namespace acidcam {
             cv::Mat flipped;
             readFrame(flipped);
             time_t t = time(0);
+#ifdef _WIN32
+            struct tm mm;
+            localtime_s(&mm, &t);
+            struct tm* m = &mm;
+#else
             struct tm *m;
             m = localtime(&t);
+#endif
             std::ostringstream time_stream;
             time_stream << snapshot_prefix << "-" << (m->tm_year + 1900) << "." << std::setw(2) << std::setfill('0') << (m->tm_mon + 1) << "." << std::setw(2) << std::setfill('0') << m->tm_mday << "_" << std::setw(2) << std::setfill('0') << m->tm_hour << "." << std::setw(2) << std::setfill('0') << m->tm_min << "." << std::setw(2) << std::setfill('0') << m->tm_sec <<  "_" << flipped.cols << "x" << flipped.rows << "x" << index << ".png";
             cv::imwrite(time_stream.str(), flipped);
