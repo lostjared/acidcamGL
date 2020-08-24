@@ -263,7 +263,11 @@ int main(int argc, char **argv) {
     cv::VideoWriter writer;
     
     if(filename.length()==0) {
+#ifdef _WIN32
+        acidcam::cap.open(device, cv::CAP_DSHOW);
+#else
         acidcam::cap.open(device);
+#endif
         if(!acidcam::cap.isOpened()) {
             std::cerr << "acidcam: Could not open capture device...\n";
             exit(EXIT_FAILURE);
