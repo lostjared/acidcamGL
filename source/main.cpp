@@ -15,7 +15,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     main_window.typeKey(codepoint);
 }
 
-constexpr unsigned long outstr_size = 49;
+constexpr unsigned long outstr_size = 51;
 std::string outstr_arr[] = {
     "Written by Jared Bruni",
     "    http://lostsidedead.com",
@@ -58,6 +58,8 @@ std::string outstr_arr[] = {
     "    F - process keyboard input for index",
     "    S - process keyboard input for shader",
     "    C - clear keyboard input",
+    "    [+] - increase blend percentage",
+    "    [-] = decrease blend percentage",
     "    [SPACE] - Acid Cam filters enabled/disabled",
     "    [LEFT] - Filter index move left",
     "    [RIGHT] - filter index move right",
