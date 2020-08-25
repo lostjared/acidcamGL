@@ -38,39 +38,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     command_stdout->setStyleSheet("background-color: black; color: white; font-size: 18px; ");
  }
 
-class CoutRedirect {
-public:
-    CoutRedirect() {
-        old = std::cout.rdbuf( buffer.rdbuf() ); // redirect cout to buffer stream
-    }
-    std::string getString() {
-        return buffer.str(); // get string
-    }
-
-    ~CoutRedirect( ) {
-        std::cout.rdbuf( old ); // reverse redirect
-    }
-
-private:
-    std::stringstream buffer;
-    std::streambuf * old;
-};
-
-int find_last_linefeed(std::ifstream &infile) {
-  infile.seekg(0,std::ios::end);
-  int filesize = infile.tellg();
-
-  for(int n=1;n<filesize;n++) {
-    infile.seekg(filesize-n-1,std::ios::beg);
-
-    char c;
-    infile.get(c);
-
-    if(c == 0x0A) return infile.tellg();
-  }
-    return 0;
-}
-
 void MainWindow::launchProgram() {
 
     Log("\nacidcamGL Launcher - Executing ...\n");
