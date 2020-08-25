@@ -4,12 +4,17 @@
 #include<iostream>
 #include<string>
 #include<QTextStream>
+#include<QApplication>
 #include<QDir>
 #include<fstream>
-
+#include<thread>
+#include<mutex>
+#include<iomanip>
 #ifndef _WIN32
 #include<sys/stat.h>
 #endif
+#include<sstream>
+#include<QProcess>
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
@@ -20,11 +25,51 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     command = new QLineEdit("", this);
     command->setGeometry(5, 10, 1280-110, 30);
     command_stdout->setReadOnly(true);
-    command->setText("acidcamGL ");
+    char * PWD;
+    QString pwd;
+    PWD = getenv ("PWD");
+    pwd.append(PWD);
+    QString buf = pwd;
+    buf += "/acidcamGL ";
+    command->setText(buf);
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
     connect(start_button, SIGNAL(clicked()), this, SLOT(launchProgram()));
+    command_stdout->setStyleSheet("background-color: black; color: white; font-size: 18px; ");
  }
+
+class CoutRedirect {
+public:
+    CoutRedirect() {
+        old = std::cout.rdbuf( buffer.rdbuf() ); // redirect cout to buffer stream
+    }
+    std::string getString() {
+        return buffer.str(); // get string
+    }
+
+    ~CoutRedirect( ) {
+        std::cout.rdbuf( old ); // reverse redirect
+    }
+
+private:
+    std::stringstream buffer;
+    std::streambuf * old;
+};
+
+int find_last_linefeed(std::ifstream &infile) {
+  infile.seekg(0,std::ios::end);
+  int filesize = infile.tellg();
+
+  for(int n=1;n<filesize;n++) {
+    infile.seekg(filesize-n-1,std::ios::beg);
+
+    char c;
+    infile.get(c);
+
+    if(c == 0x0A) return infile.tellg();
+  }
+    return 0;
+}
 
 void MainWindow::launchProgram() {
 
@@ -39,30 +84,32 @@ void MainWindow::launchProgram() {
     std::fstream file;
     file.open(QString(buf+"/acidcam").toStdString().c_str(), std::ios::out);
     if(!file.is_open()) {
-        Log("launcher: Couldn't open file for writing...");
+        Log("launcher: Couldn't open file for writing...\n");
         return;
     }
     file << "#/bin/sh\n\n";
     file << value << "\n";
     file.close();
-    //chmod(QString(buf+"/acidcam").toStdString().c_str(), 777);
-#ifdef __APPLE__
-    QString cmd = "open ";
-    cmd += buf;
-    cmd += "/acidcam";
-    int code = std::system(cmd.toStdString().c_str());
-    QString txt;
-    QTextStream stream(&txt);
-    stream << "launcher: Program command: " << cmd << " exited with code: " << code << "\n";
-    Log(txt);
-#else
     
-#endif
-    
+    QString program = "open";
+    QStringList arguments;
+    arguments << "/Users/jared/Source/newestac2/acidcamGL/launcher/acidcam";
+
+    QProcess *myProcess = new QProcess();
+    myProcess->start(program, arguments);
+    myProcess->waitForFinished();
+    Log(myProcess->readAllStandardOutput());
+    QString tvalue;
+    QTextStream stream(&tvalue);
+    stream << "launcher: exited with code: " << myProcess->exitCode();
+    Log(tvalue);
 }
 
 void MainWindow::Log(const QString &text) {
     QString t = command_stdout->toPlainText();
     t += text;
     command_stdout->setPlainText(t);
+    QTextCursor tmpCursor = command_stdout->textCursor();
+    tmpCursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+    command_stdout->setTextCursor(tmpCursor);
 }
