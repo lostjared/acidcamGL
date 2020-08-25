@@ -30,7 +30,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     PWD = getenv ("PWD");
     pwd.append(PWD);
     QString buf = pwd;
-    buf += "/acidcamGL ";
+    buf += "/acidcamGL -g -p ";
+    buf += QString(pwd+"/filters");
+    buf += " ";
     command->setText(buf);
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
@@ -57,17 +59,18 @@ void MainWindow::launchProgram() {
     file << "#/bin/sh\n\n";
     file << value << "\n";
     file.close();
-    
+    QString tvalue;
+    QTextStream stream(&tvalue);
+    stream << "launcher: executing shell command: " << value.c_str() << "\n";
     QString program = "open";
     QStringList arguments;
-    arguments << "/Users/jared/Source/newestac2/acidcamGL/launcher/acidcam";
-
+    arguments << QString(buf+"/acidcam");
+    Log(tvalue);
+    tvalue = "";
     QProcess *myProcess = new QProcess();
     myProcess->start(program, arguments);
     myProcess->waitForFinished();
     Log(myProcess->readAllStandardOutput());
-    QString tvalue;
-    QTextStream stream(&tvalue);
     stream << "launcher: exited with code: " << myProcess->exitCode();
     Log(tvalue);
 }
