@@ -32,7 +32,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QString buf = pwd;
     buf += "/acidcamGL -g -p ";
     buf += QString(pwd+"/filters");
-    buf += " ";
+    buf += " > ";
+    buf += QString(pwd+"/stdout.txt");
+    
     command->setText(buf);
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
@@ -71,7 +73,7 @@ void MainWindow::launchProgram() {
     myProcess->start(program, arguments);
     myProcess->waitForFinished();
     Log(myProcess->readAllStandardOutput());
-    stream << "launcher: exited with code: " << myProcess->exitCode();
+    stream << "launcher: process executed with error code: " << myProcess->exitCode();
     Log(tvalue);
 }
 
