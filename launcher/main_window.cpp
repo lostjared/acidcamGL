@@ -157,8 +157,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 }
 
 void MainWindow::launchProgram() {
-    
-    Log("\nacidcamGL Launcher - Executing ...\n");
+    Log(tr("\nacidcamGL Launcher - Executing ...\n"));
     std::string value = command->text().toStdString();
     QString pwd("");
     char * PWD;
@@ -192,7 +191,7 @@ void MainWindow::launchProgram() {
 
 void MainWindow::Log(const QString &text) {
     QString t = command_stdout->toPlainText();
-    t += text;
+    t += tr(text.toStdString().c_str());
     command_stdout->setPlainText(t);
     QTextCursor tmpCursor = command_stdout->textCursor();
     tmpCursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
