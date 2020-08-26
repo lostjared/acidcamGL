@@ -128,10 +128,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QString pwd;
     PWD = getenv ("PWD");
     pwd.append(PWD);
-    QString buf = pwd;
-    buf += "/acidcamGL -g -p ";
+    QString buf;
+    buf += "-g -p ";
     buf += QString(pwd+"/filters");
-    buf += " -P ";
+    buf += " -P";
     
     command->setText(buf);
     start_button = new QPushButton(tr("Launch"), this);
@@ -155,26 +155,24 @@ void MainWindow::launchProgram() {
     PWD = getenv ("PWD");
     pwd.append(PWD);
     QString buf = pwd;
-    
-    std::fstream file;
-    file.open(QString(buf+"/acidcam").toStdString().c_str(), std::ios::out);
-    if(!file.is_open()) {
-        Log("launcher: Couldn't open file for writing...\n");
-        return;
-    }
-    file << "#/bin/sh\n\n";
-    file << value << "\n";
-    file.close();
     QString tvalue;
     QTextStream stream(&tvalue);
     stream << "launcher: executing shell command: " << value.c_str() << "\n";
     QString program = "open";
     QStringList arguments;
-    arguments << QString(buf+"/acidcam");
+#ifdef __APPLE__
+    arguments << QString(pwd+"/"+"acidcamGL.app");
+    arguments << "--args";
+    QStringList pieces = QString(value.c_str()).split(" ", Qt::KeepEmptyParts);
+    for(int i = 0; i < pieces.size(); ++i) {
+        QString value = pieces.at(i);
+        arguments << value;
+    }
+#endif
     Log(tvalue);
     tvalue = "";
-    
     QProcess *myProcess = new QProcess();
+    myProcess->setWorkingDirectory(pwd);
     myProcess->start(program, arguments);
     myProcess->waitForFinished();
     Log(myProcess->readAllStandardOutput());
