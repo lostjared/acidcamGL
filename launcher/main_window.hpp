@@ -7,6 +7,8 @@
 #include<QLineEdit>
 #include<QPushButton>
 #include<QThread>
+#include<QLabel>
+#include<QComboBox>
 
 class ServerThread : public QThread {
     Q_OBJECT
@@ -34,6 +36,7 @@ private:
     QTextEdit *command_stdout;
     QLineEdit *command;
     QPushButton *start_button;
+    QComboBox *mode_select;
 };
 
 

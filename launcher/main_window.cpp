@@ -33,7 +33,7 @@
 #include<QProcess>
 #include<QtConcurrent>
 #include<QThread>
-
+#include<QLabel>
 MainWindow *main_window_ptr;
 
 #ifndef _WIN32
@@ -117,6 +117,7 @@ void ServerThread::process() {
 }
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+    
     setFixedSize(1280, 1280);
     setWindowTitle("acidcamGL - Start New Session");
     command_stdout = new QTextEdit("acidcamGL Launcher - written by Jared Bruni", this);
@@ -124,6 +125,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     command = new QLineEdit("", this);
     command->setGeometry(5, 10, 1280-110, 30);
     command_stdout->setReadOnly(true);
+    QString style_info = "font-size: 16px; font-family: monaco;";
+    command->setStyleSheet(style_info);
+    QLabel *temp1 = new QLabel(tr("Mode: "), this);
+    temp1->setGeometry(15, 60, 50, 25);
+    temp1->setStyleSheet(style_info);
+    mode_select = new QComboBox(this);
+    mode_select->setStyleSheet(style_info);
+    mode_select->setGeometry(60, 60, 200, 25);
+    mode_select->addItem("Capture Device");
+    mode_select->addItem("Video File");
+    
+    
     char * PWD;
     QString pwd;
     PWD = getenv ("PWD");
@@ -137,7 +150,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
     connect(start_button, SIGNAL(clicked()), this, SLOT(launchProgram()));
-    command_stdout->setStyleSheet("background-color: black; color: white; font-size: 18px; ");
+    command_stdout->setStyleSheet("background-color: black; color: white; font-size: 20px; font-family: monaco; ");
     tv = new ServerThread();
     threadx = new QThread;
     tv->moveToThread(threadx);
