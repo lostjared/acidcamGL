@@ -50,7 +50,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QLabel *select_temp = new QLabel(tr("Select Shaders:"), this);
     select_temp->setStyleSheet(style_info);
     select_temp->setGeometry(15, 60+25+10, 140, 20);
-    select_filters_text = new QLineEdit("/Users/jared/Source/newestac2/acidcamGL/filters", this);
+
+    QString pwd = QDir().currentPath();
+
+#ifdef __APPLE__
+    std::string f = pwd.toStdString();
+    auto pos = f.rfind("launcher");
+    if(pos != std::string::npos) {
+        f = f.substr(0, pos);
+        pwd = f.c_str();
+    }
+#endif
+
+
+    select_filters_text = new QLineEdit(pwd+"filters", this);
     select_filters_text->setStyleSheet(style_info);
     select_filters_text->setGeometry(15+140+10, 60+25+10, 250, 30);
     select_filters = new QPushButton(tr("Select"), this);
@@ -75,17 +88,20 @@ void MainWindow::launchProgram() {
     Log(tr("\nacidcamGL Launcher - Executing ...\n"));
     std::string value = command->text().toStdString();
     QString pwd("");
-    char * PWD;
-    PWD = getenv ("PWD");
-    pwd.append(PWD);
     QString buf = pwd;
     QString tvalue;
     QTextStream stream(&tvalue);
     stream << "launcher: executing shell command: " << value.c_str() << "\n";
     QString program = "open";
     QStringList arguments;
-    pwd = "/Users/jared/Source/newestac2/acidcamGL/launcher";
 #ifdef __APPLE__
+    pwd = QDir().currentPath();
+    std::string f = pwd.toStdString();
+    auto pos = f.rfind("launcher");
+    if(pos != std::string::npos) {
+        f = f.substr(0, pos);
+        pwd = f.c_str();
+    }
     arguments << QString(pwd+"/"+"acidcamGL.app");
     arguments << "--args";
     arguments << cmd_list;
