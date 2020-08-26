@@ -49,11 +49,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     QLabel *select_temp = new QLabel(tr("Select Shaders:"), this);
     select_temp->setStyleSheet(style_info);
-    select_temp->setGeometry(15, 60+25+10, 140, 20);
-
+    select_temp->setGeometry(15, 60+25+15, 140, 20);
     QString pwd = QDir().currentPath();
-
 #ifdef __APPLE__
+    pwd = "/Applications/acidcamGL";
     std::string f = pwd.toStdString();
     auto pos = f.rfind("launcher");
     if(pos != std::string::npos) {
@@ -63,12 +62,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 #endif
 
 
-    select_filters_text = new QLineEdit(pwd+"filters", this);
+    select_filters_text = new QLineEdit(pwd+"/filters", this);
     select_filters_text->setStyleSheet(style_info);
-    select_filters_text->setGeometry(15+140+10, 60+25+10, 250, 30);
+    select_filters_text->setGeometry(15+150+10, 60+25+10, 250, 30);
     select_filters = new QPushButton(tr("Select"), this);
     select_filters->setStyleSheet(style_info);
-    select_filters->setGeometry(15+140+10+250+10, 60+25+10,100,30);
+    select_filters->setGeometry(15+140+10+250+20, 60+25+10,100,30);
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     updateCommand();
     start_button = new QPushButton(tr("Launch"), this);
@@ -92,10 +91,11 @@ void MainWindow::launchProgram() {
     QString tvalue;
     QTextStream stream(&tvalue);
     stream << "launcher: executing shell command: " << value.c_str() << "\n";
-    QString program = "open";
+    QString program;
     QStringList arguments;
 #ifdef __APPLE__
-    pwd = QDir().currentPath();
+    program = "open";
+    pwd = "/Applications/acidcamGL";
     std::string f = pwd.toStdString();
     auto pos = f.rfind("launcher");
     if(pos != std::string::npos) {
@@ -105,6 +105,9 @@ void MainWindow::launchProgram() {
     arguments << QString(pwd+"/"+"acidcamGL.app");
     arguments << "--args";
     arguments << cmd_list;
+#else
+
+
 #endif
     Log(tvalue);
     tvalue = "";
