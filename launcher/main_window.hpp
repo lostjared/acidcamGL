@@ -11,10 +11,7 @@
 #include<QComboBox>
 #include"sock_server.hpp"
 
-
-
 class MainWindow : public QMainWindow {
-
 private:
     Q_OBJECT
 public:
@@ -26,6 +23,7 @@ public slots:
     void updateCommand();
     void textChanged_device(const QString &text);
     void comboChanged_mode(int index);
+    void selectShaders();
 signals:
     void LogString(const QString &text);
 private:
@@ -34,6 +32,11 @@ private:
     QPushButton *start_button;
     QComboBox *mode_select;
     QLineEdit *device_edit;
+    QPushButton *select_video;
+    QLineEdit *select_video_text;
+    QPushButton *select_filters;
+    QLineEdit *select_filters_text;
+    QStringList cmd_list;
 };
 
 

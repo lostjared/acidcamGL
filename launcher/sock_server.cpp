@@ -51,6 +51,7 @@ int sock_server() {
             buf[bytesRead] = 0;
             QString text = buf;
             tv->Log(buf);
+            std::cout << buf;
         }
         
         if(bytesRead == -1) {

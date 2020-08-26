@@ -22,7 +22,6 @@
 #endif
 #include<iostream>
 
-
 class ServerThread : public QThread {
     Q_OBJECT
 public:

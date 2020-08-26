@@ -15,6 +15,7 @@
 #include<QtConcurrent>
 #include<QThread>
 #include<QLabel>
+#include<QFileDialog>
 
 QThread *threadx;
 ServerThread *tv;
@@ -45,6 +46,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     device_edit = new QLineEdit("0", this);
     device_edit->setStyleSheet(style_info);
     device_edit->setGeometry(270+140+10, 60, 100, 25);
+
+    QLabel *select_temp = new QLabel(tr("Select Shaders:"), this);
+    select_temp->setStyleSheet(style_info);
+    select_temp->setGeometry(15, 60+25+10, 140, 20);
+    select_filters_text = new QLineEdit("/Users/jared/Source/newestac2/acidcamGL/filters", this);
+    select_filters_text->setStyleSheet(style_info);
+    select_filters_text->setGeometry(15+140+10, 60+25+10, 250, 30);
+    select_filters = new QPushButton(tr("Select"), this);
+    select_filters->setStyleSheet(style_info);
+    select_filters->setGeometry(15+140+10+250+10, 60+25+10,100,30);
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     updateCommand();
     start_button = new QPushButton(tr("Launch"), this);
@@ -56,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     tv->moveToThread(threadx);
     connect(tv, SIGNAL(Log(const QString &)), this, SLOT(Log(const QString &)));
     connect(threadx, SIGNAL(started()), tv, SLOT(process()));
+    connect(select_filters, SIGNAL(clicked()), this, SLOT(selectShaders()));
     threadx->start();
 }
 
@@ -72,14 +84,11 @@ void MainWindow::launchProgram() {
     stream << "launcher: executing shell command: " << value.c_str() << "\n";
     QString program = "open";
     QStringList arguments;
+    pwd = "/Users/jared/Source/newestac2/acidcamGL/launcher";
 #ifdef __APPLE__
     arguments << QString(pwd+"/"+"acidcamGL.app");
     arguments << "--args";
-    QStringList pieces = QString(value.c_str()).split(" ", Qt::KeepEmptyParts);
-    for(int i = 0; i < pieces.size(); ++i) {
-        QString value = pieces.at(i);
-        arguments << value;
-    }
+    arguments << cmd_list;
 #endif
     Log(tvalue);
     tvalue = "";
@@ -87,7 +96,7 @@ void MainWindow::launchProgram() {
     myProcess->setWorkingDirectory(pwd);
     myProcess->start(program, arguments);
     myProcess->waitForFinished();
-    Log(myProcess->readAllStandardOutput());
+    myProcess->readAllStandardOutput();
     stream << "launcher: process executed with error code: " << myProcess->exitCode();
     Log(tvalue);
 }
@@ -99,6 +108,16 @@ void MainWindow::Log(const QString &text) {
     QTextCursor tmpCursor = command_stdout->textCursor();
     tmpCursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
     command_stdout->setTextCursor(tmpCursor);
+}
+
+void MainWindow::selectShaders() {
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),
+                                                 "~",
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+    if(dir.length()>0)
+        select_filters_text->setText(dir);
+    updateCommand();
 }
 
 void MainWindow::LogMessage(const QString &text) {
@@ -114,20 +133,22 @@ void MainWindow::comboChanged_mode(int) {
     updateCommand();
 }
 void MainWindow::updateCommand() {
-    char * PWD;
-    QString pwd;
-    PWD = getenv ("PWD");
-    pwd.append(PWD);
-    QString buf;
-    buf += "-g -p ";
-    buf += QString(pwd+"/filters");
-    buf += " -P";
+    cmd_list.clear();
+    cmd_list << "-P";
+    cmd_list << "-g";
+    cmd_list << "-p";
+    cmd_list << select_filters_text->text();
+
     if(mode_select->currentIndex() == 0) {
         int value = atoi(device_edit->text().toStdString().c_str());
         if(value >= 0) {
-            buf += " -d ";
-            buf += device_edit->text();
+            cmd_list << "-d";
+            cmd_list << device_edit->text();
         }
+    }
+    QString buf;
+    for(int i = 0; i < cmd_list.size(); ++i) {
+        buf += cmd_list.at(i) + " ";
     }
     command->setText(buf);
 }
