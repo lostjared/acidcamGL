@@ -721,10 +721,18 @@ namespace acidcam {
                 std::cerr << "acidcam: Error could not open: " << stream.str() << "\n";
                 exit(EXIT_FAILURE);
             }
-           
+            
             int index = 0;
-                   
+            
             while(!file.eof()) {
+                
+                if(acidcam::redir == 1) {
+#ifndef _WIN32
+                    std::string text = redirect.getString();
+                    sendString(text);
+#endif
+                }
+                
                 std::string s;
                 std::getline(file, s);
                 if(file && s.length() > 0) {

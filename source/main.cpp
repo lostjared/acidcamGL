@@ -132,7 +132,7 @@ int main(int argc, char **argv) {
                 redirect.setEnabled(true);
                 std::cout << "acidcamGL: Starting up IPC code...\n";
                 client_main();
-                sendString("acidcam: Code Startup\n");
+                sendString("\nacidcam: Code Startup\n");
                 acidcam::redir = 1;
                 break;
             case 'T':
@@ -371,6 +371,12 @@ int main(int argc, char **argv) {
         std::cout << "acidcam: wrote to file [" << output_file << "]\n";
     writer.release();
     std::cout << "acidcam: exited\n";
+        if(acidcam::redir == 1) {
+    #ifndef _WIN32
+            std::string text = redirect.getString();
+            sendString(text);
+    #endif
+        }
     glfwTerminate();
     return EXIT_SUCCESS;
 }
