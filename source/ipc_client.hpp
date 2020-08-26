@@ -17,32 +17,18 @@ int client_main();
 class CoutRedirect {
     bool enable;
 public:
-    CoutRedirect(bool e) {
-        enable = e;
-        if(enable)
-            old = std::cout.rdbuf( buffer.rdbuf() );
-    }
-    
-    void setEnabled(bool e) {
-        enable = e;
-        enable = e;
-        if(enable)
-            old = std::cout.rdbuf( buffer.rdbuf() );
-        else
-            std::cout.rdbuf( old );
+    CoutRedirect() {
+        old = std::cout.rdbuf( buffer.rdbuf() );
     }
     
     std::string getString() {
-        if(enable) {
-            std::string val = buffer.str();
-            buffer.str("");
-            return val;
-        } else return "";
+        std::string val = buffer.str();
+        buffer.str("");
+        return val;
     }
     
     ~CoutRedirect( ) {
-        if(enable)
-            std::cout.rdbuf( old );
+        std::cout.rdbuf( old );
     }
     
 private:
@@ -50,7 +36,7 @@ private:
     std::streambuf * old;
 };
 
-extern CoutRedirect redirect;
+extern CoutRedirect *redirect;
 
 #endif
 #endif

@@ -699,7 +699,7 @@ namespace acidcam {
             
             if(redir == 1) {
 #ifndef WIN32
-                sendString(redirect.getString());
+                if(redirect != 0) sendString(redirect->getString());
 #endif
             }
         }
@@ -728,8 +728,10 @@ namespace acidcam {
                 
                 if(acidcam::redir == 1) {
 #ifndef _WIN32
-                    std::string text = redirect.getString();
+                    if(redirect != 0) {
+                    std::string text = redirect->getString();
                     sendString(text);
+                    }
 #endif
                 }
                 

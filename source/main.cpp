@@ -87,7 +87,7 @@ int findFilter(std::string f) {
 }
 
 #ifndef _WIN32
-    CoutRedirect redirect(false);
+    CoutRedirect *redirect = 0;
 #endif
 
 int main(int argc, char **argv) {
@@ -129,8 +129,7 @@ int main(int argc, char **argv) {
     while((opt = getopt(argc, argv, "PT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
             case 'P':
-                redirect.setEnabled(true);
-                std::cout << "acidcamGL: Starting up IPC code...\n";
+                redirect = new CoutRedirect();
                 client_main();
                 sendString("\nacidcam: Code Startup\n");
                 acidcam::redir = 1;
@@ -362,8 +361,10 @@ int main(int argc, char **argv) {
     std::cout << "acidcam: initialized...\n";
     if(acidcam::redir == 1) {
 #ifndef _WIN32
-        std::string text = redirect.getString();
-        sendString(text);
+        if(redirect != 0) {
+            std::string text = redirect->getString();
+            sendString(text);
+        }
 #endif
     }
     main_window.loop();
@@ -373,7 +374,7 @@ int main(int argc, char **argv) {
     std::cout << "acidcam: exited\n";
         if(acidcam::redir == 1) {
     #ifndef _WIN32
-            std::string text = redirect.getString();
+            std::string text = redirect->getString();
             sendString(text);
     #endif
         }
