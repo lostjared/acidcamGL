@@ -117,7 +117,6 @@ void ServerThread::process() {
 }
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-    
     setFixedSize(1280, 1280);
     setWindowTitle("acidcamGL - Start New Session");
     command_stdout = new QTextEdit("acidcamGL Launcher - written by Jared Bruni", this);
@@ -133,20 +132,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mode_select = new QComboBox(this);
     mode_select->setStyleSheet(style_info);
     mode_select->setGeometry(60, 60, 200, 25);
-    mode_select->addItem("Capture Device");
-    mode_select->addItem("Video File");
-    
-    
-    char * PWD;
-    QString pwd;
-    PWD = getenv ("PWD");
-    pwd.append(PWD);
-    QString buf;
-    buf += "-g -p ";
-    buf += QString(pwd+"/filters");
-    buf += " -P";
-    
-    command->setText(buf);
+    mode_select->addItem(tr("Capture Device"));
+    mode_select->addItem(tr("Video File"));
+    connect(mode_select, SIGNAL(currentIndexChanged(int)), this, SLOT(comboChanged_mode(int)));
+    QLabel *temp2;
+    temp2 = new QLabel(tr("Device Index: "), this);
+    temp2->setStyleSheet(style_info);
+    temp2->setGeometry(270, 60, 140, 25);
+    device_edit = new QLineEdit("0", this);
+    device_edit->setStyleSheet(style_info);
+    device_edit->setGeometry(270+140+10, 60, 100, 25);
+    connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    updateCommand();
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
     connect(start_button, SIGNAL(clicked()), this, SLOT(launchProgram()));
@@ -205,4 +202,30 @@ void MainWindow::Log(const QString &text) {
 void MainWindow::LogMessage(const QString &text) {
     Log(text);
     emit LogString(text);
+}
+
+void MainWindow::textChanged_device(const QString &) {
+    updateCommand();
+}
+
+void MainWindow::comboChanged_mode(int) {
+    updateCommand();
+}
+void MainWindow::updateCommand() {
+    char * PWD;
+    QString pwd;
+    PWD = getenv ("PWD");
+    pwd.append(PWD);
+    QString buf;
+    buf += "-g -p ";
+    buf += QString(pwd+"/filters");
+    buf += " -P";
+    if(mode_select->currentIndex() == 0) {
+        int value = atoi(device_edit->text().toStdString().c_str());
+        if(value >= 0) {
+            buf += " -d ";
+            buf += device_edit->text();
+        }
+    }
+    command->setText(buf);
 }

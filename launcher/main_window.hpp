@@ -30,6 +30,9 @@ public slots:
     void launchProgram();
     void LogMessage(const QString &text);
     void Log(const QString &text);
+    void updateCommand();
+    void textChanged_device(const QString &text);
+    void comboChanged_mode(int index);
 signals:
     void LogString(const QString &text);
 private:
@@ -37,6 +40,7 @@ private:
     QLineEdit *command;
     QPushButton *start_button;
     QComboBox *mode_select;
+    QLineEdit *device_edit;
 };
 
 
