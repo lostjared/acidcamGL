@@ -9,16 +9,9 @@
 #include<QThread>
 #include<QLabel>
 #include<QComboBox>
+#include"sock_server.hpp"
 
-class ServerThread : public QThread {
-    Q_OBJECT
-public:
-    ServerThread();
-public slots:
-    void process();
-signals:
-    void Log(const QString &text);
-};
+
 
 class MainWindow : public QMainWindow {
 

@@ -6,12 +6,10 @@
 extern QThread *tv;
 extern bool sock_running;
 extern int sockfd;
-extern MainWindow *main_window_ptr;
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
     MainWindow window1;
-    main_window_ptr = &window1;
     window1.show();
     app.exec();
     sock_running = false;
