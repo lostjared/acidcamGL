@@ -17,12 +17,13 @@
 #include<iomanip>
 #include<iostream>
 #include"keymap.hpp"
-
+#include"ipc_client.hpp"
 #define version_info "v1.0.002"
 
 namespace acidcam {
     
     extern cv::VideoCapture cap;
+    extern int redir;
     
     class AcidCam_Window : public glWindow {
         static constexpr int numVAOs = 1;
@@ -694,6 +695,12 @@ namespace acidcam {
                         optx = glm::vec4(0.5, 0.5, 0.5, 0.5);
                         break;
                 }
+            }
+            
+            if(redir == 1) {
+#ifndef WIN32
+                sendString(redirect.getString());
+#endif
             }
         }
         

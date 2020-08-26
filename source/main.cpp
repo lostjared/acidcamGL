@@ -1,5 +1,6 @@
 
 #include"acidcam_window.hpp"
+#include"ipc_client.hpp"
 
 acidcam::AcidCam_Window main_window;
 
@@ -70,6 +71,8 @@ std::string outstr_arr[] = {
     "     T - reset color offset"
 };
 
+int acidcam::redir = 0;
+
 void print_help_message() {
     for(int i = 0; i < outstr_size; ++i)
         std::cout << outstr_arr[i] << "\n";
@@ -119,8 +122,14 @@ int main(int argc, char **argv) {
     int color_map = -1;
     std::string material;
     int res_w = 0, res_h = 0;
-    while((opt = getopt(argc, argv, "T:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    while((opt = getopt(argc, argv, "PT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'P':
+                std::cout << "acidcamGL: Starting up IPC code...\n";
+                client_main();
+                sendString("acidcam: Code Startup\n");
+                acidcam::redir = 1;
+                break;
             case 'T':
                 material  = optarg;
                 break;
@@ -346,6 +355,12 @@ int main(int argc, char **argv) {
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
     std::cout << "acidcam: initialized...\n";
+    if(acidcam::redir == 1) {
+#ifndef _WIN32
+        std::string text = redirect.getString();
+        sendString(text);
+#endif
+    }
     main_window.loop();
     if(writer.isOpened())
         std::cout << "acidcam: wrote to file [" << output_file << "]\n";
