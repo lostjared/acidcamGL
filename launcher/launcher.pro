@@ -17,4 +17,4 @@ INCLUDEPATH += .
 HEADERS += main_window.hpp
 SOURCES += main.cpp main_window.cpp
 
-QT += widgets
+QT += widgets concurrent
