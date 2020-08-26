@@ -3,7 +3,6 @@
 const char *SOCK_PATH = "/tmp/testsock";
 const int BUF_SIZE=256;
 
-CoutRedirect redirect;
 
 void error(const std::string &text, bool err_no = true);
 

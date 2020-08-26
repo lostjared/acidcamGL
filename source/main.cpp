@@ -86,6 +86,10 @@ int findFilter(std::string f) {
     return -1;
 }
 
+#ifndef _WIN32
+    CoutRedirect redirect(false);
+#endif
+
 int main(int argc, char **argv) {
     if(argc == 1) {
         print_help_message();
@@ -125,6 +129,7 @@ int main(int argc, char **argv) {
     while((opt = getopt(argc, argv, "PT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
             case 'P':
+                redirect.setEnabled(true);
                 std::cout << "acidcamGL: Starting up IPC code...\n";
                 client_main();
                 sendString("acidcam: Code Startup\n");
