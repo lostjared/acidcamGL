@@ -6,6 +6,17 @@
 #include<QTextEdit>
 #include<QLineEdit>
 #include<QPushButton>
+#include<QThread>
+
+class ServerThread : public QThread {
+    Q_OBJECT
+public:
+    ServerThread();
+public slots:
+    void process();
+signals:
+    void Log(const QString &text);
+};
 
 class MainWindow : public QMainWindow {
 
@@ -13,15 +24,17 @@ private:
     Q_OBJECT
 public:
     MainWindow(QWidget *parent = 0);
-   void Log(const QString &text);
 public slots:
     void launchProgram();
+    void LogMessage(const QString &text);
+    void Log(const QString &text);
+signals:
+    void LogString(const QString &text);
 private:
     QTextEdit *command_stdout;
     QLineEdit *command;
     QPushButton *start_button;
 };
-
 
 
 #endif
