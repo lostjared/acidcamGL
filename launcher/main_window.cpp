@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(select_video_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(select_path, SIGNAL(clicked()), this, SLOT(selectPath()));
     QString homeLocation = QStandardPaths::locate(QStandardPaths::PicturesLocation, QString(), QStandardPaths::LocateDirectory);
-    select_path_text->setText(homeLocation + "/" + "acldcamGL_Snapshot");
+    select_path_text->setText(homeLocation+"acidcamGL_Snapshot");
     updateCommand();
     command_stdout->setReadOnly(true);
     command->setReadOnly(true);
@@ -223,7 +223,7 @@ void MainWindow::updateCommand() {
 
     if(select_path_text->text().length()>0) {
         cmd_list << "-e";
-        cmd_list << select_path_text->text()+"/acidcamGL_Snapshot";
+        cmd_list << select_path_text->text();
     }
 
     QString buf;
