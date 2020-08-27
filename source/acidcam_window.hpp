@@ -124,7 +124,7 @@ namespace acidcam {
             
             cv::Mat frame;
             if(!cap.isOpened()) {
-                std::cerr << "acidcam: Error opening camera/file..\n";
+                std::cout << "acidcam: Error opening camera/file..\n";
                 quit();
                 return;
             }
@@ -156,8 +156,8 @@ namespace acidcam {
             cv::Mat frame;
             frame = cv::imread(s);
             if(frame.empty()) {
-                std::cerr << "acidcam: Error could not load texture: " << s << "\n";
-                exit(EXIT_FAILURE);
+                std::cout << "acidcam: Error could not load texture: " << s << "\n";
+                acidcam::updateError();
             }
             
             cv::Mat flipped;
@@ -202,8 +202,8 @@ namespace acidcam {
             std::fstream file;
             file.open(l, std::ios::in);
             if(!file.is_open()) {
-                std::cerr << "acidcam: Error could not open playlist: " << l << "\n";
-                exit(EXIT_FAILURE);
+                std::cout << "acidcam: Error could not open playlist: " << l << "\n";
+                acidcam::updateError();
             }
             while(!file.eof()) {
                 std::string s;
@@ -212,7 +212,7 @@ namespace acidcam {
                     if(s.length()>0) {
                         int value = find_solo(s);
                         if(value == -1) {
-                            std::cerr << "acidcam: Error could not find for playlist string: " << s << "\n";
+                            std::cout << "acidcam: Error could not find for playlist string: " << s << "\n";
                             //quit();
                             //return;
                         } else
@@ -718,8 +718,8 @@ namespace acidcam {
             std::fstream file;
             file.open(stream.str(), std::ios::in) ;
             if(!file.is_open()) {
-                std::cerr << "acidcam: Error could not open: " << stream.str() << "\n";
-                exit(EXIT_FAILURE);
+                std::cout << "acidcam: Error could not open: " << stream.str() << "\n";
+                acidcam::updateError();
             }
             
             int index = 0;
@@ -746,8 +746,8 @@ namespace acidcam {
                     ShaderProgram p;
                     std::cout << "acidcam: Compiling Shader " << index << " [" << s << "] ";
                     if(p.loadProgram(fs2.str(), fs1.str())==false) {
-                        std::cerr << "Error could not load: " << fs1.str() << "\n";
-                        exit(EXIT_FAILURE);
+                        std::cout << "Error could not load: " << fs1.str() << "\n";
+                        acidcam::updateError();
                     }
                     std::cout << "\n";
                     p.setName(s.substr(0, s.rfind(".")));

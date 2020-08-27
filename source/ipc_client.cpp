@@ -35,7 +35,7 @@ void sendString(const std::string &text) {
 
 void error(const std::string &text, bool err_no) {
     std::cerr << "Error: " << text << "\n";
-    if(err_no) std::cerr << strerror(errno) << "\n";
+    if(err_no) std::cout << strerror(errno) << "\n";
 }
 #endif
 

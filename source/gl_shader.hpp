@@ -27,5 +27,6 @@ namespace acidcam {
         GLuint shader_id;
         std::string name_;
     };
+    
 }
 #endif

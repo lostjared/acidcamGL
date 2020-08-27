@@ -90,13 +90,21 @@ int findFilter(std::string f) {
     CoutRedirect *redirect = 0;
 #endif
 
+void acidcam::updateError() {
+    if(redirect != 0) {
+        std::string text = redirect->getString();
+        sendString(text);
+    }
+    exit(EXIT_FAILURE);
+}
+
 int main(int argc, char **argv) {
     if(argc == 1) {
         print_help_message();
         exit(EXIT_SUCCESS);
     }
     if(!glfwInit()) {
-        exit(EXIT_FAILURE);
+        acidcam::updateError();
     }
     ac::init();
     std::string filename;
@@ -153,7 +161,7 @@ int main(int argc, char **argv) {
                 set_index = atoi(optarg);
                 if(set_index < 0 || set_index > ac::solo_filter.size()-1) {
                     std::cout << "acidcam: Error invalid starting index...\n";
-                    exit(EXIT_FAILURE);
+                    acidcam::updateError();
                 }
                 break;
             case 'M':
@@ -229,8 +237,8 @@ int main(int argc, char **argv) {
             case 'r': {
                 std::string pos = optarg;
                 if(pos.rfind("x") == std::string::npos) {
-                    std::cerr << "acidcam: Invalid format for resolution string...1920x1080 is proper.\n";
-                    exit(EXIT_FAILURE);
+                    std::cout << "acidcam: Invalid format for resolution string...1920x1080 is proper.\n";
+                    acidcam::updateError();
                 }
                 std::string left=pos.substr(0, pos.rfind("x"));
                 std::string right=pos.substr(pos.rfind("x")+1, pos.length());
@@ -239,8 +247,8 @@ int main(int argc, char **argv) {
                 res_w = w;
                 res_h = h;
                 if(w <= 0 || h <= 0) {
-                    std::cerr << "acidcam: Invalid resolution..\n";
-                    exit(EXIT_FAILURE);
+                    std::cout << "acidcam: Invalid resolution..\n";
+                    acidcam::updateError();
                 }
                 std::cout << "acidcam: Setting Window Resolution at: " << w << "x" << h << "\n";
             }
@@ -248,16 +256,16 @@ int main(int argc, char **argv) {
             case 'c': {
                 std::string pos = optarg;
                 if(pos.rfind("x") == std::string::npos) {
-                    std::cerr << "acidcam: Invalid format for resolution string...1920x1080 is proper.\n";
-                    exit(EXIT_FAILURE);
+                    std::cout << "acidcam: Invalid format for resolution string...1920x1080 is proper.\n";
+                    acidcam::updateError();
                 }
                 std::string left=pos.substr(0, pos.rfind("x"));
                 std::string right=pos.substr(pos.rfind("x")+1, pos.length());
                 cw = atoi(left.c_str());
                 ch = atoi(right.c_str());
                 if(w <= 0 || h <= 0) {
-                    std::cerr << "Invalid resolution..\n";
-                    exit(EXIT_FAILURE);
+                    std::cout << "Invalid resolution..\n";
+                    acidcam::updateError();
                 }
                 std::cout << "acidcam: Desired Capture Resolution: " << cw << "x" << ch << "\n";
             }
@@ -269,8 +277,8 @@ int main(int argc, char **argv) {
         }
     }
     if(shader_path.length()==0) {
-        std::cerr << "acidcam: Error: must provide path to shaders...\n";
-        exit(EXIT_FAILURE);
+        std::cout << "acidcam: Error: must provide path to shaders...\n";
+        acidcam::updateError();
     }
     
     cv::VideoWriter writer;
@@ -282,8 +290,8 @@ int main(int argc, char **argv) {
         acidcam::cap.open(device);
 #endif
         if(!acidcam::cap.isOpened()) {
-            std::cerr << "acidcam: Could not open capture device...\n";
-            exit(EXIT_FAILURE);
+            std::cout << "acidcam: Could not open capture device...\n";
+            acidcam::updateError();
         }
         acidcam::cap.set(cv::CAP_PROP_FRAME_WIDTH, cw);
         acidcam::cap.set(cv::CAP_PROP_FRAME_HEIGHT, ch);
@@ -292,15 +300,15 @@ int main(int argc, char **argv) {
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
         fps = acidcam::cap.get(cv::CAP_PROP_FPS);
         if(output_file.length()>0) {
-            std::cerr << "acidcam: Error outuput file not supported for camera mode use OBS.\n";
+            std::cout << "acidcam: Error outuput file not supported for camera mode use OBS.\n";
             output_file = "";
             exit(EXIT_SUCCESS);
         }
     } else {
         acidcam::cap.open(filename);
         if(!acidcam::cap.isOpened()) {
-            std::cerr << "acidcam: Error could not open file: " << filename << "\n";
-            exit(EXIT_FAILURE);
+            std::cout << "acidcam: Error could not open file: " << filename << "\n";
+            acidcam::updateError();
         }
         cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
         ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
@@ -334,8 +342,8 @@ int main(int argc, char **argv) {
     if(filter_string.length()>0) {
         set_index = findFilter(filter_string);
         if(set_index == -1) {
-            std::cerr << "acidcam: Error could not find filter: " << filter_string << "\n";
-            exit(EXIT_FAILURE);
+            std::cout << "acidcam: Error could not find filter: " << filter_string << "\n";
+            acidcam::updateError();
         }
     }
     main_window.setFilterIndex(set_index);
@@ -350,8 +358,8 @@ int main(int argc, char **argv) {
         else
             writer.open(output_file, cv::VideoWriter::fourcc('m','p','4','v'), fps, cv::Size(w, h), true);
         if(!writer.isOpened()) {
-            std::cerr << "acidcam: Error opening video writer...\n";
-            exit(EXIT_FAILURE);
+            std::cout << "acidcam: Error opening video writer...\n";
+            acidcam::updateError();
         }
         std::cout << "acidcam: record " << output_file << " " << w << "x" << h << " " << fps << "\n";
         main_window.setWriter(writer,w,h);

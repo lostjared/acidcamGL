@@ -30,7 +30,7 @@ namespace acidcam {
         if(!window) return 0;
         glfwMakeContextCurrent(window);
         if(glewInit()!=GLEW_OK)
-            exit(EXIT_FAILURE);
+            acidcam::updateError();
         
         window_width = w;
         window_height = h;

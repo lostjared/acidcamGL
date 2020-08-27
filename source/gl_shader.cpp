@@ -3,7 +3,9 @@
 #include<fstream>
 
 namespace acidcam {
-    
+
+    extern void updateError();
+
     ShaderProgram::ShaderProgram() : shader_id{0} {
         
     }
@@ -103,13 +105,13 @@ namespace acidcam {
         std::fstream v,f;
         v.open(vert, std::ios::in);
         if(!v.is_open()) {
-            std::cerr << "acidcam: Error could not open file: " << vert << "\n";
-            exit(EXIT_FAILURE);
+            std::cout << "acidcam: Error could not open file: " << vert << "\n";
+            acidcam::updateError();
         }
         f.open(frag, std::ios::in);
         if(!f.is_open()) {
-            std::cerr << "acidcam: Eror could not open file: " << frag << "\n";
-            exit(EXIT_FAILURE);
+            std::cout << "acidcam: Eror could not open file: " << frag << "\n";
+            acidcam::updateError();
         }
         std::ostringstream stream1, stream2;
         stream1 << v.rdbuf();

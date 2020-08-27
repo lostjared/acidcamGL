@@ -4,13 +4,15 @@
 #include<cctype>
 
 namespace acidcam {
-    
+
+    extern void updateError();
+
     void KeyMap::load(const std::string &name) {
         std::fstream file;
         file.open(name, std::ios::in);
         if(!file.is_open()) {
-            std::cerr << "acidcam: Error opening file: " << name << "\n";
-            exit(EXIT_FAILURE);
+            std::cout << "acidcam: Error opening file: " << name << "\n";
+            acidcam::updateError();
         }
         
         while(!file.eof()) {

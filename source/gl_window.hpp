@@ -23,6 +23,7 @@ namespace acidcam {
     };
     
     bool checkForError();
+    extern void updateError();
 }
 
 #endif
