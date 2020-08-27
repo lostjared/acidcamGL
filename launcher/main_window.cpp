@@ -20,18 +20,7 @@
 QThread *threadx;
 ServerThread *tv;
 
-QString fixText(const QString &text) {
-    QString final;
-    for(int i = 0; i < text.length(); ++i) {
-        if(text.at(i) != ' ') {
-            final += text.at(i);
-        } else {
-            final += "\\";
-            final += " ";
-        }
-    }
-    return final;
-}
+QString application_path = "/Applications/acidcamGL";
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setFixedSize(1280, 1280);
@@ -65,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     select_temp->setGeometry(15, 60+25+15, 140, 20);
     QString pwd = QDir().currentPath();
 #ifdef __APPLE__
-    pwd = "/Applications/acidcamGL";
+    pwd = application_path;
     std::string f = pwd.toStdString();
     auto pos = f.rfind("launcher");
     if(pos != std::string::npos) {
@@ -114,7 +103,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(select_path_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(select_video_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(select_path, SIGNAL(clicked()), this, SLOT(selectPath()));
+    QString homeLocation = QStandardPaths::locate(QStandardPaths::PicturesLocation, QString(), QStandardPaths::LocateDirectory);
+    select_path_text->setText(homeLocation + "/" + "acldcamGL_Snapshot");
     updateCommand();
+    command_stdout->setReadOnly(true);
+    command->setReadOnly(true);
 }
 
 void MainWindow::launchProgram() {
@@ -129,13 +122,14 @@ void MainWindow::launchProgram() {
     QStringList arguments;
 #ifdef __APPLE__
     program = "open";
-    pwd = "/Applications/acidcamGL";
+    pwd = application_path;
     std::string f = pwd.toStdString();
     auto pos = f.rfind("launcher");
     if(pos != std::string::npos) {
-        f = f.substr(0, pos);
+        f = f.substr(0, pos-1);
         pwd = f.c_str();
     }
+    Log(pwd);
     arguments << QString(pwd+"/"+"acidcamGL.app");
     arguments << "--args";
     arguments << cmd_list;
@@ -211,7 +205,6 @@ void MainWindow::updateCommand() {
     QString temp = "";
     temp += select_filters_text->text();
     cmd_list << temp;
-
     if(mode_select->currentIndex() == 0) {
         int value = atoi(device_edit->text().toStdString().c_str());
         if(value >= 0) {
