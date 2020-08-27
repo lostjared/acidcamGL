@@ -80,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
+    start_button->setStyleSheet(style_info);
     connect(start_button, SIGNAL(clicked()), this, SLOT(launchProgram()));
     command_stdout->setStyleSheet("background-color: black; color: white; font-size: 20px; font-family: monaco; ");
     tv = new ServerThread();
@@ -108,6 +109,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     updateCommand();
     command_stdout->setReadOnly(true);
     command->setReadOnly(true);
+    //Log(QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory));
+
 }
 
 void MainWindow::launchProgram() {
