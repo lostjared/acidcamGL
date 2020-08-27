@@ -162,7 +162,7 @@ void MainWindow::selectShaders() {
 
 void MainWindow::selectVideo() {
     QString name = QFileDialog::getOpenFileName(this,
-        tr("Open Video"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi)"));
+        tr("Open Video"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
     select_video_text->setText(name);
     updateCommand();
 }
