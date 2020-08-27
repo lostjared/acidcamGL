@@ -20,6 +20,19 @@
 QThread *threadx;
 ServerThread *tv;
 
+QString fixText(const QString &text) {
+    QString final;
+    for(int i = 0; i < text.length(); ++i) {
+        if(text.at(i) != ' ') {
+            final += text.at(i);
+        } else {
+            final += "\\";
+            final += " ";
+        }
+    }
+    return final;
+}
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setFixedSize(1280, 1280);
     setWindowTitle("acidcamGL - Start New Session");
@@ -60,14 +73,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         pwd = f.c_str();
     }
 #endif
-
-
     select_filters_text = new QLineEdit(pwd+"/filters", this);
     select_filters_text->setStyleSheet(style_info);
     select_filters_text->setGeometry(15+150+10, 60+25+10, 250, 30);
     select_filters = new QPushButton(tr("Select"), this);
     select_filters->setStyleSheet(style_info);
     select_filters->setGeometry(15+140+10+250+20, 60+25+10,100,30);
+    select_video = new QPushButton(tr("Select"), this);
+    QLabel *select_temp1 = new QLabel(tr("Select Video: "), this);
+    select_temp1->setGeometry(15+140+10+250+20+60+25+10+5, 60, 125, 20);
+    select_video->setStyleSheet(style_info);
+    select_video->setGeometry(15+140+10+250+20+60+25+10+5+125+5+150+5, 60, 100, 30);
+    select_temp1->setStyleSheet(style_info);
+    select_video_text = new QLineEdit("", this);
+    select_video_text->setStyleSheet(style_info);
+    select_video_text->setGeometry(15+140+10+250+20+60+25+10+5+125+5, 60, 150, 30);
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     updateCommand();
     start_button = new QPushButton(tr("Launch"), this);
@@ -80,6 +100,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(tv, SIGNAL(Log(const QString &)), this, SLOT(Log(const QString &)));
     connect(threadx, SIGNAL(started()), tv, SLOT(process()));
     connect(select_filters, SIGNAL(clicked()), this, SLOT(selectShaders()));
+    connect(select_video, SIGNAL(clicked()),this, SLOT(selectVideo()));
     threadx->start();
 }
 
@@ -106,8 +127,8 @@ void MainWindow::launchProgram() {
     arguments << "--args";
     arguments << cmd_list;
 #else
-
-
+    program = QString(pwd+"/launcher.exe");
+    arguments << cmd_list;
 #endif
     Log(tvalue);
     tvalue = "";
@@ -139,6 +160,13 @@ void MainWindow::selectShaders() {
     updateCommand();
 }
 
+void MainWindow::selectVideo() {
+    QString name = QFileDialog::getOpenFileName(this,
+        tr("Open Video"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi)"));
+    select_video_text->setText(name);
+    updateCommand();
+}
+
 void MainWindow::LogMessage(const QString &text) {
     Log(text);
     emit LogString(text);
@@ -156,13 +184,20 @@ void MainWindow::updateCommand() {
     cmd_list << "-P";
     cmd_list << "-g";
     cmd_list << "-p";
-    cmd_list << select_filters_text->text();
+    QString temp = "";
+    temp += select_filters_text->text();
+    cmd_list << temp;
 
     if(mode_select->currentIndex() == 0) {
         int value = atoi(device_edit->text().toStdString().c_str());
         if(value >= 0) {
             cmd_list << "-d";
             cmd_list << device_edit->text();
+        }
+    } else {
+         if(select_video_text->text().length()>0) {
+            cmd_list << "-i";
+            cmd_list << select_video_text->text();
         }
     }
     QString buf;

@@ -24,6 +24,7 @@ public slots:
     void textChanged_device(const QString &text);
     void comboChanged_mode(int index);
     void selectShaders();
+    void selectVideo();
 signals:
     void LogString(const QString &text);
 private:
