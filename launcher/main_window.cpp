@@ -237,7 +237,12 @@ void MainWindow::updateCommand() {
     QString temp = "";
     temp += select_filters_text->text();
     cmd_list << temp;
+    select_video->setEnabled(true);
+    select_video_text->setEnabled(true);
+    device_edit->setEnabled(true);
     if(mode_select->currentIndex() == 0) {
+        select_video->setEnabled(false);
+        select_video_text->setEnabled(false);
         int value = atoi(device_edit->text().toStdString().c_str());
         if(value >= 0) {
             cmd_list << "-d";
@@ -253,6 +258,7 @@ void MainWindow::updateCommand() {
             }
         }
     } else {
+        device_edit->setEnabled(false);
          if(select_video_text->text().length()>0) {
             cmd_list << "-i";
             cmd_list << select_video_text->text();
