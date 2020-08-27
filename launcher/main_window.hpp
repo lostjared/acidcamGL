@@ -9,6 +9,7 @@
 #include<QThread>
 #include<QLabel>
 #include<QComboBox>
+#include<QCheckBox>
 #include"sock_server.hpp"
 
 class MainWindow : public QMainWindow {
@@ -43,6 +44,9 @@ private:
     QLineEdit *select_path_text;
     QLineEdit *camera_res;
     QLineEdit *window_res;
+    QCheckBox *full_screen;
+    QCheckBox *full_screen_resize;
+    QLineEdit *monitor_;
 };
 
 

@@ -121,10 +121,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     window_res->setStyleSheet(style_info);
     window_res->setGeometry(215+150+10+15+200, 60+25+10+40, 150, 30);
     connect(window_res, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
-    updateCommand();
+    full_screen = new QCheckBox(tr("Full Screen"), this);
+    full_screen_resize = new QCheckBox(tr("Resize"), this);
+    full_screen->setStyleSheet(style_info);
+    full_screen_resize->setStyleSheet(style_info);
+    full_screen->setGeometry(215+150+10+15+200+150+10, 60+25+10+40, 150, 25);
+    full_screen_resize->setGeometry(215+150+10+15+200+150+10+150, 60+25+10+40, 150, 25);
+    monitor_ = new QLineEdit(tr("0"), this);
+    monitor_->setStyleSheet(style_info);
+    QLabel *mon_text = new QLabel(tr("Monitor: "), this);
+    mon_text->setStyleSheet(style_info);
+    mon_text->setGeometry(215+150+10+15+200+150+10+150+50+10+50, 60+25+10+40, 100, 30);
+    monitor_->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50, 60+25+10+40, 100, 30);
     command_stdout->setReadOnly(true);
     command->setReadOnly(true);
+    connect(full_screen, SIGNAL(clicked()), this, SLOT(updateCommand()));
+    connect(full_screen_resize, SIGNAL(clicked()), this, SLOT(updateCommand()));
     //Log(QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory));
+    connect(monitor_, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    updateCommand();
 }
 
 void MainWindow::launchProgram() {
@@ -257,6 +272,17 @@ void MainWindow::updateCommand() {
             cmd_list << window_res->text();
         }
     }
+
+    if(full_screen->isChecked()) {
+        if(full_screen_resize->isChecked()) {
+            cmd_list << "-f";
+        } else {
+            cmd_list << "-F";
+        }
+        cmd_list << "-M";
+        cmd_list << monitor_->text();
+    }
+
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
         buf += cmd_list.at(i) + " ";
