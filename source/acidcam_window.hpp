@@ -57,6 +57,7 @@ namespace acidcam {
         bool repeat;
         int color_map;
         int blend_index;
+         
     public:
         
         AcidCam_Window() = default;
@@ -242,6 +243,11 @@ namespace acidcam {
             time_stream << snapshot_prefix << "-" << (m->tm_year + 1900) << "." << std::setw(2) << std::setfill('0') << (m->tm_mon + 1) << "." << std::setw(2) << std::setfill('0') << m->tm_mday << "_" << std::setw(2) << std::setfill('0') << m->tm_hour << "." << std::setw(2) << std::setfill('0') << m->tm_min << "." << std::setw(2) << std::setfill('0') << m->tm_sec <<  "_" << flipped.cols << "x" << flipped.rows << "x" << index << ".png";
             cv::imwrite(time_stream.str(), flipped);
             std::cout << "acidcam: Wrote: " << time_stream.str() << "\n";
+            if(redir == 1) {
+#ifndef WIN32
+                if(redirect != 0) sendString(redirect->getString());
+#endif
+            }
         }
         
         void readFrame(cv::Mat &frame) {

@@ -14,6 +14,7 @@ void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
 
 void character_callback(GLFWwindow* window, unsigned int codepoint) {
     main_window.typeKey(codepoint);
+    
 }
 
 constexpr unsigned long outstr_size = 51;
