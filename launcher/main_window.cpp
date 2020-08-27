@@ -93,7 +93,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     threadx->start();
     QLabel *select_temp2 = new QLabel(tr("Set Path: "), this);
     select_temp2->setStyleSheet(style_info);
-    select_temp2->setGeometry(5+15+140+10+250+20+60+25+10+5, 60+25+5,100,30);
+    select_temp2->setGeometry(5+15+140+10+250+20+60+25+10+5, 60+25+10,100,30);
     select_path = new QPushButton(tr("Select"), this);
     select_path->setStyleSheet(style_info);
     select_path->setGeometry(10+5+15+10+250+125+20+60+25+10+5+125+5+150+5+5, 60+25+10, 100, 30);
@@ -106,6 +106,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(select_path, SIGNAL(clicked()), this, SLOT(selectPath()));
     QString homeLocation = QStandardPaths::locate(QStandardPaths::PicturesLocation, QString(), QStandardPaths::LocateDirectory);
     select_path_text->setText(homeLocation+"acidcamGL_Snapshot");
+    QLabel *camera_temp = new QLabel(tr("Camera Resolution: "), this);
+    camera_temp->setStyleSheet(style_info);
+    camera_temp->setGeometry(15, 60+25+10+40, 200, 25);
+    camera_res = new QLineEdit(tr("1280x720"), this);
+    camera_res->setStyleSheet(style_info);
+    camera_res->setGeometry(215, 60+25+10+40, 150, 30);
+    connect(camera_res, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     updateCommand();
     command_stdout->setReadOnly(true);
     command->setReadOnly(true);
@@ -214,6 +221,15 @@ void MainWindow::updateCommand() {
             cmd_list << "-d";
             cmd_list << device_edit->text();
         }
+        std::string vf = camera_res->text().toStdString();
+        if(vf.find("x") != std::string::npos) {
+            std::string left = vf.substr(0, vf.find("x"));
+            std::string right = vf.substr(vf.find("x")+1, vf.length());
+            if(atoi(left.c_str()) >= 320 && atoi(right.c_str()) >= 240) {
+                cmd_list << "-c";
+                cmd_list << camera_res->text();
+            }
+        }
     } else {
          if(select_video_text->text().length()>0) {
             cmd_list << "-i";
@@ -225,6 +241,7 @@ void MainWindow::updateCommand() {
         cmd_list << "-e";
         cmd_list << select_path_text->text();
     }
+
 
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {

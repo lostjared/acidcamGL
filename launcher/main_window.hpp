@@ -41,6 +41,8 @@ private:
     QStringList cmd_list;
     QPushButton *select_path;
     QLineEdit *select_path_text;
+    QLineEdit *camera_res;
+    QLineEdit *window_res;
 };
 
 
