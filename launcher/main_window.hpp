@@ -25,6 +25,7 @@ public slots:
     void comboChanged_mode(int index);
     void selectShaders();
     void selectVideo();
+    void selectPath();
 signals:
     void LogString(const QString &text);
 private:
@@ -38,6 +39,8 @@ private:
     QPushButton *select_filters;
     QLineEdit *select_filters_text;
     QStringList cmd_list;
+    QPushButton *select_path;
+    QLineEdit *select_path_text;
 };
 
 

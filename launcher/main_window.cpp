@@ -81,15 +81,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     select_filters->setGeometry(15+140+10+250+20, 60+25+10,100,30);
     select_video = new QPushButton(tr("Select"), this);
     QLabel *select_temp1 = new QLabel(tr("Select Video: "), this);
-    select_temp1->setGeometry(15+140+10+250+20+60+25+10+5, 60, 125, 20);
+    select_temp1->setGeometry(5+15+140+10+250+20+60+25+10+5, 60, 125, 20);
     select_video->setStyleSheet(style_info);
-    select_video->setGeometry(15+140+10+250+20+60+25+10+5+125+5+150+5, 60, 100, 30);
+    select_video->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+5, 60, 100, 30);
     select_temp1->setStyleSheet(style_info);
     select_video_text = new QLineEdit("", this);
     select_video_text->setStyleSheet(style_info);
-    select_video_text->setGeometry(15+140+10+250+20+60+25+10+5+125+5, 60, 150, 30);
+    select_video_text->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5, 60, 150, 30);
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
-    updateCommand();
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
     connect(start_button, SIGNAL(clicked()), this, SLOT(launchProgram()));
@@ -102,6 +101,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(select_filters, SIGNAL(clicked()), this, SLOT(selectShaders()));
     connect(select_video, SIGNAL(clicked()),this, SLOT(selectVideo()));
     threadx->start();
+    QLabel *select_temp2 = new QLabel(tr("Set Path: "), this);
+    select_temp2->setStyleSheet(style_info);
+    select_temp2->setGeometry(5+15+140+10+250+20+60+25+10+5, 60+25+5,100,30);
+    select_path = new QPushButton(tr("Select"), this);
+    select_path->setStyleSheet(style_info);
+    select_path->setGeometry(10+5+15+10+250+125+20+60+25+10+5+125+5+150+5+5, 60+25+10, 100, 30);
+    select_temp1->setStyleSheet(style_info);
+    select_path_text = new QLineEdit("", this);
+    select_path_text->setStyleSheet(style_info);
+    select_path_text->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5, 60+25+10, 150, 25);
+    connect(select_path_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    connect(select_video_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    connect(select_path, SIGNAL(clicked()), this, SLOT(selectPath()));
+    updateCommand();
 }
 
 void MainWindow::launchProgram() {
@@ -160,6 +173,17 @@ void MainWindow::selectShaders() {
     updateCommand();
 }
 
+void MainWindow::selectPath() {
+
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),
+                                                 "~",
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+    if(dir.length()>0)
+        select_path_text->setText(dir);
+    updateCommand();
+}
+
 void MainWindow::selectVideo() {
     QString name = QFileDialog::getOpenFileName(this,
         tr("Open Video"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
@@ -200,6 +224,12 @@ void MainWindow::updateCommand() {
             cmd_list << select_video_text->text();
         }
     }
+
+    if(select_path_text->text().length()>0) {
+        cmd_list << "-e";
+        cmd_list << select_path_text->text()+"/acidcamGL_Snapshot";
+    }
+
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
         buf += cmd_list.at(i) + " ";
