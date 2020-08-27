@@ -113,11 +113,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     camera_res->setStyleSheet(style_info);
     camera_res->setGeometry(215, 60+25+10+40, 150, 30);
     connect(camera_res, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+
+    QLabel *camera_temp1 = new QLabel(tr("Window Resolution: "), this);
+    camera_temp1->setStyleSheet(style_info);
+    camera_temp1->setGeometry(215+150+10+15, 60+25+10+40, 200, 25);
+    window_res = new QLineEdit(tr("1280x720"), this);
+    window_res->setStyleSheet(style_info);
+    window_res->setGeometry(215+150+10+15+200, 60+25+10+40, 150, 30);
+    connect(window_res, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     updateCommand();
     command_stdout->setReadOnly(true);
     command->setReadOnly(true);
     //Log(QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory));
-
 }
 
 void MainWindow::launchProgram() {
@@ -241,8 +248,15 @@ void MainWindow::updateCommand() {
         cmd_list << "-e";
         cmd_list << select_path_text->text();
     }
-
-
+    std::string vf = window_res->text().toStdString();
+    if(vf.find("x") != std::string::npos) {
+        std::string left = vf.substr(0, vf.find("x"));
+        std::string right = vf.substr(vf.find("x")+1, vf.length());
+        if(atoi(left.c_str()) >= 320 && atoi(right.c_str()) >= 240) {
+            cmd_list << "-r";
+            cmd_list << window_res->text();
+        }
+    }
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
         buf += cmd_list.at(i) + " ";
