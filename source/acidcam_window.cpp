@@ -5,3 +5,10 @@ namespace acidcam {
     cv::VideoCapture cap;
 
 }
+
+
+ 
+ 
+ 
+ 
+ 

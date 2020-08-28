@@ -18,7 +18,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     main_window.typeKey(codepoint);
     
 }
-
+ 
 constexpr unsigned long outstr_size = 51;
 std::string outstr_arr[] = {
     "Written by Jared Bruni",
@@ -136,9 +136,10 @@ int main(int argc, char **argv) {
     int set_index = 0;
     bool repeat = false;
     int color_map = -1;
+    bool screen_mode = false;
     std::string material;
     int res_w = 0, res_h = 0;
-    while((opt = getopt(argc, argv, "YPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    while((opt = getopt(argc, argv, "GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
             case 'Y':
 #ifdef SYPHON_SERVER
@@ -146,6 +147,9 @@ int main(int argc, char **argv) {
                 std::cout << "acidcam: Syphon Server Startup...\n";
                 acidcam::syphon_enabled = 1;
 #endif
+                break;
+            case 'G':
+                screen_mode = true;
                 break;
             case 'P':
                 redirect = new CoutRedirect();
@@ -294,39 +298,41 @@ int main(int argc, char **argv) {
     
     cv::VideoWriter writer;
     
-    if(filename.length()==0) {
+    if(screen_mode == false) {
+        if(filename.length()==0) {
 #ifdef _WIN32
-        acidcam::cap.open(device, cv::CAP_DSHOW);
+            acidcam::cap.open(device, cv::CAP_DSHOW);
 #else
-        acidcam::cap.open(device);
+            acidcam::cap.open(device);
 #endif
-        if(!acidcam::cap.isOpened()) {
-            std::cout << "acidcam: Could not open capture device...\n";
-            acidcam::updateError();
-        }
-        acidcam::cap.set(cv::CAP_PROP_FRAME_WIDTH, cw);
-        acidcam::cap.set(cv::CAP_PROP_FRAME_HEIGHT, ch);
-        acidcam::cap.set(cv::CAP_PROP_FPS, fps);
-        cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
-        ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-        fps = acidcam::cap.get(cv::CAP_PROP_FPS);
-        if(output_file.length()>0) {
-            std::cout << "acidcam: Error outuput file not supported for camera mode use OBS.\n";
-            output_file = "";
-            exit(EXIT_SUCCESS);
-        }
-    } else {
-        acidcam::cap.open(filename);
-        if(!acidcam::cap.isOpened()) {
-            std::cout << "acidcam: Error could not open file: " << filename << "\n";
-            acidcam::updateError();
-        }
-        cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
-        ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-        fps = acidcam::cap.get(cv::CAP_PROP_FPS);
-        if(res_w == 0 && res_h == 0) {
-            w = cw;
-            h = ch;
+            if(!acidcam::cap.isOpened()) {
+                std::cout << "acidcam: Could not open capture device...\n";
+                acidcam::updateError();
+            }
+            acidcam::cap.set(cv::CAP_PROP_FRAME_WIDTH, cw);
+            acidcam::cap.set(cv::CAP_PROP_FRAME_HEIGHT, ch);
+            acidcam::cap.set(cv::CAP_PROP_FPS, fps);
+            cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
+            ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+            fps = acidcam::cap.get(cv::CAP_PROP_FPS);
+            if(output_file.length()>0) {
+                std::cout << "acidcam: Error outuput file not supported for camera mode use OBS.\n";
+                output_file = "";
+                exit(EXIT_SUCCESS);
+            }
+        } else {
+            acidcam::cap.open(filename);
+            if(!acidcam::cap.isOpened()) {
+                std::cout << "acidcam: Error could not open file: " << filename << "\n";
+                acidcam::updateError();
+            }
+            cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
+            ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+            fps = acidcam::cap.get(cv::CAP_PROP_FPS);
+            if(res_w == 0 && res_h == 0) {
+                w = cw;
+                h = ch;
+            }
         }
     }
     if(force_full == true) {
@@ -335,6 +341,9 @@ int main(int argc, char **argv) {
     else {
         main_window.create(false, full,true, "acidcamGL", w, h, monitor);
     }
+    if(screen_mode)
+        main_window.enableScreenMode(true, cw, ch);
+
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
