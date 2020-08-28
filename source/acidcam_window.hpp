@@ -19,11 +19,15 @@
 #include"keymap.hpp"
 #include"ipc_client.hpp"
 #define version_info "v1.0.002"
+#ifdef SYPHON_SERVER
+#include"syphon.h"
+#endif
 
 namespace acidcam {
     
     extern cv::VideoCapture cap;
     extern int redir;
+    extern int syphon_enabled;
     
     class AcidCam_Window : public glWindow {
         static constexpr int numVAOs = 1;
@@ -311,6 +315,12 @@ namespace acidcam {
             
             mv_mat = v_mat * m_mat;
             
+#ifdef SYPHON_SERVER
+            if(syphon_enabled) {
+                syphon_bind(window_width, window_height);
+            }
+#endif
+            
             glUniformMatrix4fv(mv_loc, 1, GL_FALSE, glm::value_ptr(mv_mat));
             glUniformMatrix4fv(proj_loc, 1, GL_FALSE, glm::value_ptr(p_mat));
             
@@ -467,7 +477,15 @@ namespace acidcam {
             glUniform2f(loc, width, height);
             glUniform2f(material_size, img_cols, img_rows);
             
+            
             glDrawArrays(GL_TRIANGLES,0,6);
+            
+            
+#ifdef SYPHON_SERVER
+            int tex = syphon_pushTexture(texture);
+            glBindTexture(GL_TEXTURE_RECTANGLE_EXT, tex);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+#endif
             
             if(take_snapshot == true) {
                 takeSnapshot();
@@ -716,6 +734,11 @@ namespace acidcam {
             p_mat = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
             window_width = newWidth;
             window_height = newHeight;
+#ifdef SYPHON_SERVER
+            if(syphon_enabled) {
+                syphon_size(width, height);
+            }
+#endif
         }
         
         void loadShaders(const std::string &text) {

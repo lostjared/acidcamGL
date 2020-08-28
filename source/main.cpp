@@ -1,7 +1,9 @@
 
 #include"acidcam_window.hpp"
 #include"ipc_client.hpp"
-
+#ifdef SYPHON_SERVER
+#include "syphon.h"
+#endif
 acidcam::AcidCam_Window main_window;
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode) {
@@ -73,6 +75,7 @@ std::string outstr_arr[] = {
 };
 
 int acidcam::redir = 0;
+int acidcam::syphon_enabled = 0;
 
 void print_help_message() {
     for(int i = 0; i < outstr_size; ++i)
@@ -135,8 +138,15 @@ int main(int argc, char **argv) {
     int color_map = -1;
     std::string material;
     int res_w = 0, res_h = 0;
-    while((opt = getopt(argc, argv, "PT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    while((opt = getopt(argc, argv, "YPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'Y':
+#ifdef SYPHON_SERVER
+                syphon_start();
+                std::cout << "acidcam: Syphon Server Startup...\n";
+                acidcam::syphon_enabled = 1;
+#endif
+                break;
             case 'P':
                 redirect = new CoutRedirect();
                 client_main();
@@ -381,12 +391,20 @@ int main(int argc, char **argv) {
         std::cout << "acidcam: wrote to file [" << output_file << "]\n";
     writer.release();
     std::cout << "acidcam: exited\n";
-        if(acidcam::redir == 1) {
-    #ifndef _WIN32
+    
+#ifdef SYPHON_SERVER
+    if(acidcam::syphon_enabled) {
+        syphon_stop();
+        syphon_exit();
+    }
+#endif
+    
+    if(acidcam::redir == 1) {
+#ifndef _WIN32
             std::string text = redirect->getString();
             sendString(text);
-    #endif
-        }
+#endif
+    }
     glfwTerminate();
     return EXIT_SUCCESS;
 }
