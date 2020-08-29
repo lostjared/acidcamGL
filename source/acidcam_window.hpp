@@ -553,7 +553,7 @@ public:
             auto m = std::chrono::duration_cast<std::chrono::milliseconds>(nowx-now).count();
             int fps_mil = 1000/fps;
             if(m < fps_mil)
-                std::this_thread::sleep_for(std::chrono::milliseconds(fps_mil-m));
+                std::this_thread::sleep_for(std::chrono::milliseconds(fps_mil-m-1));
         }
     }
     
