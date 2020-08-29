@@ -1,10 +1,16 @@
 #include "syphon.h"
 #include<GL/glew.h>
-
 #ifdef SYPHON_SERVER
 #import <Syphon/Syphon.h>
 #import<AGL/agl.h>
 #include<iostream>
+#include<Foundation/Foundation.h>
+
+
+@interface NSImage (NSImage_OpenCV) {
+}
+@property(nonatomic, readonly) char* CVMat;
+@end
 
 SyphonServer *_server = nil;
 CGFloat ImageWidth = 1280, ImageHeight = 720;
@@ -67,6 +73,7 @@ int syphon_pushTexture(int tex) {
     [pool drain];
     return val;
 }
+
 
 #endif
 

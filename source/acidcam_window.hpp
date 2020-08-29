@@ -19,7 +19,7 @@
 #include<chrono>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
-#define version_info "v1.0.002"
+#define version_info "v1.0.003"
 #ifdef SYPHON_SERVER
 #include"syphon.h"
 #endif
@@ -319,6 +319,9 @@ public:
     }
     
     virtual void update(double timeval) override {
+        std::chrono::time_point<std::chrono::system_clock> now =
+        std::chrono::system_clock::now();
+        
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClearDepth(1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -545,7 +548,12 @@ public:
             writeFrame();
         
         if(video_mode) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000/fps/8));
+            std::chrono::time_point<std::chrono::system_clock> nowx =
+            std::chrono::system_clock::now();
+            auto m = std::chrono::duration_cast<std::chrono::milliseconds>(nowx-now).count();
+            int fps_mil = 1000/fps;
+            if(m < fps_mil)
+                std::this_thread::sleep_for(std::chrono::milliseconds(fps_mil-m));
         }
     }
     

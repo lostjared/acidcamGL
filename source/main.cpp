@@ -401,7 +401,7 @@ int main(int argc, char **argv) {
         if(redirect != 0) {
             std::string text = redirect->getString();
             sendString(text);
-        }
+        } 
 #endif
     }
     main_window.loop();
