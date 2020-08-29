@@ -16,6 +16,7 @@
 #include<fstream>
 #include<iomanip>
 #include<iostream>
+#include<chrono>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
 #define version_info "v1.0.002"
@@ -66,14 +67,21 @@ class AcidCam_Window : public glWindow {
     int color_map;
     int blend_index;
     int sx, sy;
-    
+    bool video_mode;
+    int fps;
 public:
     
     AcidCam_Window() = default;
     AcidCam_Window(const AcidCam_Window &) = delete;
     AcidCam_Window &operator=(const AcidCam_Window &) = delete;
     
+    void setVideoMode(bool b, int f) {
+        video_mode = b;
+        fps = f;
+    }
+    
     virtual void init() override {
+        video_mode = false;
         blend_index = 0;
         color_map = -1;
         var_index = 0;
@@ -535,6 +543,10 @@ public:
         }
         if(writer_set == true)
             writeFrame();
+        
+        if(video_mode) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000/fps/8));
+        }
     }
     
     void setDebug(bool d) {

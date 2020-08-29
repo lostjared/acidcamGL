@@ -347,6 +347,10 @@ int main(int argc, char **argv) {
     }
     if(screen_mode)
         main_window.enableScreenMode(true, cw, ch);
+    if(filename.length()==0)
+        main_window.setVideoMode(false, 0);
+    else
+        main_window.setVideoMode(true, fps);
 
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
@@ -360,8 +364,8 @@ int main(int argc, char **argv) {
     
      if(material.length()>0)
            main_window.genMaterial(material);
-        
-    main_window.loadCustom(custom_path);
+    if(custom_path.length() != 0)
+        main_window.loadCustom(custom_path);
     main_window.loadShaders(shader_path);
     main_window.setShader(start_shader);
     if(filter_string.length()>0) {
