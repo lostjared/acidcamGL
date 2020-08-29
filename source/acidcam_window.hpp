@@ -22,7 +22,7 @@
 #ifdef SYPHON_SERVER
 #include"syphon.h"
 #endif
-
+#include<unordered_map>
 #ifdef SYPHON_SERVER
 extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #endif
@@ -396,7 +396,7 @@ public:
                     orig = frame.clone();
                 }
                 
-                ac::CallFilter(ac::solo_filter[index], frame);
+                CallCustom(ac::solo_filter[index], frame);
                 
                 if(blend_index > 0) {
                     cv::Mat copyf;
@@ -781,6 +781,57 @@ public:
             syphon_size(width, height);
         }
 #endif
+    }
+    
+    //std:::unordered_map<std::string, std::vector<std::string>> custom_filters;
+    
+    using List = std::vector<std::string>;
+    
+    std::unordered_map<std::string, List> custom_filters;
+    
+    void CallCustom(std::string index, cv::Mat &frame) {
+        std::string val = index;
+        if(custom_filters.find(val) != custom_filters.end()) {
+            for(int i = 0; i < custom_filters[val].size(); ++i) {
+                ac::CallFilter(custom_filters[val].at(i),frame);
+            }
+        } else {
+            ac::CallFilter(index, frame);
+        }
+    }
+    
+    void loadCustom(std::string &c) {
+        
+        std::string path = c + "/index.txt";
+        std::fstream file;
+        file.open(path, std::ios::in);
+        if(!file.is_open()) {
+            std::cout << "acidcam: Couldn't load custom files: " << path << "\n";
+            acidcam::updateError();
+        }
+        while(!file.eof()) {
+            std::string n;
+            std::getline(file, n);
+            if(file) {
+                std::fstream custom;
+                custom.open(c + "/" + n, std::ios::in);
+                if(!custom.is_open()) {
+                    std::cout << "acidcam: Error loading custom file: " << n << "\n";
+                    acidcam::updateError();
+                }
+                custom_filters[n] = std::vector<std::string>();
+                while(!custom.eof()) {
+                    std::string v;
+                    std::getline(custom, v);
+                    if(custom) {
+                        custom_filters[n].push_back(v);
+                    }
+                }
+                std::cout << "acidcam: Load Custom: " << n << "\n";
+                ac::solo_filter.push_back(n);
+                custom.close();
+            }
+        }
     }
     
     void loadShaders(const std::string &text) {

@@ -139,8 +139,12 @@ int main(int argc, char **argv) {
     bool screen_mode = false;
     std::string material;
     int res_w = 0, res_h = 0;
-    while((opt = getopt(argc, argv, "GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    std::string custom_path;
+    while((opt = getopt(argc, argv, "W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'W':
+                custom_path = optarg;
+                break;
             case 'Y':
 #ifdef SYPHON_SERVER
                 syphon_start();
@@ -357,6 +361,7 @@ int main(int argc, char **argv) {
      if(material.length()>0)
            main_window.genMaterial(material);
         
+    main_window.loadCustom(custom_path);
     main_window.loadShaders(shader_path);
     main_window.setShader(start_shader);
     if(filter_string.length()>0) {
