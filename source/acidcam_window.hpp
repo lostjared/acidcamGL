@@ -781,6 +781,10 @@ public:
                         setShader(shader_index);
                     }
                     break;
+                case GLFW_KEY_H:
+                    std::cout << "acidcam: Playlist shuffled...\n";
+                    sortPlaylist();
+                    break;
                 case GLFW_KEY_Q:
                     optx[0] -= movement_rate;
                     break;
