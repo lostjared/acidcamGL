@@ -68,6 +68,7 @@ std::string outstr_arr[] = {
     "    J - jump backwar index by 25",
     "    Z - take screenshot",
     "    H - Shuffle Playlist",
+    "    M - Enable/Disable Playlist Slideside random timeout",
     "    F - process keyboard input for index",
     "    S - process keyboard input for shader",
     "    C - clear keyboard input",
@@ -80,14 +81,15 @@ std::string outstr_arr[] = {
     "    [DOWN] - Shader Index move down",
     "    [ENTER] - Jump to currently typed index (type index with number keys at anytime)",
     "     Q,Q,E,R,Y,U,I,O - move movement rate",
-    "     T - reset color offset"
+    "     T - reset color offset",
+    ""
 };
 
 int acidcam::redir = 0;
 int acidcam::syphon_enabled = 0;
 
 void print_help_message() {
-    for(int i = 0; i < outstr_size; ++i)
+    for(int i = 0; outstr_arr[i] != ""; ++i)
         std::cout << outstr_arr[i] << "\n";
 }
 
@@ -119,7 +121,7 @@ int main(int argc, char **argv) {
     if(argc == 1) {
 #ifdef SYPHON_SERVER
         std::string text = "Arguments Required: \n\n";
-        for(int i = 0; i < outstr_size; ++i) {
+        for(int i = 0; outstr_arr[i] != ""; ++i) {
             text += outstr_arr[i] + "\n";
         }
         messageOutput(std::string("acidcamGL  ") + version_info, text);
