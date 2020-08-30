@@ -778,6 +778,10 @@ public:
                     break;
                 case GLFW_KEY_M:
                     rand_timeout = !rand_timeout;
+                    if(rand_timeout)
+                        std::cout << "acidcam: Rand playlist timeout enabled\n";
+                    else
+                        std::cout << "acidcam: Rand playlist timeout disabled\n";
                     break;
                 case GLFW_KEY_MINUS:
                     if(blend_index > 0) {
