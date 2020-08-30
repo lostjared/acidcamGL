@@ -19,17 +19,18 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     
 }
  
-constexpr unsigned long outstr_size = 60;
+constexpr unsigned long outstr_size = 61;
 std::string outstr_arr[] = {
     "Written by Jared Bruni",
-    "    http://lostsidedead.com",
-    "    Arguments:",
-    "    -h use H.264 output w/o uses MPEG-4",
-    "    -o output mp4 filename",
+    "http://lostsidedead.com",
+    "Arguments:",
+    "    -X codec",
+    "    -o output filename",
     "    -S filter start index",
     "    -H shader start index",
     "    -C set color map",
     "    -T set material texture filename",
+    "    -N play list slideshow timeout",
     "    -k shortcut-key file",
     "    -L playlist of filters",
     "    -b restore black",
@@ -163,8 +164,17 @@ int main(int argc, char **argv) {
     std::string custom_path;
     bool playback_mode = false;
     bool playback_sort = false;
-    while((opt = getopt(argc, argv, "qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    std::string codec;
+    int playback_timeout = 0;
+    
+    while((opt = getopt(argc, argv, "N:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'N':
+                playback_timeout = atoi(optarg);
+                break;
+            case 'X':
+                codec = optarg;
+                break;
             case 'q':
                 playback_sort = true;
                 break;
@@ -424,8 +434,8 @@ int main(int argc, char **argv) {
     main_window.setColorMap(color_map);
      
     if(output_file.length()>0) {
-        if(h264)
-            writer.open(output_file, cv::VideoWriter::fourcc('a','v','c','1'), fps, cv::Size(w, h), true);
+        if(codec.length()>0)
+            writer.open(output_file, cv::VideoWriter::fourcc(codec[0], codec[1], codec[2], codec[3]), fps, cv::Size(w, h), true);
         else
             writer.open(output_file, cv::VideoWriter::fourcc('m','p','4','v'), fps, cv::Size(w, h), true);
         if(!writer.isOpened()) {
@@ -438,7 +448,7 @@ int main(int argc, char **argv) {
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
     if(playback_mode)
-        main_window.setPlaybackMode(playback_mode, playback_sort);
+        main_window.setPlaybackMode(playback_mode, playback_timeout, playback_sort);
     
     std::cout << "acidcam: initialized...\n";
     if(acidcam::redir == 1) {

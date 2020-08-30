@@ -73,6 +73,7 @@ class AcidCam_Window : public glWindow {
     int screen_x, screen_y;
     bool playback_mode;
     bool playback_sort;
+    int p_timeout;
 public:
     
     AcidCam_Window() = default;
@@ -86,6 +87,7 @@ public:
     
     virtual void init() override {
         video_mode = false;
+        p_timeout = 0;
         blend_index = 0;
         color_map = -1;
         var_index = 0;
@@ -168,10 +170,12 @@ public:
         std::shuffle(var_list.begin(), var_list.end(), std::default_random_engine(seed));
     }
     
-    void setPlaybackMode(bool v, bool  s = false) {
+    
+    void setPlaybackMode(bool v, int timeout = 0, bool  s = false) {
         playback_mode = v;
         if(s)
             std::sort(var_list.begin(), var_list.end());
+        p_timeout = timeout;
     }
     
     GLuint material = 0;
@@ -419,7 +423,12 @@ public:
         
         if(playback_mode && list_enabled) {
             static int playback_index = 0;
-            ++playback_index;
+            static int frame_time = 0;
+            ++frame_time;
+            if(p_timeout == 0 || frame_time > p_timeout)
+                ++playback_index;
+            if(frame_time > p_timeout)
+                frame_time = 0;
             if(playback_index > var_list.size()) {
                 playback_index = 0;
                 sortPlaylist();
