@@ -114,7 +114,7 @@ extern void messageOutput(std::string title, std::string text);
 int main(int argc, char **argv) {
     if(argc == 1) {
 #ifdef SYPHON_SERVER
-        std::string text;
+        std::string text = "Arguments Required: \n\n";
         for(int i = 0; i < outstr_size; ++i) {
             text += outstr_arr[i] + "\n";
         }
