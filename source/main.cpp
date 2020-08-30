@@ -19,7 +19,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     
 }
  
-constexpr unsigned long outstr_size = 59;
+constexpr unsigned long outstr_size = 60;
 std::string outstr_arr[] = {
     "Written by Jared Bruni",
     "    http://lostsidedead.com",
@@ -66,6 +66,7 @@ std::string outstr_arr[] = {
     "    K - jump forward index by 25",
     "    J - jump backwar index by 25",
     "    Z - take screenshot",
+    "    H - Shuffle Playlist",
     "    F - process keyboard input for index",
     "    S - process keyboard input for shader",
     "    C - clear keyboard input",
@@ -391,7 +392,7 @@ int main(int argc, char **argv) {
         main_window.setVideoMode(false, 0);
     else
         main_window.setVideoMode(true, fps);
-    std::cout << "acidcam: Filters Library Version: " << ac::getVersion() << "\n";
+    std::cout << "acidcam: libacidcam Library Version: " << ac::getVersion() << "\n";
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
