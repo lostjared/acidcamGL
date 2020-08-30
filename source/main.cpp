@@ -397,6 +397,9 @@ int main(int argc, char **argv) {
     glfwSetKeyCallback(main_window.win(), key_callback);
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
     glfwSetCharCallback(main_window.win(), character_callback);
+    if(custom_path.length() != 0)
+        main_window.loadCustom(custom_path);
+
     if(list_var.length()>0)
         main_window.loadList(list_var, playback_sort);
     main_window.setDebug(debug_val);
@@ -404,8 +407,6 @@ int main(int argc, char **argv) {
     
      if(material.length()>0)
            main_window.genMaterial(material);
-    if(custom_path.length() != 0)
-        main_window.loadCustom(custom_path);
     main_window.loadShaders(shader_path);
     main_window.setShader(start_shader);
     if(filter_string.length()>0) {
