@@ -142,8 +142,6 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         cv::Mat frame;
         if(!cap.isOpened()) {
-            std::cout << "acidcam: Error opening camera/file..\n";
-            quit();
             return;
         } else {
             cap.read(frame);
