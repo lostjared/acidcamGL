@@ -11,8 +11,8 @@ LDFLAGS=-mmacosx-version-min=10.13 `pkg-config glfw3 --libs` -framework VideoDec
 
 acidcamGL: $(OBJ) *.hpp
 	$(CXX) $(CFLAGS) -DSYPHON_SERVER syphon.mm -c
-	make -C libacidcam
-	$(CXX) -std=c++11 -o acidcamGL $(OBJ) syphon.o  libacidcam/libacidcam.a $(LDFLAGS) -F/Library/Frameworks -framework AGL -framework Syphon 
+	make -C libacidcam -j16
+	$(CXX) -std=c++11 -o acidcamGL $(OBJ) syphon.o  libacidcam/libacidcam.a $(LDFLAGS) -F. -framework AGL -framework Syphon 
 
 all: acidcamGL
 
