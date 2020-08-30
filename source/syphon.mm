@@ -74,6 +74,25 @@ int syphon_pushTexture(int tex) {
     return val;
 }
 
+NSInteger _NSRunAlertPanel(NSString *msg1, NSString *msg2, NSString *button1, NSString *button2, NSString *button3) {
+    NSAlert *alert = [[NSAlert alloc] init];
+    if(button1 != nil) [alert addButtonWithTitle:button1];
+    if(button2 != nil) [alert addButtonWithTitle:button2];
+    if(msg1 != nil) [alert setMessageText:msg1];
+    if(msg2 != nil) [alert setInformativeText:msg2];
+    NSInteger rt_val = [alert runModal];
+    [alert release];
+    return rt_val;
+}
+
+void messageOutput(std::string title, std::string text) {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *s1 = [NSString stringWithUTF8String:title.c_str()];
+    NSString *s2 = [NSString stringWithUTF8String:text.c_str()];
+    _NSRunAlertPanel(s1, s2, @"Ok", nil, nil);
+    [pool drain];
+}
+
 
 #endif
 

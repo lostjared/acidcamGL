@@ -102,9 +102,21 @@ void acidcam::updateError() {
     exit(EXIT_FAILURE);
 }
 
+#ifdef SYPHON_SERVER
+extern void messageOutput(std::string title, std::string text);
+#endif
+
 int main(int argc, char **argv) {
     if(argc == 1) {
+#ifdef SYPHON_SERVER
+        std::string text;
+        for(int i = 0; i < outstr_size; ++i) {
+            text += outstr_arr[i] + "\n";
+        }
+        messageOutput("Program Information", text);
+#else
         print_help_message();
+#endif
         exit(EXIT_SUCCESS);
     }
     if(!glfwInit()) {
