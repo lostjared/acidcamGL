@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mode_select->setGeometry(60, 60, 200, 25);
     mode_select->addItem(tr("Capture Device"));
     mode_select->addItem(tr("Video File"));
+    mode_select->addItem(tr("Screen Capture"));
     connect(mode_select, SIGNAL(currentIndexChanged(int)), this, SLOT(comboChanged_mode(int)));
     QLabel *temp2;
     temp2 = new QLabel(tr("Device Index: "), this);
@@ -77,6 +78,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     select_video_text = new QLineEdit("", this);
     select_video_text->setStyleSheet(style_info);
     select_video_text->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5, 60, 150, 30);
+
+    syphon_enabled = new QCheckBox(tr("Syphon Enabled"), this);
+    syphon_enabled->setStyleSheet(style_info);
+    syphon_enabled->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10, 60, 200, 30);
+    connect(syphon_enabled, SIGNAL(clicked()), this, SLOT(updateCommand()));
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
@@ -257,12 +263,14 @@ void MainWindow::updateCommand() {
                 cmd_list << camera_res->text();
             }
         }
-    } else {
+    } else if(mode_select->currentIndex()==1) {
         device_edit->setEnabled(false);
          if(select_video_text->text().length()>0) {
             cmd_list << "-i";
             cmd_list << select_video_text->text();
         }
+    } else if(mode_select->currentIndex()==2) {
+        cmd_list << "-G";
     }
 
     if(select_path_text->text().length()>0) {
@@ -278,7 +286,9 @@ void MainWindow::updateCommand() {
             cmd_list << window_res->text();
         }
     }
-
+    if(syphon_enabled->isChecked()) {
+        cmd_list << "-Y";
+    }
     if(full_screen->isChecked()) {
         if(full_screen_resize->isChecked()) {
             cmd_list << "-f";
