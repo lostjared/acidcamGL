@@ -140,17 +140,17 @@ public:
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        
         cv::Mat frame;
         if(!cap.isOpened()) {
             std::cout << "acidcam: Error opening camera/file..\n";
             quit();
             return;
+        } else {
+            cap.read(frame);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
+            sx = frame.cols;
+            sy = frame.rows;
         }
-        cap.read(frame);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
-        sx = frame.cols;
-        sy = frame.rows;
     }
     
     int index;

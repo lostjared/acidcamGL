@@ -376,7 +376,7 @@ int main(int argc, char **argv) {
         main_window.setVideoMode(false, 0);
     else
         main_window.setVideoMode(true, fps);
-
+    std::cout << "acidcam: Filters Library Version: " << ac::getVersion() << "\n";
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
