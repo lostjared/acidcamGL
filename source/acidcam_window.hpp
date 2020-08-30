@@ -74,6 +74,8 @@ class AcidCam_Window : public glWindow {
     bool playback_mode;
     bool playback_sort;
     int p_timeout;
+    bool rand_timeout;
+    bool paused;
 public:
     
     AcidCam_Window() = default;
@@ -86,6 +88,8 @@ public:
     }
     
     virtual void init() override {
+        paused = false;
+        rand_timeout = false;
         video_mode = false;
         p_timeout = 0;
         blend_index = 0;
@@ -341,6 +345,8 @@ public:
     }
     
     virtual void update(double timeval) override {
+        if(paused)
+            return;
         std::chrono::time_point<std::chrono::system_clock> now =
         std::chrono::system_clock::now();
         
@@ -424,9 +430,13 @@ public:
         if(playback_mode && list_enabled) {
             static int playback_index = 0;
             static int frame_time = 0;
+            static int current_timeout = p_timeout;
             ++frame_time;
-            if(p_timeout == 0 || frame_time > p_timeout)
+            if(p_timeout == 0 || frame_time > current_timeout) {
                 ++playback_index;
+                if(rand_timeout)
+                    current_timeout = 1+rand()%p_timeout;
+            }
             if(frame_time > p_timeout)
                 frame_time = 0;
             if(playback_index > var_list.size()) {
@@ -766,6 +776,9 @@ public:
                         }
                     }
                     break;
+                case GLFW_KEY_M:
+                    rand_timeout = !rand_timeout;
+                    break;
                 case GLFW_KEY_MINUS:
                     if(blend_index > 0) {
                         blend_index -= 10;
@@ -793,6 +806,17 @@ public:
                 case GLFW_KEY_H:
                     std::cout << "acidcam: Playlist shuffled...\n";
                     sortPlaylist();
+                    break;
+                case GLFW_KEY_G:
+                    
+                    if(paused) {
+                        std::cout << "acidcam: program unpaused\n";
+                        paused = false;
+                    } else {
+                        std::cout << "acidcam: program paused...\n";
+                        paused = true;
+                    }
+                    
                     break;
                 case GLFW_KEY_Q:
                     optx[0] -= movement_rate;
