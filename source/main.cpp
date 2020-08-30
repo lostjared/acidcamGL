@@ -19,7 +19,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     
 }
  
-constexpr unsigned long outstr_size = 57;
+constexpr unsigned long outstr_size = 59;
 std::string outstr_arr[] = {
     "Written by Jared Bruni",
     "    http://lostsidedead.com",
@@ -51,6 +51,8 @@ std::string outstr_arr[] = {
     "    -U Screen Capture Position X,Y",
     "    -P Redirect Standard Output to Socket",
     "    -W custom filter path",
+    "    -B enable playback filter mode",
+    "    -q shuffle playlist",
     "    -l list filters",
     "    -t list filters no info",
     "    -l list search",
@@ -118,7 +120,7 @@ int main(int argc, char **argv) {
         for(int i = 0; i < outstr_size; ++i) {
             text += outstr_arr[i] + "\n";
         }
-        messageOutput("Program Information", text);
+        messageOutput(std::string("acidcamGL  ") + version_info, text);
 #else
         print_help_message();
 #endif
@@ -158,8 +160,16 @@ int main(int argc, char **argv) {
     int res_w = 0, res_h = 0;
     int screen_x = 100, screen_y = 100;
     std::string custom_path;
-    while((opt = getopt(argc, argv, "U:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    bool playback_mode = false;
+    bool playback_sort = false;
+    while((opt = getopt(argc, argv, "qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'q':
+                playback_sort = true;
+                break;
+            case 'B':
+                playback_mode = true;
+                break;
             case 'W':
                 custom_path = optarg;
                 break;
@@ -388,7 +398,7 @@ int main(int argc, char **argv) {
     glfwSetWindowSizeCallback(main_window.win(), window_size_callback);
     glfwSetCharCallback(main_window.win(), character_callback);
     if(list_var.length()>0)
-        main_window.loadList(list_var);
+        main_window.loadList(list_var, playback_sort);
     main_window.setDebug(debug_val);
     main_window.setRepeat(filename, repeat);
     
@@ -425,6 +435,9 @@ int main(int argc, char **argv) {
     }
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
+    if(playback_mode)
+        main_window.setPlaybackMode(playback_mode, playback_sort);
+    
     std::cout << "acidcam: initialized...\n";
     if(acidcam::redir == 1) {
 #ifndef _WIN32

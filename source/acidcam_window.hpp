@@ -17,6 +17,7 @@
 #include<iomanip>
 #include<iostream>
 #include<chrono>
+#include<algorithm>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
 #define version_info "v1.0.003"
@@ -70,6 +71,8 @@ class AcidCam_Window : public glWindow {
     bool video_mode;
     int fps;
     int screen_x, screen_y;
+    bool playback_mode;
+    bool playback_sort;
 public:
     
     AcidCam_Window() = default;
@@ -121,7 +124,7 @@ public:
             1, 0,
             1, 1,
         };
-        
+        playback_mode = false;
         glGenVertexArrays(1, vao);
         glBindVertexArray(vao[0]);
         glGenBuffers(numVBOs, vbo);
@@ -158,6 +161,17 @@ public:
         if(debug) {
             std::cout << "acidcam: Shader Program Loaded: " << program.name() << "\n";
         }
+    }
+    
+    void sortPlaylist() {
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::shuffle(var_list.begin(), var_list.end(), std::default_random_engine(seed));
+    }
+    
+    void setPlaybackMode(bool v, bool  s = false) {
+        playback_mode = v;
+        if(s)
+            std::sort(var_list.begin(), var_list.end());
     }
     
     GLuint material = 0;
@@ -218,7 +232,7 @@ public:
         return -1;
     }
     
-    void loadList(const std::string &l) {
+    void loadList(const std::string &l, bool s = false) {
         std::fstream file;
         file.open(l, std::ios::in);
         if(!file.is_open()) {
@@ -242,8 +256,11 @@ public:
         }
         file.close();
         std::cout << "acidcam: Playlist loaded [" << var_list.size() << "] items...\n";
+        if(s == true) {
+            sortPlaylist();
+            std::cout << "acidcam: Playlist Shuffled...\n";
+        }
     }
-    
     
     bool screen_mode = false;
     
@@ -400,6 +417,16 @@ public:
 #endif
         }
         
+        if(playback_mode && list_enabled) {
+            static int playback_index = 0;
+            ++playback_index;
+            if(playback_index > var_list.size()) {
+                playback_index = 0;
+                sortPlaylist();
+            }
+            index = var_list[playback_index];
+        }
+    
         if(shader_index == 0 || ac_on == true) {
             if(index >= 0 && index < ac::solo_filter.size()) {
                 cv::Mat orig;
