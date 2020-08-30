@@ -82,14 +82,14 @@ std::string outstr_arr[] = {
     "    [ENTER] - Jump to currently typed index (type index with number keys at anytime)",
     "     Q,Q,E,R,Y,U,I,O - move movement rate",
     "     T - reset color offset",
-    ""
+    "[end]"
 };
 
 int acidcam::redir = 0;
 int acidcam::syphon_enabled = 0;
 
 void print_help_message() {
-    for(int i = 0; outstr_arr[i] != ""; ++i)
+    for(int i = 0; outstr_arr[i] != "[end]"; ++i)
         std::cout << outstr_arr[i] << "\n";
 }
 
@@ -121,7 +121,7 @@ int main(int argc, char **argv) {
     if(argc == 1) {
 #ifdef SYPHON_SERVER
         std::string text = "Arguments Required: \n\n";
-        for(int i = 0; outstr_arr[i] != ""; ++i) {
+        for(int i = 0; outstr_arr[i] != "[end]"; ++i) {
             text += outstr_arr[i] + "\n";
         }
         messageOutput(std::string("acidcamGL  ") + version_info, text);
