@@ -69,6 +69,7 @@ class AcidCam_Window : public glWindow {
     int sx, sy;
     bool video_mode;
     int fps;
+    int screen_x, screen_y;
 public:
     
     AcidCam_Window() = default;
@@ -248,10 +249,12 @@ public:
     
     bool screen_mode = false;
     
-    void enableScreenMode(bool b, int w, int h) {
+    void enableScreenMode(bool b, int x, int y, int w, int h) {
         screen_mode = b;
         sx = w;
         sy = h;
+        screen_x = x;
+        screen_y = y;
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -392,7 +395,7 @@ public:
         } else {
 #ifdef SYPHON_SERVER
             cv::Mat cvMat, temp_frame;
-            ScreenGrabRect(100, 100, window_width, window_height, cvMat);
+            ScreenGrabRect(screen_x, screen_y, window_width, window_height, cvMat);
             cv::cvtColor(cvMat, temp_frame, cv::COLOR_RGBA2BGR);
             cv::resize(temp_frame, cvMat, cv::Size(sx, sy));
             frame = cvMat;

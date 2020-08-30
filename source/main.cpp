@@ -139,8 +139,9 @@ int main(int argc, char **argv) {
     bool screen_mode = false;
     std::string material;
     int res_w = 0, res_h = 0;
+    int screen_x = 100, screen_y = 100;
     std::string custom_path;
-    while((opt = getopt(argc, argv, "W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    while((opt = getopt(argc, argv, "U:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
             case 'W':
                 custom_path = optarg;
@@ -272,6 +273,18 @@ int main(int argc, char **argv) {
                 std::cout << "acidcam: Setting Window Resolution at: " << w << "x" << h << "\n";
             }
                 break;
+            case 'U': {
+                std::string pos = optarg;
+                if(pos.rfind(",") == std::string::npos) {
+                    std::cout << "acidcam: Invalid format for position string... 100,100 is proper.\n";
+                    acidcam::updateError();
+                }
+                std::string left=pos.substr(0, pos.rfind(","));
+                std::string right=pos.substr(pos.rfind(",")+1, pos.length());
+                screen_x = atoi(left.c_str());
+                screen_y = atoi(right.c_str());
+            }
+                break;
             case 'c': {
                 std::string pos = optarg;
                 if(pos.rfind("x") == std::string::npos) {
@@ -346,7 +359,7 @@ int main(int argc, char **argv) {
         main_window.create(false, full,true, "acidcamGL", w, h, monitor);
     }
     if(screen_mode)
-        main_window.enableScreenMode(true, cw, ch);
+        main_window.enableScreenMode(true, screen_x, screen_y, cw, ch);
     if(filename.length()==0)
         main_window.setVideoMode(false, 0);
     else
