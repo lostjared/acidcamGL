@@ -19,7 +19,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     
 }
  
-constexpr unsigned long outstr_size = 51;
+constexpr unsigned long outstr_size = 57;
 std::string outstr_arr[] = {
     "Written by Jared Bruni",
     "    http://lostsidedead.com",
@@ -46,6 +46,11 @@ std::string outstr_arr[] = {
     "    -R loop input video",
     "    -r resolution 1920x1080",
     "    -c Camera resolution 1280x720",
+    "    -G Screen Capture Mode",
+    "    -Y Enable Syphon Server",
+    "    -U Screen Capture Position X,Y",
+    "    -P Redirect Standard Output to Socket",
+    "    -W custom filter path",
     "    -l list filters",
     "    -t list filters no info",
     "    -l list search",
