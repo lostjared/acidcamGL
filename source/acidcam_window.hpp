@@ -91,7 +91,7 @@ public:
         paused = false;
         rand_timeout = false;
         video_mode = false;
-        p_timeout = 0;
+        p_timeout = 1;
         blend_index = 0;
         color_map = -1;
         var_index = 0;
@@ -176,6 +176,12 @@ public:
     
     
     void setPlaybackMode(bool v, int timeout = 0, bool  s = false) {
+        
+        if(p_timeout == 0) {
+            std::cout << "acidcam: Error you must set playback timeout with -N\n";
+            acidcam::updateError();
+        }
+        
         playback_mode = v;
         if(s)
             std::sort(var_list.begin(), var_list.end());
@@ -594,7 +600,7 @@ public:
         if(writer_set == true)
             writeFrame();
         
-        if(video_mode) {
+        if(video_mode && fps != 0) {
             std::chrono::time_point<std::chrono::system_clock> nowx =
             std::chrono::system_clock::now();
             auto m = std::chrono::duration_cast<std::chrono::milliseconds>(nowx-now).count();

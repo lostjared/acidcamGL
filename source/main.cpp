@@ -167,7 +167,7 @@ int main(int argc, char **argv) {
     bool playback_mode = false;
     bool playback_sort = false;
     std::string codec;
-    int playback_timeout = 0;
+    int playback_timeout = 1;
     
     while((opt = getopt(argc, argv, "N:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
