@@ -207,6 +207,10 @@ int main(int argc, char **argv) {
                 break;
             case 'C':
                 color_map = atoi(optarg);
+                if(color_map > 19 || color_map < 0) {
+                    std::cout << "acidcam: error color map out of range\n";
+                    acidcam::updateError();
+                }
                 break;
             case 'Z':
                 filter_string = optarg;
