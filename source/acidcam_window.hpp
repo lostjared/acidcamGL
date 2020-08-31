@@ -664,7 +664,7 @@ public:
                     }
                     break;
                 case GLFW_KEY_PERIOD:
-                    if(color_map < 21) {
+                    if(color_map < 19) {
                         color_map++;
                         std::cout << "acidcam: Color map increased to: " << color_map << "...\n";
                     }
