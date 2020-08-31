@@ -408,7 +408,7 @@ int main(int argc, char **argv) {
         main_window.setVideoMode(false, 0);
     else
         main_window.setVideoMode(true, fps);
-    std::cout << "acidcam: libacidcam Library Version: " << ac::getVersion() << "\n";
+    std::cout << "acidcam: Acid Cam Filter Library Version: " << ac::getVersion() << "\n";
     std::cout << "acidcam: GL Version: " << glGetString(GL_VERSION) << "\n";
     std::cout << "acidcam: Actual " << ((filename.length()==0) ? "Camera" : "File") << " Resolution: " << cw << "x" << ch << "p" << fps << " \n";
     glfwSetKeyCallback(main_window.win(), key_callback);
@@ -456,7 +456,10 @@ int main(int argc, char **argv) {
     if(playback_mode)
         main_window.setPlaybackMode(playback_mode, playback_timeout, playback_sort);
     
+    std::cout << "acidcam: Loaded: " << ac::solo_filter.size() << " Filters\n";
     std::cout << "acidcam: initialized...\n";
+
+
     if(acidcam::redir == 1) {
 #ifndef _WIN32
         if(redirect != 0) {
