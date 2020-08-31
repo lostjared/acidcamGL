@@ -2,3 +2,4 @@ CustomMedianTransition
 CustomVarScale
 CustomSquareStrobe
 CustomMirrorBlend
+CustomGlitchColors
