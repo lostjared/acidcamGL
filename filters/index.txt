@@ -95,6 +95,7 @@ random_colors.glsl
 gradient.glsl
 grid_strobe.glsl
 green_gradient.glsl
+xor_positional_offset.glsl
 color_bars.glsl
 cos_sin.glsl
 weirdlines.glsl
