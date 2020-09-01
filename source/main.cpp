@@ -55,6 +55,7 @@ std::string outstr_arr[] = {
     "    -W custom filter path",
     "    -B enable playback filter mode",
     "    -q shuffle playlist",
+    "    -w beats per minute for shuffle",
     "    -l list filters",
     "    -t list filters no info",
     "    -l list search",
@@ -170,9 +171,12 @@ int main(int argc, char **argv) {
     std::string codec;
     int playback_timeout = 1;
     bool stereo_ = false;
-    
-    while((opt = getopt(argc, argv, "xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    int bpm = 0;
+    while((opt = getopt(argc, argv, "w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'w':
+                bpm = atoi(optarg);
+                break;
             case 'x':
                 stereo_ = true;
                 break;
@@ -458,8 +462,10 @@ int main(int argc, char **argv) {
     }
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
-    if(playback_mode)
-        main_window.setPlaybackMode(playback_mode, playback_timeout, playback_sort);
+    if(playback_mode) {
+        int value = fps * playback_timeout / bpm;
+        main_window.setPlaybackMode(playback_mode, playback_timeout, value, bpm, playback_sort);
+    }
     
     std::cout << "acidcam: Loaded: " << ac::solo_filter.size() << " Filters\n";
     std::cout << "acidcam: initialized...\n";

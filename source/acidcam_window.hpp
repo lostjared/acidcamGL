@@ -177,17 +177,21 @@ public:
     }
     
     
-    void setPlaybackMode(bool v, int timeout = 0, bool  s = false) {
+    void setPlaybackMode(bool v, int timeout = 0, int beat = 0, int bpm = 0, bool  s = false) {
         
         if(p_timeout == 0) {
             std::cout << "acidcam: Error you must set playback timeout with -N\n";
             acidcam::updateError();
         }
-        
         playback_mode = v;
         if(s)
             std::sort(var_list.begin(), var_list.end());
-        p_timeout = timeout;
+        if(bpm != 0) {
+            p_timeout = beat;
+            std::cout <<"acidcam: Beats per minute: " << bpm << " frames per beat: " << p_timeout << "\n";
+        }
+        else
+            p_timeout = timeout;
     }
     
     GLuint material = 0;
