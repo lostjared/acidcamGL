@@ -36,6 +36,7 @@ material_energy.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
+xor_increase.glsl
 acidcolorrand.glsl
 colordivflash.glsl
 color_timeval.glsl
