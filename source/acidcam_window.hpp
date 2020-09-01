@@ -77,6 +77,7 @@ class AcidCam_Window : public glWindow {
     bool rand_timeout;
     bool paused;
     bool stereo_;
+    int stored_position, stored_var_position;
 public:
     
     AcidCam_Window() = default;
@@ -89,6 +90,8 @@ public:
     }
     
     virtual void init() override {
+        stored_position = 0;
+        stored_var_position = 0;
         stereo_ = false;
         paused = false;
         rand_timeout = false;
@@ -867,6 +870,34 @@ public:
                     break;
                 case GLFW_KEY_T:
                     optx = glm::vec4(0.5, 0.5, 0.5, 0.5);
+                    break;
+                case GLFW_KEY_PAGE_UP: {
+                    stored_position = index;
+                    stored_var_position = var_index;
+                    
+                    std::string namex;
+                    if(stored_position >= 0 && stored_position < ac::solo_filter.size()) {
+                        namex = ac::solo_filter[stored_position];
+                    } else {
+                        namex = "Unknown";
+                    }
+                    
+                    std::cout << "acidcam: Stored position set to: " << namex << " - " << stored_position << " playlist position: " << stored_var_position << "\n";
+                }
+                    break;
+                case GLFW_KEY_PAGE_DOWN: {
+                    if(list_enabled == false)
+                        index = stored_position;
+                    else
+                        index = var_list[stored_var_position];
+                    std::string namex;
+                    if(index >= 0 && index < ac::solo_filter.size()) {
+                        namex = ac::solo_filter[index];
+                    } else {
+                        namex = "Unknown";
+                    }
+                    std::cout << "acidcam: Index set to stored position: " << namex << " - " << index << "\n";
+                }
                     break;
             }
         }
