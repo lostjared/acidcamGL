@@ -76,6 +76,7 @@ class AcidCam_Window : public glWindow {
     int p_timeout;
     bool rand_timeout;
     bool paused;
+    bool stereo_;
 public:
     
     AcidCam_Window() = default;
@@ -88,6 +89,7 @@ public:
     }
     
     virtual void init() override {
+        stereo_ = false;
         paused = false;
         rand_timeout = false;
         video_mode = false;
@@ -350,6 +352,12 @@ public:
             writer.write(frame);
     }
     
+    void setStereo(bool b) {
+        stereo_ = b;
+        if(b == true)
+            std::cout << "acidcam: Stereo mode enabled...\n";
+    }
+    
     virtual void update(double timeval) override {
         if(paused)
             return;
@@ -490,7 +498,8 @@ public:
         }
         
         cv::flip(frame, frame, 0);
-        
+        if(stereo_)
+            ac::Stereo(frame);
         
         
         glActiveTexture(GL_TEXTURE0);

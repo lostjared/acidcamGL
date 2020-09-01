@@ -168,9 +168,13 @@ int main(int argc, char **argv) {
     bool playback_sort = false;
     std::string codec;
     int playback_timeout = 1;
+    bool stereo_ = false;
     
-    while((opt = getopt(argc, argv, "N:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    while((opt = getopt(argc, argv, "xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'x':
+                stereo_ = true;
+                break;
             case 'N':
                 playback_timeout = atoi(optarg);
                 break;
@@ -438,7 +442,7 @@ int main(int argc, char **argv) {
     main_window.setPrefix(snapshot_prefix);
     main_window.setRestoreBlack(restore_black);
     main_window.setColorMap(color_map);
-     
+    main_window.setStereo(stereo_);
     if(output_file.length()>0) {
         if(codec.length()>0)
             writer.open(output_file, cv::VideoWriter::fourcc(codec[0], codec[1], codec[2], codec[3]), fps, cv::Size(w, h), true);
