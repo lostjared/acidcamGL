@@ -78,6 +78,7 @@ class AcidCam_Window : public glWindow {
     bool paused;
     bool stereo_;
     int stored_position, stored_var_position;
+    bool rand_shader;
 public:
     
     AcidCam_Window() = default;
@@ -90,6 +91,7 @@ public:
     }
     
     virtual void init() override {
+        rand_shader = false;
         stored_position = 0;
         stored_var_position = 0;
         stereo_ = false;
@@ -374,6 +376,10 @@ public:
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClearDepth(1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        if(rand_shader == true)
+            program = rand()%shaders.size();
+        
         program.useProgram();
         mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
         proj_loc = glGetUniformLocation(program.id(),"proj_matrix");
@@ -898,6 +904,10 @@ public:
                     }
                     std::cout << "acidcam: Index set to stored position: " << namex << " - " << index << "\n";
                 }
+                    break;
+                case GLFW_KEY_SLASH:
+                    rand_shader = !rand_shader;
+                    std::cout << "acidcam: Random Shader Toggled...\n";
                     break;
             }
         }
