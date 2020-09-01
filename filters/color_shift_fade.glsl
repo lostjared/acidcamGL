@@ -43,6 +43,6 @@ void main(void)
     float rnd = random(st);
     vec4 v = vec4(fract(inc_valuex.x/3), fract(inc_valuex.y/9)*0.5, fract(inc_valuex.z/3), 1);
     v *= 0.5;
-    vec4 color1 = v * vec4(1, st*timeval/alpha, 1);
+    vec4 color1 = v * vec4(1, st*fract(timeval/alpha)*6.0, 1);
     color = color * color1 * 4.0;
 }
