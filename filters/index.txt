@@ -33,6 +33,7 @@ material_fill_white.glsl
 material_pixel.glsl
 material_echo.glsl
 material_energy.glsl
+material_grid_texture.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
