@@ -44,5 +44,5 @@ void main(void)
     vec4 v = vec4(fract(inc_valuex.x/3), fract(inc_valuex.y/9)*0.5, fract(inc_valuex.z/3), 1);
     v *= 0.5;
     vec4 color1 = v * vec4(1, st*timeval/alpha, 1);
-    color = color * color1 * 6.0;
+    color = color * color1 * 4.0;
 }
