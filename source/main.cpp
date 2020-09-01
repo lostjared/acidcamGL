@@ -45,6 +45,7 @@ std::string outstr_arr[] = {
     "    -d capture device",
     "    -i input_video.mp4",
     "    -R loop input video",
+    "    -x Stereo Mode",
     "    -r resolution 1920x1080",
     "    -c Camera resolution 1280x720",
     "    -G Screen Capture Mode",
