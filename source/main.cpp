@@ -586,8 +586,8 @@ int main(int argc, char **argv) {
 
     if(writer.isOpened())
         std::cout << "acidcam: wrote to file [" << output_file << "]\n";
-    else
-        std::cout << "acidcam: wrote x265 file: [" << output_file << "]\n";
+    else if(ffmpeg_enabled)
+        std::cout << "acidcam: wrote file with ffmpeg: [" << output_file << "]\n";
     
     if(ffmpeg_enabled) {
         std::ostringstream str;
