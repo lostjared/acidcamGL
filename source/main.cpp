@@ -60,6 +60,7 @@ std::string outstr_arr[] = {
     "    -t list filters no info",
     "    -l list search",
     "    -v version",
+    "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
     "    ",
     "Controls:",
     "    ",
@@ -136,6 +137,25 @@ int main(int argc, char **argv) {
 #endif
         exit(EXIT_SUCCESS);
     }
+#ifndef _WIN32
+    if(std::string(argv[1]) == "--mux" && argc == 4) {
+        std::cout << "acidcam: test for ffmpeg: ";
+        if(system("test -f /usr/local/bin/ffmpeg") == 0 || system("test -f /usr/bin/ffmpeg") == 0) {
+            std::cout << "passed...\n";
+            std::string filename = argv[3];
+            std::string output_file = argv[2];
+            std::string filename_audio = filename.substr(0, filename.rfind("."));
+            std::string ext = filename.substr(filename.rfind("."), filename.length());
+            filename_audio += "with_audio" + ext;
+            mux_audio(output_file.c_str(), filename.c_str(), filename_audio.c_str());
+            std::cout<< "acidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
+            exit(0);
+        } else {
+            std::cout << "failed...\n";
+        }
+        std::cout << "acidcam: exiting...\n";
+    }
+#endif
     if(!glfwInit()) {
         acidcam::updateError();
     }
@@ -367,6 +387,8 @@ int main(int argc, char **argv) {
                 break;
         }
     }
+    
+    
     if(shader_path.length()==0) {
         std::cout << "acidcam: Error: must provide path to shaders...\n";
         acidcam::updateError();
@@ -396,6 +418,10 @@ int main(int argc, char **argv) {
                 output_file = "";
                 exit(EXIT_SUCCESS);
             }
+            
+    
+
+            
         } else {
             acidcam::cap.open(filename);
             if(!acidcam::cap.isOpened()) {
@@ -493,6 +519,8 @@ int main(int argc, char **argv) {
     main_window.loop();
     if(writer.isOpened())
         std::cout << "acidcam: wrote to file [" << output_file << "]\n";
+    
+
     writer.release();
     std::cout << "acidcam: exited\n";
     
@@ -509,6 +537,15 @@ int main(int argc, char **argv) {
             sendString(text);
 #endif
     }
+    
+    if(!writer.isOpened() && output_file.length()>0) {
+        std::string filename_audio = filename.substr(0, filename.rfind("."));
+        std::string ext = filename.substr(filename.rfind("."), filename.length());
+        filename_audio += "with_audio" + ext;
+        std::cout<< "acidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
+        mux_audio(output_file.c_str(), filename.c_str(), filename_audio.c_str());
+    }
+    
     glfwTerminate();
     return EXIT_SUCCESS;
 }

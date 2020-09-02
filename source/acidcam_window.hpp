@@ -28,7 +28,7 @@
 #ifdef SYPHON_SERVER
 extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #endif
-
+#include"ffmpeg_write.h"
 namespace acidcam {
 
 extern cv::VideoCapture cap;
