@@ -538,12 +538,11 @@ int main(int argc, char **argv) {
 #endif
     }
     
+    acidcam::cap.release();
     if(!writer.isOpened() && output_file.length()>0) {
-        std::string filename_audio = filename.substr(0, filename.rfind("."));
-        std::string ext = filename.substr(filename.rfind("."), filename.length());
-        filename_audio += "with_audio" + ext;
-        std::cout<< "acidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
-        mux_audio(output_file.c_str(), filename.c_str(), filename_audio.c_str());
+        std::ostringstream stream;
+        stream << argv[0] << " --mux " << output_file << " " << filename;
+        system(stream.str().c_str());
     }
     
     glfwTerminate();
