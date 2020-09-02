@@ -124,20 +124,14 @@ void acidcam::updateError() {
 }
 
 void mux_audio_ac(std::string output, std::string filenamex) {
-    std::cout << "acidcam: test for ffmpeg: ";
-    if(system("test -f /usr/local/bin/ffmpeg") == 0 || system("test -f /usr/bin/ffmpeg") == 0) {
-        std::cout << "passed...\n";
-        std::string filename = filenamex;
-        std::string output_file = output;
-        std::string filename_audio = output_file.substr(0, output_file.rfind("."));
-        //filename.substr(0, filename.rfind("."));
-        std::string ext = filename.substr(filename.rfind("."), filename.length());
-        filename_audio += "_with_source_audio" + ext;
-        mux_audio(output_file.c_str(), filename.c_str(), filename_audio.c_str());
-        std::cout<< "\nacidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
-    } else {
-        std::cout << "acidcam: mux failed...\n";
-    }
+    std::string filename = filenamex;
+    std::string output_file = output;
+    std::string filename_audio = output_file.substr(0, output_file.rfind("."));
+    //filename.substr(0, filename.rfind("."));
+    std::string ext = filename.substr(filename.rfind("."), filename.length());
+    filename_audio += "_with_source_audio" + ext;
+    mux_audio(output_file.c_str(), filename.c_str(), filename_audio.c_str());
+    std::cout<< "\nacidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
 }
 
 #ifdef SYPHON_SERVER
