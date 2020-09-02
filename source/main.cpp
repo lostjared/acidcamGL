@@ -60,6 +60,8 @@ std::string outstr_arr[] = {
     "    -t list filters no info",
     "    -l list search",
     "    -v version",
+    "    -5 enable ffmpeg x265 support",
+    "    -m crf for x265 for video mode",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
     "    ",
     "Controls:",
