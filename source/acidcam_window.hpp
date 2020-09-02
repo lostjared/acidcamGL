@@ -682,6 +682,12 @@ public:
         index = i;
     }
     
+    std::fstream *stdout_file;
+    
+    void setFile(std::fstream  *fout) {
+        stdout_file = fout;
+    }
+    
     void keypress(int key, int scancode, int action, int mode) {
         if(key == GLFW_KEY_ESCAPE) {
             quit();
@@ -931,12 +937,6 @@ public:
                     std::cout << "acidcam: Random Shader Toggled...\n";
                     break;
             }
-        }
-        
-        if(redir == 1) {
-#ifdef SYPHON_SERVER
-            if(redirect != 0) sendString(redirect->getString());
-#endif
         }
     }
     

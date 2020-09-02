@@ -6,6 +6,7 @@
 #include<unistd.h>
 #endif
 // ffmpeg -y -s 640x480  -pixel_format bgr24 -f rawvideo -r 30 -i pipe: -vcodec libx265 -pix_fmt yuv420p -crf 24 test.mp4
+#include"ipc_client.hpp"
 
 extern void sendString(const std::string &s);
 
@@ -56,7 +57,6 @@ err_pipe1:
 char buffer[1024*1024];
 std::fstream file;
 int stdout_save;
-extern int redirect;
 
 FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const char *dst_res, const char *fps, const char *crf) {
     
@@ -69,18 +69,9 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
     stream << "ffmpeg -y -s " << dst_res << " -pixel_format bgr24 -f rawvideo -r " << fps << " -i pipe: -vcodec " << codec << " -pix_fmt yuv420p " <<  tag << " -crf " << crf << " " <<  output;
     
     std::cout<<"acidcam: " << stream.str() << "\n";
-    
-    
-    fflush(stdout); //clean everything first
-    stdout_save = dup(STDOUT_FILENO); //save the stdout state
-    setvbuf(stdout, buffer, _IOFBF, 1024); //set buffer to stdout
-        
-    stream << " 2>&1 | tee /Applications/acidcamGL/stdout";
+    stream << " 2>&1 ";
     
     FILE *fptr = popen(stream.str().c_str(), "w");
-#ifdef SYPHON_SERVER
-    freopen("/Applications/acidcamGL/stdout", "a", stdout); //redirect stdout to null pointer
-#endif
     
     if(!fptr) {
         std::cerr << "Error: could not open ffmpeg\n";
@@ -96,21 +87,11 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
 void write_ffmpeg(FILE *fptr, cv::Mat &frame) {
 #ifndef _WIN32
     fwrite(frame.ptr(), sizeof(char), frame.total()*frame.elemSize(), fptr);
-    std::cout << buffer;
-#ifdef SYPHON_SERVER
-    if(redirect != 0) {
-        sendString(buffer);
-    }
-#endif
 #endif
 }
 
 void close_stdout() {
-#ifndef SYPHON_SERVER
-    freopen("/Applications/acidcamGL/stdout", "a", stdout);
-    dup2(stdout_save, STDOUT_FILENO);
-    setvbuf(stdout, NULL, _IONBF, 1024);
-#endif
+    
 }
 
 void mux_audio(const char *output, const char *src, const char *final_file) {

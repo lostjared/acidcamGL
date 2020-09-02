@@ -24,7 +24,7 @@ int client_main() {
 }
 
 void sendString(const std::string &text) {
-    if(sockfd > 0) {
+    if(sockfd > 0 && text.length()>0) {
         ssize_t bytesRead;
         char buf[BUF_SIZE];
         if(write(sockfd, text.c_str(), text.length()) != text.length())

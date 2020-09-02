@@ -557,24 +557,10 @@ int main(int argc, char **argv) {
 #endif
     }
     
-    if(ffmpeg_enabled) {
-        close_stdout();
-#ifdef SYPHON_SERVER
-        std::fstream stdout_file;
-        stdout_file.open("/Applications/acidcamGL/stdout", std::ios::in);
-        if(!stdout_file.is_open()) {
-            std::cerr << "acidcam: Error opening stdout file...\n";
-        }
-        std::ostringstream ss;
-        ss << stdout_file.rdbuf();
-        stdout_file.close();
-        if(redirect != 0) {
-            sendString(ss.str());
-        }
-#endif
-    }
-    main_window.loop();
    
+    main_window.loop();
+    
+    
     writer.release();
     acidcam::cap.release();
     
