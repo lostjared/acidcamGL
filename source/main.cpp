@@ -554,8 +554,12 @@ int main(int argc, char **argv) {
     writer.release();
     acidcam::cap.release();
     
-    if(fptr != 0)
+    if(fptr != 0) {
         pclose(fptr);
+        std::ostringstream str;
+        str << argv[0] << " --mux " << output_file << " " << filename;
+        system(str.str().c_str());
+    }
     else
         writer.release();
 
@@ -564,6 +568,7 @@ int main(int argc, char **argv) {
     else
         std::cout << "acidcam: wrote x265 file: [" << output_file << "]\n";
 
+    
     std::cout << "acidcam: exited\n";
     
 #ifdef SYPHON_SERVER
