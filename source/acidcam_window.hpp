@@ -372,6 +372,18 @@ public:
             else
                 writer.write(frame);
         }
+#ifdef SYPHON_SERVER
+        if(redirect != 0) {
+            static int frame = 1;
+            int total = cap.get(cv::CAP_PROP_FRAME_COUNT);
+            if((frame%fps*20)==0 && fps > 0) {
+                std::ostringstream stream;
+                stream << "acidcam: wrote frame: " << frame << "/" << total << "/" << (frame/fps) << " seconds...\n";
+                sendString(stream.str());
+            }
+            ++frame;
+        }
+#endif
     }
     
     void writeFrame() {
