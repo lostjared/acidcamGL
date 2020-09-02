@@ -324,7 +324,7 @@ public:
         cv::imwrite(time_stream.str(), flipped);
         std::cout << "acidcam: Wrote: " << time_stream.str() << "\n";
         if(redir == 1) {
-#ifndef WIN32
+#ifdef SYPHON_SERVER
             if(redirect != 0) sendString(redirect->getString());
 #endif
         }
@@ -461,7 +461,7 @@ public:
             ++frame_time;
             if(p_timeout == 0 || frame_time > current_timeout) {
                 ++playback_index;
-                if(rand_timeout)
+                if(rand_timeout && p_timeout)
                     current_timeout = 1+rand()%p_timeout;
             }
             if(frame_time > p_timeout)
@@ -483,7 +483,7 @@ public:
                 
                 CallCustom(ac::solo_filter[index], frame);
                 
-                if(blend_index > 0) {
+                if(blend_index > 0 && blend_index/10 > 0) {
                     cv::Mat copyf;
                     double per = 1.0/(blend_index/10);
                     ac::AlphaBlendDouble(frame, orig, copyf, per, 1.0-per);
@@ -626,9 +626,11 @@ public:
             std::chrono::time_point<std::chrono::system_clock> nowx =
             std::chrono::system_clock::now();
             auto m = std::chrono::duration_cast<std::chrono::milliseconds>(nowx-now).count();
-            int fps_mil = 1000/fps;
-            if(m < fps_mil)
-                std::this_thread::sleep_for(std::chrono::milliseconds(fps_mil-m-1));
+            if(fps > 0) {
+                int fps_mil = 1000/fps;
+                if(m < fps_mil)
+                    std::this_thread::sleep_for(std::chrono::milliseconds(fps_mil-m-1));
+            }
         }
     }
     
@@ -913,7 +915,7 @@ public:
         }
         
         if(redir == 1) {
-#ifndef WIN32
+#ifdef SYPHON_SERVER
             if(redirect != 0) sendString(redirect->getString());
 #endif
         }

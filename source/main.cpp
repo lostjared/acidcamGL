@@ -110,10 +110,12 @@ int findFilter(std::string f) {
 #endif
 
 void acidcam::updateError() {
+#ifdef SYPHON_SERVER
     if(redirect != 0) {
         std::string text = redirect->getString();
         sendString(text);
     }
+#endif
     exit(EXIT_FAILURE);
 }
 
@@ -208,10 +210,12 @@ int main(int argc, char **argv) {
                 screen_mode = true;
                 break;
             case 'P':
+#ifdef SYPHON_SERVER
                 redirect = new CoutRedirect();
                 client_main();
                 sendString("\nacidcam: Code Startup\n");
                 acidcam::redir = 1;
+#endif
                 break;
             case 'T':
                 material  = optarg;
@@ -465,7 +469,12 @@ int main(int argc, char **argv) {
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
     if(playback_mode) {
-        int value = fps * playback_timeout / bpm;
+        int value = 0;
+        if(bpm > 0)
+            value = fps * playback_timeout / bpm;
+        else
+            value = 0;
+        
         main_window.setPlaybackMode(playback_mode, playback_timeout, value, bpm, playback_sort);
     }
     
