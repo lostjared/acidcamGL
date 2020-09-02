@@ -7,8 +7,9 @@
 FILE *open_ffmpeg(const char *output, const char *res, const char *dst_res, const char *fps, const char *crf) {
     
     std::ostringstream stream;
-    stream << "ffmpeg -y -s " << res << " -pixel_format bgr24 -f rawvideo -r " << fps << " -i pipe: -vcodec libx265 -pix_fmt yuv420p -crf " << crf << " -s " << dst_res << " " << output;
+    stream << "ffmpeg -y -s " << dst_res << " -pixel_format bgr24 -f rawvideo -r " << fps << " -i pipe: -vcodec libx265 -pix_fmt yuv420p " << " -tag:v hvc1 -crf " << crf << " " <<  output;
     
+    std::cout<<"acidcam: " << stream.str() << "\n";
     FILE *fptr = popen(stream.str().c_str(), "w");
     if(!fptr) {
         std::cerr << "Error: could not open ffmpeg\n";
@@ -19,7 +20,7 @@ FILE *open_ffmpeg(const char *output, const char *res, const char *dst_res, cons
 }
 
 void write_ffmpeg(FILE *fptr, cv::Mat &frame) {
-    fwrite(frame.ptr(), sizeof(char), frame.cols*frame.rows*3, fptr);
+    fwrite(frame.ptr(), sizeof(char), frame.total()*frame.elemSize(), fptr);
 }
 
 void mux_audio(const char *output, const char *src, const char *final_file) {

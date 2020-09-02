@@ -79,6 +79,7 @@ class AcidCam_Window : public glWindow {
     bool stereo_;
     int stored_position, stored_var_position;
     bool rand_shader;
+    FILE *fptr;
 public:
     
     AcidCam_Window() = default;
@@ -90,7 +91,14 @@ public:
         fps = f;
     }
     
+    void setFilePointer(FILE *fptr, int w, int h) {
+        this->fptr = fptr;
+        writer_w = w;
+        writer_h = h;
+    }
+    
     virtual void init() override {
+        fptr = 0;
         rand_shader = false;
         stored_position = 0;
         stored_var_position = 0;
@@ -350,15 +358,26 @@ public:
         writer_h = writer_hh;
     }
     
+    void write(cv::Mat &frame) {
+        if(fptr != 0) {
+            cv::Mat reimage;
+            cv::resize(frame, reimage, cv::Size(writer_w, writer_h));
+            write_ffmpeg(fptr, frame);
+        } else {
+            if(window_width != writer_w && window_height != writer_h) {
+                cv::Mat re;
+                cv::resize(frame, re, cv::Size(writer_w, writer_h));
+                writer.write(frame);
+            }
+            else
+                writer.write(frame);
+        }
+    }
+    
     void writeFrame() {
         cv::Mat frame;
         readFrame(frame);
-        if(window_width != writer_w && window_height != writer_h) {
-            cv::Mat re;
-            cv::resize(frame, re, cv::Size(writer_w, writer_h));
-            writer.write(re);
-        } else
-            writer.write(frame);
+        write(frame);
     }
     
     void setStereo(bool b) {

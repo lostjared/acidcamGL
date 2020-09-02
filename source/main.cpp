@@ -196,8 +196,17 @@ int main(int argc, char **argv) {
     int playback_timeout = 1;
     bool stereo_ = false;
     int bpm = 0;
-    while((opt = getopt(argc, argv, "w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    std::string crf = "22";
+    bool ffmpeg_enabled = false;
+    std::string res_v , fres_v;
+    while((opt = getopt(argc, argv, "5m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case '5':
+                ffmpeg_enabled = true;
+                break;
+            case 'm':
+                crf = optarg;
+                break;
             case 'w':
                 bpm = atoi(optarg);
                 break;
@@ -349,6 +358,9 @@ int main(int argc, char **argv) {
                     std::cout << "acidcam: Invalid resolution..\n";
                     acidcam::updateError();
                 }
+                std::ostringstream stream;
+                stream << res_w << "x" << res_h;
+                fres_v = stream.str();
                 std::cout << "acidcam: Setting Window Resolution at: " << w << "x" << h << "\n";
             }
                 break;
@@ -379,6 +391,7 @@ int main(int argc, char **argv) {
                     acidcam::updateError();
                 }
                 std::cout << "acidcam: Desired Capture Resolution: " << cw << "x" << ch << "\n";
+                res_v = optarg;
             }
                 break;
                 
@@ -437,6 +450,13 @@ int main(int argc, char **argv) {
             }
         }
     }
+    
+    std::ostringstream rv;
+    rv << cw << "x" << ch;
+    res_v = rv.str();
+    if(fres_v.length()==0)
+        fres_v = res_v;
+    
     if(force_full == true) {
         main_window.create(false, true, false,"acidcamGL", w, h, monitor);
     }
@@ -480,17 +500,28 @@ int main(int argc, char **argv) {
     main_window.setRestoreBlack(restore_black);
     main_window.setColorMap(color_map);
     main_window.setStereo(stereo_);
+    FILE *fptr = 0;
+    
     if(output_file.length()>0) {
-        if(codec.length()>0)
-            writer.open(output_file, cv::VideoWriter::fourcc(codec[0], codec[1], codec[2], codec[3]), fps, cv::Size(w, h), true);
-        else
-            writer.open(output_file, cv::VideoWriter::fourcc('m','p','4','v'), fps, cv::Size(w, h), true);
-        if(!writer.isOpened()) {
-            std::cout << "acidcam: Error opening video writer...\n";
-            acidcam::updateError();
+        if(ffmpeg_enabled == false) {
+            if(codec.length()>0)
+                writer.open(output_file, cv::VideoWriter::fourcc(codec[0], codec[1], codec[2], codec[3]), fps, cv::Size(w, h), true);
+            else
+                writer.open(output_file, cv::VideoWriter::fourcc('m','p','4','v'), fps, cv::Size(w, h), true);
+            if(!writer.isOpened()) {
+                std::cout << "acidcam: Error opening video writer...\n";
+                acidcam::updateError();
+            }
+            std::cout << "acidcam: record " << output_file << " " << w << "x" << h << " " << fps << "\n";
+            main_window.setWriter(writer,w,h);
+        } else {
+            std::ostringstream fps_;
+            fps_ << fps;
+            fptr = open_ffmpeg(output_file.c_str(),res_v.c_str(),fres_v.c_str(), fps_.str().c_str(), crf.c_str());
+            std::cout << "acidcam: writing x265 " << output_file << " " << res_v << " " << fres_v << " " << fps << "\n";
+            main_window.setWriter(writer,w,h);
+            main_window.setFilePointer(fptr,w,h);
         }
-        std::cout << "acidcam: record " << output_file << " " << w << "x" << h << " " << fps << "\n";
-        main_window.setWriter(writer,w,h);
     }
     if(key_val.length()>0)
         main_window.loadKeys(key_val);
@@ -517,11 +548,21 @@ int main(int argc, char **argv) {
 #endif
     }
     main_window.loop();
-    if(writer.isOpened())
-        std::cout << "acidcam: wrote to file [" << output_file << "]\n";
-    
 
     writer.release();
+    acidcam::cap.release();
+    pclose(fptr);
+    
+    if(fptr != 0)
+        pclose(fptr);
+    else
+        writer.release();
+
+    if(writer.isOpened())
+        std::cout << "acidcam: wrote to file [" << output_file << "]\n";
+    else
+        std::cout << "acidcam: wrote x265 file: [" << output_file << "]\n";
+
     std::cout << "acidcam: exited\n";
     
 #ifdef SYPHON_SERVER
@@ -537,14 +578,6 @@ int main(int argc, char **argv) {
             sendString(text);
 #endif
     }
-    
-    acidcam::cap.release();
-    if(!writer.isOpened() && output_file.length()>0) {
-        std::ostringstream stream;
-        stream << argv[0] << " --mux " << output_file << " " << filename;
-        system(stream.str().c_str());
-    }
-    
     glfwTerminate();
     return EXIT_SUCCESS;
 }
