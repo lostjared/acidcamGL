@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
             std::string output_file = argv[2];
             std::string filename_audio = filename.substr(0, filename.rfind("."));
             std::string ext = filename.substr(filename.rfind("."), filename.length());
-            filename_audio += "with_audio" + ext;
+            filename_audio += "_with_source_audio" + ext;
             mux_audio(output_file.c_str(), filename.c_str(), filename_audio.c_str());
             std::cout<< "acidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
             exit(0);
