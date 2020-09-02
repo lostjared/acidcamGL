@@ -553,7 +553,6 @@ int main(int argc, char **argv) {
 
     writer.release();
     acidcam::cap.release();
-    pclose(fptr);
     
     if(fptr != 0)
         pclose(fptr);
