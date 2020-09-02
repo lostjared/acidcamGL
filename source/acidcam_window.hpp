@@ -950,6 +950,11 @@ public:
                     break;
             }
         }
+#ifdef SYPHON_SERVER
+        if(redirect != 0) {
+            sendString(redirect->getString());
+        }
+#endif
     }
     
     void resize(int newWidth, int newHeight) {

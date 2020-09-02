@@ -122,6 +122,23 @@ void acidcam::updateError() {
     exit(EXIT_FAILURE);
 }
 
+void mux_audio_ac(std::string output, std::string filenamex) {
+    std::cout << "acidcam: test for ffmpeg: ";
+    if(system("test -f /usr/local/bin/ffmpeg") == 0 || system("test -f /usr/bin/ffmpeg") == 0) {
+        std::cout << "passed...\n";
+        std::string filename = filenamex;
+        std::string output_file = output;
+        std::string filename_audio = output_file.substr(0, output_file.rfind("."));
+        //filename.substr(0, filename.rfind("."));
+        std::string ext = filename.substr(filename.rfind("."), filename.length());
+        filename_audio += "_with_source_audio" + ext;
+        mux_audio(output_file.c_str(), filename.c_str(), filename_audio.c_str());
+        std::cout<< "\nacidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
+    } else {
+        std::cout << "acidcam: mux failed...\n";
+    }
+}
+
 #ifdef SYPHON_SERVER
 extern void messageOutput(std::string title, std::string text);
 #endif
@@ -141,22 +158,9 @@ int main(int argc, char **argv) {
     }
 #ifndef _WIN32
     if(std::string(argv[1]) == "--mux" && argc == 4) {
-        std::cout << "acidcam: test for ffmpeg: ";
-        if(system("test -f /usr/local/bin/ffmpeg") == 0 || system("test -f /usr/bin/ffmpeg") == 0) {
-            std::cout << "passed...\n";
-            std::string filename = argv[3];
-            std::string output_file = argv[2];
-            std::string filename_audio = output_file.substr(0, output_file.rfind("."));
-            //filename.substr(0, filename.rfind("."));
-            std::string ext = filename.substr(filename.rfind("."), filename.length());
-            filename_audio += "_with_source_audio" + ext;
-            mux_audio(output_file.c_str(), filename.c_str(), filename_audio.c_str());
-            std::cout<< "\nacidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
-            exit(0);
-        } else {
-            std::cout << "failed...\n";
-        }
+        mux_audio_ac(argv[2], argv[3]);
         std::cout << "acidcam: exiting...\n";
+        exit(0);
     }
 #endif
     if(!glfwInit()) {
@@ -576,9 +580,7 @@ int main(int argc, char **argv) {
         std::cout << "acidcam: wrote file with ffmpeg: [" << output_file << "]\n";
     
     if(ffmpeg_enabled) {
-        std::ostringstream str;
-        str << argv[0] << " --mux " << output_file << " " << filename;
-        system(str.str().c_str());
+       mux_audio_ac(output_file, filename);
     }
     std::cout << "acidcam: exited\n";
     
