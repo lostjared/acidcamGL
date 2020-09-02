@@ -146,11 +146,12 @@ int main(int argc, char **argv) {
             std::cout << "passed...\n";
             std::string filename = argv[3];
             std::string output_file = argv[2];
-            std::string filename_audio = filename.substr(0, filename.rfind("."));
+            std::string filename_audio = output_file.substr(0, output_file.rfind("."));
+            //filename.substr(0, filename.rfind("."));
             std::string ext = filename.substr(filename.rfind("."), filename.length());
             filename_audio += "_with_source_audio" + ext;
             mux_audio(output_file.c_str(), filename.c_str(), filename_audio.c_str());
-            std::cout<< "acidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
+            std::cout<< "\nacidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
             exit(0);
         } else {
             std::cout << "failed...\n";
@@ -194,17 +195,23 @@ int main(int argc, char **argv) {
     std::string custom_path;
     bool playback_mode = false;
     bool playback_sort = false;
-    std::string codec;
     int playback_timeout = 1;
     bool stereo_ = false;
     int bpm = 0;
+    std::string codec;
     std::string crf = "22";
     bool ffmpeg_enabled = false;
     std::string res_v , fres_v;
-    while((opt = getopt(argc, argv, "5m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    std::string ff_codec = "libx265";
+    while((opt = getopt(argc, argv, "45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case '4':
+                ffmpeg_enabled = true;
+                ff_codec = "libx264";
+                break;
             case '5':
                 ffmpeg_enabled = true;
+                ff_codec = "libx265";
                 break;
             case 'm':
                 crf = optarg;
@@ -504,6 +511,9 @@ int main(int argc, char **argv) {
     main_window.setStereo(stereo_);
     FILE *fptr = 0;
     
+    std::cout << "acidcam: Loaded: " << ac::solo_filter.size() << " Filters\n";
+    std::cout << "acidcam: initialized...\n";
+    
     if(output_file.length()>0) {
         if(ffmpeg_enabled == false) {
             if(codec.length()>0)
@@ -519,8 +529,8 @@ int main(int argc, char **argv) {
         } else {
             std::ostringstream fps_;
             fps_ << fps;
-            fptr = open_ffmpeg(output_file.c_str(),res_v.c_str(),fres_v.c_str(), fps_.str().c_str(), crf.c_str());
-            std::cout << "acidcam: writing x265 " << output_file << " " << res_v << " " << fres_v << " " << fps << "\n";
+            std::cout << "acidcam: writing with " << codec << " " << output_file << " " << res_v << " " << fres_v << " " << fps << "\n";
+            fptr = open_ffmpeg(output_file.c_str(),ff_codec.c_str(),res_v.c_str(),fres_v.c_str(), fps_.str().c_str(), crf.c_str());
             main_window.setWriter(writer,w,h);
             main_window.setFilePointer(fptr,w,h);
         }
@@ -537,9 +547,6 @@ int main(int argc, char **argv) {
         main_window.setPlaybackMode(playback_mode, playback_timeout, value, bpm, playback_sort);
     }
     
-    std::cout << "acidcam: Loaded: " << ac::solo_filter.size() << " Filters\n";
-    std::cout << "acidcam: initialized...\n";
-
 
     if(acidcam::redir == 1) {
 #ifndef _WIN32
@@ -549,16 +556,30 @@ int main(int argc, char **argv) {
         } 
 #endif
     }
+    
+    if(ffmpeg_enabled) {
+        close_stdout();
+#ifdef SYPHON_SERVER
+        std::fstream stdout_file;
+        stdout_file.open("/Applications/acidcamGL/stdout", std::ios::in);
+        if(!stdout_file.is_open()) {
+            std::cerr << "acidcam: Error opening stdout file...\n";
+        }
+        std::ostringstream ss;
+        ss << stdout_file.rdbuf();
+        stdout_file.close();
+        if(redirect != 0) {
+            sendString(ss.str());
+        }
+#endif
+    }
     main_window.loop();
-
+   
     writer.release();
     acidcam::cap.release();
     
     if(fptr != 0) {
         pclose(fptr);
-        std::ostringstream str;
-        str << argv[0] << " --mux " << output_file << " " << filename;
-        system(str.str().c_str());
     }
     else
         writer.release();
@@ -567,8 +588,12 @@ int main(int argc, char **argv) {
         std::cout << "acidcam: wrote to file [" << output_file << "]\n";
     else
         std::cout << "acidcam: wrote x265 file: [" << output_file << "]\n";
-
     
+    if(ffmpeg_enabled) {
+        std::ostringstream str;
+        str << argv[0] << " --mux " << output_file << " " << filename;
+        system(str.str().c_str());
+    }
     std::cout << "acidcam: exited\n";
     
 #ifdef SYPHON_SERVER
@@ -579,7 +604,7 @@ int main(int argc, char **argv) {
 #endif
     
     if(acidcam::redir == 1) {
-#ifndef _WIN32
+#ifdef SYPHON_SERVER
             std::string text = redirect->getString();
             sendString(text);
 #endif
