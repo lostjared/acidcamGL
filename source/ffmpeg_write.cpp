@@ -7,7 +7,11 @@
 #endif
 // ffmpeg -y -s 640x480  -pixel_format bgr24 -f rawvideo -r 30 -i pipe: -vcodec libx265 -pix_fmt yuv420p -crf 24 test.mp4
 #include"ipc_client.hpp"
-
+#ifdef __APPLE__
+std::string ffmpeg_path = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/ffmpeg";
+#else
+std::string ffmpeg_path = "ffmpeg";
+#endif
 extern void sendString(const std::string &s);
 
 /*
@@ -66,7 +70,7 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
         tag = "-tag:v hvc1";
     
     std::ostringstream stream;
-    stream << "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/ffmpeg -y -s " << dst_res << " -pixel_format bgr24 -f rawvideo -r " << fps << " -i pipe: -vcodec " << codec << " -pix_fmt yuv420p " <<  tag << " -crf " << crf << " " <<  output;
+    stream << ffmpeg_path << " -y -s " << dst_res << " -pixel_format bgr24 -f rawvideo -r " << fps << " -i pipe: -vcodec " << codec << " -pix_fmt yuv420p " <<  tag << " -crf " << crf << " " <<  output;
     
     std::cout<<"acidcam: " << stream.str() << "\n";
     
@@ -96,7 +100,7 @@ void close_stdout() {
 void mux_audio(const char *output, const char *src, const char *final_file) {
 #ifndef _WIN32
     std::ostringstream stream;
-    stream << "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/ffmpeg -y -i " << output << " -i " << src << " -c copy -map 0:v:0 -map 1:a:0? -shortest " << final_file;
+    stream << ffmpeg_path << " -y -i " << output << " -i " << src << " -c copy -map 0:v:0 -map 1:a:0? -shortest " << final_file;
     std::cout << "acidcam: " << stream.str() << "\n";
     FILE *fptr = popen(stream.str().c_str(), "r");
     if(!fptr) {
