@@ -82,7 +82,7 @@ for macOS static build with Syphon enter the macos-static directory and
 
 	make -j4
 
-You will still need to use install_name_tool on an app budle see copy.sh for how I do it
+You will still need to use install_name_tool on an app bundle see copy.sh for how I do it
 
 Run the program:
 
