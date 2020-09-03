@@ -409,7 +409,7 @@ public:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         if(rand_shader == true)
-            program = rand()%shaders.size();
+            program = shaders[rand()%(shaders.size()-1)];
         
         program.useProgram();
         mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
