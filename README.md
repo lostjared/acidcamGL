@@ -78,6 +78,10 @@ Build the project
 
         make -j4
 
+for macOS static build with Syphon enter the macos-static directory and
+
+	make -j4
+
 Run the program:
 
 	./acidcamGL -g -p ../filters
@@ -89,57 +93,75 @@ FPS: 24
 Window Size: 1280x720
 
 you can change that using arguments passed to the program
-
 How to use the program:
 Arguments:
-
-	-h use H.264 output w/o uses MPEG-4
-	-o output mp4 filename
-	-S filter start index
-	-H shader start index
-	-C set color map
-	-T set material texture filename
-	-k shortcut-key file
-	-L playlist of filters
-	-b restore black
-	-g output debug strings
-	-u fps
-	-n print filter name
-	-e snapshot prefix
-	-p shader path
-	-M monitor index
-	-f fullscreen (resize)
-	-F fullscreen (windowed mode)
-	-d capture device
-	-i input_video.mp4
-	-R loop input video
-	-r resolution 1920x1080
-	-c Camera resolution 1280x720
-	-l list filters
-	-t list filters no info
-	-v version
-
+    -X codec
+    -o output filename
+    -S filter start index
+    -H shader start index
+    -C set color map
+    -T set material texture filename
+    -N play list slideshow timeout
+    -k shortcut-key file
+    -L playlist of filters
+    -b restore black
+    -g output debug strings
+    -u fps
+    -n print filter name
+    -e snapshot prefix
+    -p shader path
+    -M monitor index
+    -f fullscreen (resize)
+    -F fullscreen (windowed mode)
+    -d capture device
+    -i input_video.mp4
+    -R loop input video
+    -x Stereo Mode
+    -r resolution 1920x1080
+    -c Camera resolution 1280x720
+    -G Screen Capture Mode
+    -Y Enable Syphon Server
+    -U Screen Capture Position X,Y
+    -P Redirect Standard Output to Socket
+    -W custom filter path
+    -B enable playback filter mode
+    -q shuffle playlist
+    -w beats per minute for shuffle
+    -l list filters
+    -t list filters no info
+    -l list search
+    -v version
+    -4 enable ffmpeg x264 support
+    -5 enable ffmpeg x265 support
+    -m crf for x265 for video mode
+    --mux outputted_file source_file [ Mux audio (copy audio) ]
+    
 Controls:
+    
+    L - enable disable playlist
+    N - set index to the end
+    P - index reset to zero
+    K - jump forward index by 25
+    J - jump backwar index by 25
+    Z - take screenshot
+    H - Shuffle Playlist
+    M - Enable/Disable Playlist Slideside random timeout
+    F - process keyboard input for index
+    S - process keyboard input for shader
+    C - clear keyboard input
+    [+] - increase blend percentage
+    [-] = decrease blend percentage
+    [SPACE] - Acid Cam filters enabled/disabled
+    [LEFT] - Filter index move left
+    [RIGHT] - filter index move right
+    [UP] - Shader Index move up
+    [DOWN] - Shader Index move down
+    [ENTER] - Jump to currently typed index (type index with number keys at anytime)
+    [PAGEUP] - Store Index Position
+    [PAGEDOWN] - Restore Position Index
+     Q,Q,E,R,Y,U,I,O - move movement rate
+     T - reset color offset
 
-	L - enable disable playlist
-	N - set index to the end
-	P - index reset to zero
-	K - jump forward index by 25
-	J - jump backwar index by 25
-	Z - take screenshot
-	F - process keyboard input for index
-	S - process keyboard input for shader
-	C - clear keyboard input
-	[SPACE] - Acid Cam filters enabled/disabled
-	[LEFT] - Filter index move left
-	[RIGHT] - filter index move right
-	[UP] - Shader Index move up
-	[DOWN] - Shader Index move down
-	[<] - Decrease index of Color Map.
-	[>] - Increase index of Color Map.
-	[ENTER] - Jump to currently typed index (type index with number keys at anytime)
-	Q,Q,E,R,Y,U,I,O - move movement rate
-	T - reset color offset
 
 Run the program:
 
