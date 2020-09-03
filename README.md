@@ -1,6 +1,6 @@
 # acidcamGL
 
-![ScreenShot1](https://github.com/lostjared/AacidcamGL/blob/master/screens/obs.jpg?raw=true "screenshot1")
+![ScreenShot1](https://github.com/lostjared/acidcamGL/blob/master/screens/obs.jpg?raw=true "screenshot1")
 
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
