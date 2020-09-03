@@ -94,7 +94,9 @@ Window Size: 1280x720
 
 you can change that using arguments passed to the program
 How to use the program:
+
 Arguments:
+
     -X codec
     -o output filename
     -S filter start index
