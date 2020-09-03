@@ -1,6 +1,9 @@
 # acidcamGL
 
-This project requires a system with a good enough graphics card to be running OpenGL 4.1 or greater. It will not work on lower specs.
+![ScreenShot1](https://github.com/lostjared/AacidcamGL/blob/master/screens/obs.jpg?raw=true "screenshot1")
+
+
+This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
 
 To be able to download and run binaries from this project you will need to enter the terminal and type
 
