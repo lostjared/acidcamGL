@@ -202,8 +202,12 @@ int main(int argc, char **argv) {
     bool ffmpeg_enabled = false;
     std::string res_v , fres_v;
     std::string ff_codec = "libx265";
-    while((opt = getopt(argc, argv, "45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    std::string list_path;
+    while((opt = getopt(argc, argv, "a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case 'a':
+                list_path = optarg;
+                break;
             case '4':
                 ffmpeg_enabled = true;
                 ff_codec = "libx264";
@@ -495,6 +499,8 @@ int main(int argc, char **argv) {
            main_window.genMaterial(material);
     main_window.loadShaders(shader_path);
     main_window.setShader(start_shader);
+    if(list_path.length()>0)
+        main_window.loadShaderList(list_path);
     if(filter_string.length()>0) {
         set_index = findFilter(filter_string);
         if(set_index == -1) {

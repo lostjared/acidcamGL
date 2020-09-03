@@ -79,7 +79,10 @@ class AcidCam_Window : public glWindow {
     bool stereo_;
     int stored_position, stored_var_position;
     bool rand_shader;
+    bool shader_list_enabled;
     FILE *fptr;
+    std::vector<int> shader_list;
+    std::unordered_map<std::string, int> shader_map;
 public:
     
     AcidCam_Window() = default;
@@ -98,6 +101,7 @@ public:
     }
     
     virtual void init() override {
+        shader_list_enabled = false;
         fptr = 0;
         rand_shader = false;
         stored_position = 0;
@@ -155,9 +159,9 @@ public:
         glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
         
         glfwGetFramebufferSize(win(), &width, &height);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
         aspect = (float)width/(float)height;
         p_mat = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
-        
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -635,16 +639,19 @@ public:
         GLint loc = glGetUniformLocation(program.id(), "iResolution");
         glUniform2f(loc, width, height);
         glUniform2f(material_size, img_cols, img_rows);
-        
-        
+
         glDrawArrays(GL_TRIANGLES,0,6);
-        
-        
 #ifdef SYPHON_SERVER
         int tex = syphon_pushTexture(texture);
         glBindTexture(GL_TEXTURE_RECTANGLE_EXT, tex);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 #endif
+
+        if(shader_list_enabled) {
+            for(int i = 0; i < shader_list.size(); ++i) {
+                // not sure how to do this
+            }
+        }
         
         if(take_snapshot == true) {
             takeSnapshot();
@@ -948,6 +955,15 @@ public:
                     rand_shader = !rand_shader;
                     std::cout << "acidcam: Random Shader Toggled...\n";
                     break;
+                case GLFW_KEY_DELETE:
+                    shader_list_enabled = !shader_list_enabled;
+                    if(shader_list_enabled) {
+                        std::cout << "acidcam: shader list enabled: " << shader_list.size() << " shaders.\n";
+                    }
+                    else
+                        std::cout << "acidcam: shader list disabled.\n";
+                        
+                    break;
             }
         }
 #ifdef SYPHON_SERVER
@@ -1021,6 +1037,24 @@ public:
         }
     }
     
+    void loadShaderList(std::string lst) {
+        std::fstream file;
+        file.open(lst, std::ios::in);
+        
+        if(!file.is_open()) {
+            std::cout << "acidcam: Error could not load shader list...\n";
+            acidcam::updateError();
+        }
+        
+        while(!file.eof()) {
+            std::string s;
+            std::getline(file, s);
+            if(file)
+                shader_list.push_back(shader_map[s]);
+        }
+        std::cout << "acidcam: shader list loaded...\n";
+    }
+    
     void loadShaders(const std::string &text) {
         std::ostringstream stream;
         stream << text << "/" << "index.txt";
@@ -1058,6 +1092,7 @@ public:
                     std::cout << "Error could not load: " << fs1.str() << "\n";
                     acidcam::updateError();
                 }
+                shader_map[s] = index;
                 std::cout << "\n";
                 p.setName(s.substr(0, s.rfind(".")));
                 shaders.push_back(p);
