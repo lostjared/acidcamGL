@@ -2,6 +2,12 @@
 
 This project requires a system with a good enough graphics card to be running OpenGL 4.1 or greater. It will not work on lower specs.
 
+To be able to download and run binaries from this project you will need to enter the terminal and type
+
+sudo spctl --master-disable
+
+Then go to System settings and select Security & Privacy. Select Anywhere as the location of apps.
+
 How to compile for macOS: 
 
 https://youtu.be/UB_i1qTLGw8
