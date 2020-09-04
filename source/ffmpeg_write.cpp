@@ -49,7 +49,20 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
 //ffmpeg -f avfoundation -i ":iShowU Audio Capture" -acodec libmp3lame -ab 128k -f mp3 -
 
 void list_devices() {
-    
+#ifdef __APPLE__
+    std::string s = ffmpeg_path + " -list_devices true -f avfoundation -i dummy";
+    FILE *fptr = popen(s.c_str(), "r");
+    if(!fptr) {
+        std::cout << "acidcam: Error: could not read file...\n";
+        exit(0);
+    }
+    while(!feof(fptr)) {
+        char buf[1024];
+        fgets(buf, 1024, fptr);
+        std::cout << buf;
+    }
+    pclose(fptr);
+#endif
 }
 
 void write_ffmpeg(FILE *fptr, cv::Mat &frame) {

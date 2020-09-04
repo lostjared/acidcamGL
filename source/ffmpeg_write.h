@@ -14,4 +14,5 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
 void write_ffmpeg(FILE *fptr, cv::Mat &frame);
 void mux_audio(const char *output, const char *src, const char *final_file);
 void close_stdout();
+void list_devices();
 #endif

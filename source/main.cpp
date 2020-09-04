@@ -151,13 +151,14 @@ int main(int argc, char **argv) {
 #endif
         exit(EXIT_SUCCESS);
     }
-#ifndef _WIN32
     if(std::string(argv[1]) == "--mux" && argc == 4) {
         mux_audio_ac(argv[2], argv[3]);
         std::cout << "acidcam: exiting...\n";
         exit(0);
+    } else if(std::string(argv[1]) == "--list" && argc == 2) {
+        list_devices();
+        exit(EXIT_SUCCESS);
     }
-#endif
     if(!glfwInit()) {
         acidcam::updateError();
     }
