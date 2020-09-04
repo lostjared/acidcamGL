@@ -63,7 +63,9 @@ std::string outstr_arr[] = {
     "    -4 enable ffmpeg x264 support",
     "    -5 enable ffmpeg x265 support",
     "    -m crf for x265 for video mode",
+    "    -1 for ffmpeg path",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
+    "    --list display capture device list",
     "    ",
     "Controls:",
     "    ",
@@ -204,8 +206,12 @@ int main(int argc, char **argv) {
     std::string res_v , fres_v;
     std::string ff_codec = "libx265";
     std::string list_path;
-    while((opt = getopt(argc, argv, "a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    while((opt = getopt(argc, argv, "1:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case '1':
+                ffmpeg_path = optarg;
+                std::cout << "acidcam: path to ffmpeg executable: " << ffmpeg_path << "\n";
+                break;
             case 'a':
                 list_path = optarg;
                 break;
