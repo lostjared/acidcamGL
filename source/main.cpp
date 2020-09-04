@@ -570,7 +570,11 @@ int main(int argc, char **argv) {
     acidcam::cap.release();
     
     if(fptr != 0) {
+#ifndef _WIN32
         pclose(fptr);
+#else
+        _pclose(fptr);
+#endif
     }
     else
         writer.release();

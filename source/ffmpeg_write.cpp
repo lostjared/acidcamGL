@@ -14,50 +14,6 @@ std::string ffmpeg_path = "ffmpeg";
 #endif
 extern void sendString(const std::string &s);
 
-/*
-int in, out;
-
-static bool start_subprocess(const char *command, int *pid, FILE **infd, FILE **outfd) {
-    int p1[2], p2[2];
-    if (!pid || !infd || !outfd)
-        return false;
-
-    if (pipe(p1) == -1)
-        goto err_pipe1;
-    if (pipe(p2) == -1)
-        goto err_pipe2;
-    if ((*pid = fork()) == -1)
-        goto err_fork;
-
-    if (*pid) {
-        in = p1[1], out = p2[0];
-        *infd = fdopen(in, "r");
-        *outfd = fdopen(out, "w");
-        close(p1[0]);
-        close(p2[1]);
-        return true;
-    } else {
-        dup2(p1[0], 0);
-        dup2(p2[1], 1);
-        close(p1[0]);
-        close(p1[1]);
-        close(p2[0]);
-        close(p2[1]);
-        execlp("/bin/sh","/bin/sh", "-c", command, (char *)NULL);
-        fprintf(stderr, "error running %s: %s", command, strerror(errno));
-        abort();
-    }
-
-err_fork:
-    close(p2[1]);
-    close(p2[0]);
-err_pipe2:
-    close(p1[1]);
-    close(p1[0]);
-err_pipe1:
-    return false;
-}
-*/
 char buffer[1024*1024];
 std::fstream file;
 int stdout_save;
@@ -74,7 +30,11 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
     
     std::cout<<"acidcam: " << stream.str() << "\n";
     
+#ifndef _WIN32
     FILE *fptr = popen(stream.str().c_str(), "w");
+#else
+    FILE *fptr = _popen(stream.str().c_str(), "w");
+#endif
     
     if(!fptr) {
         std::cerr << "Error: could not open ffmpeg\n";
@@ -86,11 +46,14 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
     return 0;
 }
 
+//ffmpeg -f avfoundation -i ":iShowU Audio Capture" -acodec libmp3lame -ab 128k -f mp3 -
+
+void list_devices() {
+    
+}
 
 void write_ffmpeg(FILE *fptr, cv::Mat &frame) {
-#ifndef _WIN32
     fwrite(frame.ptr(), sizeof(char), frame.total()*frame.elemSize(), fptr);
-#endif
 }
 
 void close_stdout() {
@@ -102,7 +65,11 @@ void mux_audio(const char *output, const char *src, const char *final_file) {
     std::ostringstream stream;
     stream << ffmpeg_path << " -y -i " << output << " -i " << src << " -c copy -map 0:v:0 -map 1:a:0? -shortest " << final_file;
     std::cout << "acidcam: " << stream.str() << "\n";
+#ifndef _WIN32
     FILE *fptr = popen(stream.str().c_str(), "r");
+#else
+    FILE *fptr = _popen(stream.str().c_str(), "r");
+#endif
     if(!fptr) {
         std::cerr << "Error: could not open ffmpeg\n";
         return;
@@ -115,6 +82,10 @@ void mux_audio(const char *output, const char *src, const char *final_file) {
         sendString(buf);
 #endif
     }
+#ifndef _WIN32
     pclose(fptr);
+#else
+    _pclose(fptr);
+#endif
 #endif
 }
