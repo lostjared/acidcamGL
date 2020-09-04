@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ac-alpha.cpp" />
+    <ClCompile Include="ac-basic.cpp" />
+    <ClCompile Include="ac-box.cpp" />
+    <ClCompile Include="ac-filter1.cpp" />
+    <ClCompile Include="ac-filter10.cpp" />
+    <ClCompile Include="ac-filter11.cpp" />
+    <ClCompile Include="ac-filter12.cpp" />
+    <ClCompile Include="ac-filter13.cpp" />
+    <ClCompile Include="ac-filter14.cpp" />
+    <ClCompile Include="ac-filter15.cpp" />
+    <ClCompile Include="ac-filter16.cpp" />
+    <ClCompile Include="ac-filter17.cpp" />
+    <ClCompile Include="ac-filter18.cpp" />
+    <ClCompile Include="ac-filter19.cpp" />
+    <ClCompile Include="ac-filter2.cpp" />
+    <ClCompile Include="ac-filter20.cpp" />
+    <ClCompile Include="ac-filter21.cpp" />
+    <ClCompile Include="ac-filter22.cpp" />
+    <ClCompile Include="ac-filter23.cpp" />
+    <ClCompile Include="ac-filter24.cpp" />
+    <ClCompile Include="ac-filter25.cpp" />
+    <ClCompile Include="ac-filter26.cpp" />
+    <ClCompile Include="ac-filter27.cpp" />
+    <ClCompile Include="ac-filter28.cpp" />
+    <ClCompile Include="ac-filter29.cpp" />
+    <ClCompile Include="ac-filter3.cpp" />
+    <ClCompile Include="ac-filter30.cpp" />
+    <ClCompile Include="ac-filter31.cpp" />
+    <ClCompile Include="ac-filter32.cpp" />
+    <ClCompile Include="ac-filter33.cpp" />
+    <ClCompile Include="ac-filter34.cpp" />
+    <ClCompile Include="ac-filter35.cpp" />
+    <ClCompile Include="ac-filter36.cpp" />
+    <ClCompile Include="ac-filter37.cpp" />
+    <ClCompile Include="ac-filter38.cpp" />
+    <ClCompile Include="ac-filter39.cpp" />
+    <ClCompile Include="ac-filter4.cpp" />
+    <ClCompile Include="ac-filter40.cpp" />
+    <ClCompile Include="ac-filter41.cpp" />
+    <ClCompile Include="ac-filter42.cpp" />
+    <ClCompile Include="ac-filter43.cpp" />
+    <ClCompile Include="ac-filter44.cpp" />
+    <ClCompile Include="ac-filter45.cpp" />
+    <ClCompile Include="ac-filter46.cpp" />
+    <ClCompile Include="ac-filter47.cpp" />
+    <ClCompile Include="ac-filter48.cpp" />
+    <ClCompile Include="ac-filter49.cpp" />
+    <ClCompile Include="ac-filter5.cpp" />
+    <ClCompile Include="ac-filter50.cpp" />
+    <ClCompile Include="ac-filter6.cpp" />
+    <ClCompile Include="ac-filter7.cpp" />
+    <ClCompile Include="ac-filter8.cpp" />
+    <ClCompile Include="ac-filter9.cpp" />
+    <ClCompile Include="ac-filtercat.cpp" />
+    <ClCompile Include="ac-grid.cpp" />
+    <ClCompile Include="ac-image.cpp" />
+    <ClCompile Include="ac-obj.cpp" />
+    <ClCompile Include="ac-particle.cpp" />
+    <ClCompile Include="ac-square.cpp" />
+    <ClCompile Include="ac-util.cpp" />
+    <ClCompile Include="acidcam_window.cpp" />
+    <ClCompile Include="ffmpeg_write.cpp" />
+    <ClCompile Include="fractal.cpp" />
+    <ClCompile Include="getopt.cpp" />
+    <ClCompile Include="gl_shader.cpp" />
+    <ClCompile Include="gl_window.cpp" />
+    <ClCompile Include="keymap.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ac-filtercat.h" />
+    <ClInclude Include="ac.h" />
+    <ClInclude Include="acidcam_window.hpp" />
+    <ClInclude Include="ffmpeg_write.h" />
+    <ClInclude Include="fractal.h" />
+    <ClInclude Include="getopt.h" />
+    <ClInclude Include="gl_shader.hpp" />
+    <ClInclude Include="gl_window.hpp" />
+    <ClInclude Include="keymap.hpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{87B81793-2E7A-4C08-96AC-63F66787C360}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>acidcamGL</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\16194\Downloads\glew-2.1.0-win32\glew-2.1.0\include;C:\Users\16194\Downloads\glfw-3.3.2.bin.WIN64\glfw-3.3.2.bin.WIN64\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\16194\Downloads\glfw-3.3.2.bin.WIN64\glfw-3.3.2.bin.WIN64\lib-vc2019;C:\Users\16194\Downloads\glew-2.1.0-win32\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\16194\Downloads\opencv\build\include;C:\Users\16194\Downloads\glew-2.1.0-win32\glew-2.1.0\include;C:\Users\16194\Downloads\glfw-3.3.2.bin.WIN64\glfw-3.3.2.bin.WIN64\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\code\build-AcidCam-Desktop_Qt_5_14_2_MSVC2017_64bit-Release\release\lib\Release;C:\Users\16194\Downloads\glew-2.1.0-win32\glew-2.1.0\lib\Release\x64;C:\Users\16194\Downloads\glfw-3.3.2.bin.WIN64\glfw-3.3.2.bin.WIN64\lib-vc2019;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opencv_calib3d412.lib;opencv_core412.lib;opencv_dnn412.lib;opencv_features2d412.lib;opencv_flann412.lib;opencv_gapi412.lib;opencv_highgui412.lib;opencv_imgcodecs412.lib;opencv_imgproc412.lib;opencv_ml412.lib;opencv_objdetect412.lib;opencv_photo412.lib;opencv_stitching412.lib;opencv_ts412.lib;opencv_video412.lib;opencv_videoio412.lib;opengl32.lib;glew32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
