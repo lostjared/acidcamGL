@@ -232,6 +232,8 @@ namespace acidcam {
             }
         }
         
+        
+        
         void sortPlaylist() {
             unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
             std::shuffle(var_list.begin(), var_list.end(), std::default_random_engine(seed));

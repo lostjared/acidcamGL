@@ -4,6 +4,8 @@
 #ifdef SYPHON_SERVER
 #include "syphon.h"
 #endif
+#include<cstdlib>
+
 acidcam::AcidCam_Window main_window;
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode) {
@@ -68,6 +70,9 @@ std::string outstr_arr[] = {
     "    -1 for ffmpeg path",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
     "    --list display capture device list",
+    "    ",
+    "Enviorment Variables:",
+    "    SHADER_PATH path to shaders",
     "    ",
     "Controls:",
     "    ",
@@ -347,8 +352,9 @@ int main(int argc, char **argv) {
             case 'n':
                 print_text = true;
                 break;
-            case 'p':
+            case 'p': {
                 shader_path = optarg;
+            }
                 break;
             case 'i':
                 filename = optarg;
@@ -421,6 +427,12 @@ int main(int argc, char **argv) {
                 break;
         }
     }
+    
+    char *p = getenv("SHADER_PATH");
+    if(p != NULL)
+        shader_path = p;
+    
+    std::cout << "acidcam: shader path: "<<shader_path << "\n";
     
     
     if(shader_path.length()==0) {
