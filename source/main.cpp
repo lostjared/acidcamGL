@@ -213,8 +213,12 @@ int main(int argc, char **argv) {
     std::string res_v , fres_v;
     std::string ff_codec = "libx265";
     std::string list_path;
-    while((opt = getopt(argc, argv, "1:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    bool cubeapp = false;
+    while((opt = getopt(argc, argv, "21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case '2':
+                cubeapp = true;
+                break;
             case '1':
                 ffmpeg_path = optarg;
                 std::cout << "acidcam: path to ffmpeg executable: " << ffmpeg_path << "\n";
@@ -431,6 +435,8 @@ int main(int argc, char **argv) {
     char *p = getenv("SHADER_PATH");
     if(p != NULL)
         shader_path = p;
+    
+    main_window.enableCube(cubeapp);
     
     std::cout << "acidcam: shader path: "<<shader_path << "\n";
     

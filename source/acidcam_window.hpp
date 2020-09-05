@@ -95,6 +95,7 @@ namespace acidcam {
         FILE *fptr;
         std::vector<int> shader_list;
         std::unordered_map<std::string, int> shader_map;
+        bool enable_cubeapp = false;
 #ifdef SPOUT_SERVER
         SPOUTLIBRARY* spoutsender;
 #endif
@@ -103,6 +104,10 @@ namespace acidcam {
         AcidCam_Window() = default;
         AcidCam_Window(const AcidCam_Window &) = delete;
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
+        
+        void enableCube(bool value) {
+            enable_cubeapp = value;
+        }
         
 #ifdef SPOUT_SERVER
         bool INIT_TEXTURE(GLuint& texID, unsigned int width, unsigned int height)
@@ -184,6 +189,11 @@ namespace acidcam {
                 1, 0,
                 1, 1,
             };
+            
+            if(enable_cubeapp) {
+                init_cube();
+                return;
+            }
             playback_mode = false;
             glGenVertexArrays(1, vao);
             glBindVertexArray(vao[0]);
@@ -453,6 +463,12 @@ namespace acidcam {
         virtual void update(double timeval) override {
             if (paused)
                 return;
+            
+            if(enable_cubeapp) {
+                update_cube(timeval);
+                return;
+            }
+            
             std::chrono::time_point<std::chrono::system_clock> now =
             std::chrono::system_clock::now();
             
@@ -1177,5 +1193,255 @@ namespace acidcam {
             file.close();
             std::cout << "acidcam: Loaded " << shaders.size() << " Shaders...\n";
         }
+        
+        // cube
+        
+        float cameraX, cameraY, cameraZ;
+        float cube_x, cube_y, cube_z;
+        glm::mat4 r_mat;
+        
+        virtual void init_cube() {
+            cameraX = 0;
+            cameraY = 0;
+            cameraZ = 8.0f;
+            cube_x = 0.0f;
+            cube_y = -2.0f;
+            cube_z = 0.0f;
+            color_alpha_r = 0.1;
+            color_alpha_g = 0.2;
+            color_alpha_b = 0.3;
+            
+            GLfloat vertices[] = { -1.0f, -1.0f, 1.0f, // front face
+                1.0f, 1.0f, 1.0f,
+                -1.0f, 1.0f, 1.0f,
+                
+                -1.0f, -1.0f, 1.0f,
+                1.0f, -1.0f, 1.0f,
+                1.0f, 1.0f, 1.0f,
+                
+                -1.0f, -1.0f, -1.0f, // left side
+                -1.0f, -1.0f, 1.0f,
+                -1.0f, 1.0f, -1.0f,
+                
+                -1.0f, 1.0f, -1.0f,
+                -1.0f, -1.0f, 1.0f,
+                -1.0f, 1.0f, 1.0f,
+                
+                -1.0f, 1.0f, -1.0f, // top
+                -1.0f, 1.0f, 1.0f,
+                1.0f, 1.0f, 1.0f,
+                
+                1.0f, 1.0f, 1.0f,
+                1.0f, 1.0f, -1.0f,
+                -1.0f, 1.0f, -1.0f,
+                
+                -1.0f, -1.0f, -1.0f, // bottom
+                -1.0f, -1.0f, 1.0f,
+                1.0f, -1.0f, 1.0f,
+                
+                1.0f, -1.0f, 1.0f,
+                1.0f, -1.0f, -1.0f,
+                -1.0f, -1.0f, -1.0f,
+                
+                1.0f, -1.0f, -1.0f, // right
+                1.0f, -1.0f, 1.0f,
+                1.0f, 1.0f, -1.0f,
+                
+                1.0f, 1.0f, -1.0f,
+                1.0f, -1.0f, 1.0f,
+                1.0f, 1.0f, 1.0f,
+                
+                -1.0f, -1.0f, -1.0f, // back face
+                1.0f, 1.0f, -1.0f,
+                -1.0f, 1.0f, -1.0f,
+                
+                -1.0f, -1.0f, -1.0f,
+                1.0f, -1.0f, -1.0f,
+                1.0f, 1.0f, -1.0f,
+            };
+            
+            GLfloat texCoords[] = {
+                0, 0, // front
+                1, 1,
+                0, 1,
+                
+                0, 0,
+                1, 0,
+                1, 1,
+                
+                0, 0, // left
+                1, 0,
+                0, 1,
+                
+                0, 1,
+                1, 0,
+                1, 1,
+                
+                0,0, // top
+                0,1,
+                1,1,
+                
+                1, 1,
+                1, 0,
+                0, 0,
+                
+                0, 0,// bottom
+                0, 1,
+                1, 1,
+                
+                1,1,
+                1,0,
+                0,0,
+                
+                0,0,// right
+                1,0,
+                0,1,
+                
+                0,1,
+                1,0,
+                1,1,
+                
+                0,0, // back
+                1,1,
+                0,1,
+                
+                0,0,
+                1,0,
+                1,1
+            };
+            
+            glGenVertexArrays(1, vao);
+            glBindVertexArray(vao[0]);
+            glGenBuffers(numVBOs, vbo);
+            glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+            glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+            
+            glfwGetFramebufferSize(win(), &width, &height);
+            aspect = (float)width/(float)height;
+            
+            p_mat = glm::perspective(1.0472f, aspect, 0.1f, 1000.0f);
+            
+            glGenTextures(1, &texture);
+            glBindTexture(GL_TEXTURE_2D, texture);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            
+            cv::Mat frame;
+            cap.read(frame);
+            
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
+        }
+        
+        virtual void update_cube(double timeval) {
+            glClearColor(0.0, 0.0, 0.0, 1.0);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            program.useProgram();
+            
+            mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
+            proj_loc = glGetUniformLocation(program.id(),"proj_matrix");
+            
+            GLuint samp = glGetUniformLocation(program.id(),"samp");
+            
+            GLuint calpha_r = glGetUniformLocation(program.id(),"value_alpha_r");
+            
+            GLuint calpha_g = glGetUniformLocation(program.id(),"value_alpha_g");
+            
+            GLuint calpha_b = glGetUniformLocation(program.id(),"value_alpha_b");
+            
+            cameraZ = 8.0f;
+            
+            v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, cameraY, -cameraZ));
+            cv::Mat frame;
+            cap.read(frame);
+            if (shader_index == 0 || ac_on == true) {
+                if (index >= 0 && index < ac::solo_filter.size()) {
+                    cv::Mat orig;
+                    
+                    if (blend_index > 0) {
+                        orig = frame.clone();
+                    }
+                    
+                    CallCustom(ac::solo_filter[index], frame);
+                    
+                    if (blend_index > 0 && blend_index / 10 > 0) {
+                        cv::Mat copyf;
+                        double per = 1.0 / (blend_index / 10);
+                        ac::AlphaBlendDouble(frame, orig, copyf, per, 1.0 - per);
+                        frame = copyf.clone();
+                    }
+                    
+                    if (color_map != -1) {
+                        cv::Mat output_f1 = frame.clone();
+                        cv::applyColorMap(output_f1, frame, color_map);
+                    }
+                    
+                    if (restore_black == true) {
+                        ac::CallFilter("RestoreBlack", frame);
+                        if (color_map != -1) {
+                            cv::Mat output_f1 = frame.clone();
+                            cv::applyColorMap(output_f1, frame, color_map);
+                        }
+                    }
+                    if (print_text == true) {
+                        std::ostringstream stream;
+                        stream << ac::solo_filter[index];
+                        cv::putText(frame, stream.str(), cv::Point(40, 40), cv::FONT_HERSHEY_DUPLEX, 1.0, CV_RGB(255, 255, 255), 2);
+                    }
+                }
+            }
+            
+            cv::flip(frame, frame, 0);
+            
+            cameraZ += -5.0f;
+            
+            v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, cameraY, -cameraZ));
+            
+            m_mat = glm::translate(glm::mat4(1.0f),glm::vec3(0.0f,0.0f,0.0f));
+            
+          //  m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(sin(0.35f * timeval)*2.0f, cos(0.52f*timeval)*2.0f, sin(0.7f*timeval)*2.0f));
+            
+            r_mat = glm::rotate(glm::mat4(1.0f), 1.75f*(float)timeval,glm::vec3(0.0f, 1.0f, 0.0f));
+            r_mat = glm::rotate(r_mat, 1.75f*(float)timeval,glm::vec3(1.0f, 0.0f, 0.0f));
+            r_mat = glm::rotate(r_mat, 1.75f*(float)timeval, glm::vec3(0.0f, 0.0f, 1.0f));
+            
+            m_mat = m_mat * r_mat;
+            mv_mat = v_mat * m_mat;
+            
+            glUniformMatrix4fv(mv_loc, 1, GL_FALSE, glm::value_ptr(mv_mat));
+            glUniformMatrix4fv(proj_loc, 1, GL_FALSE, glm::value_ptr(p_mat));
+            
+            glUniformMatrix4fv(mv_loc, 1, GL_FALSE, glm::value_ptr(mv_mat));
+            glUniformMatrix4fv(proj_loc, 1, GL_FALSE, glm::value_ptr(p_mat));
+            
+            glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+            glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE,0,0);
+            glEnableVertexAttribArray(0);
+            
+            glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+            glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE,0,0);
+            glEnableVertexAttribArray(1);
+            
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows, GL_BGR, GL_UNSIGNED_BYTE, frame.ptr());
+            
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, texture);
+            
+            glUniform1i(samp, 0);
+            
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_LEQUAL);
+            
+            glDrawArrays(GL_TRIANGLES,0,36);
+        }
+    
+        GLuint createShaderProgram() {
+            GLuint vfProgram = program.createProgramFromFile("vertex.glsl", "frag.glsl");
+            return vfProgram;
+        }
+        
     };
 }
