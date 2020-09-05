@@ -14,6 +14,7 @@ purple_fade.glsl
 purple_haze.glsl
 purple_strobe.glsl
 rgb_fade.glsl
+color_scale.glsl
 grid_sin.glsl
 material.glsl
 material_rgb.glsl
