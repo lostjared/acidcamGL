@@ -20,7 +20,7 @@
 #include<algorithm>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
-#define version_info "v1.0.003"
+#define version_info "v1.0.004"
 #ifdef SYPHON_SERVER
 #include"syphon.h"
 #endif
@@ -29,6 +29,18 @@
 extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #endif
 #include"ffmpeg_write.h"
+
+#ifdef _WIN32
+#define SPOUT_SERVER
+#endif
+
+#ifdef SPOUT_SERVER
+#include"SpoutLibrary.h"
+#endif
+
+
+
+
 namespace acidcam {
 
 extern cv::VideoCapture cap;
@@ -83,11 +95,32 @@ class AcidCam_Window : public glWindow {
     FILE *fptr;
     std::vector<int> shader_list;
     std::unordered_map<std::string, int> shader_map;
+#ifdef SPOUT_SERVER
+    SPOUTLIBRARY* spoutsender;
+#endif
 public:
     
     AcidCam_Window() = default;
     AcidCam_Window(const AcidCam_Window &) = delete;
     AcidCam_Window &operator=(const AcidCam_Window &) = delete;
+
+#ifdef SPOUT_SERVER
+    bool INIT_TEXTURE(GLuint& texID, unsigned int width, unsigned int height)
+    {
+        if (texID != 0) glDeleteTextures(1, &texID);
+
+        glGenTextures(1, &texID);
+        glBindTexture(GL_TEXTURE_2D, texID);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        return true;
+    }
+#endif
     
     void setVideoMode(bool b, int f) {
         video_mode = b;
@@ -100,6 +133,8 @@ public:
         writer_h = h;
     }
     
+   GLuint senderTexture = 0;
+
     virtual void init() override {
         shader_list_enabled = false;
         fptr = 0;
@@ -159,7 +194,6 @@ public:
         glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
         
         glfwGetFramebufferSize(win(), &width, &height);
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
         aspect = (float)width/(float)height;
         p_mat = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
         glGenTextures(1, &texture);
@@ -177,7 +211,21 @@ public:
             sx = frame.cols;
             sy = frame.rows;
         }
+#ifdef SPOUT_SERVER
+        spoutsender = GetSpout(); // Create a Spout sender object from the SpoutLibary dll
+        if (!spoutsender) {
+            MessageBoxA(NULL, "Load Spout library failed", "Spout Sender", MB_ICONERROR);
+            exit(0);
+        }
+        senderTexture = 0; // make sure the ID is zero for the first time
+        INIT_TEXTURE(senderTexture, window_width, window_height);
+
+        // 3D drawing setup for a sender
+        glEnable(GL_DEPTH_TEST);							// enable depth comparisons and update the depth buffer
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
+#endif
     }
+
     
     int index;
     
@@ -401,85 +449,90 @@ public:
         if(b == true)
             std::cout << "acidcam: Stereo mode enabled...\n";
     }
+
+    bool bInitialized = false;
     
     virtual void update(double timeval) override {
-        if(paused)
+        if (paused)
             return;
         std::chrono::time_point<std::chrono::system_clock> now =
-        std::chrono::system_clock::now();
-        
+            std::chrono::system_clock::now();
+
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClearDepth(1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        if(rand_shader == true)
-            program = shaders[rand()%(shaders.size()-1)];
-        
+
+        if (rand_shader == true)
+            program = shaders[rand() % (shaders.size() - 1)];
+
         program.useProgram();
         mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
-        proj_loc = glGetUniformLocation(program.id(),"proj_matrix");
-        GLuint samp = glGetUniformLocation(program.id(),"samp");
-        GLuint mat_samp = glGetUniformLocation(program.id(),"mat_samp");
-        GLuint calpha_r = glGetUniformLocation(program.id(),"value_alpha_r");
-        GLuint calpha_g = glGetUniformLocation(program.id(),"value_alpha_g");
-        GLuint calpha_b = glGetUniformLocation(program.id(),"value_alpha_b");
-        GLuint c_index = glGetUniformLocation(program.id(),"index_value");
-        GLuint c_tf = glGetUniformLocation(program.id(),"time_f");
+        proj_loc = glGetUniformLocation(program.id(), "proj_matrix");
+        GLuint samp = glGetUniformLocation(program.id(), "samp");
+        GLuint mat_samp = glGetUniformLocation(program.id(), "mat_samp");
+        GLuint calpha_r = glGetUniformLocation(program.id(), "value_alpha_r");
+        GLuint calpha_g = glGetUniformLocation(program.id(), "value_alpha_g");
+        GLuint calpha_b = glGetUniformLocation(program.id(), "value_alpha_b");
+        GLuint c_index = glGetUniformLocation(program.id(), "index_value");
+        GLuint c_tf = glGetUniformLocation(program.id(), "time_f");
         GLuint alpha_pos = glGetUniformLocation(program.id(), "alpha_value");
         GLuint optx_pos = glGetUniformLocation(program.id(), "optx");
         GLuint rand_pos = glGetUniformLocation(program.id(), "random_var");
         GLuint restore_blackx = glGetUniformLocation(program.id(), "restore_black");
         GLuint inc_value_pos = glGetUniformLocation(program.id(), "inc_value");
         GLuint inc_value_posx = glGetUniformLocation(program.id(), "inc_valuex");
-        
-        
+
+
         GLuint material_size;
         material_size = glGetUniformLocation(program.id(), "mat_size");
-        
+
         v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
-        m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0,0,0));
-        
+        m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+
         mv_mat = v_mat * m_mat;
-        
+
 #ifdef SYPHON_SERVER
-        if(syphon_enabled) {
+        if (syphon_enabled) {
             syphon_bind(window_width, window_height);
         }
 #endif
-        
+
         glUniformMatrix4fv(mv_loc, 1, GL_FALSE, glm::value_ptr(mv_mat));
         glUniformMatrix4fv(proj_loc, 1, GL_FALSE, glm::value_ptr(p_mat));
-        
+
         glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-        glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE,0,0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
         glEnableVertexAttribArray(0);
-        
+
         glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-        glVertexAttribPointer(1,2,GL_FLOAT,GL_FALSE,0,0);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
         glEnableVertexAttribArray(1);
-        
+
         cv::Mat frame;
-        
-        
-        if(screen_mode == false) {
-            if(!cap.read(frame)) {
-                if(repeat == true && repeat_filename.length()>0) {
+
+
+        if (screen_mode == false) {
+            if (!cap.read(frame)) {
+                if (repeat == true && repeat_filename.length() > 0) {
                     cap.open(repeat_filename);
-                    if(cap.isOpened()) {
+                    if (cap.isOpened()) {
                         cap.read(frame);
                         std::cout << "acidcam: video loop...\n";
-                    } else {
+                    }
+                    else {
                         std::cout << "acidcam: Capture device closed exiting...\n";
                         quit();
                         return;
                     }
-                } else {
+                }
+                else {
                     std::cout << "acidcam: Capture device closed exiting...\n";
                     quit();
                     return;
                 }
             }
-        } else {
+        }
+        else {
 #ifdef SYPHON_SERVER
             cv::Mat cvMat, temp_frame;
             ScreenGrabRect(screen_x, screen_y, window_width, window_height, cvMat);
@@ -488,147 +541,150 @@ public:
             frame = cvMat;
 #endif
         }
-        
-        if(playback_mode && list_enabled) {
+
+        if (playback_mode && list_enabled) {
             static int playback_index = 0;
             static int frame_time = 0;
             static int current_timeout = p_timeout;
             ++frame_time;
-            if(p_timeout == 0 || frame_time > current_timeout) {
+            if (p_timeout == 0 || frame_time > current_timeout) {
                 ++playback_index;
-                if(rand_timeout && p_timeout)
-                    current_timeout = 1+rand()%p_timeout;
+                if (rand_timeout && p_timeout)
+                    current_timeout = 1 + rand() % p_timeout;
             }
-            if(frame_time > p_timeout)
+            if (frame_time > p_timeout)
                 frame_time = 0;
-            if(playback_index > var_list.size()) {
+            if (playback_index > var_list.size()) {
                 playback_index = 0;
                 sortPlaylist();
             }
             index = var_list[playback_index];
         }
-    
-        if(shader_index == 0 || ac_on == true) {
-            if(index >= 0 && index < ac::solo_filter.size()) {
+
+        if (shader_index == 0 || ac_on == true) {
+            if (index >= 0 && index < ac::solo_filter.size()) {
                 cv::Mat orig;
-                
-                if(blend_index > 0) {
+
+                if (blend_index > 0) {
                     orig = frame.clone();
                 }
-                
+
                 CallCustom(ac::solo_filter[index], frame);
-                
-                if(blend_index > 0 && blend_index/10 > 0) {
+
+                if (blend_index > 0 && blend_index / 10 > 0) {
                     cv::Mat copyf;
-                    double per = 1.0/(blend_index/10);
-                    ac::AlphaBlendDouble(frame, orig, copyf, per, 1.0-per);
+                    double per = 1.0 / (blend_index / 10);
+                    ac::AlphaBlendDouble(frame, orig, copyf, per, 1.0 - per);
                     frame = copyf.clone();
                 }
-                
-                if(color_map != -1) {
+
+                if (color_map != -1) {
                     cv::Mat output_f1 = frame.clone();
                     cv::applyColorMap(output_f1, frame, color_map);
                 }
-                
-                if(restore_black == true) {
+
+                if (restore_black == true) {
                     ac::CallFilter("RestoreBlack", frame);
-                    if(color_map != -1) {
+                    if (color_map != -1) {
                         cv::Mat output_f1 = frame.clone();
                         cv::applyColorMap(output_f1, frame, color_map);
                     }
                 }
-                if(print_text == true) {
+                if (print_text == true) {
                     std::ostringstream stream;
                     stream << ac::solo_filter[index];
-                    cv::putText(frame, stream.str(),cv::Point(40, 40),cv::FONT_HERSHEY_DUPLEX,1.0,CV_RGB(255, 255, 255), 2);
+                    cv::putText(frame, stream.str(), cv::Point(40, 40), cv::FONT_HERSHEY_DUPLEX, 1.0, CV_RGB(255, 255, 255), 2);
                 }
             }
         }
-        
+
         cv::flip(frame, frame, 0);
-        if(stereo_)
+        if (stereo_)
             ac::Stereo(frame);
-        
-        
+
+
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
-        
+
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame.cols, frame.rows, GL_BGR, GL_UNSIGNED_BYTE, frame.ptr());
-        
-        if(material_on) {
+
+        if (material_on) {
             glActiveTexture(GL_TEXTURE1);
             glBindTexture(GL_TEXTURE_2D, material);
         }
-        color_alpha_r += rand()%100 * 0.01f;
-        color_alpha_g += rand()%100 * 0.01f;
-        color_alpha_b += rand()%100 * 0.01f;
-        
-        if(color_alpha_r > 1.5f)
+        color_alpha_r += rand() % 100 * 0.01f;
+        color_alpha_g += rand() % 100 * 0.01f;
+        color_alpha_b += rand() % 100 * 0.01f;
+
+        if (color_alpha_r > 1.5f)
             color_alpha_r = 0.1f;
-        if(color_alpha_g > 1.5f)
+        if (color_alpha_g > 1.5f)
             color_alpha_g = 0.1f;
-        if(color_alpha_b > 1.5f)
+        if (color_alpha_b > 1.5f)
             color_alpha_b = 0.1f;
         static bool idir = true;
-        if(idir == true) {
+        if (idir == true) {
             alpha += 0.1f;
-            if(alpha >= 6.0)
+            if (alpha >= 6.0)
                 idir = false;
-        } else {
+        }
+        else {
             alpha -= 0.1f;
-            if(alpha <= 1.0f) {
+            if (alpha <= 1.0f) {
                 idir = true;
             }
-            
+
         }
-        random_var = glm::vec4(rand()%255, rand()%255, rand()%255, rand()%255);
-        
-        static glm::vec4 inc_value(rand()%255, rand()%255, rand()%255, 1);
-        
+        random_var = glm::vec4(rand() % 255, rand() % 255, rand() % 255, rand() % 255);
+
+        static glm::vec4 inc_value(rand() % 255, rand() % 255, rand() % 255, 1);
+
         static int inc_dir = 1;
-        
-        if(inc_dir == 1) {
-            for(int i = 0; i < 3; ++i) {
+
+        if (inc_dir == 1) {
+            for (int i = 0; i < 3; ++i) {
                 ++inc_value[i];
-                if(inc_value[i] >= 255)
+                if (inc_value[i] >= 255)
                     inc_dir = 0;
             }
-        } else {
-            for(int i = 0; i < 3; ++i) {
+        }
+        else {
+            for (int i = 0; i < 3; ++i) {
                 --inc_value[i];
-                if(inc_value[i] <= 1) {
+                if (inc_value[i] <= 1) {
                     inc_dir = 1;
-                    inc_value = glm::vec4(rand()%255, rand()%255, rand()%255, 1);
+                    inc_value = glm::vec4(rand() % 255, rand() % 255, rand() % 255, 1);
                 }
             }
         }
-        
-        static glm::vec4 inc_valuex(rand()%255, rand()%255, rand()%255, 1);
-        
+
+        static glm::vec4 inc_valuex(rand() % 255, rand() % 255, rand() % 255, 1);
+
         static int inc_dirx = 1;
-        
-        if(inc_dirx == 1) {
-            for(int i = 0; i < 3; ++i) {
+
+        if (inc_dirx == 1) {
+            for (int i = 0; i < 3; ++i) {
                 ++inc_valuex[i];
-                if(inc_valuex[i] >= 255)
+                if (inc_valuex[i] >= 255)
                     inc_dirx = 0;
             }
-        } else {
-            for(int i = 0; i < 3; ++i) {
+        }
+        else {
+            for (int i = 0; i < 3; ++i) {
                 --inc_valuex[i];
-                if(inc_valuex[i] <= 1) {
+                if (inc_valuex[i] <= 1) {
                     inc_dirx = 1;
                 }
             }
         }
-        
+
         glUniform1i(samp, 0);
         glUniform1i(mat_samp, 1);
         glUniform1f(c_index, (float)index);
         glUniform1f(c_tf, timeval);
         glUniform4fv(inc_value_pos, 1, glm::value_ptr(inc_value));
         glUniform4fv(inc_value_posx, 1, glm::value_ptr(inc_valuex));
-        
+
         glUniform1f(calpha_r, color_alpha_r);
         glUniform1f(calpha_g, color_alpha_g);
         glUniform1f(calpha_b, color_alpha_b);
@@ -640,36 +696,54 @@ public:
         glUniform2f(loc, width, height);
         glUniform2f(material_size, img_cols, img_rows);
 
-        glDrawArrays(GL_TRIANGLES,0,6);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 #ifdef SYPHON_SERVER
         int tex = syphon_pushTexture(texture);
         glBindTexture(GL_TEXTURE_RECTANGLE_EXT, tex);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 #endif
 
-        if(shader_list_enabled) {
-            for(int i = 0; i < shader_list.size(); ++i) {
+        if (shader_list_enabled) {
+            for (int i = 0; i < shader_list.size(); ++i) {
                 // not sure how to do this
             }
         }
-        
-        if(take_snapshot == true) {
+
+        if (take_snapshot == true) {
             takeSnapshot();
             take_snapshot = false;
         }
-        if(writer_set == true)
+        if (writer_set == true)
             writeFrame();
-        
-        if(video_mode && fps != 0) {
-            std::chrono::time_point<std::chrono::system_clock> nowx =
-            std::chrono::system_clock::now();
-            auto m = std::chrono::duration_cast<std::chrono::milliseconds>(nowx-now).count();
-            if(fps > 0) {
-                int fps_mil = 1000/fps;
-                if(m < fps_mil)
-                    std::this_thread::sleep_for(std::chrono::milliseconds(fps_mil-m-1));
-            }
+#ifdef SPOUT_SERVER
+        if (!bInitialized) {
+            // Create the sender
+            bInitialized = spoutsender->CreateSender("acidcamGL", window_width, window_height);
         }
+
+        if (bInitialized) {
+
+            if (window_width > 0 && window_height > 0) { // protect against user minimize
+                // Grab the screen into the local spout texture
+                glBindTexture(GL_TEXTURE_2D, senderTexture);
+                glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, window_width, window_height);
+                glBindTexture(GL_TEXTURE_2D, 0);
+                // Send the texture out for all receivers to use
+                spoutsender->SendTexture(senderTexture, GL_TEXTURE_2D, window_width, window_height);
+            }
+    }
+#endif
+
+            if (video_mode && fps != 0) {
+                std::chrono::time_point<std::chrono::system_clock> nowx =
+                    std::chrono::system_clock::now();
+                auto m = std::chrono::duration_cast<std::chrono::milliseconds>(nowx - now).count();
+                if (fps > 0) {
+                    int fps_mil = 1000 / fps;
+                    if (m < fps_mil)
+                        std::this_thread::sleep_for(std::chrono::milliseconds(fps_mil - m - 1));
+                }
+            }
     }
     
     void setDebug(bool d) {
@@ -979,6 +1053,9 @@ public:
         p_mat = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
         window_width = newWidth;
         window_height = newHeight;
+#ifdef SPOUT_SERVER
+        INIT_TEXTURE(senderTexture, window_width, window_height);
+#endif
 #ifdef SYPHON_SERVER
         if(syphon_enabled) {
             syphon_size(width, height);

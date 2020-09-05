@@ -23,7 +23,7 @@ namespace acidcam {
             w = mode->width;
             h = mode->height;
         }
-        
+        glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
         if(record)
             glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         window = glfwCreateWindow(w, h, name.c_str(),(full == true && record == false) ? monitors[monitor] : 0,0);

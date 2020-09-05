@@ -18,6 +18,8 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
     main_window.typeKey(codepoint);
     
 }
+
+//ffmpeg -f avfoundation -r 30  -video_device_index 3 -i "default" test.mpg
  
 constexpr unsigned long outstr_size = 61;
 std::string outstr_arr[] = {
