@@ -219,10 +219,6 @@ namespace acidcam {
             }
             senderTexture = 0; // make sure the ID is zero for the first time
             INIT_TEXTURE(senderTexture, window_width, window_height);
-            
-            // 3D drawing setup for a sender
-            glEnable(GL_DEPTH_TEST);							// enable depth comparisons and update the depth buffer
-            glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
 #endif
         }
         
