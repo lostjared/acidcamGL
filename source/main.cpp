@@ -445,6 +445,7 @@ int main(int argc, char **argv) {
     }
     
     cv::VideoWriter writer;
+    int camera_mode = 0;
     
     if(screen_mode == false) {
         if(filename.length()==0) {
@@ -463,15 +464,7 @@ int main(int argc, char **argv) {
             cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
             ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
             fps = acidcam::cap.get(cv::CAP_PROP_FPS);
-            if(output_file.length()>0) {
-                std::cout << "acidcam: Error outuput file not supported for camera mode use OBS.\n";
-                output_file = "";
-                exit(EXIT_SUCCESS);
-            }
-            
-    
-
-            
+            camera_mode = 0;
         } else {
             acidcam::cap.open(filename);
             if(!acidcam::cap.isOpened()) {
@@ -485,6 +478,7 @@ int main(int argc, char **argv) {
                 w = cw;
                 h = ch;
             }
+            camera_mode = 1;
         }
     }
 
@@ -612,10 +606,17 @@ int main(int argc, char **argv) {
     else if(ffmpeg_enabled)
         std::cout << "acidcam: wrote file with ffmpeg: [" << output_file << "]\n";
     
-    if(ffmpeg_enabled) {
+    if(camera_mode == 1 && ffmpeg_enabled) {
        mux_audio_ac(output_file, filename);
     }
     std::cout << "acidcam: exited\n";
+
+    if(acidcam::redir == 1) {
+#ifdef SYPHON_SERVER
+        std::string text = redirect->getString();
+        sendString(text);
+#endif
+    }
     
 #ifdef SYPHON_SERVER
     if(acidcam::syphon_enabled) {
@@ -624,12 +625,6 @@ int main(int argc, char **argv) {
     }
 #endif
     
-    if(acidcam::redir == 1) {
-#ifdef SYPHON_SERVER
-            std::string text = redirect->getString();
-            sendString(text);
-#endif
-    }
     glfwTerminate();
     return EXIT_SUCCESS;
 }

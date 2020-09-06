@@ -29,7 +29,6 @@
 extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #endif
 #include"ffmpeg_write.h"
-
 #ifdef _WIN32
 #define SPOUT_SERVER
 #endif
@@ -37,9 +36,6 @@ extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #ifdef SPOUT_SERVER
 #include"SpoutLibrary.h"
 #endif
-
-
-
 
 namespace acidcam {
     
