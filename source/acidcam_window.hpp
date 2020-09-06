@@ -95,6 +95,8 @@ namespace acidcam {
 #ifdef SPOUT_SERVER
         SPOUTLIBRARY* spoutsender;
 #endif
+        glm::vec4 inc_value;
+        glm::vec4 inc_valuex;
     public:
         
         AcidCam_Window() = default;
@@ -167,6 +169,8 @@ namespace acidcam {
             color_alpha_r = 0.1;
             color_alpha_g = 0.2;
             color_alpha_b = 0.3;
+            inc_value = glm::vec4(rand() % 255, rand() % 255, rand() % 255, 1);
+            inc_valuex = glm::vec4(rand() % 255, rand() % 255, rand() % 255, 1);
             repeat = false;
             GLfloat vertices[] = {
                 -1.0f, -1.0f, 1.0f, // front face
@@ -649,7 +653,6 @@ namespace acidcam {
             }
             random_var = glm::vec4(rand() % 255, rand() % 255, rand() % 255, rand() % 255);
             
-            static glm::vec4 inc_value(rand() % 255, rand() % 255, rand() % 255, 1);
             
             static int inc_dir = 1;
             
@@ -670,7 +673,6 @@ namespace acidcam {
                 }
             }
             
-            static glm::vec4 inc_valuex(rand() % 255, rand() % 255, rand() % 255, 1);
             
             static int inc_dirx = 1;
             
@@ -1341,14 +1343,21 @@ namespace acidcam {
             
             mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
             proj_loc = glGetUniformLocation(program.id(),"proj_matrix");
+           
+            GLuint samp = glGetUniformLocation(program.id(), "samp");
+            GLuint mat_samp = glGetUniformLocation(program.id(), "mat_samp");
+            GLuint calpha_r = glGetUniformLocation(program.id(), "value_alpha_r");
+            GLuint calpha_g = glGetUniformLocation(program.id(), "value_alpha_g");
+            GLuint calpha_b = glGetUniformLocation(program.id(), "value_alpha_b");
+            GLuint c_index = glGetUniformLocation(program.id(), "index_value");
+            GLuint c_tf = glGetUniformLocation(program.id(), "time_f");
+            GLuint alpha_pos = glGetUniformLocation(program.id(), "alpha_value");
+            GLuint optx_pos = glGetUniformLocation(program.id(), "optx");
+            GLuint rand_pos = glGetUniformLocation(program.id(), "random_var");
+            GLuint restore_blackx = glGetUniformLocation(program.id(), "restore_black");
+            GLuint inc_value_pos = glGetUniformLocation(program.id(), "inc_value");
+            GLuint inc_value_posx = glGetUniformLocation(program.id(), "inc_valuex");
             
-            GLuint samp = glGetUniformLocation(program.id(),"samp");
-            
-            GLuint calpha_r = glGetUniformLocation(program.id(),"value_alpha_r");
-            
-            GLuint calpha_g = glGetUniformLocation(program.id(),"value_alpha_g");
-            
-            GLuint calpha_b = glGetUniformLocation(program.id(),"value_alpha_b");
             
             cameraZ = 8.0f;
             
@@ -1420,9 +1429,81 @@ namespace acidcam {
             
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture);
+
+            color_alpha_r += rand() % 100 * 0.01f;
+            color_alpha_g += rand() % 100 * 0.01f;
+            color_alpha_b += rand() % 100 * 0.01f;
             
+            if (color_alpha_r > 1.5f)
+                color_alpha_r = 0.1f;
+            if (color_alpha_g > 1.5f)
+                color_alpha_g = 0.1f;
+            if (color_alpha_b > 1.5f)
+                color_alpha_b = 0.1f;
+            static bool idir = true;
+            if (idir == true) {
+                alpha += 0.1f;
+                if (alpha >= 6.0)
+                    idir = false;
+            }
+            else {
+                alpha -= 0.1f;
+                if (alpha <= 1.0f) {
+                    idir = true;
+                }
+                
+            }
+            random_var = glm::vec4(rand() % 255, rand() % 255, rand() % 255, rand() % 255);
+
+            static int inc_dir = 1;
+            if (inc_dir == 1) {
+                for (int i = 0; i < 3; ++i) {
+                    ++inc_value[i];
+                    if (inc_value[i] >= 255)
+                        inc_dir = 0;
+                }
+            }
+            else {
+                for (int i = 0; i < 3; ++i) {
+                    --inc_value[i];
+                    if (inc_value[i] <= 1) {
+                        inc_dir = 1;
+                        inc_value = glm::vec4(rand() % 255, rand() % 255, rand() % 255, 1);
+                    }
+                }
+            }
+            static int inc_dirx = 1;
+            if (inc_dirx == 1) {
+                for (int i = 0; i < 3; ++i) {
+                    ++inc_valuex[i];
+                    if (inc_valuex[i] >= 255)
+                        inc_dirx = 0;
+                }
+            }
+            else {
+                for (int i = 0; i < 3; ++i) {
+                    --inc_valuex[i];
+                    if (inc_valuex[i] <= 1) {
+                        inc_dirx = 1;
+                    }
+                }
+            }
             glUniform1i(samp, 0);
+            glUniform1i(mat_samp, 1);
+            glUniform1f(c_index, (float)index);
+            glUniform1f(c_tf, timeval);
+            glUniform4fv(inc_value_pos, 1, glm::value_ptr(inc_value));
+            glUniform4fv(inc_value_posx, 1, glm::value_ptr(inc_valuex));
             
+            glUniform1f(calpha_r, color_alpha_r);
+            glUniform1f(calpha_g, color_alpha_g);
+            glUniform1f(calpha_b, color_alpha_b);
+            glUniform1f(alpha_pos, alpha);
+            glUniform4fv(optx_pos, 1, glm::value_ptr(optx));
+            glUniform4fv(rand_pos, 1, glm::value_ptr(random_var));
+            glUniform1f(restore_blackx, ((restore_black == true) ? 1.0 : 0.0));
+            GLint loc = glGetUniformLocation(program.id(), "iResolution");
+            glUniform2f(loc, width, height);
             glEnable(GL_DEPTH_TEST);
             glEnable(GL_LEQUAL);
             
