@@ -37,6 +37,7 @@ extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #include"SpoutLibrary.h"
 #endif
 
+#include"plugin-program.hpp"
 namespace acidcam {
     
     extern cv::VideoCapture cap;
@@ -1080,12 +1081,16 @@ namespace acidcam {
         //std:::unordered_map<std::string, std::vector<std::string>> custom_filters;
         
         using List = std::vector<std::string>;
-        
         std::unordered_map<std::string, List> custom_filters;
+        using Prog = AC_Program *;
+        std::unordered_map<std::string, Prog> plugins;
         
         void CallCustom(std::string index, cv::Mat &frame) {
             std::string val = index;
-            if(custom_filters.find(val) != custom_filters.end()) {
+            
+            if(plugins.find(val) != plugins.end()) {
+                plugins[val]->exec(frame);
+            } else if(custom_filters.find(val) != custom_filters.end()) {
                 for(int i = 0; i < custom_filters[val].size(); ++i) {
                     ac::CallFilter(custom_filters[val].at(i),frame);
                 }
@@ -1094,8 +1099,33 @@ namespace acidcam {
             }
         }
         
+        void loadPlugins(std::string c) {
+            if(c.length()==0)return;
+            std::string path = c + "/index.txt";
+            std::fstream file;
+            file.open(path, std::ios::in);
+            if(!file.is_open()) {
+                std::cout << "acidcam: Couldn't load custom files: " << path << "\n";
+                acidcam::updateError();
+            }
+            while(!file.eof()) {
+                std::string n;
+                std::getline(file, n);
+                if(file) {
+                    AC_Program *program = new AC_Program();
+                    if(program->load(c + "/" + n)) {
+                        plugins[n] = program;
+                        std::cout << "acidcam: Loaded Plugin: " << n << "\n";
+                        ac::solo_filter.push_back(n);
+                    } else {
+                        std::cout << "acidcam: Could not open plugin: " << n << "\n";
+                        acidcam::updateError();
+                    }
+                }
+            }
+        }
+        
         void loadCustom(std::string &c) {
-            
             std::string path = c + "/index.txt";
             std::fstream file;
             file.open(path, std::ios::in);

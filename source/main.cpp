@@ -213,8 +213,13 @@ int main(int argc, char **argv) {
     std::string ff_codec = "libx265";
     std::string list_path;
     bool cubeapp = false;
-    while((opt = getopt(argc, argv, "21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    std::string plugins;
+    
+    while((opt = getopt(argc, argv, "3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case '3':
+                plugins = optarg;
+                break;
             case '2':
                 cubeapp = true;
                 break;
@@ -512,6 +517,9 @@ int main(int argc, char **argv) {
     if(custom_path.length() != 0)
         main_window.loadCustom(custom_path);
 
+    if(plugins.length()>0)
+        main_window.loadPlugins(plugins);
+    
     if(list_var.length()>0)
         main_window.loadList(list_var, playback_sort);
     main_window.setDebug(debug_val);
