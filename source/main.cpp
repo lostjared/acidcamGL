@@ -574,15 +574,17 @@ int main(int argc, char **argv) {
         main_window.loadKeys(key_val);
     if(playback_mode) {
         int value = 0;
-        if(bpm > 0)
-            value = fps * playback_timeout / bpm;
-        else
-            value = 0;
+        value = fps * 60 / bpm;
         
         main_window.setPlaybackMode(playback_mode, playback_timeout, value, bpm, playback_sort);
+        
+        if(value == 0) {
+            std::cout << "acidcam: Error invalid bpm info.\n";
+            acidcam::updateError();
+        }
     }
     
-
+    
     if(acidcam::redir == 1) {
 #ifndef _WIN32
         if(redirect != 0) {

@@ -262,7 +262,7 @@ namespace acidcam {
             playback_mode = v;
             if(s)
                 std::sort(var_list.begin(), var_list.end());
-            if(bpm != 0) {
+            if(bpm != 0 && beat != 0) {
                 p_timeout = beat;
                 std::cout <<"acidcam: Beats per minute: " << bpm << " frames per beat: " << p_timeout << "\n";
             }
@@ -1087,7 +1087,6 @@ namespace acidcam {
         
         void CallCustom(std::string index, cv::Mat &frame) {
             std::string val = index;
-            
             if(plugins.find(val) != plugins.end()) {
                 plugins[val]->exec(frame);
             } else if(custom_filters.find(val) != custom_filters.end()) {
