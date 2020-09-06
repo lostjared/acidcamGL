@@ -41,15 +41,14 @@ void main(void)
     ivec4 source =ivec4(color * 255);
     vec4 c = vec4(0.2, 0.5, 0.8, 1); // random_value/255;
     vec4 cval;
-    vec4 a = fract(inc_valuex/255)*1.5;
-    color = (color*0.5) * a;
+   // float val = fract(timeval/inc_valuex.x+inc_value.y);
+    color += 0.05;
+   // color = (color * val);
     
     ivec3 int_color;
     for(int i = 0; i < 3; ++i) {
         int_color[i] = int(255 * color[i]);
         int_color[i] = int_color[i]^source[3-i-1];
-        //if(int_color[i] > 255)
-          //  int_color[i] = int_color[i]%255;
         color[i] = float(int_color[i])/255;
     }
 }
