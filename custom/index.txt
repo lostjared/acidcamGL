@@ -3,3 +3,6 @@ CustomVarScale
 CustomSquareStrobe
 CustomMirrorBlend
 CustomGlitchColors
+ResizeDir
+CustomDarkReverse
+CustomEdges
