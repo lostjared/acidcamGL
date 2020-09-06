@@ -173,7 +173,6 @@ int main(int argc, char **argv) {
     }
     ac::init();
     std::string filename;
-    std::cout << "acidcamGL: " << version_info << "\n";
     int w = 1280, h = 720;
     int cw = 1280, ch = 720;
     int opt = 0;
@@ -437,8 +436,7 @@ int main(int argc, char **argv) {
         shader_path = p;
     
     main_window.enableCube(cubeapp);
-    
-    std::cout << "acidcam: shader path: "<<shader_path << "\n";
+ 
     
     
     if(shader_path.length()==0) {
@@ -489,6 +487,9 @@ int main(int argc, char **argv) {
             }
         }
     }
+
+    std::cout << "acidcamGL: " << version_info << "\n";
+    std::cout << "acidcam: shader path: "<<shader_path << "\n";
     
     std::ostringstream rv;
     rv << cw << "x" << ch;

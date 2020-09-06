@@ -20,7 +20,7 @@
 #include<algorithm>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
-#define version_info "v1.0.004"
+#define version_info "v1.0.005"
 #ifdef SYPHON_SERVER
 #include"syphon.h"
 #endif
@@ -107,6 +107,8 @@ namespace acidcam {
         
         void enableCube(bool value) {
             enable_cubeapp = value;
+            if(value)
+                std::cout << "acidcam: Cube mode enabled...\n";
         }
         
 #ifdef SPOUT_SERVER
@@ -1393,17 +1395,10 @@ namespace acidcam {
                     }
                 }
             }
-            
             cv::flip(frame, frame, 0);
-            
             cameraZ += -5.0f;
-            
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, cameraY, -cameraZ));
-            
             m_mat = glm::translate(glm::mat4(1.0f),glm::vec3(0.0f,0.0f,0.0f));
-            
-          //  m_mat = glm::translate(glm::mat4(1.0f), glm::vec3(sin(0.35f * timeval)*2.0f, cos(0.52f*timeval)*2.0f, sin(0.7f*timeval)*2.0f));
-            
             r_mat = glm::rotate(glm::mat4(1.0f), 1.75f*(float)timeval,glm::vec3(0.0f, 1.0f, 0.0f));
             r_mat = glm::rotate(r_mat, 1.75f*(float)timeval,glm::vec3(1.0f, 0.0f, 0.0f));
             r_mat = glm::rotate(r_mat, 1.75f*(float)timeval, glm::vec3(0.0f, 0.0f, 1.0f));
