@@ -301,10 +301,6 @@ int main(int argc, char **argv) {
                 break;
             case 'S':
                 set_index = atoi(optarg);
-                if(set_index < 0 || set_index > ac::solo_filter.size()-1) {
-                    std::cout << "acidcam: Error invalid starting index...\n";
-                    acidcam::updateError();
-                }
                 break;
             case 'M':
                 monitor = atoi(optarg);
@@ -439,6 +435,12 @@ int main(int argc, char **argv) {
     char *p = getenv("SHADER_PATH");
     if(p != NULL)
         shader_path = p;
+    p = getenv("AC_PLUGIN_PATH");
+    if(p != NULL)
+        plugins = p;
+    p = getenv("AC_CUSTOM_PATH");
+    if(p != NULL)
+        custom_path = p;
     
     main_window.enableCube(cubeapp);
  
@@ -524,6 +526,11 @@ int main(int argc, char **argv) {
         main_window.loadList(list_var, playback_sort);
     main_window.setDebug(debug_val);
     main_window.setRepeat(filename, repeat);
+
+    if(set_index < 0 || set_index > ac::solo_filter.size()-1) {
+        std::cout << "acidcam: Error invalid starting index...\n";
+        acidcam::updateError();
+    }
     
      if(material.length()>0)
            main_window.genMaterial(material);
