@@ -6,3 +6,5 @@ CustomGlitchColors
 ResizeDir
 CustomDarkReverse
 CustomEdges
+CustomEdgeSquare
+CustomReverseXorBlur
