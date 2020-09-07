@@ -1361,7 +1361,6 @@ namespace acidcam {
             
             cv::Mat frame;
             cap.read(frame);
-            
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
         }
         
@@ -1392,7 +1391,25 @@ namespace acidcam {
             
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, cameraY, -cameraZ));
             cv::Mat frame;
-            cap.read(frame);
+            if (!cap.read(frame)) {
+                if (repeat == true && repeat_filename.length() > 0) {
+                    cap.open(repeat_filename);
+                    if (cap.isOpened()) {
+                        cap.read(frame);
+                        std::cout << "acidcam: video loop...\n";
+                    }
+                    else {
+                        std::cout << "acidcam: Capture device closed exiting...\n";
+                        quit();
+                        return;
+                    }
+                }
+                else {
+                    std::cout << "acidcam: Capture device closed exiting...\n";
+                    quit();
+                    return;
+                }
+            }
             if (shader_index == 0 || ac_on == true) {
                 if (index >= 0 && index < ac::solo_filter.size()) {
                     cv::Mat orig;
