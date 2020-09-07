@@ -93,6 +93,7 @@ namespace acidcam {
         std::vector<int> shader_list;
         std::unordered_map<std::string, int> shader_map;
         bool enable_cubeapp = false;
+        bool blur_enabled;
 #ifdef SPOUT_SERVER
         SPOUTLIBRARY* spoutsender;
 #endif
@@ -142,6 +143,7 @@ namespace acidcam {
         GLuint senderTexture = 0;
         
         virtual void init() override {
+            blur_enabled = false;
             shader_list_enabled = false;
             fptr = 0;
             rand_shader = false;
@@ -812,6 +814,13 @@ namespace acidcam {
                 }
                 
                 switch(key) {
+                    case GLFW_KEY_SEMICOLON:
+                        blur_enabled = !blur_enabled;
+                        if(blur_enabled)
+                            std::cout << "acidcam: Blur Mode enabled...\n";
+                        else
+                            std::cout << "acidcam: Blur Mode disabled...\n";
+                        break;
                     case GLFW_KEY_COMMA:
                         
                         if(color_map == 0) {
@@ -1087,6 +1096,14 @@ namespace acidcam {
         
         void CallCustom(std::string index, cv::Mat &frame) {
             std::string val = index;
+            
+            if(blur_enabled) {
+                ac::MedianBlur(frame);
+                ac::MedianBlur(frame);
+                ac::MedianBlur(frame);
+            }
+            
+            
             if(plugins.find(val) != plugins.end()) {
                 plugins[val]->exec(frame);
             } else if(custom_filters.find(val) != custom_filters.end()) {
