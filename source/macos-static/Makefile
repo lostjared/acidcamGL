@@ -1,4 +1,3 @@
-
 #generic Makefile for macOS
 
 OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
@@ -19,4 +18,3 @@ all: acidcamGL
 .PHONY: clean
 clean:
 	rm -f acidcamGL *.o
-
