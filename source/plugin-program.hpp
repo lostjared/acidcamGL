@@ -1,12 +1,11 @@
 #ifndef __PLUGIN_PROGRAM__
 #define __PLUGIN_PROGRAM__
-#ifndef _WIN32
 #include<iostream>
-#ifdef _WIN32
-#include"ac.h"
+#include<string>
+#ifndef _WIN32
+#include<acidcam/ac.h>
 #else
-#include"acidcam/ac.h"
-#include<unistd.h>
+#include"ac.h"
 #endif
 namespace acidcam {
    
@@ -26,5 +25,4 @@ namespace acidcam {
     
 }
 
-#endif
 #endif

@@ -20,7 +20,7 @@
 #include<algorithm>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
-#define version_info "v1.0.005"
+#define version_info "v1.0.006"
 #ifdef SYPHON_SERVER
 #include"syphon.h"
 #endif
@@ -36,8 +36,8 @@ extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #ifdef SPOUT_SERVER
 #include"SpoutLibrary.h"
 #endif
-
 #include"plugin-program.hpp"
+
 namespace acidcam {
     
     extern cv::VideoCapture cap;
@@ -1093,7 +1093,7 @@ namespace acidcam {
         std::unordered_map<std::string, List> custom_filters;
         using Prog = AC_Program *;
         std::unordered_map<std::string, Prog> plugins;
-        
+
         void CallCustom(std::string index, cv::Mat &frame) {
             std::string val = index;
             

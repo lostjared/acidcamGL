@@ -431,7 +431,7 @@ int main(int argc, char **argv) {
                 break;
         }
     }
-    
+#ifndef WIN32
     char *p = getenv("SHADER_PATH");
     if(p != NULL)
         shader_path = p;
@@ -441,7 +441,17 @@ int main(int argc, char **argv) {
     p = getenv("AC_CUSTOM_PATH");
     if(p != NULL)
         custom_path = p;
-    
+#else
+    char* p;
+    size_t len;
+    errno_t err = _dupenv_s(&p, &len, "SHADER_PATH");
+    if (len > 0)
+        shader_path = p;
+
+    err = _dupenv_s(&p, &len, "AC_CUSTOM_PATH");
+    if (len > 0)
+        custom_path = p;
+#endif
     main_window.enableCube(cubeapp);
  
     
