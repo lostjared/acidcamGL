@@ -3,6 +3,7 @@ whitelight.glsl
 flash_gradient_strobe.glsl
 color_shift_fade.glsl
 rgb_fade_xor.glsl
+blue_shade.glsl
 echo.glsl
 echo_two.glsl
 lightfade_xor.glsl
