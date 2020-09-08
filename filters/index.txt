@@ -1,4 +1,5 @@
 acidcam.glsl
+nofilter.glsl
 whitelight.glsl
 flash_gradient_strobe.glsl
 color_shift_fade.glsl
