@@ -23,17 +23,21 @@ void Stereo(cv::Mat &frame, cv::Mat &img1, cv::Mat &img2) {
 }
 
 int main(int argc, char **argv) {
-    
-    int cam1 = atoi(argv[1]);
-    int cam2 = atoi(argv[2]);
+    int cam[2];
+    cam[0] = atoi(argv[1]);
+    cam[1] = atoi(argv[2]);
     
     cv::namedWindow("Stereo");
     
     
-    if(cam1 > 0 && cam2 > 0) {
+    if(cam[0] >= 0 && cam[1] >= 0) {
         cv::VideoCapture cap[2];
-        cap[0].open(cam1);
-        cap[1].open(cam2);
+        for(int i = 0; i < 2; ++i) {
+            cap[i].open(cam[i]);
+            if(!cap[i].isOpened()) {
+                std::cout << "Couldn't open cam: " << cam[i] << "\n";
+            }
+        }
         
         for(int i = 0; i < 2; ++i) {
             if(!cap[i].isOpened()) {
@@ -49,9 +53,9 @@ int main(int argc, char **argv) {
                 cap[1].read(img[1]);
                 Stereo(screen, img[0], img[1]);
                 cv::imshow("Stereo",screen);
-                int key = cv::waitKey(5);
+                int key = cv::waitKey(1);
                 if(key == 27)
-                    exit(0);
+                    active = false;
             }
         }
     }
