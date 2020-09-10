@@ -37,7 +37,7 @@ extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #include"SpoutLibrary.h"
 #endif
 #include"plugin-program.hpp"
-
+#include"stereo.h"
 namespace acidcam {
     
     extern cv::VideoCapture cap;
@@ -99,6 +99,7 @@ namespace acidcam {
 #endif
         glm::vec4 inc_value;
         glm::vec4 inc_valuex;
+        bool p_run = false;
     public:
         
         AcidCam_Window() = default;
@@ -110,6 +111,14 @@ namespace acidcam {
             if(value)
                 std::cout << "acidcam: Cube mode enabled...\n";
         }
+        
+        StereoCam stereo;
+        
+        void StereoX(int *id, int w, int h) {
+            stereo.Load(id);
+            stereo_ = true;
+        }
+        
         
 #ifdef SPOUT_SERVER
         bool INIT_TEXTURE(GLuint& texID, unsigned int width, unsigned int height)
@@ -474,6 +483,9 @@ namespace acidcam {
                 return;
             }
             
+            //stereo.Render(frame);
+            
+            
             std::chrono::time_point<std::chrono::system_clock> now =
             std::chrono::system_clock::now();
             
@@ -617,10 +629,9 @@ namespace acidcam {
                 }
             }
             
-            cv::flip(frame, frame, 0);
             if (stereo_)
-                ac::Stereo(frame);
-            
+                stereo.Render(frame);
+            //  ac::Stereo(frame);
             
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture);
@@ -1102,6 +1113,7 @@ namespace acidcam {
                 ac::MedianBlur(frame);
                 ac::MedianBlur(frame);
             }
+            
             
             
             if(plugins.find(val) != plugins.end()) {

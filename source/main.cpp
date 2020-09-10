@@ -5,7 +5,7 @@
 #include "syphon.h"
 #endif
 #include<cstdlib>
-
+#include"stereo.h"
 acidcam::AcidCam_Window main_window;
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode) {
@@ -104,6 +104,7 @@ std::string outstr_arr[] = {
 
 int acidcam::redir = 0;
 int acidcam::syphon_enabled = 0;
+int cmd[2];
 
 void print_help_message() {
     for(int i = 0; outstr_arr[i] != "[end]"; ++i)
@@ -214,9 +215,14 @@ int main(int argc, char **argv) {
     std::string list_path;
     bool cubeapp = false;
     std::string plugins;
-    
-    while((opt = getopt(argc, argv, "3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    bool value_enabled = false;
+    int value_index = 0;
+    while((opt = getopt(argc, argv, "6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
         switch(opt) {
+            case '6':
+                value_enabled = true;
+                value_index = atoi(optarg);
+                break;
             case '3':
                 plugins = optarg;
                 break;
@@ -372,6 +378,7 @@ int main(int argc, char **argv) {
                 break;
             case 'd':
                 device = atoi(optarg);
+                cmd[0] = device;
                 break;
             case 'r': {
                 std::string pos = optarg;
@@ -611,6 +618,11 @@ int main(int argc, char **argv) {
 #endif
     }
     
+    cmd[0] = device;
+    cmd[1] = value_index;
+    
+    if(value_enabled && cmd[0]>=0 && cmd[1]>=0)
+        main_window.StereoX(cmd, 1280, 720);
    
     main_window.loop();
     
