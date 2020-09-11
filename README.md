@@ -39,6 +39,7 @@ Then install GLFLW,GLEW,OpenGL,OpenCV
 	brew install glfw3 glew opencv
 
 Dependending on what you have installed this could take quite some time.
+You can choose to statically compile
 
 Next download libacidcam:
 
