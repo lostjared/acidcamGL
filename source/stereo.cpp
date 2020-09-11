@@ -43,7 +43,7 @@ void acidcam::StereoCam::Render(cv::Mat &frame) {
     cap[0].read(img1);
     cap[1].read(img2);
     cv::flip(img1,img1, 0);
-    cv::flip(img2,img2, 0);
+    cv::flip(img2,img2, 0); 
     Stereo(frame, img1, img2);
 }
 
