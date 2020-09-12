@@ -18,3 +18,6 @@ all: acidcamGL
 .PHONY: clean
 clean:
 	rm -f acidcamGL *.o
+
+install:
+	cp acidcamGL /usr/local/bin/acidcamGL
