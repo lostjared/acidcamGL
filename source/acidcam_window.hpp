@@ -89,6 +89,7 @@ namespace acidcam {
         int stored_position, stored_var_position;
         bool rand_shader;
         bool shader_list_enabled;
+        bool stereo_mode = false;
         FILE *fptr;
         std::vector<int> shader_list;
         std::unordered_map<std::string, int> shader_map;
@@ -482,10 +483,7 @@ namespace acidcam {
                 update_cube(timeval);
                 return;
             }
-            
-            //stereo.Render(frame);
-            
-            
+                       
             std::chrono::time_point<std::chrono::system_clock> now =
             std::chrono::system_clock::now();
             
@@ -495,6 +493,7 @@ namespace acidcam {
             
             if (rand_shader == true)
                 program = shaders[rand() % (shaders.size() - 1)];
+            
             
             program.useProgram();
             mv_loc = glGetUniformLocation(program.id(), "mv_matrix");
@@ -601,7 +600,7 @@ namespace acidcam {
                     }
                     
                     CallCustom(ac::solo_filter[index], frame);
-                    
+
                     if (blend_index > 0 && blend_index / 10 > 0) {
                         cv::Mat copyf;
                         double per = 1.0 / (blend_index / 10);
@@ -629,8 +628,9 @@ namespace acidcam {
                 }
             }
             
-            if (stereo_)
+            if (stereo_ && stereo_mode) {
                 stereo.Render(frame);
+            }
             //  ac::Stereo(frame);
             
             glActiveTexture(GL_TEXTURE0);
@@ -825,6 +825,13 @@ namespace acidcam {
                 }
                 
                 switch(key) {
+                    case GLFW_KEY_1:
+                        stereo_mode =!stereo_mode;
+                        if(stereo_mode)
+                           std::cout << "acidcam: Stereo: on\n";
+                        
+                        
+                        break;
                     case GLFW_KEY_SEMICOLON:
                         blur_enabled = !blur_enabled;
                         if(blur_enabled)
@@ -1108,13 +1115,17 @@ namespace acidcam {
         void CallCustom(std::string index, cv::Mat &frame) {
             std::string val = index;
             
+            
             if(blur_enabled) {
                 ac::MedianBlur(frame);
                 ac::MedianBlur(frame);
                 ac::MedianBlur(frame);
             }
             
-            
+            if(stereo_mode) {
+                stereo.Render(frame);
+                cv::flip(frame, frame, 0);
+            }
             
             if(plugins.find(val) != plugins.end()) {
                 plugins[val]->exec(frame);
