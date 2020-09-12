@@ -1122,10 +1122,13 @@ namespace acidcam {
                 ac::MedianBlur(frame);
             }
             
+            
             if(stereo_mode) {
                 stereo.Render(frame);
-                cv::flip(frame, frame, 0);
             }
+            
+            cv::flip(frame, frame, 0);
+            
             
             if(plugins.find(val) != plugins.end()) {
                 plugins[val]->exec(frame);
