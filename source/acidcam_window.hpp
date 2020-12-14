@@ -626,11 +626,13 @@ namespace acidcam {
                         cv::putText(frame, stream.str(), cv::Point(40, 40), cv::FONT_HERSHEY_DUPLEX, 1.0, CV_RGB(255, 255, 255), 2);
                     }
                 }
+            } else {
+                cv::flip(frame, frame, 0);
             }
             
             if (stereo_ && stereo_mode) {
                 stereo.Render(frame);
-            }
+            } 
             //  ac::Stereo(frame);
             
             glActiveTexture(GL_TEXTURE0);
