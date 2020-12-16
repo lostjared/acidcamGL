@@ -40,6 +40,7 @@ material_echo.glsl
 material_energy.glsl
 material_grid_texture.glsl
 material_and.glsl
+material_and_val.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
