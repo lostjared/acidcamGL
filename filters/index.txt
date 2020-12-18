@@ -25,6 +25,7 @@ material_xor.glsl
 material_random.glsl
 material_psychedelic.glsl
 material_fade.glsl
+material_fade_xor.glsl
 material_fade_in.glsl
 material_square.glsl
 purple_material.glsl
