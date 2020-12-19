@@ -37,6 +37,7 @@ material_boxes.glsl
 material_tic_tac_toe.glsl
 material_fill.glsl
 material_fill_white.glsl
+material_fill_white_color.glsl
 material_pixel.glsl
 material_echo.glsl
 material_energy.glsl
