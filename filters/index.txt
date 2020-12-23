@@ -45,6 +45,7 @@ material_fill_pencil_fade_xor.glsl
 material_pencil_gradient_xor.glsl
 material_pencil_set_white.glsl
 material_pencil_set_black.glsl
+material_pencil_strobe.glsl
 material_pencil_add.glsl
 material_pixel.glsl
 material_echo.glsl
