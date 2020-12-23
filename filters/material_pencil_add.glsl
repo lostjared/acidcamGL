@@ -45,6 +45,7 @@ void main(void)
     }
     if(color21[0] < 0.5 && color21[1] < 0.5 && color21[2] < 0.5) {
         color += color21;
+        color[3] = 1.0f;
     }
 }
 
