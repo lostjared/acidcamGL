@@ -48,6 +48,7 @@ material_pencil_set_black.glsl
 material_pencil_strobe.glsl
 material_pencil_add.glsl
 material_pencil_passthrough.glsl
+material_echo_set.glsl
 material_pixel.glsl
 material_echo.glsl
 material_energy.glsl
