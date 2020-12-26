@@ -40,7 +40,7 @@ void main(void)
     vec4 color2;
     color2 = texture(mat_samp, tc);
 
-    if(color2[0] < 0.5 && color2[1] < 0.5 && color2[2] < 0.5) {
+    if(color2[0] < 0.7 && color2[1] < 0.7 && color2[2] < 0.7) {
         color = color2;
     }
 }

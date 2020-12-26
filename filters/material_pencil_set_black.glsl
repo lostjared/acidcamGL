@@ -43,7 +43,7 @@ void main(void)
     for(int i = 0; i < 3; ++i) {
         source[i] = int(255 * color[i]);
     }
-    if(color21[0] < 0.5 && color21[1] < 0.5 && color21[2] < 0.5) {
+    if(color21[0] < 0.7 && color21[1] < 0.7 && color21[2] < 0.7) {
         color = vec4(0.0,0.0,0.0,1.0);
     } else {
     }
