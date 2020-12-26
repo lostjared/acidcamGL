@@ -53,6 +53,7 @@ material_echo_set.glsl
 material_pixel.glsl
 material_echo.glsl
 material_energy.glsl
+material_energy_xor.glsl
 material_grid_texture.glsl
 material_and.glsl
 material_and_val.glsl
