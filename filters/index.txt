@@ -62,6 +62,7 @@ material_and_both.glsl
 material_and_both_two.glsl
 material_add.glsl
 material_add_and.glsl
+material_scale_up_down.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
