@@ -42,8 +42,6 @@ void main(void)
     vec4 m_color = texture(mat_samp, tc);
     color = color * m_color;
     ivec4 source =ivec4(color * 255);
-    vec4 c = vec4(0.2, 0.5, 0.8, 1); // random_value/255;
-    vec4 cval;
     color += 0.03;
     ivec3 int_color;
     for(int i = 0; i < 3; ++i) {
