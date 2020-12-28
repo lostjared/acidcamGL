@@ -20,6 +20,7 @@ reverse_xor.glsl
 color_scale.glsl
 grid_sin.glsl
 material.glsl
+material_white_light.glsl
 material_rgb.glsl
 material_xor.glsl
 material_reverse_xor.glsl
