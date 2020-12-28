@@ -31,9 +31,7 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    vec4 l = vec4(0.8, 0.6, 1.0, 1.0);
     color = color * alpha;
-    
 }
 
 
