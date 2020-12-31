@@ -68,6 +68,7 @@ std::string outstr_arr[] = {
     "    -5 enable ffmpeg x265 support",
     "    -m crf for x265 for video mode",
     "    -1 for ffmpeg path",
+    "    -7 for video start offset in seconds.",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
     "    --list display capture device list",
     "    ",
@@ -105,6 +106,7 @@ std::string outstr_arr[] = {
 int acidcam::redir = 0;
 int acidcam::syphon_enabled = 0;
 int cmd[2];
+float pos_frames = 0;
 
 void print_help_message() {
     for(int i = 0; outstr_arr[i] != "[end]"; ++i)
@@ -217,8 +219,11 @@ int main(int argc, char **argv) {
     std::string plugins;
     bool value_enabled = false;
     int value_index = 0;
-    while((opt = getopt(argc, argv, "6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:")) != -1) {
+    while((opt = getopt(argc, argv, "6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:")) != -1) {
         switch(opt) {
+            case '7':
+                pos_frames = atof(optarg);
+                break;
             case '6':
                 value_enabled = true;
                 value_index = atoi(optarg);
@@ -501,6 +506,11 @@ int main(int argc, char **argv) {
             if(res_w == 0 && res_h == 0) {
                 w = cw;
                 h = ch;
+            }
+            if(pos_frames > 0) {
+                int frame_index = static_cast<int>(pos_frames * fps);
+                acidcam::cap.set(cv::CAP_PROP_POS_FRAMES, frame_index);
+                std::cout << "acidcam: video offset set to frame: " << frame_index << "\n";
             }
             camera_mode = 1;
         }
