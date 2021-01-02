@@ -23,7 +23,6 @@ void character_callback(GLFWwindow* window, unsigned int codepoint) {
 
 //ffmpeg -f avfoundation -r 30  -video_device_index 3 -i "default" test.mpg
  
-constexpr unsigned long outstr_size = 61;
 std::string outstr_arr[] = {
     "Written by Jared Bruni",
     "http://lostsidedead.com",
