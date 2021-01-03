@@ -65,6 +65,7 @@ material_pixel.glsl
 material_echo.glsl
 material_echo_two.glsl
 material_echo_two_xor.glsl
+material_echo_alpha_two_xor.glsl
 material_energy.glsl
 material_energy_xor.glsl
 material_grid_texture.glsl
