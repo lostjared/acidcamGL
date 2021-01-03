@@ -9,6 +9,7 @@ echo.glsl
 echo_two.glsl
 echo_alpha.glsl
 echo_alpha_two.glsl
+echo_alpha_two_xor.glsl
 echo_alpha_three.glsl
 lightfade_xor.glsl
 lightfade.glsl
