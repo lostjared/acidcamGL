@@ -79,6 +79,7 @@ material_scale_up_down.glsl
 material_right_in_two.glsl
 material_grid_sin.glsl
 material_sheet.glsl
+material_dark_square.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
