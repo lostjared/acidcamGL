@@ -1,5 +1,3 @@
-// Goign to attempt to write something
-// starting off slow
 #include"ac.h"
 
 
