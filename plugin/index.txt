@@ -2,3 +2,4 @@ plug1.acidcam
 detect_edges.acidcam
 newone1.acidcam
 newbars.acidcam
+newlines.acidcam
