@@ -43,7 +43,7 @@ extern "C" void filter(cv::Mat  &frame) {
         
         if((z%max) == 0)
             ++off;
-        if(off > 8)
+        if(off > 7)
             off = 0;
     }
 
