@@ -20,6 +20,7 @@ all: $(PROGRAM)
 clean:
 	rm -f $(PROGRAM)  *.o
 
-install:
-	cp $(PROGRAM) /Users/jared/Source/newestac2/acidcamGL/plugin
+install: all
+	cp $(PROGRAM) ../../../../plugin
+#/Users/jared/Source/newestac2/acidcamGL/plugin
 
