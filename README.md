@@ -151,9 +151,7 @@ Arguments:
 Enviorment Variables:
 
         SHADER_PATH - path to shaders	
-        
         AC_PLUGIN_PATH - path to compiled plugins
-        
         AC_CUSTOM_PATH - path to custom filter stack text files
     
 Controls:
