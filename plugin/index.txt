@@ -4,3 +4,4 @@ newone1.acidcam
 newbars.acidcam
 newlines.acidcam
 newvarlines.acidcam
+newstretchlines.acidcam
