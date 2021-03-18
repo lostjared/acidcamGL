@@ -142,6 +142,7 @@ Arguments:
     -l list filters
     -t list filters no info
     -l list search
+    -7 jump to location in video by seconds
     -v version
     -4 enable ffmpeg x264 support
     -5 enable ffmpeg x265 support
