@@ -110,6 +110,7 @@ Arguments:
     -o output filename
     -S filter start index
     -H shader start index
+    -Z starting filter name
     -C set color map
     -T set material texture filename
     -N play list slideshow timeout
