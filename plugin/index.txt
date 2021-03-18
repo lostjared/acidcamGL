@@ -5,3 +5,4 @@ newbars.acidcam
 newlines.acidcam
 newvarlines.acidcam
 newstretchlines.acidcam
+newblendlines.acidcam
