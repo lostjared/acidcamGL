@@ -20,5 +20,5 @@ all: $(PROGRAM)
 clean:
 	rm -f $(PROGRAM)  *.o
 
-install:
+install: all
 	cp $(PROGRAM) /usr/local/bin
