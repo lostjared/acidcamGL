@@ -5,6 +5,9 @@ all:
 	make -C newone install
 	make -C newvarlines install
 	make -C newstretchlines install
+	make -C newblendlines install
+	make -C newvarblendlines install
+	make -C newrandblend install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -12,3 +15,6 @@ clean:
 	make -C newone clean
 	make -C newvarlines clean
 	make -C newstretchlines clean
+	make -C newblendlines clean
+	make -C newvarblendlines clean
+	make -C newrandblend clean
