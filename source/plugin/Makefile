@@ -8,6 +8,7 @@ all:
 	make -C newblendlines install
 	make -C newvarblendlines install
 	make -C newrandblend install
+	make -C lsdadd install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -18,3 +19,4 @@ clean:
 	make -C newblendlines clean
 	make -C newvarblendlines clean
 	make -C newrandblend clean
+	make -C lsdadd clean
