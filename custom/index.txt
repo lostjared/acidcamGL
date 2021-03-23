@@ -8,3 +8,4 @@ CustomDarkReverse
 CustomEdges
 CustomEdgeSquare
 CustomReverseXorBlur
+CustomEdgeGlitch
