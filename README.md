@@ -240,6 +240,11 @@ List all included filters by index:
 
 	./acidcamGL -l
 
+Jump to location in vidoe file by seconds
+
+	./acidcamGL -g -p filters -i file.mp4 -7 25
+
+
 Key shortcut format:
 
 in a text file add each line for the desired keyshort cuts in this format:
