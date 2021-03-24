@@ -16,12 +16,6 @@ Then go to System settings and select Security & Privacy. Select Anywhere as the
 
 How to compile for macOS: 
 
-https://youtu.be/UB_i1qTLGw8
-
-Playlist of Tutorials/Demos:
-
- https://www.youtube.com/playlist?list=PLUgo--lX2kmpR2VtPCj61ZWPpMMCFAu79
-
 This project is still in very early stages of development.
 This project is an implementation of Acid Cam using OpenGL/Shaders.
 It is designed more for visualizations or live streaming with OBS versus a Video Editor like the other versions of Acid Cam.
