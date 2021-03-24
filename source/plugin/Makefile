@@ -10,6 +10,7 @@ all:
 	make -C newrandblend install
 	make -C lsdadd install
 	make -C offstuck install
+	make -C blendstuck install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -22,4 +23,5 @@ clean:
 	make -C newrandblend clean
 	make -C lsdadd clean
 	make -C offstuck clean
+	make -C blendstuck clean
 

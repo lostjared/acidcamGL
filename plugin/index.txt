@@ -10,3 +10,4 @@ newvarblendlines.acidcam
 newrandblend.acidcam
 lsdadd.acidcam
 offstuck.acidcam
+blendstuck.acidcam
