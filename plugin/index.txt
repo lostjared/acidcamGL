@@ -11,3 +11,4 @@ newrandblend.acidcam
 lsdadd.acidcam
 offstuck.acidcam
 blendstuck.acidcam
+lsdtwo.acidcam

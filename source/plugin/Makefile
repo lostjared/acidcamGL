@@ -11,6 +11,7 @@ all:
 	make -C lsdadd install
 	make -C offstuck install
 	make -C blendstuck install
+	make -C lsdtwo install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -24,4 +25,5 @@ clean:
 	make -C lsdadd clean
 	make -C offstuck clean
 	make -C blendstuck clean
+	make -C lsdtwo clean
 
