@@ -112,6 +112,7 @@ int cmd[2];
 float pos_frames = 0;
 
 void print_help_message() {
+    std::cout << "acidcamGL " << version_info << " \n";
     for(int i = 0; outstr_arr[i] != "[end]"; ++i)
         std::cout << outstr_arr[i] << "\n";
 }
