@@ -28,7 +28,7 @@ This project reqeuires libacidcam,GLFW,GLEW,OpenGL,OpenCV.FFmpeg
 
 First install homebrew: https://brew.sh
 
-Then install GLFLW,GLEW,OpenGL,OpenCV
+Then install GLFLW,GLEW,OpenGL,OpenCV,FFmpeg
 
 	brew install glfw3 glew opencv ffmpeg
 
