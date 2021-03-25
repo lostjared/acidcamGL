@@ -2,7 +2,7 @@ run
 
 $ make
 
-to build
+to build and install to plugin folder in this tree
 
 and
 
