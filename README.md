@@ -24,13 +24,13 @@ The program is controlled with the qwerty keyboard but, currently looking into M
 
 How to compile on macOS:
 
-This project reqeuires libacidcam,GLFW,GLEW,OpenGL,OpenCV
+This project reqeuires libacidcam,GLFW,GLEW,OpenGL,OpenCV.FFmpeg
 
 First install homebrew: https://brew.sh
 
 Then install GLFLW,GLEW,OpenGL,OpenCV
 
-	brew install glfw3 glew opencv
+	brew install glfw3 glew opencv ffmpeg
 
 Dependending on what you have installed this could take quite some time.
 You can choose to statically compile
