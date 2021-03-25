@@ -20,7 +20,7 @@
 #include<algorithm>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
-#define version_info "v1.0.006"
+#define version_info "v1.0.007"
 #ifdef SYPHON_SERVER
 #include"syphon.h"
 #endif
