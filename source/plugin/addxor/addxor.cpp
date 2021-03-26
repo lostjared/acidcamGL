@@ -19,7 +19,7 @@ extern "C" void filter(cv::Mat  &frame) {
              color[2] ^= pix[2];
              
              ++off;
-             if(off > 7) {
+             if(off > MAX-1) {
                  off = 0;
                  color[0] = pix[0];
                  color[1] = pix[1];
