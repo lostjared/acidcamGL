@@ -13,6 +13,7 @@ all:
 	make -C blendstuck install
 	make -C lsdtwo install
 	make -C addxor install
+	make -C addmulxor install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -28,4 +29,5 @@ clean:
 	make -C blendstuck clean
 	make -C lsdtwo clean
 	make -C addxor clean
+	make -C addmulxor clean
 
