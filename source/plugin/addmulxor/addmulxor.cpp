@@ -13,7 +13,7 @@ extern "C" void filter(cv::Mat  &frame) {
              cv::Mat &m = collection.frames[off];
              cv::Vec3b pix = m.at<cv::Vec3b>(z, i);
              color[r] += static_cast<unsigned char>((pixel[r] * 0.5) + (pix[r] * 0.5));
-             if(off > MAX) {
+             if(off > MAX-1) {
                  off = 0;
                  color[r] = color[r] ^ pix[r];
              }

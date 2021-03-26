@@ -15,7 +15,7 @@ extern "C" void filter(cv::Mat  &frame) {
             }
         }
         if(rand()%50 == 0) ++off;
-        if(off > MAX) {
+        if(off > MAX-1) {
             off = 0;
         }
     }

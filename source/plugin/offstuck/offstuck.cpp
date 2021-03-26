@@ -1,7 +1,8 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    static ac::MatrixCollection<32> collection;
+    static constexpr int MAX = 32;
+    static ac::MatrixCollection<MAX> collection;
     collection.shiftFrames(frame);
     static int off = 0;
     for(int z = 0; z < frame.rows; ++z) {
@@ -12,7 +13,7 @@ extern "C" void filter(cv::Mat  &frame) {
             pixel = pix;
             if(rand()%25 == 0) {
                 ++off;
-                if(off > 31) {
+                if(off > MAX-1) {
                     off = 0;
                 }
             }

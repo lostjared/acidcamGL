@@ -14,7 +14,7 @@ extern "C" void filter(cv::Mat  &frame) {
             ++off;
             m = 0;
             shift = rand()%MAX;
-            if(off > MAX)
+            if(off > MAX-1)
                 off = 0;
         }
         for(int i = 0; i < frame.cols; ++i) {

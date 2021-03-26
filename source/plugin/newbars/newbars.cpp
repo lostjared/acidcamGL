@@ -2,11 +2,12 @@
 
 
 extern "C" void filter(cv::Mat  &frame) {
-    static ac::MatrixCollection<8> collection;
+    static constexpr int MAX = 8;
+    static ac::MatrixCollection<MAX> collection;
     collection.shiftFrames(frame);
     
     int off = 0;
-    int max = frame.rows / 8;
+    int max = frame.rows / MAX;
     
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
@@ -41,7 +42,7 @@ extern "C" void filter(cv::Mat  &frame) {
         
         if((z%max) == 0)
             ++off;
-        if(off > 7)
+        if(off > MAX-1)
             off = 0;
     }
 
