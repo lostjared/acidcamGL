@@ -14,3 +14,4 @@ blendstuck.acidcam
 lsdtwo.acidcam
 addxor.acidcam
 addmulxor.acidcam
+lsdinc.acidcam

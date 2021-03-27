@@ -14,6 +14,7 @@ all:
 	make -C lsdtwo install
 	make -C addxor install
 	make -C addmulxor install
+	make -C lsdinc install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -30,4 +31,5 @@ clean:
 	make -C lsdtwo clean
 	make -C addxor clean
 	make -C addmulxor clean
+	make -C lsdinc clean
 
