@@ -24,7 +24,7 @@ extern "C" void filter(cv::Mat  &frame) {
             dir = 0;
             if(dir2 == 1) {
                 max += 0.5f;
-                if(max > 25)
+                if(max > 20)
                     dir2 = 0;
             } else {
                 max -= 0.5f;
