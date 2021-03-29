@@ -901,6 +901,13 @@ namespace acidcam {
                         take_snapshot = true;
                         break;
                     case GLFW_KEY_ENTER:
+                        
+                        if(mode == GLFW_MOD_SHIFT) {
+                            std::cout << "acidcam: Attempting to release objects....\n";
+                            ac::release_all_objects();
+                            break;
+                        }
+                        
                     case GLFW_KEY_F: {
                         int val = atoi(input_string.c_str());
                         if(val >= 0 && val <= ac::solo_filter.size()-3) {

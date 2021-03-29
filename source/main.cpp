@@ -99,6 +99,7 @@ std::string outstr_arr[] = {
     "    [UP] - Shader Index move up",
     "    [DOWN] - Shader Index move down",
     "    [ENTER] - Jump to currently typed index (type index with number keys at anytime)",
+    "    [SHIFT]+[ENTER] - Release Stored Frames ",
     "    [PAGEUP] - Store Index Position",
     "    [PAGEDOWN] - Restore Position Index",
     "     Q,Q,E,R,Y,U,I,O - move movement rate",
