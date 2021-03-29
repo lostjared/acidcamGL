@@ -1,7 +1,6 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    static int counter = 0;
     static float rgb[3] = { 1,2,3 };
     static float inc[3] = { 0.1, 0.2, 0.3 };
     static float max = 7.0;
@@ -24,7 +23,7 @@ extern "C" void filter(cv::Mat  &frame) {
             dir = 0;
             if(dir2 == 1) {
                 max += 0.5f;
-                if(max > 20)
+                if(max > 15)
                     dir2 = 0;
             } else {
                 max -= 0.5f;
