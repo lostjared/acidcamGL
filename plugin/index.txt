@@ -16,3 +16,4 @@ addxor.acidcam
 addmulxor.acidcam
 lsdinc.acidcam
 lsdinout.acidcam
+coloronoff.acidcam
