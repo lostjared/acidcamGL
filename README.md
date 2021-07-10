@@ -274,5 +274,5 @@ Use:
 
 After enabling plugins (with the shell variable pointing to path) and having the list of plugins to load one from the command line use:
 
-	./acidcamGL -d 0 -g -p filters -Z plugin.acidcam
+	./acidcamGL -g -p filters -Z plugin.acidcam
 
