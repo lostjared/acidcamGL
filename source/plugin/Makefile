@@ -17,6 +17,7 @@ all:
 	make -C lsdinc install
 	make -C coloronoff install
 	make -C medianmod install
+	make -C medianmod2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -36,4 +37,5 @@ clean:
 	make -C lsdinc clean
 	make -C coloronoff clean
 	make -C medianmod clean
+	make -C medianmod2 clean
 

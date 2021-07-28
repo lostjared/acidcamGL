@@ -18,3 +18,4 @@ lsdinc.acidcam
 lsdinout.acidcam
 coloronoff.acidcam
 medianmod.acidcam
+medianmod2.acidcam
