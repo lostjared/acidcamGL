@@ -16,6 +16,7 @@ all:
 	make -C addmulxor install
 	make -C lsdinc install
 	make -C coloronoff install
+	make -C medianmod install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -34,4 +35,5 @@ clean:
 	make -C addmulxor clean
 	make -C lsdinc clean
 	make -C coloronoff clean
+	make -C medianmod clean
 
