@@ -51,6 +51,7 @@ material_boxes.glsl
 material_tic_tac_toe.glsl
 material_fill.glsl
 material_fill_black_blend.glsl
+material_fill_black_chroma.glsl
 material_fill_white.glsl
 material_fill_white_color.glsl
 material_fill_white_xor.glsl
