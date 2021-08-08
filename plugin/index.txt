@@ -19,3 +19,4 @@ lsdinout.acidcam
 coloronoff.acidcam
 medianmod.acidcam
 medianmod2.acidcam
+stuckframe.acidcam
