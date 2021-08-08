@@ -20,3 +20,4 @@ coloronoff.acidcam
 medianmod.acidcam
 medianmod2.acidcam
 stuckframe.acidcam
+stuckframergb.acidcam
