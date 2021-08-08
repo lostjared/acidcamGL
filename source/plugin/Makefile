@@ -20,6 +20,7 @@ all:
 	make -C medianmod2 install
 	make -C stuckframe install
 	make -C stuckframergb install
+	make -C stuckframergb_edge install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -42,4 +43,5 @@ clean:
 	make -C medianmod2 clean
 	make -C stuckframe clean
 	make -C stuckframergb clean
+	make -C stuckframergb_edge clean
 
