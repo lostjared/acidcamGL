@@ -22,3 +22,4 @@ medianmod2.acidcam
 stuckframe.acidcam
 stuckframergb.acidcam
 stuckframergb_edge.acidcam
+stuckframe2.acidcam
