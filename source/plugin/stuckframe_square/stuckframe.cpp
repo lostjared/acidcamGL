@@ -14,9 +14,11 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             cv::Mat &f = collection.frames[off];
             cv::Vec3b pix = f.at<cv::Vec3b>(z, i);
-            pixel = pix;
-            
-            if(i%30 == 0 && z%30 == 0 && off_on == 1) {
+            for(int q = 0; q < 3; ++q) {
+                pixel[q] = static_cast<unsigned char>(pixel[q] * 0.5 + pix[q] * 0.5);
+            }
+                
+            if(i%20 == 0 && z%20 == 0 && off_on == 1) {
                 off_on = 0;
                 off += array[array_off];
                 if(off > MAX - 1) {
@@ -24,7 +26,7 @@ extern "C" void filter(cv::Mat  &frame) {
                 }
             }
         }
-        if(z%60 == 0) {
+        if(z%40 == 0) {
             off_on = 1;
         }
     }
