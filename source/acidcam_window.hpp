@@ -1162,7 +1162,7 @@ namespace acidcam {
             while(!file.eof()) {
                 std::string n;
                 std::getline(file, n);
-                if(file) {
+                if(file && n.length() > 0) {
                     AC_Program *program = new AC_Program();
                     if(program->load(c + "/" + n)) {
                         plugins[n] = program;
@@ -1170,7 +1170,7 @@ namespace acidcam {
                         ac::solo_filter.push_back(n);
                     } else {
                         std::cout << "acidcam: Could not open plugin: " << n << "\n";
-                        acidcam::updateError();
+                        //acidcam::updateError();
                     }
                 }
             }
