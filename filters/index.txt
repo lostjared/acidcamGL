@@ -12,6 +12,7 @@ echo_alpha.glsl
 echo_alpha_two.glsl
 echo_alpha_two_xor.glsl
 echo_alpha_three.glsl
+echo_alpha_three_rgb.glsl
 echo_and_or_xor.glsl
 echo_or_and_xor.glsl
 echo_xor_or_and.glsl
