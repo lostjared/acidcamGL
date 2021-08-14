@@ -95,6 +95,7 @@ namespace acidcam {
         std::unordered_map<std::string, int> shader_map;
         bool enable_cubeapp = false;
         bool blur_enabled;
+        std::string output_format;
 #ifdef SPOUT_SERVER
         SPOUTLIBRARY* spoutsender;
 #endif
@@ -106,6 +107,10 @@ namespace acidcam {
         AcidCam_Window() = default;
         AcidCam_Window(const AcidCam_Window &) = delete;
         AcidCam_Window &operator=(const AcidCam_Window &) = delete;
+        
+        void setOutputFormat(std::string f) {
+            output_format = f;
+        }
         
         void enableCube(bool value) {
             enable_cubeapp = value;
@@ -403,7 +408,7 @@ namespace acidcam {
             m = localtime(&t);
 #endif
             std::ostringstream time_stream;
-            time_stream << snapshot_prefix << "-" << (m->tm_year + 1900) << "." << std::setw(2) << std::setfill('0') << (m->tm_mon + 1) << "." << std::setw(2) << std::setfill('0') << m->tm_mday << "_" << std::setw(2) << std::setfill('0') << m->tm_hour << "." << std::setw(2) << std::setfill('0') << m->tm_min << "." << std::setw(2) << std::setfill('0') << m->tm_sec <<  "_" << flipped.cols << "x" << flipped.rows << "x" << index << ".png";
+            time_stream << snapshot_prefix << "-" << (m->tm_year + 1900) << "." << std::setw(2) << std::setfill('0') << (m->tm_mon + 1) << "." << std::setw(2) << std::setfill('0') << m->tm_mday << "_" << std::setw(2) << std::setfill('0') << m->tm_hour << "." << std::setw(2) << std::setfill('0') << m->tm_min << "." << std::setw(2) << std::setfill('0') << m->tm_sec <<  "_" << flipped.cols << "x" << flipped.rows << "x" << index << "." << output_format;
             cv::imwrite(time_stream.str(), flipped);
             std::cout << "acidcam: Wrote: " << time_stream.str() << "\n";
             if(redir == 1) {

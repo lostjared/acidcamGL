@@ -34,6 +34,7 @@ std::string outstr_arr[] = {
     "    -Z Starting ilter by Name",
     "    -C set color map",
     "    -T set material texture filename",
+    "    -s image output format",
     "    -N play list slideshow timeout",
     "    -k shortcut-key file",
     "    -L playlist of filters",
@@ -224,8 +225,13 @@ int main(int argc, char **argv) {
     std::string plugins;
     bool value_enabled = false;
     int value_index = 0;
-    while((opt = getopt(argc, argv, "6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:")) != -1) {
+    std::string output_format="png";
+    while((opt = getopt(argc, argv, "s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:")) != -1) {
         switch(opt) {
+            case 's':
+                if(optarg != 0)
+                    output_format = optarg;
+                break;
             case '7':
                 pos_frames = atof(optarg);
                 break;
@@ -553,6 +559,8 @@ int main(int argc, char **argv) {
 
     if(plugins.length()>0)
         main_window.loadPlugins(plugins);
+
+    main_window.setOutputFormat(output_format);
     
     if(list_var.length()>0)
         main_window.loadList(list_var, playback_sort);

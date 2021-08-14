@@ -107,6 +107,7 @@ Arguments:
     -Z starting filter name
     -C set color map
     -T set material texture filename
+    -s image output format (png/tif/jpeg)
     -N play list slideshow timeout
     -k shortcut-key file
     -L playlist of filters
