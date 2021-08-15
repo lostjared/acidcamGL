@@ -204,7 +204,7 @@ extern void ScreenGrab(cv::Mat &frame);
 void ac::CurrentDesktop(cv::Mat &frame) {
 #if !defined(NO_SCREEN_GRAB) && defined(__APPLE__)
     cv::Mat cap;
-    //  ScreenGrab(cap);
+    ScreenGrab(cap);
     cv::Mat temp;
     ac_resize(cap, temp, frame.size());
     cv::cvtColor(temp, frame, cv::COLOR_RGBA2BGR);
@@ -457,7 +457,7 @@ extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 void ac::CurrentDesktopRect(cv::Mat &frame) {
 #if !defined(NO_SCREEN_GRAB) && defined(__APPLE__)
         cv::Mat cap;
-     //   ScreenGrabRect(xx,yy,ww,hh,cap);
+        ScreenGrabRect(xx,yy,ww,hh,cap);
         cv::Mat temp;
         //ac_resize(cap, temp, frame.size());
         cv::Scalar s(0,0,0);
