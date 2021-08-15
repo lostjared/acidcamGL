@@ -1,4 +1,5 @@
 all:
+	make -C lsdinout install
 	make -C fill_edges install
 	make -C newbars install
 	make -C newlines install
@@ -48,4 +49,5 @@ clean:
 	make -C stuckframergb_edge clean
 	make -C stuckframe2 clean
 	make -C stuckframe_square clean
+	make -C lsdinout clean
 
