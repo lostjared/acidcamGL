@@ -486,9 +486,20 @@ void ac::GhostShift(cv::Mat &frame) {
 }
 
 void ac::RotateSet(cv::Mat &frame) {
-    RotateFrame(frame);
+    cv::Mat out = frame.clone();
+    RotateFrame(out);
+    cv::Mat copy1;
+    cv::resize(out, copy1, cv::Size(static_cast<int>(frame.cols*3.5), static_cast<int>(frame.rows*3.5)));
+    for(int z = 0; z < frame.rows; ++z) {
+        for(int i = 0; i < frame.cols; ++i) {
+            cv::Vec3b &pixel = pixelAt(frame,z, i);
+            if(z+(copy1.rows/3) < copy1.rows-1 && i+(copy1.cols/3) < copy1.cols-1) {
+                cv::Vec3b pix = copy1.at<cv::Vec3b>(z+(copy1.rows/3), i+(copy1.cols/3));
+                pixel = pix;
+            }
+        }
+    }
     AddInvert(frame);
-
 }
 
 void ac::RotateFrameReverse(cv::Mat &frame) {
@@ -511,8 +522,10 @@ void ac::RotateSetReverse(cv::Mat &frame) {
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = pixelAt(frame,z, i);
-            cv::Vec3b pix = copy1.at<cv::Vec3b>(z+(copy1.cols/3), i+(copy1.cols/3));
-            pixel = pix;
+            if(z+(copy1.rows/3) < copy1.rows-1 && i +(copy1.cols/3) < copy1.cols-1) {
+                cv::Vec3b pix = copy1.at<cv::Vec3b>(z+(copy1.rows/3), i+(copy1.cols/3));
+                pixel = pix;
+            }
         }
     }
     AddInvert(frame);
