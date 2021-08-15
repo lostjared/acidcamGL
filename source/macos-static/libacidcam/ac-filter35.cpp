@@ -381,7 +381,7 @@ void ac::GlitchyTrails(cv::Mat &frame) {
         square_size = 25 + (rand()% (square_max - 25));
         for(int z = row; z < row+square_size; ++z) {
             for(int i = 0; i < frame.cols; ++i) {
-                if(i < frame.cols && z < frame.rows) {
+                if(i < frame.cols-1 && z < frame.rows-1) {
                     cv::Vec3b &pixel = pixelAt(frame,z, i);
                     if(off < (collection.size()-1)) {
                         cv::Vec3b pix = collection.frames[off].at<cv::Vec3b>(z, i);
@@ -397,8 +397,10 @@ void ac::GlitchyTrails(cv::Mat &frame) {
         if(size_past > square_max-1) {
             size_past = 0;
             ++off;
-            if(off > (collection.size()-1))
+            if(off > (collection.size()-1)) {
+                off = collection.size()-2;
                 break;
+            }
         }
     }
     AddInvert(frame);

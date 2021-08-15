@@ -3847,7 +3847,7 @@ namespace ac {
             square_size = 25 + (rand()% (square_max - 25));
             for(int z = row; z < row+square_size; ++z) {
                 for(int i = 0; i < frame.cols; ++i) {
-                    if(i < frame.cols && z < frame.rows) {
+                    if(i < frame.cols-1 && z < frame.rows-1) {
                         cv::Vec3b &pixel = pixelAt(frame,z, i);
                         cv::Vec3b pix;
                         int frame_index = (rand()%(collection->size()-1));
@@ -3872,8 +3872,10 @@ namespace ac {
             if(size_past > square_max-1) {
                 size_past = 0;
                 ++off;
-                if(off > (collection->size()-1))
+                if(off > (collection->size()-1)) {
+                    off = collection->size()-2;
                     break;
+                }
             }
         }
     }
@@ -3892,7 +3894,7 @@ namespace ac {
             int frame_index = (rand()%(collection->size()-1));
             for(int z = row; z < row+square_size; ++z) {
                 for(int i = 0; i < frame.cols; ++i) {
-                    if(i < frame.cols && z < frame.rows) {
+                    if(i < frame.cols-1 && z < frame.rows-1) {
                         cv::Vec3b &pixel = pixelAt(frame,z, i);
                         cv::Vec3b pix;
                         if(off < (collection->size()-1)) {
@@ -3913,8 +3915,10 @@ namespace ac {
             if(size_past > square_max-1) {
                 size_past = 0;
                 ++off;
-                if(off > (collection->size()-1))
+                if(off > (collection->size()-1)) {
+                    off = collection->size()-2;
                     break;
+                }
             }
         }
     }
