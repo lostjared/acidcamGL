@@ -93,6 +93,13 @@ void messageOutput(std::string title, std::string text) {
     [pool drain];
 }
 
+void getSizeOfDisplay(int &w, int &h) {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    auto mainDisplayId = CGMainDisplayID();
+        w = CGDisplayPixelsWide(mainDisplayId);
+        h = CGDisplayPixelsHigh(mainDisplayId);
+    [pool drain];
+}
 
 #endif
 

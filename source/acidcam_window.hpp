@@ -418,15 +418,28 @@ namespace acidcam {
             }
         }
         
+        
         void readFrame(cv::Mat &frame) {
             cv::Mat img;
-            img.create(window_height, window_width,CV_8UC3);
-            glPixelStorei(GL_PACK_ALIGNMENT, (img.step & 3) ? 1 : 4);
-            glPixelStorei(GL_PACK_ROW_LENGTH, (int)img.step/img.elemSize());
-            glReadPixels(0, 0, img.cols, img.rows, GL_RGB, GL_UNSIGNED_BYTE, img.data);
+            int width, height;
+            glfwGetFramebufferSize(win(), &width, &height);
+            img.create(height, width,CV_8UC3);
+            GLsizei nrChannels = 3;
+            GLsizei stride = nrChannels * width;
+            stride += (stride % 4) ? (4 - stride % 4) : 0;
+            GLsizei bufferSize = stride * height;
+            std::vector<char> buffer(bufferSize);
+            glPixelStorei(GL_PACK_ALIGNMENT, 4);
+            glReadBuffer(GL_FRONT);
+            glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, img.data);
             cv::Mat flipped;
             cv::flip(img, flipped, 0);
-            cv::cvtColor(flipped, frame, cv::COLOR_RGB2BGR);
+            cv::Mat frame1;
+            cv::cvtColor(flipped, frame1, cv::COLOR_RGB2BGR);
+            if(window_width != width || window_height != height) {
+               cv::resize(frame1,frame, cv::Size(window_width, window_height));
+            } else
+                frame = frame1;
         }
         
         int writer_w = 0, writer_h = 0;
