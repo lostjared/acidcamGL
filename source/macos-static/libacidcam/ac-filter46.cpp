@@ -813,9 +813,9 @@ void ac::SquareBlockGlitch(cv::Mat &frame) {
 }
 
 void ac::SquareStretchRows(cv::Mat &frame) {
-    
-    cv::Mat copies[4];
-    for(int i = 0; i < 4; ++i) {
+    static constexpr int COPY_SIZE=4;
+    cv::Mat copies[COPY_SIZE];
+    for(int i = 0; i < COPY_SIZE; ++i) {
         ac_resize(frame, copies[i], cv::Size(frame.cols+((rand()%10) * 100), frame.rows));
     }
     
@@ -823,12 +823,16 @@ void ac::SquareStretchRows(cv::Mat &frame) {
     for(int row = 0; row < frame.rows; row += (frame.rows/4)) {
         for(int z = row; z < row+(frame.rows/4) && z < frame.rows; ++z) {
             for(int i = 0; i < frame.cols; ++i) {
-                cv::Vec3b &pixel = pixelAt(frame,z, i);
-                cv::Vec3b pix = copies[offset].at<cv::Vec3b>(z, i);
-                pixel = pix;
+                if(offset < COPY_SIZE-1 && i < frame.cols && z < frame.rows && i < copies[offset].cols && z < copies[offset].rows) {
+                    cv::Vec3b &pixel = pixelAt(frame,z, i);
+                    cv::Vec3b pix = copies[offset].at<cv::Vec3b>(z, i);
+                    pixel = pix;
+                }
             }
         }
         offset++;
+        if(offset > COPY_SIZE-1)
+            offset = 0;
     }
     AddInvert(frame);
 }
