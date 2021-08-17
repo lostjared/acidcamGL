@@ -484,13 +484,11 @@ namespace acidcam {
         }
         
         void writeFrame() {
-            
             static bool skip = true;
             if(skip == true) {
                 skip = false;
                 return;
             }
-            
             cv::Mat frame;
             readFrame(frame);
             write(frame);
