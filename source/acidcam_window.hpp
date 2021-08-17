@@ -460,10 +460,10 @@ namespace acidcam {
                 } else
                     write_ffmpeg(fptr, frame);
             } else {
-                if(window_width != writer_w && window_height != writer_h) {
+                if(frame.size() != cv::Size(writer_w,writer_h)) {
                     cv::Mat re;
                     cv::resize(frame, re, cv::Size(writer_w, writer_h));
-                    writer.write(frame);
+                    writer.write(re);
                 }
                 else
                     writer.write(frame);
