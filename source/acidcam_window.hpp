@@ -454,8 +454,11 @@ namespace acidcam {
         void write(cv::Mat &frame) {
             if(fptr != 0) {
                 cv::Mat reimage;
-                cv::resize(frame, reimage, cv::Size(writer_w, writer_h));
-                write_ffmpeg(fptr, frame);
+                if(frame.size() != cv::Size(writer_w, writer_h)) {
+                    cv::resize(frame, reimage, cv::Size(writer_w, writer_h));
+                    write_ffmpeg(fptr, reimage);
+                } else
+                    write_ffmpeg(fptr, frame);
             } else {
                 if(window_width != writer_w && window_height != writer_h) {
                     cv::Mat re;
