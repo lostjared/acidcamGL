@@ -452,6 +452,7 @@ namespace acidcam {
         }
         
         void write(cv::Mat &frame) {
+            if(frame.empty()) return;
             if(fptr != 0) {
                 cv::Mat reimage;
                 if(frame.size() != cv::Size(writer_w, writer_h)) {
@@ -483,6 +484,13 @@ namespace acidcam {
         }
         
         void writeFrame() {
+            
+            static bool skip = true;
+            if(skip == true) {
+                skip = false;
+                return;
+            }
+            
             cv::Mat frame;
             readFrame(frame);
             write(frame);
