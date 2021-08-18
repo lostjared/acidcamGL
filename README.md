@@ -144,7 +144,7 @@ Arguments:
     -m crf for x265 for video mode
     --mux outputted_file source_file [ Mux audio (copy audio) ]
 
-Enviorment Variables:
+Enviorment Variables: (you should export these)
 
         SHADER_PATH - path to shaders	
         AC_PLUGIN_PATH - path to compiled plugins
