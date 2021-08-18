@@ -16,7 +16,6 @@ uniform float alpha_value;
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 uniform sampler2D samp;
-uniform sampler2D mat_samp;
 uniform vec2 mat_size;
 uniform vec4 inc_valuex;
 uniform float value_alpha_r, value_alpha_g, value_alpha_b;
@@ -38,7 +37,7 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    vec4 color2 = texture(mat_samp, tc);
+    vec4 color2 = texture(samp, tc);
     vec2 st = (gl_FragCoord.xy / iResolution_.xy);
     float rnd = random(st);
     vec4 v = vec4(fract(inc_valuex.x/3), fract(inc_valuex.y/9)*0.5, fract(inc_valuex.z/3), 1);

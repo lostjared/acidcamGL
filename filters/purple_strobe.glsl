@@ -16,7 +16,6 @@ uniform float alpha_value;
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 uniform sampler2D samp;
-uniform sampler2D mat_samp;
 
 uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
