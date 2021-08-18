@@ -78,6 +78,7 @@ std::string outstr_arr[] = {
     "    SHADER_PATH path to shaders",
     "    AC_PLUGIN_PATH",
     "    AC_CUSTOM_PATH",
+    "    FFMPEG_PATH",
     "    ",
     "Controls:",
     "    ",
@@ -464,6 +465,9 @@ int main(int argc, char **argv) {
     p = getenv("AC_CUSTOM_PATH");
     if(p != NULL)
         custom_path = p;
+    p = getenv("FFMPEG_PATH");
+    if(p != NULL)
+        ffmpeg_path = p;
 #else
     char* p;
     size_t len;

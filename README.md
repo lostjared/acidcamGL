@@ -24,7 +24,7 @@ The program is controlled with the qwerty keyboard but, currently looking into M
 
 How to compile on macOS:
 
-This project reqeuires libacidcam,GLFW,GLEW,OpenGL,OpenCV.FFmpeg
+This project reqeuires libacidcam,GLFW,GLEW,OpenGL,OpenCV,FFmpeg
 
 First install homebrew: https://brew.sh
 
@@ -149,7 +149,7 @@ Enviorment Variables:
         SHADER_PATH - path to shaders	
         AC_PLUGIN_PATH - path to compiled plugins
         AC_CUSTOM_PATH - path to custom filter stack text files
-    
+	FFMPEG_PATH - path to ffmpeg executable
 Controls:
     
     L - enable disable playlist
