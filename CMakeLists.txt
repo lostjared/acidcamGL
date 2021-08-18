@@ -40,4 +40,4 @@ link_directories(/usr/local/lib /usr/lib /opt/homebrew/lib)
 add_executable(acidcamGL ${CMAKE_SOURCE_DIR}/source/main.cpp ${CMAKE_SOURCE_DIR}/source/gl_shader.cpp ${CMAKE_SOURCE_DIR}/source/gl_window.cpp ${CMAKE_SOURCE_DIR}/source/keymap.cpp ${CMAKE_SOURCE_DIR}/source/acidcam_window.cpp ${CMAKE_SOURCE_DIR}/source/ipc_client.cpp ${CMAKE_SOURCE_DIR}/source/ffmpeg_write.cpp ${CMAKE_SOURCE_DIR}/source/plugin-program.cpp ${CMAKE_SOURCE_DIR}/source/stereo.cpp)
 target_link_libraries(acidcamGL ${OPENGL_gl_LIBRARY} ${GLEW_SHARED_LIBRARIES} ${GLEW_LIB_NAME} Threads::Threads glfw ${GLEW_LIBARIES} GLEW ${OpenCV_LIBS} acidcam ${CMAKE_DL_LIBS})
 target_compile_options(acidcamGL PRIVATE ${COMPILER_FLAGS})
-
+install(TARGETS acidcamGL DESTINATION bin)
