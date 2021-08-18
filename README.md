@@ -149,7 +149,7 @@ Enviorment Variables:
         SHADER_PATH - path to shaders	
         AC_PLUGIN_PATH - path to compiled plugins
         AC_CUSTOM_PATH - path to custom filter stack text files
-	FFMPEG_PATH - path to ffmpeg executable
+        FFMPEG_PATH - path to ffmpeg executable
 Controls:
     
     L - enable disable playlist
