@@ -975,7 +975,7 @@ namespace acidcam {
                             if(var_index > 0)
                                 var_index -= 1;
                             
-                            if(var_list[var_index] > 0 && var_list[var_index] < ac::solo_filter.size()) {
+                            if(var_list[var_index] > 0 && var_list[var_index] < ac::solo_filter.size()-1) {
                                 index = var_list[var_index];
                                 if(debug) {
                                     std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
@@ -985,16 +985,16 @@ namespace acidcam {
                         break;
                     case GLFW_KEY_RIGHT:
                         if(list_enabled == false) {
-                            if(index < ac::solo_filter.size()) {
+                            if(index < ac::solo_filter.size()-1) {
                                 ++index;
                                 if(debug) {
                                     std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
                                 }
                             }
                         } else {
-                            if(var_index < var_list.size())
+                            if(var_index < var_list.size()-1)
                                 var_index += 1;
-                            if(var_list[var_index] > 0 && var_list[var_index] < ac::solo_filter.size()) {
+                            if(var_list[var_index] > 0 && var_list[var_index] < ac::solo_filter.size()-1) {
                                 index = var_list[var_index];
                                 if(debug) {
                                     std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
