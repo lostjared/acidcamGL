@@ -25,6 +25,7 @@ all:
 	make -C stuckframe2 install
 	make -C stuckframe_square install
 	make -C stuckrow install
+	make -C stuckxy install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -52,4 +53,5 @@ clean:
 	make -C stuckframe_square clean
 	make -C lsdinout clean
 	make -C stuckrow clean
+	make -C stuckxy clean
 

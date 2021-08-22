@@ -24,3 +24,4 @@ stuckframergb_edge.acidcam
 stuckframe2.acidcam
 stuckframe_square.acidcam
 stuckrow.acidcam
+stuckxy.acidcam
