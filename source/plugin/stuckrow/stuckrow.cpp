@@ -1,7 +1,7 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    static constexpr int MAX = 32;
+    static constexpr int MAX = 16;
     static ac::MatrixCollection<MAX> collection;
     collection.shiftFrames(frame);
     static int off = 0;
