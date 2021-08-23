@@ -3897,7 +3897,7 @@ namespace ac {
                     if(i < frame.cols-1 && z < frame.rows-1) {
                         cv::Vec3b &pixel = pixelAt(frame,z, i);
                         cv::Vec3b pix;
-                        if(frame_index < (collectoin->size()-1) && off < (collection->size()-1) && z < collection->frames[frame_index].rows && i < collection->frames[frame_index].cols) {
+                        if(frame_index < (collection->size()-1) && off < (collection->size()-1) && z < collection->frames[frame_index].rows && i < collection->frames[frame_index].cols) {
                             pix = collection->frames[frame_index].template at<cv::Vec3b>(z, i);
                             
                             for(int j = 0; j < 3; ++j) {
