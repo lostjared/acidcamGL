@@ -3837,7 +3837,7 @@ namespace ac {
     template<int Size>
     void GlitchyXorTrails(cv::Mat &frame, MatrixCollection<Size> *collection, bool random = false) {
         collection->shiftFrames(frame);
-        static int square_max = (frame.rows / collection->size());
+        static int square_max = (frame.rows / (collection->size()-1));
         static int square_size = 25 + (rand()% (square_max - 25));
         int row = 0;
         int off = 0;
@@ -3851,7 +3851,7 @@ namespace ac {
                         cv::Vec3b &pixel = pixelAt(frame,z, i);
                         cv::Vec3b pix;
                         int frame_index = (rand()%(collection->size()-1));
-                        if(off < (collection->size()-1)) {
+                        if(frame_index < (collection->size()-1) && off < (collection->size()-1)) {
                             if(random == false && z < collection->frames[off].rows && i < collection->frames[off].cols)
                                 pix = collection->frames[off].template at<cv::Vec3b>(z, i);
                             else if(z < collection->frames[off].rows && i < collection->frames[off].cols)
@@ -3869,11 +3869,11 @@ namespace ac {
             }
             row += square_size;
             size_past += square_size;
-            if(size_past > square_max-1) {
+            if(row > frame.rows-1 || size_past > square_max-1) {
                 size_past = 0;
                 ++off;
                 if(off > (collection->size()-1)) {
-                    off = collection->size()-2;
+                    off = 0;
                     break;
                 }
             }
@@ -3883,7 +3883,7 @@ namespace ac {
     template<int Size>
     void GlitchyXorTrailsRandom(cv::Mat &frame, MatrixCollection<Size> *collection) {
         collection->shiftFrames(frame);
-        static int square_max = (frame.rows / collection->size());
+        static int square_max = (frame.rows / (collection->size()-1));
         static int square_size = 25 + (rand()% (square_max - 25));
         int row = 0;
         int off = 0;
@@ -3897,7 +3897,7 @@ namespace ac {
                     if(i < frame.cols-1 && z < frame.rows-1) {
                         cv::Vec3b &pixel = pixelAt(frame,z, i);
                         cv::Vec3b pix;
-                        if(off < (collection->size()-1) && z < collection->frames[frame_index].rows && i < collection->frames[frame_index].cols) {
+                        if(frame_index < (collectoin->size()-1) && off < (collection->size()-1) && z < collection->frames[frame_index].rows && i < collection->frames[frame_index].cols) {
                             pix = collection->frames[frame_index].template at<cv::Vec3b>(z, i);
                             
                             for(int j = 0; j < 3; ++j) {
@@ -3915,8 +3915,8 @@ namespace ac {
             if(size_past > square_max-1) {
                 size_past = 0;
                 ++off;
-                if(off > (collection->size()-1)) {
-                    off = collection->size()-2;
+                if(row > frame.rows-1 || off > (collection->size()-1)) {
+                    off = 0;
                     break;
                 }
             }
