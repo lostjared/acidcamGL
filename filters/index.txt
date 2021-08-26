@@ -6,6 +6,7 @@ color_shift_fade.glsl
 rgb_fade_xor.glsl
 blue_shade.glsl
 echo.glsl
+echo_2.glsl
 echo_xor.glsl
 echo_two.glsl
 echo_alpha.glsl
@@ -77,6 +78,7 @@ material_echo.glsl
 material_echo_two.glsl
 material_echo_two_xor.glsl
 material_echo_alpha_two_xor.glsl
+material_echo_blend.glsl
 material_energy.glsl
 material_energy_xor.glsl
 material_grid_texture.glsl
