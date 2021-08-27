@@ -20,7 +20,6 @@ int stdout_save;
 
 FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const char *dst_res, const char *fps, const char *crf) {
     
-#ifndef _WIN32
     std::string tag;
     if(std::string(codec)=="libx265")
         tag = "-tag:v hvc1";
@@ -33,17 +32,13 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
 #ifndef _WIN32
     FILE *fptr = popen(stream.str().c_str(), "w");
 #else
-    FILE *fptr = _popen(stream.str().c_str(), "w");
+    FILE *fptr = _popen(stream.str().c_str(), "wb");
 #endif
-    
     if(!fptr) {
         std::cerr << "Error: could not open ffmpeg\n";
         return 0;
     }
-    
     return fptr;
-#endif
-    return 0;
 }
 
 //ffmpeg -f avfoundation -i ":iShowU Audio Capture" -acodec libmp3lame -ab 128k -f mp3 -
