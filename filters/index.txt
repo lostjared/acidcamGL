@@ -39,6 +39,7 @@ material_flash_gradient_strobe.glsl
 material_tex_xor.glsl
 material_rgb.glsl
 material_xor.glsl
+material_or.glsl
 material_rgb_fade_xor.glsl
 material_reverse_xor.glsl
 material_random.glsl
