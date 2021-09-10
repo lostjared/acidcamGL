@@ -8,6 +8,7 @@ blue_shade.glsl
 echo.glsl
 echo_2.glsl
 echo_xor.glsl
+echo_or.glsl
 echo_two.glsl
 echo_alpha.glsl
 echo_alpha_two.glsl
