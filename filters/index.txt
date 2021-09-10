@@ -44,6 +44,7 @@ material_rgb_fade_xor.glsl
 material_reverse_xor.glsl
 material_random.glsl
 material_psychedelic.glsl
+material_psychedelic_or.glsl
 material_fade.glsl
 material_fade_xor.glsl
 material_fade_in.glsl
