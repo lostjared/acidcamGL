@@ -43,7 +43,7 @@ void main(void)
     color[1] = 1.5*(color[1] * fract(alpha_g*timeval));
     color[2] = 1.5*(color[2] * fract(alpha_b*timeval));
     
-    color = 3.0 * color2 * color;
+    color = color + color2;
 }
 
 
