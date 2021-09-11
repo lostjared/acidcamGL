@@ -122,6 +122,9 @@ colorsheet.glsl
 rightintwo.glsl
 bright.glsl
 dark.glsl
+darkr.glsl
+darkg.glsl
+darkb.glsl
 scale.glsl
 gradient_position.glsl
 timeval_alpha.glsl
