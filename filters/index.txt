@@ -33,6 +33,7 @@ reverse_xor.glsl
 color_scale.glsl
 grid_sin.glsl
 alpha_xor.glsl
+color_xor.glsl
 material.glsl
 material_white_light.glsl
 material_white_light_xor.glsl
