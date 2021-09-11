@@ -125,6 +125,7 @@ dark.glsl
 darkr.glsl
 darkg.glsl
 darkb.glsl
+subtle_xor.glsl
 scale.glsl
 gradient_position.glsl
 timeval_alpha.glsl
