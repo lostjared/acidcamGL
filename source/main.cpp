@@ -93,6 +93,7 @@ std::string outstr_arr[] = {
     "    J - jump backwar index by 25",
     "    Z - take screenshot",
     "    H - Shuffle Playlist",
+    "    [SHIFT]+H - AutoFilter Shuffle Lock On/Off",
     "    M - Enable/Disable Playlist Slideside random timeout",
     "    F - process keyboard input for index",
     "    S - process keyboard input for shader",
