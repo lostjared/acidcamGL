@@ -1,0 +1,6 @@
+echo.glsl:Square_Block_Resize:6
+echo.glsl:Square_Block_Resize_Vertical:6
+echo.glsl:Square_Block_Resize_Reset:6
+echo.glsl:Square_Block_Resize_Vert_Reset:6
+echo.glsl:Square_Block_Resize_Dir:6
+echo.glsl:DiagPixel:8
