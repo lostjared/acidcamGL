@@ -528,7 +528,7 @@ namespace acidcam {
                 program = shaders[sh];
                 int i = findFilter(index.filter);
                 if(i == -1) {
-                    std::cout << "acidcam: Could nsssot find filter: " << index.filter << "\n";
+                    std::cout << "acidcam: Could not find filter: " << index.filter << "\n";
                     exit(EXIT_FAILURE);
                 } else {
                     setFilterIndex(i);

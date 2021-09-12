@@ -1,0 +1,4 @@
+acidcam.glsl:MedianBlendMultiThread:8
+rgb_fade_xor.glsl:MedianBlendMultiThread:8
+echo.glsl:MedianBlendMultiThread:8
+

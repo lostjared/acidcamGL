@@ -82,7 +82,7 @@ namespace acidcam {
         }
 
         bool next(AutoFilterIndex &index) {
-            if(current_index < size()-1) {
+            if(current_index < size()) {
                 index = playback[current_index];
                 current_index++;
                 return true;
