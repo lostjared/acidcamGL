@@ -62,7 +62,7 @@ namespace acidcam {
         void printFilters() {
             int index = 0;
             for(auto &i : playback) {
-                std::cout <<"acidcam: [AutoFilter] index: " << index << " " << i << "\n";
+                std::cout <<"acidcam: [AutoFilter] - index: " << index << " " << i << "\n";
                 ++index;
             }
         }

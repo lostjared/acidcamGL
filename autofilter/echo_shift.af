@@ -1,0 +1,4 @@
+echo.glsl:MedianBlendMultiThread:3
+echo_rgb.glsl:MedianBlendMultiThread:3
+echo_bgr.glsl:MedianBlendMultiThread:3
+

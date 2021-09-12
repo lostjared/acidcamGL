@@ -534,7 +534,7 @@ namespace acidcam {
                     setFilterIndex(i);
                     if(!af.increment()) {
                         af.next();
-                        std::cout << "acidcam: [AutoFilter] : " << af.current() << "\n";
+                        std::cout << "acidcam: [AutoFilter] - " << af.current() << "\n";
                     }
                 }
             }
