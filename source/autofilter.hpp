@@ -48,6 +48,7 @@ namespace acidcam {
     }
 
     class AutoFilter {
+        bool shuffle_on = false;
     public:
         AutoFilter() : current_index{0} {}
 
@@ -92,6 +93,8 @@ namespace acidcam {
             }
             current_index = 0;
             index = playback[current_index];
+            if(shuffle_on)
+                shuffle();
             return false;
         }
 
@@ -101,9 +104,19 @@ namespace acidcam {
                 return true;
             }
             current_index = 0;
+            if(shuffle_on == true)
+                shuffle();
             return false;
         }
 
+        void shuffle(bool on) {
+            shuffle_on = on;
+            if(shuffle_on)
+                std::cout << "acidcam: Shuffle Lock [Off]\n";
+            else
+                std::cout << "acidcam: Shuffle Lock [On]\n";
+        }
+        
         void shuffle() {
             unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
             std::shuffle(playback.begin(), playback.end(), std::default_random_engine(seed));

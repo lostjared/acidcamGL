@@ -1072,8 +1072,17 @@ namespace acidcam {
                         }
                         break;
                     case GLFW_KEY_H:
-                        std::cout << "acidcam: Playlist shuffled...\n";
-                        sortPlaylist();
+                        if(mode == GLFW_MOD_SHIFT) {
+                            if(af.size()>0) {
+                                static bool shuffle_on = false;
+                                shuffle_on = !shuffle_on;
+                                af.shuffle(shuffle_on);
+                                af.shuffle();
+                            }
+                        } else {
+                            std::cout << "acidcam: Playlist shuffled...\n";
+                            sortPlaylist();
+                        }
                         break;
                     case GLFW_KEY_G:
                         
