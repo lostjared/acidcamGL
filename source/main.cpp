@@ -8,6 +8,9 @@
 #include"stereo.h"
 acidcam::AcidCam_Window main_window;
 
+std::unordered_map<std::string, int> draw_strings_map;
+
+
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode) {
     main_window.keypress(key, scancode, action, mode);
 }
@@ -122,11 +125,10 @@ void print_help_message() {
 }
 
 int findFilter(std::string f) {
-    for(int i = 0; i < ac::solo_filter.size(); ++i) {
-         if(f == ac::solo_filter[i])
-            return i;
-    }
-    return -1;
+    auto pos = draw_strings_map.find(f);
+    if(pos == draw_strings_map.end())
+        return -1;
+    return pos->second;
 }
 
 #ifndef _WIN32
@@ -570,6 +572,9 @@ int main(int argc, char **argv) {
 
     if(plugins.length()>0)
         main_window.loadPlugins(plugins);
+    
+    for(int i = 0; i < ac::solo_filter.size(); ++i)
+        draw_strings_map[ac::solo_filter[i]] = i;
 
     if(autofilter_file != "")
         main_window.loadAutoFilter(autofilter_file);
@@ -606,6 +611,7 @@ int main(int argc, char **argv) {
     main_window.setColorMap(color_map);
     main_window.setStereo(stereo_);
     FILE *fptr = 0;
+
     
     std::cout << "acidcam: Loaded: " << ac::solo_filter.size() << " Filters\n";
     std::cout << "acidcam: initialized...\n";

@@ -7,6 +7,9 @@
 #include<vector>
 #include<algorithm>
 #include<cstdlib>
+#include<chrono>
+#include<algorithm>
+#include<random>
 
 namespace acidcam {
 
@@ -101,6 +104,11 @@ namespace acidcam {
             return false;
         }
 
+        void shuffle() {
+            unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+            std::shuffle(playback.begin(), playback.end(), std::default_random_engine(seed));
+        }
+        
 
         bool loadFile(const std::string &filename) {
             std::fstream file;
