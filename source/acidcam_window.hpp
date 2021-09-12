@@ -986,7 +986,8 @@ namespace acidcam {
                     }
                     case GLFW_KEY_SPACE:
                         if(mode == GLFW_MOD_SHIFT) {
-                            af_enabled = !af_enabled;
+                            if(af.size()>0)
+                                af_enabled = !af_enabled;
                             if(af_enabled && af.size()>0)
                                 std::cout << "acidcam: Autofilter [On]\n";
                             else if(af_enabled == false && af.size()>0)
@@ -1059,13 +1060,13 @@ namespace acidcam {
                         }
                         break;
                     case GLFW_KEY_UP:
-                        if(shader_index > 0) {
+                        if(af_enabled == false && shader_index > 0) {
                             --shader_index;
                             setShader(shader_index);
                         }
                         break;
                     case GLFW_KEY_DOWN:
-                        if(shader_index < shaders.size()-1) {
+                        if(af_enabled == false && shader_index < shaders.size()-1) {
                             shader_index++;
                             setShader(shader_index);
                         }
