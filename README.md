@@ -100,6 +100,7 @@ How to use the program:
 
 Arguments:
 
+    -A autofilter file
     -X codec
     -o output filename
     -S filter start index
