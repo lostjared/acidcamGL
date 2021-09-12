@@ -27,7 +27,7 @@ std::string outstr_arr[] = {
     "Written by Jared Bruni",
     "http://lostsidedead.com",
     "Arguments:",
-    "    -A autofilter file"
+    "    -A autofilter file",
     "    -X codec",
     "    -o output filename",
     "    -S filter start index",
