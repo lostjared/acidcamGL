@@ -987,6 +987,10 @@ namespace acidcam {
                     case GLFW_KEY_SPACE:
                         if(mode == GLFW_MOD_SHIFT) {
                             af_enabled = !af_enabled;
+                            if(af_enabled && af.size()>0)
+                                std::cout << "acidcam: Autofilter [On]\n";
+                            else if(af_enabled == false && af.size()>0)
+                                std::cout << "acidcam: Autofilter [Off]\n";
                         }
                         else {
                             ac_on = !ac_on;
