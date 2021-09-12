@@ -107,6 +107,7 @@ namespace acidcam {
         glm::vec4 inc_valuex;
         bool p_run = false;
         AutoFilter af;
+        bool af_enabled = false;
     public:
         
         AcidCam_Window() = default;
@@ -118,9 +119,8 @@ namespace acidcam {
         }
         
         void loadAutoFilter(const std::string &f) {
-            if(af.loadFile(f)) {
-                af.printFilters();
-            }
+            if(af.loadFile(f))
+                af_enabled = true;
         }
         
         void enableCube(bool value) {
@@ -522,7 +522,7 @@ namespace acidcam {
                 return;
             }
             
-            if(af.size()>0) {
+            if(af_enabled && af.size()>0) {
                 AutoFilterIndex index{af.current()};
                 int sh = shader_map[index.shader];
                 program = shaders[sh];
@@ -985,11 +985,16 @@ namespace acidcam {
                         break;
                     }
                     case GLFW_KEY_SPACE:
-                        ac_on = !ac_on;
-                        if(ac_on)
-                            std::cout << "acidcam: filters enabled...\n";
-                        else
-                            std::cout << "acidcam: filters disabled...\n";
+                        if(mode == GLFW_MOD_SHIFT) {
+                            af_enabled = !af_enabled;
+                        }
+                        else {
+                            ac_on = !ac_on;
+                            if(ac_on)
+                                std::cout << "acidcam: filters enabled...\n";
+                            else
+                                std::cout << "acidcam: filters disabled...\n";
+                        }
                         break;
                     case GLFW_KEY_LEFT:
                         if(list_enabled == false) {

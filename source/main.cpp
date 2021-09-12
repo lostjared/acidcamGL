@@ -100,6 +100,7 @@ std::string outstr_arr[] = {
     "    [+] - increase blend percentage",
     "    [-] = decrease blend percentage",
     "    [SPACE] - Acid Cam filters enabled/disabled",
+    "    [SHIFT]+[SPACE] - Toggle Autofilter on and off",
     "    [LEFT] - Filter index move left",
     "    [RIGHT] - filter index move right",
     "    [UP] - Shader Index move up",
