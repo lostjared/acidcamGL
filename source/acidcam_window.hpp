@@ -1,5 +1,6 @@
 #include"gl_window.hpp"
 #include"gl_shader.hpp"
+#include"autofilter.hpp"
 #include"glm/glm.hpp"
 #include"glm/gtc/type_ptr.hpp"
 #include"glm/gtc/matrix_transform.hpp"
@@ -38,12 +39,15 @@ extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #endif
 #include"plugin-program.hpp"
 #include"stereo.h"
+
+extern int findFilter(std::string f);
+
 namespace acidcam {
     
     extern cv::VideoCapture cap;
     extern int redir;
     extern int syphon_enabled;
-    
+   
     class AcidCam_Window : public glWindow {
         static constexpr int numVAOs = 1;
         static constexpr int numVBOs = 2;
@@ -102,6 +106,7 @@ namespace acidcam {
         glm::vec4 inc_value;
         glm::vec4 inc_valuex;
         bool p_run = false;
+        AutoFilter af;
     public:
         
         AcidCam_Window() = default;
@@ -110,6 +115,12 @@ namespace acidcam {
         
         void setOutputFormat(std::string f) {
             output_format = f;
+        }
+        
+        void loadAutoFilter(const std::string &f) {
+            if(af.loadFile(f)) {
+                af.printFilters();
+            }
         }
         
         void enableCube(bool value) {
@@ -509,6 +520,23 @@ namespace acidcam {
             if(enable_cubeapp) {
                 update_cube(timeval);
                 return;
+            }
+            
+            if(af.size()>0) {
+                AutoFilterIndex index{af.current()};
+                int sh = shader_map[index.shader];
+                program = shaders[sh];
+                int i = findFilter(index.filter);
+                if(i == -1) {
+                    std::cout << "acidcam: Could nsssot find filter: " << index.filter << "\n";
+                    exit(EXIT_FAILURE);
+                } else {
+                    setFilterIndex(i);
+                    if(!af.increment()) {
+                        af.next();
+                        std::cout << "acidcam: [AutoFilter] : " << af.current() << "\n";
+                    }
+                }
             }
                        
             std::chrono::time_point<std::chrono::system_clock> now =

@@ -227,8 +227,14 @@ int main(int argc, char **argv) {
     bool value_enabled = false;
     int value_index = 0;
     std::string output_format="png";
-    while((opt = getopt(argc, argv, "s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:")) != -1) {
+    std::string autofilter_file;
+    while((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:")) != -1) {
         switch(opt) {
+            case 'A':
+                if(optarg != 0) {
+                    autofilter_file = optarg;
+                }
+                break;
             case 's':
                 if(optarg != 0)
                     output_format = optarg;
@@ -564,6 +570,9 @@ int main(int argc, char **argv) {
     if(plugins.length()>0)
         main_window.loadPlugins(plugins);
 
+    if(autofilter_file != "")
+        main_window.loadAutoFilter(autofilter_file);
+    
     main_window.setOutputFormat(output_format);
     
     if(list_var.length()>0)
