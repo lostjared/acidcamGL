@@ -151,38 +151,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 void MainWindow::launchProgram() {
     Log(tr("\nacidcamGL Launcher - Executing ...\n"));
     std::string value = command->text().toStdString();
-    QString pwd("");
-    QString buf = pwd;
     QString tvalue;
     QTextStream stream(&tvalue);
     stream << "launcher: executing shell command: " << value.c_str() << "\n";
     QString program;
     QStringList arguments;
-#ifdef __APPLE__
-    program = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/acidcamGL";
-    pwd = application_path;
-    std::string f = pwd.toStdString();
-    auto pos = f.rfind("launcher");
-    if(pos != std::string::npos) {
-        f = f.substr(0, pos-1);
-        pwd = f.c_str();
-    }
-    Log(pwd+"\n");
-    arguments << QString(pwd+"/"+"acidcamGL.app");
-   // arguments << "--args";
-    arguments << cmd_list;
-#else
-    program = QString(pwd+"/launcher.exe");
-    arguments << cmd_list;
-#endif
     Log(tvalue);
     tvalue = "";
-    QString cmd_string = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/acidcamGL ";
+    QString cmd_string;
+#ifdef __APPLE__
+    cmd_string = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/acidcamGL ";
+#else
+    cmd_string = "acidcamGL ";
+#endif
     cmd_string += command->text();
-     fptr = popen(cmd_string.toStdString().c_str(), "r");
-    
-    //stream << "launcher: process executed with error code: " << myProcess->exitCode();
-    //Log(tvalue);
+    FILE *fptr_ = popen(cmd_string.toStdString().c_str(), "r");
+    if(!fptr_) {
+        std::cerr << "Error could not launch process...\n";
+    }
+    fptr.push_back(fptr_);
 }
 
 void MainWindow::Log(const QString &text) {
