@@ -158,13 +158,13 @@ void mux_audio_ac(std::string output, std::string filenamex) {
     std::cout<< "\nacidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
 }
 
-#if defined(SYPHON_SERVER) || defined(__linux__)
+#if defined(SYPHON_SERVER)
 extern void messageOutput(std::string title, std::string text);
 #endif
 
 int main(int argc, char **argv) {
     if(argc == 1) {
-#if defined(SYPHON_SERVER) || defined(__linux__)
+#if defined(SYPHON_SERVER)
         std::string text = "Arguments Required: \n\n";
         for(int i = 0; outstr_arr[i] != "[end]"; ++i) {
             text += outstr_arr[i] + "\n";
