@@ -8,7 +8,7 @@
 // ffmpeg -y -s 640x480  -pixel_format bgr24 -f rawvideo -r 30 -i pipe: -vcodec libx265 -pix_fmt yuv420p -crf 24 test.mp4
 #include"ipc_client.hpp"
 #ifdef __APPLE__
-std::string ffmpeg_path = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/ffmpeg";
+std::string ffmpeg_path = "ffmpeg";
 #else
 std::string ffmpeg_path = "ffmpeg";
 #endif
