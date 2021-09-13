@@ -28,7 +28,10 @@ namespace acidcam {
         if(record)
             glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         window = glfwCreateWindow(w, h, name.c_str(),(full == true && record == false) ? monitors[monitor] : 0,0);
-        if(!window) return 0;
+        if(!window) {
+            std::cerr << "acidcam: Could not create window...\n";
+            return 0;
+        }
         glfwMakeContextCurrent(window);
         if(glewInit()!=GLEW_OK)
             acidcam::updateError();
