@@ -138,7 +138,7 @@ int findFilter(std::string f) {
 #endif
 
 void acidcam::updateError() {
-#ifdef SYPHON_SERVER
+#if defined(SYPHON_SERVER) || defined(__linux__)
     if(redirect != 0) {
         std::string text = redirect->getString();
         sendString(text);
@@ -158,13 +158,13 @@ void mux_audio_ac(std::string output, std::string filenamex) {
     std::cout<< "\nacidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
 }
 
-#ifdef SYPHON_SERVER
+#if defined(SYPHON_SERVER) || defined(__linux__)
 extern void messageOutput(std::string title, std::string text);
 #endif
 
 int main(int argc, char **argv) {
     if(argc == 1) {
-#ifdef SYPHON_SERVER
+#if defined(SYPHON_SERVER) || defined(__linux__)
         std::string text = "Arguments Required: \n\n";
         for(int i = 0; outstr_arr[i] != "[end]"; ++i) {
             text += outstr_arr[i] + "\n";
@@ -307,7 +307,7 @@ int main(int argc, char **argv) {
                 screen_mode = true;
                 break;
             case 'P':
-#ifdef SYPHON_SERVER
+#if defined(SYPHON_SERVER) || defined(__linux__)
                 redirect = new CoutRedirect();
                 client_main();
                 sendString("\nacidcam: Code Startup\n");
@@ -696,7 +696,7 @@ int main(int argc, char **argv) {
     std::cout << "acidcam: exited\n";
 
     if(acidcam::redir == 1) {
-#ifdef SYPHON_SERVER
+#if defined(SYPHON_SERVER) || defined(__linux__)
         std::string text = redirect->getString();
         sendString(text);
 #endif

@@ -423,7 +423,7 @@ namespace acidcam {
             cv::imwrite(time_stream.str(), flipped);
             std::cout << "acidcam: Wrote: " << time_stream.str() << "\n";
             if(redir == 1) {
-#ifdef SYPHON_SERVER
+#if defined(SYPHON_SERVER) || defined(__linux__)
                 if(redirect != 0) sendString(redirect->getString());
 #endif
             }
@@ -480,7 +480,7 @@ namespace acidcam {
                 else
                     writer.write(frame);
             }
-#ifdef SYPHON_SERVER
+#if defined(SYPHON_SERVER) || defined(__linux__)
             if(redirect != 0) {
                 static int frame = 1;
                 int total = cap.get(cv::CAP_PROP_FRAME_COUNT);
@@ -1165,7 +1165,7 @@ namespace acidcam {
                         break;
                 }
             }
-#ifdef SYPHON_SERVER
+#if defined(SYPHON_SERVER) || defined(__linux__)
             if(redirect != 0) {
                 sendString(redirect->getString());
             }
