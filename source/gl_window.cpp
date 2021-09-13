@@ -4,11 +4,12 @@
 namespace acidcam {
     
     int glWindow::create(bool record, bool full, bool resize, std::string name, int w, int h, int monitor) {
+#ifndef __linux__
         glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint (GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint (GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        
+#endif
         int count;
         GLFWmonitor** monitors = glfwGetMonitors(&count);
         if(monitor > count)
