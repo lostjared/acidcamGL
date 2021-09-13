@@ -159,7 +159,7 @@ void MainWindow::launchProgram() {
     QString program;
     QStringList arguments;
 #ifdef __APPLE__
-    program = "open";
+    program = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/acidcamGL";
     pwd = application_path;
     std::string f = pwd.toStdString();
     auto pos = f.rfind("launcher");
@@ -167,9 +167,9 @@ void MainWindow::launchProgram() {
         f = f.substr(0, pos-1);
         pwd = f.c_str();
     }
-    Log(pwd);
+    Log(pwd+"\n");
     arguments << QString(pwd+"/"+"acidcamGL.app");
-    arguments << "--args";
+   // arguments << "--args";
     arguments << cmd_list;
 #else
     program = QString(pwd+"/launcher.exe");
@@ -177,13 +177,12 @@ void MainWindow::launchProgram() {
 #endif
     Log(tvalue);
     tvalue = "";
-    QProcess *myProcess = new QProcess();
-    myProcess->setWorkingDirectory(pwd);
-    myProcess->start(program, arguments);
-    myProcess->waitForFinished();
-    myProcess->readAllStandardOutput();
-    stream << "launcher: process executed with error code: " << myProcess->exitCode();
-    Log(tvalue);
+    QString cmd_string = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/acidcamGL ";
+    cmd_string += command->text();
+     fptr = popen(cmd_string.toStdString().c_str(), "r");
+    
+    //stream << "launcher: process executed with error code: " << myProcess->exitCode();
+    //Log(tvalue);
 }
 
 void MainWindow::Log(const QString &text) {
@@ -298,10 +297,14 @@ void MainWindow::updateCommand() {
         cmd_list << "-M";
         cmd_list << monitor_->text();
     }
+#ifdef __APPLE__
+    cmd_list << "-1 /Applications/acidcamGL/acidcamGL.app/Contents/MacOS/ffmpeg";
+#endif
 
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
         buf += cmd_list.at(i) + " ";
     }
+    
     command->setText(buf);
 }

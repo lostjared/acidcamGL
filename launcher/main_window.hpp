@@ -10,6 +10,7 @@
 #include<QLabel>
 #include<QComboBox>
 #include<QCheckBox>
+#include<QProcess>
 #include"sock_server.hpp"
 
 class MainWindow : public QMainWindow {
@@ -48,6 +49,7 @@ private:
     QCheckBox *full_screen_resize;
     QLineEdit *monitor_;
     QCheckBox *syphon_enabled;
+    FILE *fptr;
 };
 
 
