@@ -138,7 +138,7 @@ int findFilter(std::string f) {
 #endif
 
 void acidcam::updateError() {
-#if defined(SYPHON_SERVER) || defined(__linux__)
+#if defined(__APPLE__) || defined(__linux__)
     if(redirect != 0) {
         std::string text = redirect->getString();
         sendString(text);
@@ -307,7 +307,7 @@ int main(int argc, char **argv) {
                 screen_mode = true;
                 break;
             case 'P':
-#if defined(SYPHON_SERVER) || defined(__linux__)
+#if defined(__APPLE__) || defined(__linux__)
                 redirect = new CoutRedirect();
                 client_main();
                 sendString("\nacidcam: Code Startup\n");
@@ -696,7 +696,7 @@ int main(int argc, char **argv) {
     std::cout << "acidcam: exited\n";
 
     if(acidcam::redir == 1) {
-#if defined(SYPHON_SERVER) || defined(__linux__)
+#if defined(__APPLE__) || defined(__linux__)
         std::string text = redirect->getString();
         sendString(text);
 #endif

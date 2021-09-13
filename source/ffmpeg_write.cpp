@@ -86,7 +86,7 @@ void mux_audio(const char *output, const char *src, const char *final_file) {
         char buf[256];
         fgets(buf, 256, fptr);
         std::cout << buf;
-#if defined(SYPHON_SERVER) || defined(__linux__)
+#if defined(__APPLE__) || defined(__linux__)
         sendString(buf);
 #endif
     }
