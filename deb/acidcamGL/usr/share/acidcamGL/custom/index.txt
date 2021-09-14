@@ -1,0 +1,11 @@
+CustomMedianTransition
+CustomVarScale
+CustomSquareStrobe
+CustomMirrorBlend
+CustomGlitchColors
+ResizeDir
+CustomDarkReverse
+CustomEdges
+CustomEdgeSquare
+CustomReverseXorBlur
+CustomEdgeGlitch

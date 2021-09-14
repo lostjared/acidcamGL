@@ -1,0 +1,8 @@
+Package: acidcamGL
+Architecture: amd64
+Maintainer: Jared Bruni
+Depends: libopencv-dev,libglfw3,libglew2.1,ffmpeg,libacidcam
+Priority: optional
+Version: 1.0.014
+Description: Acid.Cam
+	Turns Webcam or Video files into interactive work of art
