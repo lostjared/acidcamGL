@@ -63,6 +63,7 @@ material_tic_tac_toe.glsl
 material_fill.glsl
 material_fill_black_bg.glsl
 material_fill_black_bg_xor.glsl
+material_fill_black_bg_strobe.glsl
 material_fill_black_blend.glsl
 material_fill_black_chroma.glsl
 material_fill_black_xor.glsl
