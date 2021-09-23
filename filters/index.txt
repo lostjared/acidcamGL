@@ -5,6 +5,7 @@ flash_gradient_strobe.glsl
 color_shift_fade.glsl
 rgb_fade_xor.glsl
 blue_shade.glsl
+dark_addup_xor.glsl
 echo.glsl
 echo_2.glsl
 echo_xor.glsl
@@ -64,6 +65,7 @@ material_fill.glsl
 material_fill_black_bg.glsl
 material_fill_black_bg_xor.glsl
 material_fill_black_bg_strobe.glsl
+material_black_image_xor.glsl
 material_fill_black_blend.glsl
 material_fill_black_chroma.glsl
 material_fill_black_xor.glsl
