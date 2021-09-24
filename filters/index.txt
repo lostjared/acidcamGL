@@ -5,6 +5,7 @@ flash_gradient_strobe.glsl
 color_shift_fade.glsl
 rgb_fade_xor.glsl
 blue_shade.glsl
+addup_blend.glsl
 dark_addup_xor.glsl
 echo.glsl
 echo_2.glsl
