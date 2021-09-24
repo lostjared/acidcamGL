@@ -39,9 +39,5 @@ void main(void)
     color = texture(samp, tc);
     vec4 color2;
     color2 = texture(mat_samp, tc);
-
-    color = color * color2;
+    color = (0.5 * color) + (0.5 * color2);
 }
-
-
-
