@@ -27,6 +27,7 @@ all:
 	make -C stuckrow install
 	make -C stuckxy install
 	make -C stuckrowline install
+	make -C frame_stutter install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -56,3 +57,4 @@ clean:
 	make -C stuckrow clean
 	make -C stuckxy clean
 	make -C stuckrowline clean
+	make -C frame_stutter clean
