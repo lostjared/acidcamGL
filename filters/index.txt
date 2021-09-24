@@ -6,6 +6,7 @@ color_shift_fade.glsl
 rgb_fade_xor.glsl
 blue_shade.glsl
 addup_blend.glsl
+addup_cos.glsl
 dark_addup_xor.glsl
 echo.glsl
 echo_2.glsl
