@@ -40,6 +40,9 @@ color_xor.glsl
 color_time.glsl
 material.glsl
 material_alphablend.glsl
+material_alphablend_random.glsl
+material_alphablend_xor.glsl
+material_alphablend_xor_scale.glsl
 material_white_light.glsl
 material_white_light_xor.glsl
 material_flash_gradient_strobe.glsl
