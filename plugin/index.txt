@@ -27,3 +27,4 @@ stuckrow.acidcam
 stuckxy.acidcam
 stuckrowline.acidcam
 frame_stutter.acidcam
+squarexorx4.acidcam
