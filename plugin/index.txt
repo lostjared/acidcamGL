@@ -29,3 +29,4 @@ stuckrowline.acidcam
 frame_stutter.acidcam
 squarexorx4.acidcam
 squarexorx2.acidcam
+pixel_lag.acidcam
