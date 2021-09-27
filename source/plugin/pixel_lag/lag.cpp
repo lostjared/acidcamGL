@@ -41,10 +41,12 @@ extern "C" void filter(cv::Mat  &frame) {
 
     stutter_filter(frame);
     
-    int pixel_size = 16+(rand()%64);
-    int num_pixels = rand()%((frame.rows * frame.cols)/92);
+     int num_pixels = rand()%((frame.rows * frame.cols)/92);
 
     for(int q = 0; q < num_pixels; ++q) {
+        
+        int pixel_size = 16+(rand()%64);
+        
         int off_x = rand()%(frame.cols-pixel_size-1);
         int off_y = rand()%(frame.rows-pixel_size-1);
         int offset = rand()%(collection.size()-1);
