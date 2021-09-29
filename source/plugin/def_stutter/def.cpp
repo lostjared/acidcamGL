@@ -51,10 +51,11 @@ extern "C" void filter(cv::Mat  &frame) {
            for(int x = off_x; x < off_x + pixel_size; ++x) {
                cv::Mat &m = collection.frames[offset];
                cv::Vec3b &pix = m.at<cv::Vec3b>(y, x);
+               cv::Vec3b &pix_copy = frame_copy.at<cv::Vec3b>(y, x);
                cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
                for(int j = 0; j < 3; ++j) {
                    if(pixel[j] != pix[j]) {
-                        pixel[j] = static_cast<unsigned char>((0.5 * pixel[j]) + (0.5 * pix[j]));
+                        pixel[j] = static_cast<unsigned char>((0.5 * pixel[j]) + (0.5 * pix_copy[j]));
                     }
                }
            }
