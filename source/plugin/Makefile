@@ -33,6 +33,7 @@ all:
 	make -C pixel_lag install
 	make -C def_stutter install
 	make -C stutter_sbrv install
+	make -C stutter_trails install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -68,3 +69,4 @@ clean:
 	make -C pixel_lag clean
 	make -C def_stutter clean
 	make -C stutter_sbrv clean
+	make -C stutter_trails clean

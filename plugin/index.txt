@@ -32,3 +32,4 @@ squarexorx2.acidcam
 pixel_lag.acidcam
 def_stutter.acidcam
 stutter_sbrv.acidcam
+stutter_trails.acidcam
