@@ -32,6 +32,7 @@ all:
 	make -C squarexorx2 install
 	make -C pixel_lag install
 	make -C def_stutter install
+	make -C stutter_sbrv install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -66,3 +67,4 @@ clean:
 	make -C squarexorx2 clean
 	make -C pixel_lag clean
 	make -C def_stutter clean
+	make -C stutter_sbrv clean
