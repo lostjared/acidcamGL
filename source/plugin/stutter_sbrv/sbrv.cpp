@@ -1,4 +1,3 @@
-// This one runs really slow
 #include"ac.h"
 #include<cstdlib>
 #include<ctime>
