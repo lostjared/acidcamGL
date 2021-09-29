@@ -17,13 +17,13 @@ void stutter_filter(cv::Mat  &frame) {
 
         static bool on = true;
         if(on == true) {
-            if((rand()%25)==0) {
+            if((rand()%15)==0) {
                 stored = frame.clone();
                 on = !on;
             }
             frame = stored.clone();
         } else {
-            if((rand()%30) == 0)
+            if((rand()%10) == 0)
                 on = !on;
         }
     }
