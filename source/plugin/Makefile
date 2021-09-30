@@ -34,6 +34,7 @@ all:
 	make -C def_stutter install
 	make -C stutter_sbrv install
 	make -C stutter_trails install
+	make -C stutter_square install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -70,3 +71,4 @@ clean:
 	make -C def_stutter clean
 	make -C stutter_sbrv clean
 	make -C stutter_trails clean
+	make -C stutter_square clean
