@@ -29,7 +29,7 @@ void stutter_filter(cv::Mat  &frame) {
 }
 
 extern "C" void filter(cv::Mat  &frame) {
-    static ac::MatrixCollection<32> collection;
+    static ac::MatrixCollection<4> collection;
     if(collection.empty()) {
         srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
@@ -48,9 +48,13 @@ extern "C" void filter(cv::Mat  &frame) {
                     pixel = pix;
                 }
             }
-            ++offset;
-            if(offset > (collection.size()-1))
-                offset = 0;
+            
+            if((rand()%8) == 0) {
+                ++offset;
+                if(offset > (collection.size()-1))
+                    offset = 0;
+            }
         }
+       
     }
 }
