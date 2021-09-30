@@ -35,4 +35,4 @@ stutter_sbrv.acidcam
 stutter_trails.acidcam
 stutter_square.acidcam
 stutter_square2.acidcam
-trails_xor.acidcam
+xor_blend.acidcam

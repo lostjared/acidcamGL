@@ -7,6 +7,7 @@ extern "C" void filter(cv::Mat  &frame) {
     if(collection.empty())
         collection.shiftFrames(frame);
     int col_size = collection.size()-1;
+    
     collection.shiftFrames(frame);
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
