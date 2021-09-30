@@ -1217,7 +1217,10 @@ namespace acidcam {
                 plugins[val]->exec(frame);
             } else if(custom_filters.find(val) != custom_filters.end()) {
                 for(int i = 0; i < custom_filters[val].size(); ++i) {
-                    ac::CallFilter(custom_filters[val].at(i),frame);
+                    if(plugins.find(custom_filters[val].at(i)) != plugins.end())
+                        plugins[custom_filters[val].at(i)]->exec(frame);
+                    else
+                        ac::CallFilter(custom_filters[val].at(i),frame);
                 }
             } else {
                 ac::CallFilter(index, frame);
