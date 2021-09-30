@@ -36,6 +36,7 @@ all:
 	make -C stutter_trails install
 	make -C stutter_square install
 	make -C stutter_square2 install
+	make -C xor_blend install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -74,3 +75,4 @@ clean:
 	make -C stutter_trails clean
 	make -C stutter_square clean
 	make -C stutter_square2 clean
+	make -C xor_blend clean
