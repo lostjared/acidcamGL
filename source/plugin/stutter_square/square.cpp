@@ -30,8 +30,11 @@ void stutter_filter(cv::Mat  &frame) {
 
 extern "C" void filter(cv::Mat  &frame) {
     static ac::MatrixCollection<32> collection;
-    collection.shiftFrames(frame);
+    if(collection.empty())
+        srand(static_cast<unsigned int>(time(0)));
+    
     stutter_filter(frame);
+    collection.shiftFrames(frame);
     int square_size = 4+(rand()%28);
     static int offset = 0;
     for(int z = 0; z < frame.rows-square_size; z += square_size) {
