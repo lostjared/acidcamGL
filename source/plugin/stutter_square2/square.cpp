@@ -49,11 +49,12 @@ extern "C" void filter(cv::Mat  &frame) {
                 }
             }
             
-            if((rand()%8) == 0) {
                 ++offset;
                 if(offset > (collection.size()-1))
                     offset = 0;
-            }
+                square_size_x = 4+(rand()%28);
+                square_size_y = 4+(rand()%28);
+            
         }
        
     }
