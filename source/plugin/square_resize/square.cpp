@@ -91,8 +91,7 @@ extern "C" void filter(cv::Mat  &frame) {
         squarez.init(frame.size());
         size_val = frame.size();
     }
-
-  //  stutter_filter(frame);
+    stutter_filter(frame);
     collection.shiftFrames(frame);
     int square_size_x = squarez(0, 0).size_x;
     int square_size_y = squarez(0, 0).size_y;
@@ -114,10 +113,10 @@ extern "C" void filter(cv::Mat  &frame) {
                 squarez(i, z).offset ++;
                 
                 if(squarez(i, z).size_x >= 32)
-                    squarez(i, z).size_x = 4+rand()%28;
+                    squarez(i, z).size_x = 16+rand()%16;
                 
                 if(squarez(i, z).size_y >= 32)
-                    squarez(i, z).size_y = 4+rand()%28;
+                    squarez(i, z).size_y = 16+rand()%16;
                 
                 if(squarez(i, z).offset > MAX-2)
                     squarez(i, z).offset = 0;
