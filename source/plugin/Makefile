@@ -37,6 +37,8 @@ all:
 	make -C stutter_square install
 	make -C stutter_square2 install
 	make -C xor_blend install
+	make -C fractal install
+	make -C square_resize install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -76,3 +78,5 @@ clean:
 	make -C stutter_square clean
 	make -C stutter_square2 clean
 	make -C xor_blend clean
+	make -C fractal clean
+	make -C square_resize clean

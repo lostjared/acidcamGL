@@ -36,3 +36,5 @@ stutter_trails.acidcam
 stutter_square.acidcam
 stutter_square2.acidcam
 xor_blend.acidcam
+fractal.acidcam
+square_resize.acidcam
