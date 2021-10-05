@@ -4,6 +4,16 @@
 
 static constexpr int MAX = 8;
 
+
+unsigned char wrapToChar(double d) {
+    if(d < 255) {
+        unsigned long x = static_cast<unsigned long>(d);
+        return static_cast<unsigned char>(x);
+    }
+    unsigned long x = static_cast<unsigned long>(d);
+    return static_cast<unsigned char>(x%255);
+}
+
 void stutter_filter(cv::Mat  &frame) {
     static cv::Mat stored;
     static cv::Size stored_size;
@@ -102,25 +112,12 @@ extern "C" void filter(cv::Mat  &frame) {
                 for(int y = 0; z+y < frame.rows && y < square_size_y; ++y) {
                     cv::Vec3b &pixel = ac::pixelAt(frame,z+y, i+x);
                     cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z+y, i+x);
-                    pixel = pix;
+                    for(int j = 0; j < 3; ++j)
+                        pixel[j] = wrapToChar((0.5 * pixel[j]) + (0.5 * pix[j]));
                 }
                 square_size_x = squarez(i, z).size_x;
                 square_size_y = squarez(i, z).size_y;
                 offset = squarez(i, z).offset;
-                
-                squarez(i, z).size_x ++;
-                squarez(i, z).size_y ++;
-                squarez(i, z).offset ++;
-                
-                if(squarez(i, z).size_x >= 32)
-                    squarez(i, z).size_x = 16+rand()%16;
-                
-                if(squarez(i, z).size_y >= 32)
-                    squarez(i, z).size_y = 16+rand()%16;
-                
-                if(squarez(i, z).offset > MAX-2)
-                    squarez(i, z).offset = 0;
-                
             }
         }
        
