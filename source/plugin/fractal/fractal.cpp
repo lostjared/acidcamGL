@@ -82,41 +82,38 @@ void frac::FractalLogic() {
     // std::cout << paramA << ": " << paramB << " :" << " dir: " << dir << "\n";
 }
 
+int MAX_ITER=80;
+
+int mandelbrot(const std::complex<double> &c) {
+    int n = 0;
+    std::complex<double> z(0, 0);
+    while(std::abs(z) <= 2 && n < MAX_ITER) {
+        z = z*z+c;
+        n ++;
+    }
+    return n;
+}
+
 void frac::DrawFractal(cv::Mat &frame, bool)
 {
-    float x1=mod_x-1.0f*zoom_x;
-    float x2=mod_x+1.0f*zoom_w;
-    float y1=mod_y-1.0f*zoom_y;
-    float y2=mod_y+1.0f*zoom_h;
     int width=frame.cols, height=frame.rows;
-    std::complex<double> C (paramA, paramB);
-    std::complex<double> Z;
-    int i = 0;
-    for (int x = 0; x < width; ++x)
-    {
-        for (int y = 0; y < height; ++y)
-        {
-            //C=std::complex<double>((double)(x*(x2-x1)/width+x1), (double)(y*(y2-y1)/height+y1));
-            Z=std::complex<double>((double)(x*(x2-x1)/width+x1), (double)(y*(y2-y1)/height+y1));
-            //Z=std::complex<double>(0, 0);
-            for (i = 0; i < max_iter && std::abs(Z) < 2; i++)
-            {
-                Z=Z*Z+C;
-            }
-            cv::Vec3b &cf = frame.at<cv::Vec3b>(y, x);
-            if(i == max_iter) {
-            
-            } else {
-                cf[0] = 0;
-                cf[1] = 0;
-                cf[2] = 0;
-            }
+    double start = -2, end = 1, im_start = -1, im_end = 1;
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            double w = (double(x)/double(width));
+            double h = (double(y)/double(height));
+            std::complex<double> c(start + w * (end - start), im_start + h * (im_end - im_start));
+            int n = mandelbrot(c);
+            cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
+            unsigned char color = static_cast<unsigned char>(255-(n * 255 / MAX_ITER));
+            pixel[0] += color;
+            pixel[1] += color;
+            pixel[2] += color;
         }
-        if(x > frame.size().width) break;
     }
 }
 
 extern "C" void filter(cv::Mat  &frame) {
     frac::DrawFractal(frame, false);
-    frac::FractalLogic();
+    //frac::FractalLogic();
 }
