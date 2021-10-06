@@ -79,7 +79,7 @@ public:
     void release() {
         if(square != nullptr) {
             for(int i = 0; i < size_val.width; ++i)
-                delete square[i];
+                delete[] square[i];
             delete [] square;
             square = nullptr;
         }
