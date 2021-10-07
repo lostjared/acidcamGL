@@ -13,7 +13,6 @@ int mandelbrot(const std::complex<double> &c);
 }
 
 void frac::FractalLogic() {
-    static double alpha_r = 1.0;
     
     switch(dir) {
         case 1: {
@@ -85,19 +84,22 @@ void frac::DrawFractal(cv::Mat &frame, bool) {
     double end = 2;
     double im_start = -1.0;
     double im_end = 1;
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
-            double w = (double(x)/double(width));
-            double h = (double(y)/double(height));
-            std::complex<double> c(start + w * (end - start)*paramA, im_start + h * (im_end - im_start)*paramB);
-            int n = mandelbrot(c);
-            cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
-            unsigned char color = static_cast<unsigned char>(255-(n * 255 / MAX_ITER));
-            pixel[0] += color;
-            pixel[1] += color;
-            pixel[2] += color;
+    static auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
+        for(int z = offset; z <  offset+size; ++z) {
+            for(int i = 0; i < cols; ++i) {
+                cv::Vec3b &pixel = frame->at<cv::Vec3b>(z, i);
+                double w = (double(i)/double(width));
+                double h = (double(z)/double(height));
+                std::complex<double> c(start + w * (end - start)*paramA, im_start + h * (im_end - im_start)*paramB);
+                int n = mandelbrot(c);
+                unsigned char color = static_cast<unsigned char>(255-(n * 255 / MAX_ITER));
+                pixel[0] += color;
+                pixel[1] += color;
+                pixel[2] += color;
+            }
         }
-    }
+    };
+    ac::UseMultipleThreads(frame, ac::getThreadCount(), callback);
 }
 
 extern "C" void filter(cv::Mat  &frame) {
