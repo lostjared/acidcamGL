@@ -3,13 +3,13 @@
 #include<ctime>
 
 namespace frac {
-double paramA = 1.0;
-double paramB = 1.0;
-int dir = 1;
-int MAX_ITER=80;
-void FractalLogic();
-void DrawFractal(cv::Mat &frame, bool neg=false);
-int mandelbrot(const std::complex<double> &c);
+    double paramA = 1.0;
+    double paramB = 1.0;
+    int dir = 1;
+    int MAX_ITER=80;
+    void FractalLogic();
+    void DrawFractal(cv::Mat &frame, bool neg=false);
+    int mandelbrot(const std::complex<double> &c);
 }
 
 void frac::FractalLogic() {
