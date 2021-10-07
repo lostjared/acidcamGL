@@ -75,6 +75,7 @@ std::string outstr_arr[] = {
     "    -1 for ffmpeg path",
     "    -7 for video start offset in seconds.",
     "    -3 Plugin Path",
+    "    -9 Number of threads",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
     "    --list display capture device list",
     "    ",
@@ -233,8 +234,19 @@ int main(int argc, char **argv) {
     int value_index = 0;
     std::string output_format="png";
     std::string autofilter_file;
-    while((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:")) != -1) {
+    while((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:")) != -1) {
         switch(opt) {
+            case '9':
+                if(optarg != 0) {
+                    int count = atoi(optarg);
+                    if(count < 2) {
+                        std::cerr << "acidcam: Invalid thread count..\n";
+                        exit(EXIT_FAILURE);
+                    }
+                    ac::setThreadCount(count);
+                    std::cout << "acidcam: Thread Count set to: " << count << "\n";
+                }
+                break;
             case 'A':
                 if(optarg != 0) {
                     autofilter_file = optarg;
@@ -542,7 +554,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    std::cout << "acidcamGL: " << version_info << "\n";
+    std::cout << "acidcam: " << version_info << "\n";
     std::cout << "acidcam: shader path: "<<shader_path << "\n";
     
     std::ostringstream rv;
