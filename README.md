@@ -140,6 +140,7 @@ Arguments:
     -l list search
     -7 jump to location in video by seconds
     -v version
+    -9 Threads
     -1 ffmpeg path
     -4 enable ffmpeg x264 support
     -5 enable ffmpeg x265 support
