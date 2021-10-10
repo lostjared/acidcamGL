@@ -78,6 +78,7 @@ std::string outstr_arr[] = {
     "    -9 Number of threads",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
     "    --list display capture device list",
+    "    --rotate src output",
     "    ",
     "Enviorment Variables:",
     "    SHADER_PATH path to shaders",
@@ -159,6 +160,11 @@ void mux_audio_ac(std::string output, std::string filenamex) {
     std::cout<< "\nacidcam: muxed " << output_file << " " << filename << " " << filename_audio << "\n";
 }
 
+void rotate90(std::string input, std::string filename) {
+    rotate_90(input.c_str(), filename.c_str());
+    std::cout << "\nacidcam: rotated 90 degrees\n";
+}
+
 #if defined(SYPHON_SERVER)
 extern void messageOutput(std::string title, std::string text);
 #endif
@@ -183,6 +189,10 @@ int main(int argc, char **argv) {
     } else if(std::string(argv[1]) == "--list" && argc == 2) {
         list_devices();
         exit(EXIT_SUCCESS);
+    } else if(std::string(argv[1]) == "--rotate" && argc == 4) {
+        rotate90(argv[2], argv[3]);
+        std::cout << "acidcam: exiting...\n";
+        exit(0);
     }
     if(!glfwInit()) {
         acidcam::updateError();
@@ -555,7 +565,7 @@ int main(int argc, char **argv) {
     }
 
     std::cout << "acidcam: " << version_info << "\n";
-    std::cout << "acidcam: shader path: "<<shader_path << "\n";
+    std::cout << "acidcam: shader path: " << shader_path << "\n";
     
     std::ostringstream rv;
     rv << cw << "x" << ch;

@@ -69,7 +69,6 @@ void close_stdout() {
 }
 
 void mux_audio(const char *output, const char *src, const char *final_file) {
-#ifndef _WIN32
     std::ostringstream stream;
     stream << ffmpeg_path << " -y -i \"" << output << "\" -i \"" << src << "\" -c copy -map 0:v:0 -map 1:a:0? -shortest \"" << final_file << "\"";
     std::cout << "acidcam: " << stream.str() << "\n";
@@ -95,5 +94,33 @@ void mux_audio(const char *output, const char *src, const char *final_file) {
 #else
     _pclose(fptr);
 #endif
+}
+
+void rotate_90(const char *output, const char *src) {
+    std::ostringstream stream;
+    stream << ffmpeg_path << " -i \"" << output << "\" -c copy  -metadata:s:v:0 rotate=90 " << "\"" << src << "\"";
+    std::cout << "acidcam: " << stream.str() << "\n";
+#ifndef _WIN32
+    FILE *fptr = popen(stream.str().c_str(), "r");
+#else
+    FILE *fptr = _popen(stream.str().c_str(), "r");
 #endif
+    if(!fptr) {
+        std::cerr << "Error: could not open ffmpeg\n";
+        return;
+    }
+    while(!feof(fptr)) {
+        char buf[256];
+        fgets(buf, 256, fptr);
+        std::cout << buf;
+#if defined(__APPLE__) || defined(__linux__)
+        sendString(buf);
+#endif
+    }
+#ifndef _WIN32
+    pclose(fptr);
+#else
+    _pclose(fptr);
+#endif
+    
 }
