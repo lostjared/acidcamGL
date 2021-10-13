@@ -44,7 +44,7 @@ extern int findFilter(std::string f);
 
 namespace acidcam {
     
-    extern cv::VideoCapture cap;
+    extern cv::VideoCapture cap, cap_second;
     extern int redir;
     extern int syphon_enabled;
    
@@ -108,6 +108,7 @@ namespace acidcam {
         bool p_run = false;
         AutoFilter af;
         bool af_enabled = false;
+        std::string material_file;
     public:
         
         AcidCam_Window() = default;
@@ -311,7 +312,24 @@ namespace acidcam {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             
             cv::Mat frame;
-            frame = cv::imread(s);
+            
+            if(s.find(".mp4") != std::string::npos || s.find(".mkv") != std::string::npos || s.find(".avi") != std::string::npos || s.find(".m4v") != std::string::npos) {
+                if(!cap_second.open(s)) {
+                    std::cout << "acidcam: Error could not open secondary material video...\n";
+                    acidcam::updateError();
+                    exit(EXIT_FAILURE);
+                } else {
+                    std::cout << "acidcam: Opened secondary video [" << s << "]\n";
+                    material_file = s;
+                }
+                if(!cap_second.read(frame)) {
+                    std::cout << "acidcam: Could not read frame from video.\n";
+                    acidcam::updateError();
+                    exit(EXIT_FAILURE);
+                }
+            } else {
+                frame = cv::imread(s);
+            }
             if(frame.empty()) {
                 std::cout << "acidcam: Error could not load texture: " << s << "\n";
                 acidcam::updateError();
@@ -698,6 +716,23 @@ namespace acidcam {
             if (material_on) {
                 glActiveTexture(GL_TEXTURE1);
                 glBindTexture(GL_TEXTURE_2D, material);
+                cv::Mat frame1;
+                if(cap_second.isOpened()) {
+                    if(!cap_second.read(frame1)) {
+                        cap_second.open(material_file);
+                        if(!cap_second.isOpened()) {
+                            std::cout << "acidcam: Error opening video: " << material_file << "\n";
+                            acidcam::updateError();
+                        }
+                        if(!cap_second.read(frame1)) {
+                            std::cout << "acidcam: Error reading frame..\n";
+                            acidcam::updateError();
+                            exit(EXIT_FAILURE);
+                        }
+                    }
+                    cv::flip(frame1, frame1, 0);
+                    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, frame1.cols, frame1.rows, GL_BGR, GL_UNSIGNED_BYTE, frame1.ptr());
+                }
             }
             color_alpha_r += rand() % 100 * 0.01f;
             color_alpha_g += rand() % 100 * 0.01f;
