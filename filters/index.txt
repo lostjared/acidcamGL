@@ -10,6 +10,8 @@ addup_cos.glsl
 dark_addup_xor.glsl
 echo.glsl
 echo_2.glsl
+echo_3.glsl
+echo_4.glsl
 echo_xor.glsl
 echo_or.glsl
 echo_two.glsl
@@ -93,6 +95,7 @@ material_pencil_passthrough.glsl
 material_pencil_passthrough_white.glsl
 material_pass_scale.glsl
 material_echo_set.glsl
+material_echo_three.glsl
 material_pixel.glsl
 material_echo.glsl
 material_echo_two.glsl
