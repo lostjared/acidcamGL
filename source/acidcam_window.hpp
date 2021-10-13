@@ -313,7 +313,7 @@ namespace acidcam {
             
             cv::Mat frame;
             
-            if(s.find(".mp4") != std::string::npos || s.find(".mkv") != std::string::npos || s.find(".avi") != std::string::npos || s.find(".m4v") != std::string::npos) {
+            if(s.find(".mp4") != std::string::npos || s.find(".mkv") != std::string::npos || s.find(".avi") != std::string::npos || s.find(".m4v") != std::string::npos || s.find(".mov") != std::string::npos) {
                 if(!cap_second.open(s)) {
                     std::cout << "acidcam: Error could not open secondary material video...\n";
                     acidcam::updateError();
