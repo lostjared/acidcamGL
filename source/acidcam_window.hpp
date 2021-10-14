@@ -19,6 +19,7 @@
 #include<iostream>
 #include<chrono>
 #include<algorithm>
+#include<cctype>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
 #define version_info "v1.0.014"
@@ -312,8 +313,15 @@ namespace acidcam {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             
             cv::Mat frame;
-            
-            if(s.find(".mp4") != std::string::npos || s.find(".mkv") != std::string::npos || s.find(".avi") != std::string::npos || s.find(".m4v") != std::string::npos || s.find(".mov") != std::string::npos) {
+            auto lowerString = [](const std::string &sx) -> std::string {
+                std::string val;
+                for(int i = 0; i < sx.length(); ++i) {
+                    val += tolower(sx[i]);
+                }
+                return val;
+            };
+            std::string sx = lowerString(s);
+            if(sx.find(".mp4") != std::string::npos || sx.find(".mkv") != std::string::npos || sx.find(".avi") != std::string::npos || sx.find(".m4v") != std::string::npos || sx.find(".mov") != std::string::npos) {
                 if(!cap_second.open(s)) {
                     std::cout << "acidcam: Error could not open secondary material video...\n";
                     acidcam::updateError();
