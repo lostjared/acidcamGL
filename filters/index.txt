@@ -12,6 +12,7 @@ echo.glsl
 echo_2.glsl
 echo_3.glsl
 echo_4.glsl
+echo_4_rev.glsl
 echo_xor.glsl
 echo_or.glsl
 echo_two.glsl
