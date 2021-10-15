@@ -84,7 +84,7 @@ namespace acidcam {
         
         if(fragCompiled != 1) {
             std::cout << "acidcam: Error on Fragment compile\n";
-            printShaderLog(vShader);
+            printShaderLog(fShader);
             return 0;
         }
         GLuint vfProgram = glCreateProgram();
