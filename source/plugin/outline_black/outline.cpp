@@ -14,9 +14,9 @@ extern "C" void filter(cv::Mat  &frame) {
                 pixel[1] = cpixel[1];
                 pixel[2] = cpixel[2];
             } else {
-                pixel[0] = 255;
-                pixel[1] = 255;
-                pixel[2] = 255;
+                pixel[0] = 0;
+                pixel[1] = 0;
+                pixel[2] = 0;
             }
         }
     }

@@ -41,6 +41,7 @@ all:
 	make -C square_resize install
 	make -C pixel_lag2 install
 	make -C outline install
+	make -C outline_black install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -84,3 +85,4 @@ clean:
 	make -C square_resize clean
 	make -C pixel_lag2 clean
 	make -C outline clean
+	make -C outline_black clean

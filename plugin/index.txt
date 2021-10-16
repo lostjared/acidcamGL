@@ -40,3 +40,4 @@ fractal.acidcam
 square_resize.acidcam
 pixel_lag2.acidcam
 outline.acidcam
+outline_black.acidcam
