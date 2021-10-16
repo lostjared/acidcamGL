@@ -40,6 +40,7 @@ all:
 	make -C fractal install
 	make -C square_resize install
 	make -C pixel_lag2 install
+	make -C outline install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -82,3 +83,4 @@ clean:
 	make -C fractal clean
 	make -C square_resize clean
 	make -C pixel_lag2 clean
+	make -C outline clean
