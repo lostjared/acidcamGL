@@ -293,7 +293,7 @@ Use:
 
 	acidcamGL -L playist.txt -g -p filters
 
-After enabling plugins (with the shell variable pointing to path) and having the list of plugins to load one from the command line use:
+After enabling plugins (with the shell variable pointing to path) and having the list of plugins in index.txt to load one from the command line use:
 
 	acidcamGL -g -p filters -Z plugin.acidcam
 
