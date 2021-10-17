@@ -187,6 +187,10 @@ Controls:
 
 
 Run the program:
+You will need to ethier set the SHADER_PATH enviorment variable or pass the path to the shaders when exeucting the program with the -p argument. Each shader is listed in a index.txt file in the order you want the program to cycle through them. The program comes with over 100 example shaders.
+Example exporting the enviorment varaible:
+
+      export SHADER_PATH=/Users/jared/Downloads/acidcamGL/filters
 
 Full Screen Monitor 0
 
