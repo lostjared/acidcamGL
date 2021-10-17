@@ -42,6 +42,7 @@ grid_sin.glsl
 alpha_xor.glsl
 color_xor.glsl
 color_time.glsl
+fill_white.glsl
 material.glsl
 material_alphablend.glsl
 material_alphablend_random.glsl
