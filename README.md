@@ -78,6 +78,9 @@ Configure the project:
 Build the project
 
         make -j4
+Install it
+
+        sudo make install
 
 for macOS static build with Syphon enter the macos-static directory and
 
@@ -87,7 +90,7 @@ You will still need to use install_name_tool on an app bundle see copy.sh for ho
 
 Run the program:
 
-	./acidcamGL -g -p ../filters
+	acidcamGL -g -p ../filters
 
 The default Resolution is:
 
@@ -187,63 +190,63 @@ Run the program:
 
 Full Screen Monitor 0
 
-	./acidcamGL -g -p filters -F -M 0
+	acidcamGL -g -p filters -F -M 0
 
 or Monitor 1
 
-	./acidcamGL -g -p filters -F -M 1
+	acidcamGL -g -p filters -F -M 1
 
 Windowed mode 1920x1080 Camera/Window
 
-	./acidcamGL -g -p filters -c 1920x1080 -r 1920x1080
+	acidcamGL -g -p filters -c 1920x1080 -r 1920x1080
 
 Windowed mode 1920x1080 Camera 1280x720
 
-	./acidcamGL -g -p filters -c 1280x720 -r 1920x1080
+	acidcamGL -g -p filters -c 1280x720 -r 1920x1080
 
 Default Windowed  mode:
 
-	./acidcamGL -g -p filters 
+	acidcamGL -g -p filters 
 
 Default Fullscreen (Resize) mode:
 
-	./acidcamGL -g -p filters -f
+	acidcamGL -g -p filters -f
 
 Default FullScreen (Windowed) mode:
 
-	./acidcamGL -g -p filters -F
+	acidcamGL -g -p filters -F
 
 Use Webcam Device by Index:
 	
-	./acidcamGL -g -p filters -d 1
+	acidcamGL -g -p filters -d 1
 
 Use different frames per second:
 
-	./acidcamGL -g -p filters -u 30
+	acidcamGL -g -p filters -u 30
 
 or (if supported by your USB 3.0 Webcam)
  
-	./acidcamGL -g -p filters -u 60
+	acidcamGL -g -p filters -u 60
 
 or even better
 
-	./acidcamGL -g -p filters -u 60 -c 1920x1080 -r 1920x1080
+	acidcamGL -g -p filters -u 60 -c 1920x1080 -r 1920x1080
 
 Use Video File as Input:
 
-	./acidcamGL -g -p filters -i file.mp4
+	acidcamGL -g -p filters -i file.mp4
 
 Record to MP4 file:
 
-	./acidcamGL -g -p filters -i file.mp4 -h -o outfile.mp4
+	acidcamGL -g -p filters -i file.mp4 -h -o outfile.mp4
 
 List all included filters by index:
 
-	./acidcamGL -l
+	acidcamGL -l
 
 Jump to location in vidoe file by seconds
 
-	./acidcamGL -g -p filters -i file.mp4 -7 25
+	acidcamGL -g -p filters -i file.mp4 -7 25
 
 
 Key shortcut format:
@@ -258,12 +261,12 @@ an example file would be
 	Q 25 7
 If you saved this to keys.key you would use it with -k key like his:
 
-	./acidcamGL -g -p filters -k keys.key
+	acidcamGL -g -p filters -k keys.key
 
 Playlist file:
 
 use:
-	./acidcamGL -l
+	acidcamGL -l
 
 Playlist Now uses String names versus ID identifiers:
 to list the different filters
@@ -276,9 +279,9 @@ save the file then when in the program press the L key to toggle the playlist on
 To use the playlist file its he same as the keys just with
 Use:
 
-	./acidcamGL -L playist.txt -g -p filters
+	acidcamGL -L playist.txt -g -p filters
 
 After enabling plugins (with the shell variable pointing to path) and having the list of plugins to load one from the command line use:
 
-	./acidcamGL -g -p filters -Z plugin.acidcam
+	acidcamGL -g -p filters -Z plugin.acidcam
 
