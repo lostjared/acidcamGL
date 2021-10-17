@@ -244,6 +244,14 @@ Record to MP4 file:
 
 	acidcamGL -g -p filters -i file.mp4 -h -o outfile.mp4
 
+Record as x264 using FFmpeg:
+	
+	acidcamGL -g -p filters -i file.mp4 -4 -o output.mp4 
+
+Record as x265 using FFmpeg
+
+	acidcamGL -g -pf ilters -i file.mp4 -5 -o output.mp4
+
 List all included filters by index:
 
 	acidcamGL -l
