@@ -50,6 +50,7 @@ material_alphablend_xor.glsl
 material_alphablend_xor_scale.glsl
 material_alphablend_sin.glsl
 material_alphablend_add.glsl
+material_rgb_mix.glsl
 material_echo_self.glsl
 material_echo_self_rev.glsl
 material_echo_self_rev2.glsl
