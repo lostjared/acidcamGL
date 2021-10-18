@@ -53,6 +53,7 @@ material_alphablend_add.glsl
 material_rgb_mix.glsl
 material_rgb_mix_rev.glsl
 material_rgb_mix_rev2.glsl
+material_random_shift.glsl
 material_echo_self.glsl
 material_echo_self_rev.glsl
 material_echo_self_rev2.glsl
