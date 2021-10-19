@@ -79,7 +79,6 @@ void main(void)
         color[x1] = (color[x1] * 0.5) + (color2[0] * 0.5);
         color[x2] = (color[x2] * 0.5) + (color3[1] * 0.5);
         color[x3] = (color[x3] * 0.5) + (color4[2] * 0.5);
-        
     }
 }
 
