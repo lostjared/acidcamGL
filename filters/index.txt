@@ -2,6 +2,7 @@ acidcam.glsl
 nofilter.glsl
 whitelight.glsl
 self_alphablend_scale.glsl
+self_alphablend_scale_xor.glsl
 flash_gradient_strobe.glsl
 color_shift_fade.glsl
 rgb_fade_xor.glsl
