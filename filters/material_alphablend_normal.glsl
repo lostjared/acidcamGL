@@ -39,7 +39,6 @@ void main(void)
             colori[i] = colori[i]%255;
         color[i] = float(colori[i]) / 255;
     }
-   
 }
 
 
