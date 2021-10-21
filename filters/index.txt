@@ -54,6 +54,7 @@ material_alphablend_xor_scale.glsl
 material_alphablend_sin.glsl
 material_alphablend_add.glsl
 material_alphablend_normal.glsl
+material_color_shift_fade.glsl
 material_rgb_mix.glsl
 material_rgb_mix_rev.glsl
 material_rgb_mix_rev2.glsl
