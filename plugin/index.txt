@@ -42,3 +42,4 @@ pixel_lag2.acidcam
 outline.acidcam
 outline_black.acidcam
 canny_restore.acidcam
+square_onoff.acidcam
