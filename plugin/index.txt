@@ -44,3 +44,4 @@ outline_black.acidcam
 canny_restore.acidcam
 square_onoff.acidcam
 square_onoff_size.acidcam
+square_onoff_alpha.acidcam

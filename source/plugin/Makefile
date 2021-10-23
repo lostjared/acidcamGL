@@ -45,6 +45,7 @@ all:
 	make -C canny_restore install
 	make -C square_onoff install
 	make -C square_onoff_size install
+	make -C square_onoff_alpha install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -92,3 +93,4 @@ clean:
 	make -C canny_restore clean
 	make -C square_onoff clean
 	make -C square_onoff_size clean
+	make -C square_onoff_alpha clean
