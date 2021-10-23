@@ -46,6 +46,7 @@ color_xor.glsl
 color_time.glsl
 fill_white.glsl
 material.glsl
+material_alpha_scale.glsl
 material_alpha.glsl
 material_alphablend.glsl
 material_alphablend_random.glsl
