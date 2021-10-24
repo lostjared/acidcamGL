@@ -46,6 +46,7 @@ all:
 	make -C square_onoff install
 	make -C square_onoff_size install
 	make -C square_onoff_alpha install
+	make -C square_onoff_alpha_clip install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -94,3 +95,4 @@ clean:
 	make -C square_onoff clean
 	make -C square_onoff_size clean
 	make -C square_onoff_alpha clean
+	make -C square_onoff_alpha_clip clean
