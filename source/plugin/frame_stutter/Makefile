@@ -8,12 +8,12 @@ OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
 #LDFLAGS=-mmacosx-version-min=10.13 `pkg-config glfw3 --libs` -framework VideoDecodeAcceleration  -lblas -lcblas -lclapack -llapack -lf77lapack -framework CoreVideo -framework CoreMedia -framework OpenGL -framework Cocoa -framework IOKit -framework AVKit -framework AVFoundation  -framework OpenCL  -lbz2  ../../macos/cvlibs/*a -framework Cocoa -framework AppKit -framework Foundation
 #LDFLAGS=`pkg-config glfw3 glew opencv4 --libs`
 CFLAGS=-std=c++11 `pkg-config acidcam opencv4 --cflags`
-LDFLAGS=`pkg-config opencv4 --libs`
+LDFLAGS=`pkg-config opencv4 acidcam --libs`
 %.o: %.cpp
 	$(CXX) $(CFLAGS) $< -c -o $@
 
 $(PROGRAM): $(OBJ) 
-	$(CXX) -std=c++11 -shared -o $(PROGRAM) $(OBJ) $(LDFLAGS) -lacidcam
+	$(CXX) -std=c++11 -shared -o $(PROGRAM) $(OBJ) $(LDFLAGS) 
 #../../libacidcam/libacidcam.a
 
 all: $(PROGRAM)
