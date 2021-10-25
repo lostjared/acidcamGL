@@ -48,3 +48,4 @@ square_onoff_alpha.acidcam
 square_onoff_alpha_clip.acidcam
 square_onoff_alpha_clip_fast.acidcam
 square_onoff_alpha_pixel.acidcam
+square_onoff_diff.acidcam

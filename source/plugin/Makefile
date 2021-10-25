@@ -49,6 +49,7 @@ all:
 	make -C square_onoff_alpha_clip install
 	make -C square_onoff_alpha_clip_fast install
 	make -C square_onoff_alpha_pixel install
+	make -C square_onoff_diff install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -100,3 +101,4 @@ clean:
 	make -C square_onoff_alpha_clip clean
 	make -C square_onoff_alpha_clip_fast clean
 	make -C square_onoff_alpha_pixel clean
+	make -C square_onoff_diff clean
