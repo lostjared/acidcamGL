@@ -1,3 +1,4 @@
+Make sure you have opencv and libacidcam installed and
 run 
 
 $ make
@@ -10,4 +11,7 @@ $ make clean
 
 to clean up
 
+you will need to set the plugin path as an exported enviorment variable
 
+
+$ export AC_PLUGIN_PATH=/path/to/plugins
