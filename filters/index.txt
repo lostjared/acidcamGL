@@ -71,6 +71,8 @@ material_flash_gradient_strobe.glsl
 material_tex_xor.glsl
 material_rgb.glsl
 material_xor.glsl
+material_xor_blend_1.glsl
+material_xor_blend_alpha.glsl
 material_color_time.glsl
 material_or.glsl
 material_rgb_fade_xor.glsl
