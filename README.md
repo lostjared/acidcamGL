@@ -297,3 +297,14 @@ After enabling plugins (with the shell variable pointing to path) and having the
 
 	acidcamGL -g -p filters -Z plugin.acidcam
 
+Project comes with some example plugin files in the acidcamGL/source/plugin folder. To compile these enter the directory and type 
+
+    make
+
+This will install the examples in this tree under acidcamGL/plugin
+To export these after compiling them use
+
+    export AC_PLUGIN_PATH=/path/to/acidcamGL/plugin
+    
+add the export commands to your .bash_profile to not have to issue them everytime you start a new session  in the terminal.
+
