@@ -52,6 +52,7 @@ all:
 	make -C square_onoff_diff install
 	make -C setframelast install
 	make -C xor_blend_2 install
+	make -C downward_line install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -106,3 +107,4 @@ clean:
 	make -C square_onoff_diff clean
 	make -C setframelast clean
 	make -C xor_blend_2 clean
+	make -C downward_line clean
