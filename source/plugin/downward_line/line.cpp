@@ -23,7 +23,7 @@ extern "C" void filter(cv::Mat  &frame) {
     
     static int off = 0;
     for(int q = 0; q < 5; ++q) {
-        for(int y = line_y[q]; y <  line_y[q]+line_h[q]; ++y) {
+        for(int y = line_y[q]; y <  line_y[q]+line_h[q] && y < frame.rows; ++y) {
             for(int x = 0; x < frame.cols; ++x) {
                 cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
                 cv::Mat &m = collection.frames[off];
