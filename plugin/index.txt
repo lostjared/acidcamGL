@@ -52,3 +52,4 @@ square_onoff_diff.acidcam
 setframelast.acidcam
 xor_blend_2.acidcam
 downward_line.acidcam
+downward_line2.acidcam

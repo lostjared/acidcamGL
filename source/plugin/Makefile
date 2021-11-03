@@ -53,6 +53,7 @@ all:
 	make -C setframelast install
 	make -C xor_blend_2 install
 	make -C downward_line install
+	make -C downard_line2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -108,3 +109,4 @@ clean:
 	make -C setframelast clean
 	make -C xor_blend_2 clean
 	make -C downward_line clean
+	make -C downard_line2 clean
