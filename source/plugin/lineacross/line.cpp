@@ -1,6 +1,7 @@
 #include"ac.h"
 #include<cstdlib>
 #include<ctime>
+#include<memory>
 
 unsigned char wrap_cast(double d) {
     unsigned long x = static_cast<unsigned long>(d);
@@ -18,18 +19,14 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     collection.shiftFrames(frame);
     
-    static int *across = 0;
-    static int *across_dir = 0;
+    static std::unique_ptr<int> across;
+    static std::unique_ptr<int> across_dir;
     static int across_size = 0;
     
     if(across_size == 0 || across_size != frame.rows) {
-        if(across != 0) {
-            delete [] across;
-            delete [] across_dir;
-        }
         across_size = frame.rows;
-        across = new int[across_size+1];
-        across_dir = new int[across_size+1];
+        across.reset(new int[across_size+1]);
+        across_dir.reset(new int[across_size+1]);
         int across_height = 5+rand()%10;
 
         for(int q = 0; q < across_size; q += across_height) {
@@ -37,8 +34,8 @@ extern "C" void filter(cv::Mat  &frame) {
             int pos = rand()%(frame.cols-10);
             
             for(int e = 0; e < across_height && q+e < across_size; ++e) {
-                across[q+e] = pos;
-                across_dir[q+e] = dir;
+                across.get()[q+e] = pos;
+                across_dir.get()[q+e] = dir;
             }
             across_height = 5+rand()%10;
         }
@@ -49,7 +46,7 @@ extern "C" void filter(cv::Mat  &frame) {
     for(int z = 0; z < frame.rows; ++z) {
         int offset = 0;
         
-        for(int i = across[z]; i < frame.cols && offset < frame.cols; ++i) {
+        for(int i = across.get()[z]; i < frame.cols && offset < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             cv::Mat &m = collection.frames[off];
             cv::Vec3b &col = m.at<cv::Vec3b>(z, offset);
@@ -58,15 +55,15 @@ extern "C" void filter(cv::Mat  &frame) {
             offset++;
         }
         
-        if(across_dir[z] == 0) {
-            across[z] += 10+rand()%150;
-            if(across[z] > frame.cols-5) {
-                across_dir[z] = 1;
+        if(across_dir.get()[z] == 0) {
+            across.get()[z] += 10+rand()%150;
+            if(across.get()[z] > frame.cols-5) {
+                across_dir.get()[z] = 1;
             }
         } else {
-            across[z] -= 10+rand()%150;
-            if(across[z] <= 1) {
-                across_dir[z] = 0;
+            across.get()[z] -= 10+rand()%150;
+            if(across.get()[z] <= 1) {
+                across_dir.get()[z] = 0;
             }
         }
     }
