@@ -5,9 +5,9 @@
 extern "C" void filter(cv::Mat  &frame) {
     cv::Mat img;
     ac::ac_resize(frame, img, cv::Size(frame.cols/2, frame.rows));
-    static ac::MatrixCollection<8> collection;
+    static ac::MatrixCollection<5> collection;
     collection.shiftFrames(img);
-    cv::Mat &copy = collection.frames[7];
+    cv::Mat &copy = collection.frames[4];
     for(int z = 0; z < frame.rows; ++z) {
         int x = 0;
         for(int i = frame.cols/2+10; i < frame.cols; ++i) {
