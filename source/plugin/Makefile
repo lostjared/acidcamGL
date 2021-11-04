@@ -55,6 +55,7 @@ all:
 	make -C downward_line install
 	make -C downward_line2 install
 	make -C lineacross install
+	make -C stereo.delay install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -112,3 +113,4 @@ clean:
 	make -C downward_line clean
 	make -C downward_line2 clean
 	make -C lineacross clean
+	make -C stereo.delay clean
