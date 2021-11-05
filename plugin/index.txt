@@ -54,3 +54,5 @@ xor_blend_2.acidcam
 downward_line.acidcam
 downward_line2.acidcam
 lineacross.acidcam
+stereo.delay.acidcam
+stereo.glitch.acidcam
