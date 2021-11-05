@@ -57,6 +57,7 @@ all:
 	make -C lineacross install
 	make -C stereo.delay install
 	make -C stereo.glitch install
+	make -C stereo.glitch.delay install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -116,3 +117,4 @@ clean:
 	make -C lineacross clean
 	make -C stereo.delay clean
 	make -C stereo.glitch clean
+	make -C stereo.glitch.delay clean

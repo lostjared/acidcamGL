@@ -56,3 +56,4 @@ downward_line2.acidcam
 lineacross.acidcam
 stereo.delay.acidcam
 stereo.glitch.acidcam
+stereo.glitch.delay.acidcam
