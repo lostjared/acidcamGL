@@ -58,6 +58,7 @@ all:
 	make -C stereo.delay install
 	make -C stereo.glitch install
 	make -C stereo.glitch.delay install
+	make -C stereo.glitch.2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -118,3 +119,4 @@ clean:
 	make -C stereo.delay clean
 	make -C stereo.glitch clean
 	make -C stereo.glitch.delay clean
+	make -C stereo.glitch.2 clean
