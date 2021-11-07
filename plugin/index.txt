@@ -58,3 +58,4 @@ stereo.delay.acidcam
 stereo.glitch.acidcam
 stereo.glitch.delay.acidcam
 stereo.glitch.2.acidcam
+stereo.glitch.strobe.acidcam

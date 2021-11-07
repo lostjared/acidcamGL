@@ -59,6 +59,7 @@ all:
 	make -C stereo.glitch install
 	make -C stereo.glitch.delay install
 	make -C stereo.glitch.2 install
+	make -C stereo.glitch.strobe install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -120,3 +121,4 @@ clean:
 	make -C stereo.glitch clean
 	make -C stereo.glitch.delay clean
 	make -C stereo.glitch.2 clean
+	make -C stereo.glitch.strobe clean
