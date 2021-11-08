@@ -713,9 +713,9 @@ namespace acidcam {
             
             if (stereo_ && stereo_mode) {
                 stereo.Render(frame);
+                cv::flip(frame, frame, 0);
             } 
-            //  ac::Stereo(frame);
-            
+             
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture);
             
