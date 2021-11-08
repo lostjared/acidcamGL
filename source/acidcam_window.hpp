@@ -136,6 +136,7 @@ namespace acidcam {
         void StereoX(int *id, int w, int h) {
             stereo.Load(id);
             stereo_ = true;
+            stereo_mode = true;
         }
         
         
@@ -532,7 +533,7 @@ namespace acidcam {
         }
         
         void setStereo(bool b) {
-            stereo_ = b;
+            stereo_mode = b;
             if(b == true)
                 std::cout << "acidcam: Stereo mode enabled...\n";
         }
@@ -623,12 +624,19 @@ namespace acidcam {
             
             
             if (screen_mode == false) {
-                if (!cap.read(frame)) {
-                    if (repeat == true && repeat_filename.length() > 0) {
-                        cap.open(repeat_filename);
-                        if (cap.isOpened()) {
-                            cap.read(frame);
-                            std::cout << "acidcam: video loop...\n";
+                if(stereo_ == false) {
+                    if (!cap.read(frame)) {
+                        if (repeat == true && repeat_filename.length() > 0) {
+                            cap.open(repeat_filename);
+                            if (cap.isOpened()) {
+                                cap.read(frame);
+                                std::cout << "acidcam: video loop...\n";
+                            }
+                            else {
+                                std::cout << "acidcam: Capture device closed exiting...\n";
+                                quit();
+                                return;
+                            }
                         }
                         else {
                             std::cout << "acidcam: Capture device closed exiting...\n";
@@ -636,12 +644,8 @@ namespace acidcam {
                             return;
                         }
                     }
-                    else {
-                        std::cout << "acidcam: Capture device closed exiting...\n";
-                        quit();
-                        return;
-                    }
                 }
+                
             }
             else {
 #ifdef SYPHON_SERVER
@@ -711,10 +715,12 @@ namespace acidcam {
                 cv::flip(frame, frame, 0);
             }
             
-            if (stereo_ && stereo_mode) {
+            if (video_mode == false && stereo_) {
                 stereo.Render(frame);
                 cv::flip(frame, frame, 0);
-            } 
+            } else if(video_mode == true && stereo_mode) {
+                ac::Stereo(frame);
+            }
              
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture);
@@ -926,11 +932,13 @@ namespace acidcam {
                 
                 switch(key) {
                     case GLFW_KEY_1:
-                        stereo_mode =!stereo_mode;
-                        if(stereo_mode)
-                           std::cout << "acidcam: Stereo: on\n";
-                        
-                        
+                        if(video_mode == true) {
+                            stereo_mode =!stereo_mode;
+                            if(stereo_mode)
+                                std::cout << "acidcam: Stereo: on\n";
+                            else
+                                std::cout << "acidcam Stereo: off\n";
+                        }
                         break;
                     case GLFW_KEY_SEMICOLON:
                         blur_enabled = !blur_enabled;

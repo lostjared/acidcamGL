@@ -542,6 +542,7 @@ int main(int argc, char **argv) {
             ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
             fps = acidcam::cap.get(cv::CAP_PROP_FPS);
             camera_mode = 0;
+            
         } else {
             acidcam::cap.open(filename);
             if(!acidcam::cap.isOpened()) {
