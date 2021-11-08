@@ -716,6 +716,7 @@ namespace acidcam {
             }
             
             if (video_mode == false && stereo_) {
+                frame.create(height, width, CV_8UC3);
                 stereo.Render(frame);
                 cv::flip(frame, frame, 0);
             } else if(video_mode == true && stereo_mode) {
