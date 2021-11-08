@@ -1258,6 +1258,7 @@ namespace acidcam {
             
             
             if(stereo_mode) {
+                frame.create(height, width, CV_8UC3);
                 stereo.Render(frame);
             }
             
