@@ -49,6 +49,11 @@ void acidcam::StereoCam::SetSize(int w, int h) {
     for(int i = 0; i < 2; ++i) {
         cap[i].set(cv::CAP_PROP_FRAME_WIDTH, w);
         cap[i].set(cv::CAP_PROP_FRAME_WIDTH, h);
+        int zw = cap[i].get(cv::CAP_PROP_FRAME_WIDTH);
+        int zh = cap[i].get(cv::CAP_PROP_FRAME_HEIGHT);
+        cap[i].set(cv::CAP_PROP_FPS, 30);
+        double fps = cap[i].get(cv::CAP_PROP_FPS);
+        std::cout << "acidcam: Stereo Mode: Camera " << (i+1) << " " << zw << "x" << zh << " @ " << fps << " fps.\n";
     }
 }
 

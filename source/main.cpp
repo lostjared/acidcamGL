@@ -690,7 +690,7 @@ int main(int argc, char **argv) {
     cmd[1] = value_index;
     
     if(value_enabled && cmd[0]>=0 && cmd[1]>=0)
-        main_window.StereoX(cmd, 1280, 720);
+        main_window.StereoX(cmd, w, h);
    
     main_window.loop();
     
