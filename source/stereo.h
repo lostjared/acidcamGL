@@ -17,6 +17,8 @@ namespace acidcam {
        void Render(cv::Mat &frame);
         void SetSize(int w, int h);
         cv::VideoCapture cap[2];
+    private:
+        int capture[2];
    };
 }
 

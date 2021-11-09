@@ -29,6 +29,8 @@ acidcam::StereoCam::StereoCam() {
     
 }
 void acidcam::StereoCam::Load(int *cmd) {
+    capture[0] = cmd[0];
+    capture[1] = cmd[1];
     for(int i = 0; i < 2; ++i) {
         cap[i] = cv::VideoCapture(cmd[i]);
         if(!cap[i].isOpened()) {
@@ -53,7 +55,7 @@ void acidcam::StereoCam::SetSize(int w, int h) {
         int zh = cap[i].get(cv::CAP_PROP_FRAME_HEIGHT);
         cap[i].set(cv::CAP_PROP_FPS, 30);
         double fps = cap[i].get(cv::CAP_PROP_FPS);
-        std::cout << "acidcam: Stereo Mode: Camera " << (i+1) << " " << zw << "x" << zh << "p" << fps << "\n";
+        std::cout << "acidcam: Stereo Mode: Camera: " << (i+1) << " Device: " << capture[i] << " @ " << zw << "x" << zh << "p" << fps << "\n";
     }
 }
 
