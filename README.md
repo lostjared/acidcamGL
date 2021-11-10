@@ -310,9 +310,9 @@ add the export commands to your .bash_profile to not have to issue them everytim
 
 To use stereo mode, have two webcams of the same type and use:
 
-    acidcamGL -d camera1_index -6 camera2_index -g -p ./filters
+    acidcamGL -d camera1_index -6 camera2_index -g -p ./filters -c 1280x720 -r 1280x720 -u 30
     
-This will use camera1-index as left eye camera 2 index as right eye 
+This will use camera1-index as left eye camera 2 index as right eye  as resolution 1280x720 30 fps
 
 You can also turn a regular video into stereo mode by using the -x argument
 

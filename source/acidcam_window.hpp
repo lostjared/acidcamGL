@@ -678,7 +678,7 @@ namespace acidcam {
             }
             
             if (video_mode == false && stereo_) {
-                frame.create(height, width, CV_8UC3);
+                frame.create(cv::Size(window_width, window_height),CV_8UC3);
                 stereo.Render(frame);
                 cv::flip(frame, frame, 0);
             } else if(video_mode == true && stereo_mode) {
@@ -1252,17 +1252,15 @@ namespace acidcam {
         void CallCustom(std::string index, cv::Mat &frame) {
             std::string val = index;
             
+            if(stereo_mode) {
+                frame.create(cv::Size(window_width, window_height), CV_8UC3);
+                stereo.Render(frame);
+            }
             
             if(blur_enabled) {
                 ac::MedianBlur(frame);
                 ac::MedianBlur(frame);
                 ac::MedianBlur(frame);
-            }
-            
-            
-            if(stereo_mode) {
-                frame.create(height, width, CV_8UC3);
-                stereo.Render(frame);
             }
             
             cv::flip(frame, frame, 0);

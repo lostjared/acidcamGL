@@ -689,8 +689,13 @@ int main(int argc, char **argv) {
     cmd[0] = device;
     cmd[1] = value_index;
     
-    if(value_enabled && cmd[0]>=0 && cmd[1]>=0)
-        main_window.StereoX(cmd, w, h, fps);
+    if(value_enabled && cmd[0]>=0 && cmd[1]>=0) {
+        if(cw != res_w || ch != res_h) {
+            std::cout << "acidcam: Error stereo cam resolution must be window resolution.\n";
+            acidcam::updateError();
+        }
+        main_window.StereoX(cmd, cw, ch, fps);
+    }
    
     main_window.loop();
     

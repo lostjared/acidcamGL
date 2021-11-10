@@ -2,23 +2,23 @@
 
 
 void acidcam::Stereo(cv::Mat &frame, cv::Mat &img1, cv::Mat &img2) {
-cv::Mat frame1 = img1;
-cv::Mat frame2 = img2;
-cv::resize(frame1, img1, cv::Size(frame.cols/2, frame.rows));
-cv::resize(frame2, img2, cv::Size(frame.cols/2, frame.rows));
+    cv::Mat frame1 = img1;
+    cv::Mat frame2 = img2;
+    cv::resize(frame1, img1, cv::Size(frame.cols/2, frame.rows));
+    cv::resize(frame2, img2, cv::Size(frame.cols/2, frame.rows));
 
-for(int z = 0; z < frame.rows; ++z) {
-    int x = 0;
-    for(int i = frame.cols/2; i < frame.cols; ++i) {
-            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            cv::Vec3b pix = img2.at<cv::Vec3b>(z, x);
-            ++x;
-            pixel = pix;
-        }
+    for(int z = 0; z < frame.rows; ++z) {
+        int x = 0;
+        for(int i = frame.cols/2; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                cv::Vec3b pix = img2.at<cv::Vec3b>(z, x);
+                ++x;
+                pixel = pix;
+            }
         for(int i = 0; i < frame.cols/2; ++i) {
-            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            cv::Vec3b pix = img1.at<cv::Vec3b>(z, i);
-            pixel = pix;
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                cv::Vec3b pix = img1.at<cv::Vec3b>(z, i);
+                pixel = pix;
         }
     }
 }
@@ -32,7 +32,11 @@ void acidcam::StereoCam::Load(int *cmd) {
     capture[0] = cmd[0];
     capture[1] = cmd[1];
     for(int i = 0; i < 2; ++i) {
+#ifndef _WIN32
         cap[i] = cv::VideoCapture(cmd[i]);
+#else
+        cap[i] = cv::VideoCapture(cmd[i], cv::CAP_DSHOW);
+#endif
         if(!cap[i].isOpened()) {
             std::cout << "acidcam: couldn't open device: " << cmd[i] << "\n";
             exit(0);
