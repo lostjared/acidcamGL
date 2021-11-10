@@ -314,8 +314,8 @@ To use stereo mode, have two webcams of the same type and use:
     
 This will use camera1-index as left eye camera 2 index as right eye 
 
-You can also turn a regular video into stereo mode by using the -X argument
+You can also turn a regular video into stereo mode by using the -x argument
 
-    acidcamGL -i file.mp4 -g -X
+    acidcamGL -i file.mp4 -g -x
 
 Or press the '1' key to toggle stereo on and off.
