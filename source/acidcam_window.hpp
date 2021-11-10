@@ -133,9 +133,9 @@ namespace acidcam {
         
         StereoCam stereo;
         
-        void StereoX(int *id, int w, int h) {
+        void StereoX(int *id, int w, int h, double fps_) {
             stereo.Load(id);
-            stereo.SetSize(w, h);
+            stereo.SetSize(w, h, fps_);
             stereo_ = true;
             stereo_mode = true;
         }

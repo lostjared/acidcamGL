@@ -47,16 +47,14 @@ void acidcam::StereoCam::Render(cv::Mat &frame) {
     }
 }
 
-void acidcam::StereoCam::SetSize(int w, int h) {
-    
-    std::cout << "acidcam: Stereo attempted resolution " << w << "x" << h << "\n";
-    
+void acidcam::StereoCam::SetSize(int w, int h, double fps_) {
+    std::cout << "acidcam: Stereo attempted resolution " << w << "x" << h << "p" << fps_ << "\n";
     for(int i = 0; i < 2; ++i) {
         cap[i].set(cv::CAP_PROP_FRAME_WIDTH, w);
         cap[i].set(cv::CAP_PROP_FRAME_HEIGHT, h);
         int zw = cap[i].get(cv::CAP_PROP_FRAME_WIDTH);
         int zh = cap[i].get(cv::CAP_PROP_FRAME_HEIGHT);
-        cap[i].set(cv::CAP_PROP_FPS, 30);
+        cap[i].set(cv::CAP_PROP_FPS, fps_);
         double fps = cap[i].get(cv::CAP_PROP_FPS);
         std::cout << "acidcam: Stereo Mode: Camera: " << (i+1) << " Device: " << capture[i] << " @ " << zw << "x" << zh << "p" << fps << "\n";
     }

@@ -15,7 +15,7 @@ namespace acidcam {
        StereoCam();
        void Load(int *cmd);
        void Render(cv::Mat &frame);
-        void SetSize(int w, int h);
+        void SetSize(int w, int h, double fps_);
         cv::VideoCapture cap[2];
     private:
         int capture[2];
