@@ -677,6 +677,15 @@ namespace acidcam {
                 index = var_list[playback_index];
             }
             
+            if (video_mode == false && stereo_) {
+                frame.create(height, width, CV_8UC3);
+                stereo.Render(frame);
+                cv::flip(frame, frame, 0);
+            } else if(video_mode == true && stereo_mode) {
+                ac::Stereo(frame);
+            }
+            
+            
             if (shader_index == 0 || ac_on == true) {
                 if (index >= 0 && index < ac::solo_filter.size()) {
                     cv::Mat orig;
@@ -713,16 +722,18 @@ namespace acidcam {
                     }
                 }
             } else {
-                cv::flip(frame, frame, 0);
+                if(stereo_ == false)
+                    cv::flip(frame, frame, 0);
             }
-            
+           
+          /*
             if (video_mode == false && stereo_) {
                 frame.create(height, width, CV_8UC3);
                 stereo.Render(frame);
                 cv::flip(frame, frame, 0);
             } else if(video_mode == true && stereo_mode) {
                 ac::Stereo(frame);
-            }
+            } */
              
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture);
