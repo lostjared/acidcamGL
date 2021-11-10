@@ -308,3 +308,14 @@ To export these after compiling them use
     
 add the export commands to your .bash_profile to not have to issue them everytime you start a new session  in the terminal.
 
+To use stereo mode, have two webcams of the same type and use:
+
+    acidcamGL -d camera1_index -6 camera2_index -g -p ./filters
+    
+This will use camera1-index as left eye camera 2 index as right eye 
+
+You can also turn a regular video into stereo mode by using the -X argument
+
+    acidcamGL -i file.mp4 -g -X
+
+Or press the '1' key to toggle stereo on and off.
