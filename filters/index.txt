@@ -66,6 +66,7 @@ material_echo_self.glsl
 material_echo_self_rev.glsl
 material_echo_self_rev2.glsl
 material_echo_shift.glsl
+material_echo_shift2.glsl
 material_white_light.glsl
 material_white_light_xor.glsl
 material_flash_gradient_strobe.glsl
