@@ -128,6 +128,7 @@ material_echo_two_xor.glsl
 material_echo_alpha_two_xor.glsl
 material_echo_blend.glsl
 material_echo_opposite.glsl
+material_echo_opposite2.glsl
 material_energy.glsl
 material_energy_xor.glsl
 material_grid_texture.glsl
