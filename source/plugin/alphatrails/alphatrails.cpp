@@ -11,13 +11,12 @@ unsigned char wrap_cast(double f) {
 
 extern "C" void filter(cv::Mat  &frame) {
     static constexpr int MAX = 16;
-    static ac::MatrixCollection<16> collection;
+    static ac::MatrixCollection<MAX> collection;
     collection.shiftFrames(frame);
     cv::Mat *frames[3];
     frames[0] = &collection.frames[1];
     frames[1] = &collection.frames[7];
     frames[2] = &collection.frames[15];
-    
     auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
         for(int z = offset; z <  offset+size; ++z) {
             for(int i = 0; i < cols; ++i) {
