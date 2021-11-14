@@ -60,3 +60,4 @@ stereo.glitch.delay.acidcam
 stereo.glitch.2.acidcam
 stereo.glitch.strobe.acidcam
 alphatrails.acidcam
+starthought.acidcam
