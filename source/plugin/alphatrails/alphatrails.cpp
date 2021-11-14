@@ -1,6 +1,4 @@
 #include"ac.h"
-#include<cstdlib>
-#include<ctime>
 
 unsigned char wrap_cast(double f) {
     unsigned long x = static_cast<unsigned long>(f);
@@ -17,9 +15,7 @@ extern "C" void filter(cv::Mat  &frame) {
     frames[0] = &collection.frames[1];
     frames[1] = &collection.frames[7];
     frames[2] = &collection.frames[15];
-    
     static double alpha = 0.1;
-    
     auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
         for(int z = offset; z <  offset+size; ++z) {
             for(int i = 0; i < cols; ++i) {
