@@ -1716,6 +1716,9 @@ namespace acidcam {
                     }
                 }
             }
+            
+            
+            
             glUniform1i(samp, 0);
             glUniform1i(mat_samp, 1);
             glUniform1f(c_index, (float)index);
@@ -1736,6 +1739,13 @@ namespace acidcam {
             glEnable(GL_LEQUAL);
             
             glDrawArrays(GL_TRIANGLES,0,36);
+            
+            if (take_snapshot == true) {
+                takeSnapshot();
+                take_snapshot = false;
+            }
+            if (writer_set == true)
+                writeFrame();
         }
     
         GLuint createShaderProgram() {
