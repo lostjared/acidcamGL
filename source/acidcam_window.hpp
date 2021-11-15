@@ -22,7 +22,7 @@
 #include<cctype>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
-#define version_info "v1.0.015"
+#define version_info "v1.0.016"
 #ifdef SYPHON_SERVER
 #include"syphon.h"
 #endif
