@@ -62,6 +62,7 @@ all:
 	make -C stereo.glitch.strobe install
 	make -C alphatrails install
 	make -C starthought install
+	make -C starthought2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -126,3 +127,4 @@ clean:
 	make -C stereo.glitch.strobe clean
 	make -C alphatrails clean
 	make -C starthought clean
+	make -C starthought2 clean
