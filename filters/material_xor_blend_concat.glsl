@@ -39,7 +39,7 @@ void main(void)
     color = texture(samp, tc);
     vec4 color2;
     color2 = texture(mat_samp, tc);
-    vec2 pos = gl_FragCoord.xy / iResolution.xy;
+    vec2 pos = gl_FragCoord.xy / iResolution_.xy;
     color = (color * (0.5 * pos.x)) + (color2 * (0.5 * pos.y));
     ivec4 color_1, color_2;
     color_1 = ivec4(color * 255);
