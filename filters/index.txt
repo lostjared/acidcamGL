@@ -71,6 +71,7 @@ material_echo_shift3.glsl
 material_echo_mod.glsl
 material_echo_mod2.glsl
 material_echo_rand.glsl
+material_echo_blend_size.glsl
 material_white_light.glsl
 material_white_light_xor.glsl
 material_flash_gradient_strobe.glsl
