@@ -83,6 +83,7 @@ material_xor_blend_2.glsl
 material_xor_blend_3.glsl
 material_xor_blend_4.glsl
 material_xor_blend_alpha.glsl
+material_xor_blend_concat.glsl
 material_color_time.glsl
 material_or.glsl
 material_rgb_fade_xor.glsl
