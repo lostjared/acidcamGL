@@ -40,12 +40,14 @@ void main(void)
     vec4 color2x;
     color2x = texture(mat_samp, tc);
     vec2 pos = gl_FragCoord.xy / iResolution_.xy;
-    color = (color2x * (0.5 * pos.x)) + (color2x * (0.5 * pos.y));
+    color2x = ((color2x) * (0.2 * pos.x)) + ((color2x) * (0.2 * pos.y));
+    color = (0.5 * color) + (0.5 * color2x);
     vec4 color2 = texture(samp, tc/2);
     vec4 color3 = texture(samp, tc/4);
     vec4 color4 = texture(samp, tc/8);
     color = (color * 0.4) + (color2 * 0.4) + (color3 * 0.4) + (color4 * 0.4) ;
 }
+
 
 
 

@@ -57,6 +57,7 @@ material_alphablend_add.glsl
 material_alphablend_normal.glsl
 material_with_source.glsl
 material_coord.glsl
+material_coord_rev.glsl
 material_color_shift_fade.glsl
 material_color_shift_fade_xor.glsl
 material_rgb_mix.glsl
