@@ -11,6 +11,7 @@ addup_blend.glsl
 addup_cos.glsl
 dark_addup_xor.glsl
 picolor.glsl
+pigrid.glsl
 echo.glsl
 echo_2.glsl
 echo_3.glsl
