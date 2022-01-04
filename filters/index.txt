@@ -35,6 +35,9 @@ echo_bgr.glsl
 mirror1.glsl
 mirror2.glsl
 mirror3.glsl
+mirror1_s.glsl
+mirror2_s.glsl
+mirror3_s.glsl
 lightfade_xor.glsl
 lightfade.glsl
 lightfadedark.glsl
