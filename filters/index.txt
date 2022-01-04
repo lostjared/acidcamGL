@@ -32,6 +32,9 @@ echo_or_and_xor.glsl
 echo_xor_or_and.glsl
 echo_rgb.glsl
 echo_bgr.glsl
+mirror1.glsl
+mirror2.glsl
+mirror3.glsl
 lightfade_xor.glsl
 lightfade.glsl
 lightfadedark.glsl
