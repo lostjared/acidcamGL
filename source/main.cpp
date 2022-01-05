@@ -82,9 +82,11 @@ std::string outstr_arr[] = {
     "    ",
     "Enviorment Variables:",
     "    SHADER_PATH path to shaders",
-    "    AC_PLUGIN_PATH",
     "    AC_CUSTOM_PATH",
     "    FFMPEG_PATH",
+#ifndef _WIN32
+    "    AC_PLUGIN_PATH",
+#endif
     "    ",
     "Controls:",
     "    ",
