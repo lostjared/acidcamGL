@@ -30,13 +30,13 @@ extern "C" void filter(cv::Mat &frame) {
         size_x += 2;
         size_y += 2;
         
-        if(size_x > frame.cols/2) {
+        if(size_x > frame.cols/2 || size_y > frame.rows/2) {
             dir = 0;
         }
     } else {
         size_x -= 2;
         size_y -= 2;
-        if(size_x <= 2) {
+        if(size_x <= 2 || size_y <= 2) {
             dir = 1;
         }
     }
