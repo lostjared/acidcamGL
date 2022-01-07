@@ -61,3 +61,5 @@ stereo.glitch.2.acidcam
 stereo.glitch.strobe.acidcam
 alphatrails.acidcam
 starthought.acidcam
+starthought2.acidcam
+mirrorcollection.acidcam
