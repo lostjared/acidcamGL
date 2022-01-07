@@ -2,13 +2,9 @@
 
 extern "C" void filter(cv::Mat &frame) {
     static ac::MatrixCollection<8> collection;
-    if(collection.empty()) {
-        srand(static_cast<unsigned int>(time(0)));
-    }
     collection.shiftFrames(frame);
     
     static int size_x = 24, size_y = 24;
-    
     static auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
         static int findex = 0;
         for(int z = offset; z <  offset+size; ++z) {
