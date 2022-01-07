@@ -63,3 +63,4 @@ alphatrails.acidcam
 starthought.acidcam
 starthought2.acidcam
 mirrorcollection.acidcam
+placement.acidcam
