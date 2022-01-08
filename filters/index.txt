@@ -13,6 +13,7 @@ dark_addup_xor.glsl
 picolor.glsl
 pigrid.glsl
 gridcolor_gradient.glsl
+average_pixels.glsl
 echo.glsl
 echo_2.glsl
 echo_3.glsl
