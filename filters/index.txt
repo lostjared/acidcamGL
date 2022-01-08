@@ -54,6 +54,7 @@ alpha_xor.glsl
 color_xor.glsl
 color_time.glsl
 fill_white.glsl
+matrix_mul.glsl
 material.glsl
 material_mirror1.glsl
 material_mirror2.glsl
