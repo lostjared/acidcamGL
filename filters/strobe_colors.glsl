@@ -40,8 +40,6 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    ivec4 source = ivec4(color * 255);
-    vec2 pos = gl_FragCoord.xy/iResolution_.xy;
     color[0] = color[0] * sin(fract(alpha * timeval));
     color[1] = color[1] * cos(fract(alpha * timeval));
     color[2] = color[2] * tan(fract(alpha * timeval));
