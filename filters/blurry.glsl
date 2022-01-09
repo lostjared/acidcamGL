@@ -32,15 +32,12 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    vec4 color_one = color;
-    ivec4 source = ivec4(color * 255);
-    source += ivec4(inc_value);
-    for(int i = 0; i < 3; ++i) {
-        color[i] = float(source[i]) / 255;
-    }
-    color = (0.3 * color) + (0.7 * color_one);
-}
+    vec4 color_one = texture(samp, tc-0.02);
+    vec4 color_two = texture(samp, tc-0.04);
+    
+    color = (color * 0.3) + (color_two * 0.5) + (color_one * 0.3);
 
+}
 
 
 
