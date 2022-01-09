@@ -58,6 +58,7 @@ fill_white.glsl
 matrix_mul.glsl
 matrix_mul2.glsl
 matrix_mul3.glsl
+matrix_mul4.glsl
 strobe_colors.glsl
 material.glsl
 material_mirror1.glsl
