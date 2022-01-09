@@ -40,6 +40,9 @@ mirror3.glsl
 mirror1_s.glsl
 mirror2_s.glsl
 mirror3_s.glsl
+mirror_blur1.glsl
+mirror_blur2.glsl
+mirror_blur3.glsl
 lightfade_xor.glsl
 lightfade.glsl
 lightfadedark.glsl
