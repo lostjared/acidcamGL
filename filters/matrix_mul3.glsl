@@ -40,6 +40,7 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
+    vec4 tcolor = color;
     ivec4 source = ivec4(color * 255) / 2;
     mat4 matrix = mat4(
                  tc[0], tc[1], tc[1], tc[0],
@@ -49,6 +50,7 @@ void main(void)
     
     color = color * matrix;
     color = xor_RGB(color, source);
+    color = (0.5 * tcolor) + (0.5 * color);
 }
 
 
