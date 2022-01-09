@@ -64,3 +64,4 @@ starthought.acidcam
 starthought2.acidcam
 mirrorcollection.acidcam
 placement.acidcam
+black_square.acidcam
