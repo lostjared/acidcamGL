@@ -8,14 +8,16 @@ foreach $fi (@f) {
     my $pos = index $fi, "-";
     if($pos != -1) {
         my $pos2 = index $fi, "_", $pos;
-        my $pos3 = index $fi, "_", $pos2+1;
-        if($pos3 != -1) {
-            my $r = substr($fi, $pos+1, $pos3-$pos-1);
-            $list{$r} = $fi;
-            #print $r . "\n";
+        if($pos != -1) {
+            my $pos3 = index $fi, "_", $pos2+1;
+            if($pos3 != -1) {
+                my $r = substr($fi, $pos+1, $pos3-$pos-1);
+                $list{$r} = $fi;
+                #print $r . "\n";
+            }
         }
     }
 }
-foreach $i (sort keys %list) {
+foreach my $i (sort keys %list) {
     print $list{$i} . "\n";
 }
