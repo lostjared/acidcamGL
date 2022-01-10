@@ -1,5 +1,10 @@
 #!/usr/bin/perl
 
+# use
+# sort_images.pl directory -2020
+# or
+# sort_images.pl directory -2021
+
 my $dir = shift @ARGV;
 my $src = shift @ARGV;
 opendir $d, $dir or die("Could not open directory");
