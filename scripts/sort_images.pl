@@ -16,9 +16,10 @@ foreach $fi (@f) {
                 my $r = substr($fi, $pos+1, $pos3-$pos-1);
                 my $t = substr($r, $ti, length ($r));
                 
-                if ($r =~ m/(\d+).(\d+).(\d+)/) {
+                if ($r =~ m/(\d+).(\d+).(\d+)_(\d+).(\d+).(\d+)/) {
                     
-                    $list{$r} = $fi;
+                    $s = $2 . "/" . $3 . "/" . $1 . " " . $4 . ":" . $5 . ":" . $6;
+                    $list{$s} = $fi;
                 }
             }
         }
