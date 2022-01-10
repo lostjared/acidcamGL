@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+
+use File::stat;
+use Time::localtime;
+
 my $dir = shift @ARGV;
 my $src = shift @ARGV;
 opendir $d, $dir or die("Could not open directory");
@@ -12,10 +16,11 @@ foreach $fi (@f) {
         if($pos2 != -1) {
             my $pos3 = index $fi, "_", $pos2+1;
             if($pos3 != -1) {
-                my $r = substr($fi, $pos, $pos3-$pos-1);
-                
-                $list{$r} = $fi;
-                #print $r . "\n";
+                my $r = substr($fi, $pos, $pos2-$pos);
+                if ($r =~ m/(\d+).(\d+).(\d+)/) {
+                    $list{$2 . $3 . $fi} = $fi;
+                    
+                }
             }
         }
     }
