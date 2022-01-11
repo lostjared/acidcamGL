@@ -1,10 +1,5 @@
 #!/usr/bin/perl
 
-# use
-# sort_images.pl directory -2020
-# or
-# sort_images.pl directory -2021
-
 my $dir = shift @ARGV;
 my $src = shift @ARGV;
 opendir $d, $dir or die("Could not open directory");
@@ -23,7 +18,7 @@ foreach $fi (@f) {
                 
                 if ($r =~ m/(\d+).(\d+).(\d+)_(\d+).(\d+).(\d+)/) {
                     
-                    $s = $2 . "/" . $3 . "/" . $1 . " " . $4 . ":" . $5 . ":" . $6;
+                    $s = $2 . "-" . $3 . "-" . $1 . " " . $4 . ":" . $5 . ":" . $6;
                     $list{$s} = $fi;
                 }
             }
