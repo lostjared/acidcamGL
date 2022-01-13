@@ -275,6 +275,7 @@ namespace acidcam {
             if(debug) {
                 std::cout << "acidcam: Shader Program Loaded: " << program.name() << "\n";
             }
+            shader_index = index;
         }
         
         

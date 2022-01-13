@@ -7,7 +7,6 @@
 #include<cstdlib>
 #include"stereo.h"
 acidcam::AcidCam_Window main_window;
-
 std::unordered_map<std::string, int> draw_strings_map;
 
 
