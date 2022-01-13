@@ -273,7 +273,7 @@ namespace acidcam {
         void setShader(int index) {
             program = shaders[index];
             if(debug) {
-                std::cout << "acidcam: Shader Program - " << index << " - Loaded: " << program.name() << "\n";
+                std::cout << "acidcam: Shader Program: " << index << " - Loaded: " << program.name() << "\n";
             }
             shader_index = index;
         }
