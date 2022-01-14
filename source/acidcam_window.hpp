@@ -909,6 +909,7 @@ namespace acidcam {
         
         void setFilterIndex(const int &i) {
             index = i;
+            ac_on = true;
         }
         
         std::fstream *stdout_file;
