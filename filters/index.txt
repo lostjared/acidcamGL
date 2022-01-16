@@ -37,6 +37,7 @@ echo_bgr.glsl
 reverse.glsl
 reverse_vert.glsl
 reverse_xy.glsl
+reverse_alpha.glsl
 mirror1.glsl
 mirror2.glsl
 mirror3.glsl
