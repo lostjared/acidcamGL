@@ -49,6 +49,8 @@ mirror_blur2.glsl
 mirror_blur3.glsl
 mirror_rev.glsl
 mirror_revy.glsl
+mirror_rev2.glsl
+mirror_rev2y.glsl
 lightfade_xor.glsl
 lightfade.glsl
 lightfadedark.glsl
