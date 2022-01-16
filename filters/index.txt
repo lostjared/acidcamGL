@@ -35,6 +35,7 @@ echo_xor_or_and.glsl
 echo_rgb.glsl
 echo_bgr.glsl
 reverse.glsl
+reverse_vert.glsl
 mirror1.glsl
 mirror2.glsl
 mirror3.glsl
