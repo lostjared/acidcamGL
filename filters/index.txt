@@ -47,6 +47,7 @@ mirror3_s.glsl
 mirror_blur1.glsl
 mirror_blur2.glsl
 mirror_blur3.glsl
+mirror_rev.glsl
 lightfade_xor.glsl
 lightfade.glsl
 lightfadedark.glsl
@@ -109,6 +110,7 @@ material_white_light_xor.glsl
 material_flash_gradient_strobe.glsl
 material_tex_xor.glsl
 material_rgb.glsl
+material_mirror_alpha_xor.glsl
 material_xor.glsl
 material_xor_blend_1.glsl
 material_xor_blend_2.glsl
