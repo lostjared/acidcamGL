@@ -41,6 +41,9 @@ reverse_alpha.glsl
 mirror1.glsl
 mirror2.glsl
 mirror3.glsl
+mirror1_op.glsl
+mirror2_op.glsl
+mirror3_op.glsl
 mirror1_s.glsl
 mirror2_s.glsl
 mirror3_s.glsl
