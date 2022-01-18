@@ -55,6 +55,7 @@ mirror_revy.glsl
 mirror_rev2.glsl
 mirror_rev2y.glsl
 mirror_offset.glsl
+mirror_offset_rev.glsl
 lightfade_xor.glsl
 lightfade.glsl
 lightfadedark.glsl
