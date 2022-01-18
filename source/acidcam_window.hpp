@@ -910,6 +910,8 @@ namespace acidcam {
         void setFilterIndex(const int &i) {
             index = i;
             if(i != 0) ac_on = true;
+            
+            std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
         }
         
         std::fstream *stdout_file;
