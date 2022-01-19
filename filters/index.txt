@@ -16,6 +16,7 @@ gridcolor_gradient.glsl
 average_pixels.glsl
 blurry.glsl
 blur_offset.glsl
+blur_offset_color_fade.glsl
 echo.glsl
 echo_2.glsl
 echo_3.glsl
