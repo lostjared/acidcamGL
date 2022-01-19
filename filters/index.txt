@@ -85,6 +85,9 @@ material_mirror1.glsl
 material_mirror2.glsl
 material_mirror3.glsl
 material_mirror_alpha.glsl
+material_mirror1_color_blend.glsl
+material_mirror2_color_blend.glsl
+material_mirror3_color_blend.glsl
 material_mirror_xor.glsl
 material_mirror_rev1.glsl
 material_gridcolor_gradient.glsl
