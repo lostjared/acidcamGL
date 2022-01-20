@@ -3,7 +3,6 @@
 #include<ctime>
 
 extern "C" void filter(cv::Mat  &frame) {
-/*
     cv::Mat img;
     ac::ac_resize(frame, img, cv::Size(frame.cols/2, frame.rows));
     static ac::MatrixCollection<5> collection;
@@ -26,5 +25,4 @@ extern "C" void filter(cv::Mat  &frame) {
             frame.at<cv::Vec3b>(z, i) = cv::Vec3b(0, 0, 0);
         }
     }
-*/
 }

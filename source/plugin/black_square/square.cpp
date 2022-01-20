@@ -1,7 +1,6 @@
 #include "ac.h"
 
 extern "C" void filter(cv::Mat &frame) {
-    /*
     for(int z = 0; z < frame.rows; z += 32) {
         for(int i = 0; i < frame.cols; i += 32) {
             for(int y = 1; y < 31; ++y) {
@@ -14,5 +13,4 @@ extern "C" void filter(cv::Mat &frame) {
             }
         }
     }
-    */
 }

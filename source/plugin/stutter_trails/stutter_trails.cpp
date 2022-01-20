@@ -3,6 +3,7 @@
 #include<ctime>
 
 void stutter_filter(cv::Mat  &frame) {
+    
     static cv::Mat stored;
     static cv::Size stored_size;
     

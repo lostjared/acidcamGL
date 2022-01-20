@@ -10,7 +10,6 @@ unsigned char clip_cast(double f) {
 }
 
 extern "C" void filter(cv::Mat  &frame) {
-    
     static constexpr int MAX = 8;
     int PIXEL_SIZE=4+(rand()%36);
     static ac::MatrixCollection<MAX> collection;
@@ -34,7 +33,6 @@ extern "C" void filter(cv::Mat  &frame) {
                     }
                 }
             }
-            
         }
         static int adir = 1;
         if(adir == 1) {
