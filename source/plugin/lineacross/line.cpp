@@ -11,6 +11,7 @@ unsigned char wrap_cast(double d) {
 }
 
 extern "C" void filter(cv::Mat  &frame) {
+    /*
     static constexpr int MAX = 8;
     static ac::MatrixCollection<MAX> collection;
     if(collection.empty()) {
@@ -72,4 +73,5 @@ extern "C" void filter(cv::Mat  &frame) {
     if(off > MAX-1) {
         off = 0;
     }
+    */
 }

@@ -29,7 +29,6 @@ stuckrowline.acidcam
 frame_stutter.acidcam
 squarexorx4.acidcam
 squarexorx2.acidcam
-pixel_lag.acidcam
 def_stutter.acidcam
 stutter_sbrv.acidcam
 stutter_trails.acidcam
@@ -38,7 +37,6 @@ stutter_square2.acidcam
 xor_blend.acidcam
 fractal.acidcam
 square_resize.acidcam
-pixel_lag2.acidcam
 outline.acidcam
 outline_black.acidcam
 canny_restore.acidcam
@@ -53,15 +51,8 @@ setframelast.acidcam
 xor_blend_2.acidcam
 downward_line.acidcam
 downward_line2.acidcam
-lineacross.acidcam
-stereo.delay.acidcam
-stereo.glitch.acidcam
-stereo.glitch.delay.acidcam
-stereo.glitch.2.acidcam
-stereo.glitch.strobe.acidcam
 alphatrails.acidcam
 starthought.acidcam
 starthought2.acidcam
 mirrorcollection.acidcam
 placement.acidcam
-black_square.acidcam

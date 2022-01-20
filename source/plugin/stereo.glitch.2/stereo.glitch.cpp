@@ -3,6 +3,7 @@
 #include<ctime>
 
 extern "C" void filter(cv::Mat  &frame) {
+    /*
     cv::Mat img;
     ac::ac_resize(frame, img, cv::Size(frame.cols/2, frame.rows));
     cv::Mat copy = img.clone();
@@ -21,5 +22,5 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b pix = copy.at<cv::Vec3b>(z, i);
             pixel = pix;
         }
-    }
+    }*/
 }
