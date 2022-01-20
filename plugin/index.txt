@@ -31,7 +31,6 @@ squarexorx4.acidcam
 squarexorx2.acidcam
 def_stutter.acidcam
 stutter_sbrv.acidcam
-stutter_trails.acidcam
 stutter_square.acidcam
 stutter_square2.acidcam
 xor_blend.acidcam
