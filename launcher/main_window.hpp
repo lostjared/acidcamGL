@@ -53,6 +53,10 @@ private:
     QLineEdit *start_shader;
     QLineEdit *start_filter;
     QLineEdit *start_sec;
+    QCheckBox *record_video;
+    QComboBox *record_type;
+    QLineEdit *record_name;
+    QLineEdit *record_crf;
     std::vector<FILE*> fptr;
 };
 

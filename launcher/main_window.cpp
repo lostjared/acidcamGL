@@ -169,6 +169,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(start_shader, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(start_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(start_sec, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    
+    record_video = new QCheckBox(tr("Record"), this);
+    record_video->setStyleSheet(style_info);
+    record_video->setGeometry(20, 135+40+35, 100, 30);
+    record_type = new QComboBox(this);
+    record_type->setStyleSheet(style_info);
+    record_type->setGeometry(125, 135+40+35, 100, 30);
+    record_type->addItem("x264");
+    record_type->addItem("x265");
+    record_name = new QLineEdit(tr("output.mp4"), this);
+    record_name->setStyleSheet(style_info);
+    record_name->setGeometry(240, 135+40+35, 250, 30);
+    QLabel *crf_lbl = new QLabel(tr("CRF"), this);
+    crf_lbl->setStyleSheet(style_info);
+    crf_lbl->setGeometry(240+260, 135+40+35, 100, 30);
+    record_crf = new QLineEdit(tr("22"), this);
+    record_crf->setStyleSheet(style_info);
+    record_crf->setGeometry(240+260+40, 135+40+35, 100, 30);
+
+    connect(record_crf, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    connect(record_name, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+
+    connect(record_video, SIGNAL(clicked()), this, SLOT(updateCommand()));
+    connect(record_type, SIGNAL(currentIndexChanged(int)), this, SLOT(comboChanged_mode(int)));
+    
     updateCommand();
 }
 
@@ -314,6 +339,18 @@ void MainWindow::updateCommand() {
         cmd_list << "-S" << start_filter->text();
     if(start_sec->text() != "0")
         cmd_list << "-7" << start_sec->text();
+    
+    if(record_video->isChecked()) {
+        if(record_type->currentIndex() == 0) {
+            cmd_list << "-4";
+        } else {
+            cmd_list << "-5";
+        }
+        cmd_list << "-o";
+        cmd_list << record_name->text();
+        cmd_list << "-m";
+        cmd_list << record_crf->text();
+    }
 
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
