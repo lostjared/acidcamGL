@@ -31,6 +31,7 @@ public slots:
     void selectPath();
     void setMatPath();
     void setPlaylistPath();
+    void setAutoFilter();
 signals:
     void LogString(const QString &text);
 private:
@@ -65,6 +66,8 @@ private:
     QPushButton *playlist_set;
     QCheckBox *enable_playback;
     QLineEdit *enable_bpm;
+    QLineEdit *auto_filter;
+    QPushButton *auto_set;
     std::vector<FILE*> fptr;
 };
 

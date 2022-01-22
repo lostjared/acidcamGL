@@ -23,10 +23,10 @@ ServerThread *tv;
 QString application_path = "/Applications/acidcamGL";
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-    setFixedSize(1280, 1280);
+    setFixedSize(1280, 375+500+10);
     setWindowTitle("acidcamGL - Start New Session");
     command_stdout = new QTextEdit("acidcamGL Launcher - written by Jared Bruni", this);
-    command_stdout->setGeometry(5, 1280/2, 1280-10, 1280/2-5);
+    command_stdout->setGeometry(5, 375, 1280-10, 500);
     command = new QLineEdit("", this);
     command->setGeometry(5, 10, 1280-110, 30);
     command_stdout->setReadOnly(true);
@@ -243,6 +243,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
   
     connect(enable_playback, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
+    QLabel *auto_lbl = new QLabel(tr("AutoFilter"), this);
+    auto_lbl->setStyleSheet(style_info);
+    auto_lbl->setGeometry(20, 135+40+35+35+35+35, 100, 30);
+    
+    auto_filter = new QLineEdit(tr(""), this);
+    auto_filter->setStyleSheet(style_info);
+    auto_filter->setGeometry(125, 135+40+35+35+35+35, 200, 30);
+    
+    auto_set = new QPushButton(tr("Select"), this);
+    auto_set->setStyleSheet(style_info);
+    auto_set->setGeometry(330, 135+40+35+35+35+35, 100, 30);
+
+    connect(auto_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+  
+    connect(auto_set, SIGNAL(clicked()), this, SLOT(setAutoFilter()));
+
     
     updateCommand();
 }
@@ -312,6 +328,13 @@ void MainWindow::setPlaylistPath() {
     QString name = QFileDialog::getOpenFileName(this,
         tr("Open Playlist"), "/Users", tr("Playlist Files (*.key)"));
     playlist_file->setText(name);
+    updateCommand();
+}
+
+void MainWindow::setAutoFilter() {
+    QString name = QFileDialog::getOpenFileName(this,
+        tr("Open Autofilter"), "/Users", tr("Autofilter Files (*.af)"));
+    auto_filter->setText(name);
     updateCommand();
 }
 
@@ -426,8 +449,12 @@ void MainWindow::updateCommand() {
         cmd_list << "-L" << (QString("\"") + playlist_file->text() + "\"");
     }
     
-    if(enable_playback->isChecked()) {
+    if(enable_playback->isChecked() && playlist_file->text() != "") {
         cmd_list << "-B" << "-q" << "-w" << enable_bpm->text();
+    }
+    
+    if(auto_filter->text() != "") {
+        cmd_list << "-A" << QString("\"") + auto_filter->text() + "\"";
     }
     
     QString buf;
