@@ -79,10 +79,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     select_video_text->setStyleSheet(style_info);
     select_video_text->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5, 60, 150, 30);
 
+#ifdef __APPLE__
     syphon_enabled = new QCheckBox(tr("Syphon Enabled"), this);
     syphon_enabled->setStyleSheet(style_info);
     syphon_enabled->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10, 60, 200, 30);
     connect(syphon_enabled, SIGNAL(clicked()), this, SLOT(updateCommand()));
+#endif
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
@@ -140,7 +142,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mon_text->setGeometry(215+150+10+15+200+150+10+150+50+10+50, 60+25+10+40, 100, 30);
     monitor_->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50, 60+25+10+40, 100, 30);
     command_stdout->setReadOnly(true);
-    command->setReadOnly(true);
+    command->setReadOnly(false);
     connect(full_screen, SIGNAL(clicked()), this, SLOT(updateCommand()));
     connect(full_screen_resize, SIGNAL(clicked()), this, SLOT(updateCommand()));
     //Log(QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory));
@@ -284,9 +286,6 @@ void MainWindow::updateCommand() {
         cmd_list << "-M";
         cmd_list << monitor_->text();
     }
-#ifdef __APPLE__
-    cmd_list << "-1 /Applications/acidcamGL/acidcamGL.app/Contents/MacOS/ffmpeg";
-#endif
 
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
