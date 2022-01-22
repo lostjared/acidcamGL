@@ -159,9 +159,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     start_filter = new QLineEdit(tr("0"), this);
     start_filter->setGeometry(335, 135+35, 100, 30);
     start_filter->setStyleSheet(style_info);
+    QLabel *start_sec_lbl = new QLabel(tr("Start At: "), this);
+    start_sec_lbl->setGeometry(335+110, 135+35, 100, 30);
+    start_sec_lbl->setStyleSheet(style_info);
+    start_sec = new QLineEdit(tr("0"), this);
+    start_sec->setStyleSheet(style_info);
+    start_sec->setGeometry(335+210, 135+35, 100, 30);
     connect(monitor_, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(start_shader, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(start_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    connect(start_sec, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     updateCommand();
 }
 
@@ -303,6 +310,10 @@ void MainWindow::updateCommand() {
     }
     cmd_list << "-H" << start_shader->text();
     cmd_list << "-S" << start_filter->text();
+    
+    if(start_sec->text() != "0")
+        cmd_list << "-7" << start_sec->text();
+    
 
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {

@@ -52,6 +52,7 @@ private:
     QCheckBox *syphon_enabled;
     QLineEdit *start_shader;
     QLineEdit *start_filter;
+    QLineEdit *start_sec;
     std::vector<FILE*> fptr;
 };
 
