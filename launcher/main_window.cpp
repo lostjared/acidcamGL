@@ -210,7 +210,40 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     connect(material_set, SIGNAL(clicked()), this, SLOT(setMatPath()));
     connect(material_filename, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    
+    QLabel *playlist_lbl = new QLabel(tr("Playlist: "), this);
+    playlist_lbl->setStyleSheet(style_info);
+    playlist_lbl->setGeometry(20, 135+40+35+35+35, 100, 30);
+    
+    playlist_file = new QLineEdit(tr(""), this);
+    playlist_file->setStyleSheet(style_info);
+    playlist_file->setGeometry(125, 135+40+35+35+35, 200, 30);
+    
+    playlist_set = new QPushButton(tr("Select"), this);
+    playlist_set->setStyleSheet(style_info);
+    playlist_set->setGeometry(330, 135+40+35+35+35, 100, 30);
 
+    connect(playlist_file, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+  
+    connect(playlist_set, SIGNAL(clicked()), this, SLOT(setPlaylistPath()));
+    
+    enable_playback = new QCheckBox(tr("Enable Playback"), this);
+    enable_playback->setStyleSheet(style_info);
+    enable_playback->setGeometry(440, 135+40+35+35+35,200, 30);
+    
+    QLabel *ebpm_lbl = new QLabel(tr("Beats per Minute: "), this);
+    ebpm_lbl->setStyleSheet(style_info);
+    ebpm_lbl->setGeometry(550+100, 135+40+35+35+35, 200, 30);
+    
+    enable_bpm = new QLineEdit(tr("60"), this);
+    enable_bpm->setStyleSheet(style_info);
+    enable_bpm->setGeometry(660+200, 135+40+35+35+35, 200, 30);
+
+    connect(enable_bpm, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+  
+    connect(enable_playback, SIGNAL(clicked()), this, SLOT(updateCommand()));
+    
+    
     updateCommand();
 }
 
@@ -272,6 +305,13 @@ void MainWindow::setMatPath() {
     QString name = QFileDialog::getOpenFileName(this,
         tr("Open Video/Image"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
     material_filename->setText(name);
+    updateCommand();
+}
+
+void MainWindow::setPlaylistPath() {
+    QString name = QFileDialog::getOpenFileName(this,
+        tr("Open Playlist"), "/Users", tr("Playlist Files (*.key)"));
+    playlist_file->setText(name);
     updateCommand();
 }
 
@@ -381,7 +421,15 @@ void MainWindow::updateCommand() {
         QString filename = QString("\"") + material_filename->text() + "\"";
         cmd_list << filename;
     }
-
+    
+    if(playlist_file->text() != "") {
+        cmd_list << "-L" << (QString("\"") + playlist_file->text() + "\"");
+    }
+    
+    if(enable_playback->isChecked()) {
+        cmd_list << "-B" << "-q" << "-w" << enable_bpm->text();
+    }
+    
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
         buf += cmd_list.at(i) + " ";

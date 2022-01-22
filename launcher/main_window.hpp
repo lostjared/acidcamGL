@@ -30,6 +30,7 @@ public slots:
     void selectVideo();
     void selectPath();
     void setMatPath();
+    void setPlaylistPath();
 signals:
     void LogString(const QString &text);
 private:
@@ -60,6 +61,10 @@ private:
     QLineEdit *record_crf;
     QLineEdit *material_filename;
     QPushButton *material_set;
+    QLineEdit *playlist_file;
+    QPushButton *playlist_set;
+    QCheckBox *enable_playback;
+    QLineEdit *enable_bpm;
     std::vector<FILE*> fptr;
 };
 
