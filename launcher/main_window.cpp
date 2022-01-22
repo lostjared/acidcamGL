@@ -308,12 +308,12 @@ void MainWindow::updateCommand() {
         cmd_list << "-M";
         cmd_list << monitor_->text();
     }
-    cmd_list << "-H" << start_shader->text();
-    cmd_list << "-S" << start_filter->text();
-    
+    if(start_shader->text() != "0")
+        cmd_list << "-H" << start_shader->text();
+    if(start_filter->text() != "0")
+        cmd_list << "-S" << start_filter->text();
     if(start_sec->text() != "0")
         cmd_list << "-7" << start_sec->text();
-    
 
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
