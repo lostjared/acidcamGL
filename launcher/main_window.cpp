@@ -81,11 +81,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     select_video_text->setStyleSheet(style_info);
     select_video_text->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5, 60, 150, 30);
 
-#ifdef __APPLE__
     syphon_enabled = new QCheckBox(tr("Syphon Enabled"), this);
     syphon_enabled->setStyleSheet(style_info);
     syphon_enabled->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10, 60, 200, 30);
     connect(syphon_enabled, SIGNAL(clicked()), this, SLOT(updateCommand()));
+#ifndef __APPLE__
+    syphon_enabled->hide();
 #endif
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     start_button = new QPushButton(tr("Launch"), this);
@@ -280,11 +281,19 @@ void MainWindow::launchProgram() {
     cmd_string = "acidcamGL ";
 #endif
     cmd_string += command->text();
+    
+#if defined(__APPLE__) || defined(__linux__)
     FILE *fptr_ = popen(cmd_string.toStdString().c_str(), "r");
     if(!fptr_) {
         std::cerr << "Error could not launch process...\n";
     }
     fptr.push_back(fptr_);
+#elif defined(_WIN32)
+    std::thread e([=]() {
+        system(cmd_string.toStdString().c_str());
+    });
+    e.detach();
+#endif
 }
 
 void MainWindow::Log(const QString &text) {
