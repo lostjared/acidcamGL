@@ -29,6 +29,7 @@ public slots:
     void selectShaders();
     void selectVideo();
     void selectPath();
+    void setMatPath();
 signals:
     void LogString(const QString &text);
 private:
@@ -57,6 +58,8 @@ private:
     QComboBox *record_type;
     QLineEdit *record_name;
     QLineEdit *record_crf;
+    QLineEdit *material_filename;
+    QPushButton *material_set;
     std::vector<FILE*> fptr;
 };
 

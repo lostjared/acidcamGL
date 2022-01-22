@@ -40,7 +40,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mode_select->setGeometry(60, 60, 200, 25);
     mode_select->addItem(tr("Capture Device"));
     mode_select->addItem(tr("Video File"));
+#ifdef __APPLE__
     mode_select->addItem(tr("Screen Capture"));
+#endif
     connect(mode_select, SIGNAL(currentIndexChanged(int)), this, SLOT(comboChanged_mode(int)));
     QLabel *temp2;
     temp2 = new QLabel(tr("Device Index: "), this);
@@ -194,6 +196,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(record_video, SIGNAL(clicked()), this, SLOT(updateCommand()));
     connect(record_type, SIGNAL(currentIndexChanged(int)), this, SLOT(comboChanged_mode(int)));
     
+    QLabel *mat_lbl = new QLabel(tr("Material: "), this);
+    mat_lbl->setStyleSheet(style_info);
+    mat_lbl->setGeometry(20, 135+40+35+35, 100, 30);
+    
+    material_filename = new QLineEdit(tr(""), this);
+    material_filename->setStyleSheet(style_info);
+    material_filename->setGeometry(125, 135+40+35+35, 200, 30);
+    
+    material_set = new QPushButton(tr("Select"), this);
+    material_set->setStyleSheet(style_info);
+    material_set->setGeometry(330, 135+40+35+35, 100, 30);
+    
+    connect(material_set, SIGNAL(clicked()), this, SLOT(setMatPath()));
+    connect(material_filename, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+
     updateCommand();
 }
 
@@ -251,6 +268,13 @@ void MainWindow::selectPath() {
     updateCommand();
 }
 
+void MainWindow::setMatPath() {
+    QString name = QFileDialog::getOpenFileName(this,
+        tr("Open Video/Image"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
+    material_filename->setText(name);
+    updateCommand();
+}
+
 void MainWindow::selectVideo() {
     QString name = QFileDialog::getOpenFileName(this,
         tr("Open Video"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
@@ -277,7 +301,7 @@ void MainWindow::updateCommand() {
     cmd_list << "-p";
     QString temp = "";
     temp += select_filters_text->text();
-    cmd_list << temp;
+    cmd_list << QString("\"") + temp + "\"";
     select_video->setEnabled(true);
     select_video_text->setEnabled(true);
     device_edit->setEnabled(true);
@@ -302,7 +326,7 @@ void MainWindow::updateCommand() {
         device_edit->setEnabled(false);
          if(select_video_text->text().length()>0) {
             cmd_list << "-i";
-            cmd_list << select_video_text->text();
+            cmd_list << QString("\"") + select_video_text->text() + "\"";
         }
     } else if(mode_select->currentIndex()==2) {
         cmd_list << "-G";
@@ -310,7 +334,7 @@ void MainWindow::updateCommand() {
 
     if(select_path_text->text().length()>0) {
         cmd_list << "-e";
-        cmd_list << select_path_text->text();
+        cmd_list << QString("\"") + select_path_text->text() + "\"";
     }
     std::string vf = window_res->text().toStdString();
     if(vf.find("x") != std::string::npos) {
@@ -350,6 +374,12 @@ void MainWindow::updateCommand() {
         cmd_list << record_name->text();
         cmd_list << "-m";
         cmd_list << record_crf->text();
+    }
+    
+    if(material_filename->text() != "") {
+        cmd_list << "-T";
+        QString filename = QString("\"") + material_filename->text() + "\"";
+        cmd_list << filename;
     }
 
     QString buf;
