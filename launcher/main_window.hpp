@@ -50,6 +50,8 @@ private:
     QCheckBox *full_screen_resize;
     QLineEdit *monitor_;
     QCheckBox *syphon_enabled;
+    QLineEdit *start_shader;
+    QLineEdit *start_filter;
     std::vector<FILE*> fptr;
 };
 

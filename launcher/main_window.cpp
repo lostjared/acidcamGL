@@ -146,7 +146,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(full_screen, SIGNAL(clicked()), this, SLOT(updateCommand()));
     connect(full_screen_resize, SIGNAL(clicked()), this, SLOT(updateCommand()));
     //Log(QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory));
+    
+    QLabel *start_lbl = new QLabel(tr("Shader: "), this);
+    start_lbl->setStyleSheet(style_info);
+    start_lbl->setGeometry(20, 135+35, 100, 30);
+    start_shader = new QLineEdit(tr("0"), this);
+    start_shader->setGeometry(120, 135+35, 100, 30);
+    start_shader->setStyleSheet(style_info);
+    QLabel *start_filter_lbl = new QLabel(tr("Filter: "), this);
+    start_filter_lbl->setGeometry(235, 135+35, 100, 30);
+    start_filter_lbl->setStyleSheet(style_info);
+    start_filter = new QLineEdit(tr("0"), this);
+    start_filter->setGeometry(335, 135+35, 100, 30);
+    start_filter->setStyleSheet(style_info);
     connect(monitor_, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    connect(start_shader, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    connect(start_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     updateCommand();
 }
 
@@ -286,6 +301,8 @@ void MainWindow::updateCommand() {
         cmd_list << "-M";
         cmd_list << monitor_->text();
     }
+    cmd_list << "-H" << start_shader->text();
+    cmd_list << "-S" << start_filter->text();
 
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
