@@ -25,6 +25,7 @@ QString application_path = "/Applications/acidcamGL";
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setFixedSize(1280, 375+500+10);
     setWindowTitle("acidcamGL - Start New Session");
+    setWindowIcon(QPixmap(":/images/icon.png"));
     command_stdout = new QTextEdit("acidcamGL Launcher - written by Jared Bruni", this);
     command_stdout->setGeometry(5, 375, 1280-10, 500);
     command = new QLineEdit("", this);
