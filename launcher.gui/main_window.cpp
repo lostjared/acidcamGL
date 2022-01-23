@@ -358,7 +358,6 @@ void MainWindow::setOutputFile() {
         tr("Open Video"), "/Users", tr("Video Files (*.mp4 *.mkv *.m4v *.mov)"));
     record_name->setText(name);
     updateCommand();
-
 }
 
 void MainWindow::selectVideo() {
