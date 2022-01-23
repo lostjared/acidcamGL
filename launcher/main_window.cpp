@@ -181,20 +181,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     record_type->setGeometry(125, 135+40+35, 100, 30);
     record_type->addItem("x264");
     record_type->addItem("x265");
-    record_name = new QLineEdit(tr("output.mp4"), this);
+    record_name = new QLineEdit(tr(""), this);
     record_name->setStyleSheet(style_info);
     record_name->setGeometry(240, 135+40+35, 250, 30);
+    record_set = new QPushButton(tr("Select"), this);
+    record_set->setStyleSheet(style_info);
+    record_set->setGeometry(240+260, 135+40+35,100,30);
     QLabel *crf_lbl = new QLabel(tr("CRF"), this);
     crf_lbl->setStyleSheet(style_info);
-    crf_lbl->setGeometry(240+260, 135+40+35, 100, 30);
+    crf_lbl->setGeometry(240+260+110, 135+40+35, 100, 30);
     record_crf = new QLineEdit(tr("22"), this);
     record_crf->setStyleSheet(style_info);
-    record_crf->setGeometry(240+260+40, 135+40+35, 100, 30);
+    record_crf->setGeometry(240+260+40+110, 135+40+35, 100, 30);
 
     connect(record_crf, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(record_name, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
 
     connect(record_video, SIGNAL(clicked()), this, SLOT(updateCommand()));
+    
+    connect(record_set, SIGNAL(clicked()), this, SLOT(setOutputFile()));
+   
     connect(record_type, SIGNAL(currentIndexChanged(int)), this, SLOT(comboChanged_mode(int)));
     
     QLabel *mat_lbl = new QLabel(tr("Material: "), this);
@@ -347,6 +353,14 @@ void MainWindow::setAutoFilter() {
     updateCommand();
 }
 
+void MainWindow::setOutputFile() {
+    QString name = QFileDialog::getSaveFileName(this,
+        tr("Open Video"), "/Users", tr("Video Files (*.mp4 *.mkv *.m4v *.mov)"));
+    record_name->setText(name);
+    updateCommand();
+
+}
+
 void MainWindow::selectVideo() {
     QString name = QFileDialog::getOpenFileName(this,
         tr("Open Video"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
@@ -436,14 +450,14 @@ void MainWindow::updateCommand() {
     if(start_sec->text() != "0")
         cmd_list << "-7" << start_sec->text();
     
-    if(record_video->isChecked()) {
+    if(record_video->isChecked() && record_name->text() != "") {
         if(record_type->currentIndex() == 0) {
             cmd_list << "-4";
         } else {
             cmd_list << "-5";
         }
         cmd_list << "-o";
-        cmd_list << record_name->text();
+        cmd_list << QString("\"") + record_name->text() + "\"";
         cmd_list << "-m";
         cmd_list << record_crf->text();
     }

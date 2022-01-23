@@ -32,6 +32,7 @@ public slots:
     void setMatPath();
     void setPlaylistPath();
     void setAutoFilter();
+    void setOutputFile();
 signals:
     void LogString(const QString &text);
 private:
@@ -60,6 +61,7 @@ private:
     QComboBox *record_type;
     QLineEdit *record_name;
     QLineEdit *record_crf;
+    QPushButton *record_set;
     QLineEdit *material_filename;
     QPushButton *material_set;
     QLineEdit *playlist_file;
