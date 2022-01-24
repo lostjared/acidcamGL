@@ -157,7 +157,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QLabel *mon_text = new QLabel(tr("Monitor: "), this);
     mon_text->setStyleSheet(style_info);
     mon_text->setGeometry(215+150+10+15+200+150+10+150+50+10+50, 60+25+10+40, 100, 30);
-    monitor_->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50, 60+25+10+40, 100, 30);
+    monitor_->setGeometry(215+150+10+15+200+150+10+150+150+10+10+30, 60+25+10+40, 50, 30);
+    
+    QLabel *fps_lbl = new QLabel(tr("FPS: "), this);
+    fps_lbl->setStyleSheet(style_info);
+    fps_lbl->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50+40, 60+25+10+40, 50, 30);
+  
+    fps = new QLineEdit(tr(""), this);
+    fps->setStyleSheet(style_info);
+    fps->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50+60+30, 60+25+10+40, 50, 30);
+  
+    connect(fps, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    
+    
+    
     command_stdout->setReadOnly(true);
     command->setReadOnly(false);
     connect(full_screen, SIGNAL(clicked()), this, SLOT(updateCommand()));
@@ -423,6 +436,9 @@ void MainWindow::updateCommand() {
                 }
             }
         }
+        if(fps->text() != "") {
+            cmd_list << "-u" << fps->text();
+        }
     } else if(mode_select->currentIndex()==1) {
         device_edit->setEnabled(false);
          if(select_video_text->text().length()>0) {
@@ -448,6 +464,8 @@ void MainWindow::updateCommand() {
             }
         }
     }
+    
+    
     if(syphon_enabled->isChecked()) {
         cmd_list << "-Y";
     }

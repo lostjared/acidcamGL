@@ -72,6 +72,7 @@ private:
     QPushButton *auto_set;
     QCheckBox *enable_res;
     QCheckBox *enable_cam;
+    QLineEdit *fps;
     std::vector<FILE*> fptr;
 };
 
