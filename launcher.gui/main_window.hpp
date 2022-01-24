@@ -70,6 +70,8 @@ private:
     QLineEdit *enable_bpm;
     QLineEdit *auto_filter;
     QPushButton *auto_set;
+    QCheckBox *enable_res;
+    QCheckBox *enable_cam;
     std::vector<FILE*> fptr;
 };
 

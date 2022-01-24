@@ -118,17 +118,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(select_path, SIGNAL(clicked()), this, SLOT(selectPath()));
     QString homeLocation = QStandardPaths::locate(QStandardPaths::PicturesLocation, QString(), QStandardPaths::LocateDirectory);
     select_path_text->setText(homeLocation+"acidcamGL_Snapshot");
-    QLabel *camera_temp = new QLabel(tr("Camera Resolution: "), this);
-    camera_temp->setStyleSheet(style_info);
-    camera_temp->setGeometry(15, 60+25+10+40, 200, 25);
+    //QLabel *camera_temp = new QLabel(tr("Camera Resolution: "), this);
+    //camera_temp->setStyleSheet(style_info);
+    //camera_temp->setGeometry(15, 60+25+10+40, 200, 25);
+    
+    enable_cam = new QCheckBox(tr("Camera Resolution: "), this);
+    enable_cam->setStyleSheet(style_info);
+    enable_cam->setGeometry(15, 60+25+10+40, 200, 25);
+    
+    connect(enable_cam, SIGNAL(clicked()), this, SLOT(updateCommand()));
+    
+    
     camera_res = new QLineEdit(tr("1280x720"), this);
     camera_res->setStyleSheet(style_info);
     camera_res->setGeometry(215, 60+25+10+40, 150, 30);
     connect(camera_res, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
 
-    QLabel *camera_temp1 = new QLabel(tr("Window Resolution: "), this);
-    camera_temp1->setStyleSheet(style_info);
-    camera_temp1->setGeometry(215+150+10+15, 60+25+10+40, 200, 25);
+   // QLabel *camera_temp1 = new QLabel(tr("Window Resolution: "), this);
+    enable_res = new QCheckBox(tr("Window Resolution: "), this);
+    enable_res->setStyleSheet(style_info);
+    enable_res->setGeometry(215+150+10+15, 60+25+10+40, 200, 25);
+    
+    connect(enable_res, SIGNAL(clicked()), this, SLOT(updateCommand()));
+    
+    
     window_res = new QLineEdit(tr("1280x720"), this);
     window_res->setStyleSheet(style_info);
     window_res->setGeometry(215+150+10+15+200, 60+25+10+40, 150, 30);
@@ -404,8 +417,10 @@ void MainWindow::updateCommand() {
             std::string left = vf.substr(0, vf.find("x"));
             std::string right = vf.substr(vf.find("x")+1, vf.length());
             if(atoi(left.c_str()) >= 320 && atoi(right.c_str()) >= 240) {
-                cmd_list << "-c";
-                cmd_list << camera_res->text();
+                if(enable_cam->isChecked()) {
+                    cmd_list << "-c";
+                    cmd_list << camera_res->text();
+                }
             }
         }
     } else if(mode_select->currentIndex()==1) {
@@ -427,8 +442,10 @@ void MainWindow::updateCommand() {
         std::string left = vf.substr(0, vf.find("x"));
         std::string right = vf.substr(vf.find("x")+1, vf.length());
         if(atoi(left.c_str()) >= 320 && atoi(right.c_str()) >= 240) {
-            cmd_list << "-r";
-            cmd_list << window_res->text();
+            if(enable_res->isChecked()) {
+                cmd_list << "-r";
+                cmd_list << window_res->text();
+            }
         }
     }
     if(syphon_enabled->isChecked()) {
