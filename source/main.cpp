@@ -170,7 +170,16 @@ void rotate90(std::string input, std::string filename) {
 extern void messageOutput(std::string title, std::string text);
 #endif
 
+
+void system_pause() {
+#ifdef _WIN32
+    system("PAUSE");
+#endif
+}
+
+
 int main(int argc, char **argv) {
+    atexit(system_pause);
     if(argc == 1) {
 #if defined(SYPHON_SERVER)
         std::string text = "Arguments Required: \n\n";
