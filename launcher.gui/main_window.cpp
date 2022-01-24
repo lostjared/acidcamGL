@@ -118,9 +118,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(select_path, SIGNAL(clicked()), this, SLOT(selectPath()));
     QString homeLocation = QStandardPaths::locate(QStandardPaths::PicturesLocation, QString(), QStandardPaths::LocateDirectory);
     select_path_text->setText(homeLocation+"acidcamGL_Snapshot");
-    //QLabel *camera_temp = new QLabel(tr("Camera Resolution: "), this);
-    //camera_temp->setStyleSheet(style_info);
-    //camera_temp->setGeometry(15, 60+25+10+40, 200, 25);
     
     enable_cam = new QCheckBox(tr("Camera Resolution: "), this);
     enable_cam->setStyleSheet(style_info);
