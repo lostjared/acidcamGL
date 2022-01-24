@@ -173,6 +173,7 @@ extern void messageOutput(std::string title, std::string text);
 
 void system_pause() {
 #ifdef _WIN32
+    glfwTerminate();
     system("PAUSE");
 #endif
 }
