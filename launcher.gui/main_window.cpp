@@ -131,7 +131,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     camera_res->setGeometry(215, 60+25+10+40, 150, 30);
     connect(camera_res, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
 
-   // QLabel *camera_temp1 = new QLabel(tr("Window Resolution: "), this);
     enable_res = new QCheckBox(tr("Window Resolution: "), this);
     enable_res->setStyleSheet(style_info);
     enable_res->setGeometry(215+150+10+15, 60+25+10+40, 200, 25);
@@ -268,7 +267,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     enable_bpm = new QLineEdit(tr("60"), this);
     enable_bpm->setStyleSheet(style_info);
-    enable_bpm->setGeometry(660+200, 135+40+35+35+35, 200, 30);
+    enable_bpm->setGeometry(660+170, 135+40+35+35+35, 50, 30);
 
     connect(enable_bpm, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
   
