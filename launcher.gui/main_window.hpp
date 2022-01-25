@@ -74,6 +74,7 @@ private:
     QCheckBox *enable_res;
     QCheckBox *enable_cam;
     QLineEdit *fps;
+    QCheckBox *custom_on;
     QLineEdit *custom_file;
     QPushButton *custom_set;
     std::vector<FILE*> fptr;

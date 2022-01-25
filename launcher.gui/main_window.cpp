@@ -119,13 +119,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QString homeLocation = QStandardPaths::locate(QStandardPaths::PicturesLocation, QString(), QStandardPaths::LocateDirectory);
     select_path_text->setText(homeLocation+"acidcamGL_Snapshot");
     
-    QLabel *custom_lbl = new QLabel(tr("Custom: "), this);
-    custom_lbl->setStyleSheet(style_info);
-    custom_lbl->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270, 60+25+10, 75, 25);
+    custom_on = new QCheckBox(tr("Custom: "), this);
+    custom_on->setStyleSheet(style_info);
+    custom_on->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270, 60+25+10, 75, 25);
+    
+    connect(custom_on, SIGNAL(clicked()), this, SLOT(updateCommand()));
+  
     
     custom_file = new QLineEdit(tr(""), this);
     custom_file->setStyleSheet(style_info);
-    custom_file->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270+75, 60+25+10, 150, 25);
+    custom_file->setGeometry(20+10+5+15+10+125+250+20+60+25+10+5+125+5+5+270+75, 60+25+10, 130, 25);
     
     custom_set = new QPushButton(tr("Select"), this);
     custom_set->setStyleSheet(style_info);
@@ -537,7 +540,7 @@ void MainWindow::updateCommand() {
     }
     
     
-    if(custom_file->text() != "") {
+    if(custom_on->isChecked() && custom_file->text() != "") {
         cmd_list << "-W" << QString("\"") + custom_file->text() + "\"";
     }
     
