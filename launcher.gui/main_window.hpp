@@ -33,6 +33,7 @@ public slots:
     void setPlaylistPath();
     void setAutoFilter();
     void setOutputFile();
+    void setCustomFile();
 signals:
     void LogString(const QString &text);
 private:
@@ -73,6 +74,8 @@ private:
     QCheckBox *enable_res;
     QCheckBox *enable_cam;
     QLineEdit *fps;
+    QLineEdit *custom_file;
+    QPushButton *custom_set;
     std::vector<FILE*> fptr;
 };
 

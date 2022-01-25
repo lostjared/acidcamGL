@@ -119,6 +119,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QString homeLocation = QStandardPaths::locate(QStandardPaths::PicturesLocation, QString(), QStandardPaths::LocateDirectory);
     select_path_text->setText(homeLocation+"acidcamGL_Snapshot");
     
+    QLabel *custom_lbl = new QLabel(tr("Custom: "), this);
+    custom_lbl->setStyleSheet(style_info);
+    custom_lbl->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270, 60+25+10, 75, 25);
+    
+    custom_file = new QLineEdit(tr(""), this);
+    custom_file->setStyleSheet(style_info);
+    custom_file->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270+75, 60+25+10, 150, 25);
+    
+    custom_set = new QPushButton(tr("Select"), this);
+    custom_set->setStyleSheet(style_info);
+    custom_set->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270+75+160, 60+25+10, 95, 30);
+    
+    connect(custom_file, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    connect(custom_set, SIGNAL(clicked()), this, SLOT(setCustomFile()));
+    
     enable_cam = new QCheckBox(tr("Camera Resolution: "), this);
     enable_cam->setStyleSheet(style_info);
     enable_cam->setGeometry(15, 60+25+10+40, 200, 25);
@@ -383,6 +398,16 @@ void MainWindow::setOutputFile() {
     updateCommand();
 }
 
+void MainWindow::setCustomFile() {
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Custom Index Directory"),
+                                                 "~",
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
+    if(dir.length()>0)
+        custom_file->setText(dir);
+    updateCommand();
+}
+
 void MainWindow::selectVideo() {
     QString name = QFileDialog::getOpenFileName(this,
         tr("Open Video"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
@@ -510,6 +535,12 @@ void MainWindow::updateCommand() {
     if(auto_filter->text() != "") {
         cmd_list << "-A" << QString("\"") + auto_filter->text() + "\"";
     }
+    
+    
+    if(custom_file->text() != "") {
+        cmd_list << "-W" << QString("\"") + custom_file->text() + "\"";
+    }
+    
     
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
