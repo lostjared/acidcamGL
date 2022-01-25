@@ -18,3 +18,4 @@ HEADERS += main_window.hpp sock_server.hpp
 SOURCES += main.cpp main_window.cpp sock_server.cpp
 
 QT += widgets concurrent
+RESOURCES += qresource.qrc
