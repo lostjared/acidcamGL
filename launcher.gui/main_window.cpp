@@ -89,6 +89,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 #ifndef __APPLE__
     syphon_enabled->hide();
 #endif
+    
+    video_repeat = new QCheckBox(tr("Repeat"), this);
+    video_repeat->setStyleSheet(style_info);
+    video_repeat->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10+170, 60, 100, 30);
+    connect(video_repeat, SIGNAL(clicked()), this, SLOT(updateCommand()));
+    
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     start_button = new QPushButton(tr("Launch"), this);
     start_button->setGeometry(1280-100, 10, 90, 30);
@@ -465,6 +471,11 @@ void MainWindow::updateCommand() {
         }
     } else if(mode_select->currentIndex()==1) {
         device_edit->setEnabled(false);
+        
+        if(video_repeat->isChecked()) {
+            cmd_list << "-R";
+        }
+        
          if(select_video_text->text().length()>0) {
             cmd_list << "-i";
             cmd_list << QString("\"") + select_video_text->text() + "\"";

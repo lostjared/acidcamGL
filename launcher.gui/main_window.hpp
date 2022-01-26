@@ -77,6 +77,7 @@ private:
     QCheckBox *custom_on;
     QLineEdit *custom_file;
     QPushButton *custom_set;
+    QCheckBox *video_repeat;
     std::vector<FILE*> fptr;
 };
 
