@@ -329,7 +329,8 @@ void MainWindow::launchProgram() {
     tvalue = "";
     QString cmd_string;
 #ifdef __APPLE__
-    cmd_string = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/acidcamGL ";
+    //cmd_string = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/acidcamGL ";
+    cmd_string = "acidcamGL "; // todo: set application path
 #else
     cmd_string = "acidcamGL ";
 #endif
