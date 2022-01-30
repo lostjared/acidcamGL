@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     device_edit = new QLineEdit("0", this);
     device_edit->setStyleSheet(style_info);
     device_edit->setGeometry(270+140+10, 60, 100, 25);
-
+    
     QLabel *select_temp = new QLabel(tr("Select Shaders:"), this);
     select_temp->setStyleSheet(style_info);
     select_temp->setGeometry(15, 60+25+15, 140, 20);
@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     select_video_text = new QLineEdit("", this);
     select_video_text->setStyleSheet(style_info);
     select_video_text->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5, 60, 150, 30);
-
+    
     syphon_enabled = new QCheckBox(tr("Syphon Enabled"), this);
     syphon_enabled->setStyleSheet(style_info);
     syphon_enabled->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10, 60, 200, 30);
@@ -131,7 +131,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     custom_on->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270, 60+25+10, 75, 25);
     
     connect(custom_on, SIGNAL(clicked()), this, SLOT(updateCommand()));
-  
+    
     
     custom_file = new QLineEdit(tr(""), this);
     custom_file->setStyleSheet(style_info);
@@ -155,7 +155,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     camera_res->setStyleSheet(style_info);
     camera_res->setGeometry(215, 60+25+10+40, 150, 30);
     connect(camera_res, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
-
+    
     enable_res = new QCheckBox(tr("Window Resolution: "), this);
     enable_res->setStyleSheet(style_info);
     enable_res->setGeometry(215+150+10+15, 60+25+10+40, 200, 25);
@@ -183,11 +183,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QLabel *fps_lbl = new QLabel(tr("FPS: "), this);
     fps_lbl->setStyleSheet(style_info);
     fps_lbl->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50+40, 60+25+10+40, 50, 30);
-  
+    
     fps = new QLineEdit(tr(""), this);
     fps->setStyleSheet(style_info);
     fps->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50+60+30, 60+25+10+40, 50, 30);
-  
+    
     connect(fps, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
     
@@ -241,14 +241,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     record_crf = new QLineEdit(tr("22"), this);
     record_crf->setStyleSheet(style_info);
     record_crf->setGeometry(240+260+40+110, 135+40+35, 100, 30);
-
+    
     connect(record_crf, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(record_name, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
-
+    
     connect(record_video, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
     connect(record_set, SIGNAL(clicked()), this, SLOT(setOutputFile()));
-   
+    
     connect(record_type, SIGNAL(currentIndexChanged(int)), this, SLOT(comboChanged_mode(int)));
     
     QLabel *mat_lbl = new QLabel(tr("Material: "), this);
@@ -277,9 +277,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     playlist_set = new QPushButton(tr("Select"), this);
     playlist_set->setStyleSheet(style_info);
     playlist_set->setGeometry(330, 135+40+35+35+35, 100, 30);
-
+    
     connect(playlist_file, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
-  
+    
     connect(playlist_set, SIGNAL(clicked()), this, SLOT(setPlaylistPath()));
     
     enable_playback = new QCheckBox(tr("Enable Playback"), this);
@@ -293,9 +293,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     enable_bpm = new QLineEdit(tr("60"), this);
     enable_bpm->setStyleSheet(style_info);
     enable_bpm->setGeometry(660+170, 135+40+35+35+35, 50, 30);
-
+    
     connect(enable_bpm, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
-  
+    
     connect(enable_playback, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
     QLabel *auto_lbl = new QLabel(tr("AutoFilter"), this);
@@ -309,11 +309,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     auto_set = new QPushButton(tr("Select"), this);
     auto_set->setStyleSheet(style_info);
     auto_set->setGeometry(330, 135+40+35+35+35+35, 100, 30);
-
+    
     connect(auto_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
-  
+    
     connect(auto_set, SIGNAL(clicked()), this, SLOT(setAutoFilter()));
-
+    
     
     updateCommand();
 }
@@ -363,30 +363,26 @@ void MainWindow::Log(const QString &text) {
 void MainWindow::selectShaders() {
     
     QString dir_path = settings->value("dir_shaders", "").toString();
-    
     QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),
-                                                 dir_path,
-                                                 QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks);
+                                                    dir_path,
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
     if(dir.length()>0) {
         select_filters_text->setText(dir);
         settings->setValue("dir_shaders",dir);
-
     }
     updateCommand();
 }
 
 void MainWindow::selectPath() {
-
     QString dir_path = settings->value("dir_path1", "").toString();
     QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),
-                                                 dir_path,
-                                                 QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks);
+                                                    dir_path,
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
     if(dir.length()>0) {
         select_path_text->setText(dir);
         settings->setValue("dir_path1",dir);
-
     }
     updateCommand();
 }
@@ -394,7 +390,7 @@ void MainWindow::selectPath() {
 void MainWindow::setMatPath() {
     QString dir_path = settings->value("dir_path2", "").toString();
     QString name = QFileDialog::getOpenFileName(this,
-        tr("Open Video/Image"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
+                                                tr("Open Video/Image"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
     if(name.length() > 0) {
         material_filename->setText(name);
         std::string val = name.toStdString();
@@ -412,7 +408,7 @@ void MainWindow::setMatPath() {
 void MainWindow::setPlaylistPath() {
     QString dir_path = settings->value("dir_path3", "").toString();
     QString name = QFileDialog::getOpenFileName(this,
-        tr("Open Playlist"), dir_path, tr("Playlist Files (*.key)"));
+                                                tr("Open Playlist"), dir_path, tr("Playlist Files (*.key)"));
     if(name.length() > 0) {
         playlist_file->setText(name);
         std::string val = name.toStdString();
@@ -429,12 +425,9 @@ void MainWindow::setPlaylistPath() {
 
 void MainWindow::setAutoFilter() {
     QString dir_path = settings->value("dir_path4", "").toString();
-    
     QString name = QFileDialog::getOpenFileName(this,
-        tr("Open Autofilter"), dir_path, tr("Autofilter Files (*.af)"));
-    
+                                                tr("Open Autofilter"), dir_path, tr("Autofilter Files (*.af)"));
     if(name.length() > 0) {
-    
         std::string val = name.toStdString();
         auto pos = val.rfind("/");
         if(pos == std::string::npos)
@@ -443,20 +436,15 @@ void MainWindow::setAutoFilter() {
             val = val.substr(0, pos);
         }
         settings->setValue("dir_path4", val.c_str());
-    
-        
-    auto_filter->setText(name);
-        
+        auto_filter->setText(name);
     }
     updateCommand();
 }
 
 void MainWindow::setOutputFile() {
     QString dir_path = settings->value("dir_path5", "").toString();
-    
     QString name = QFileDialog::getSaveFileName(this,
-        tr("Open Video"), dir_path, tr("Video Files (*.mp4 *.mkv *.m4v *.mov)"));
-    
+                                                tr("Open Video"), dir_path, tr("Video Files (*.mp4 *.mkv *.m4v *.mov)"));
     if(name.length() > 0) {
         std::string val = name.toStdString();
         auto pos = val.rfind("/");
@@ -473,11 +461,10 @@ void MainWindow::setOutputFile() {
 
 void MainWindow::setCustomFile() {
     QString dir_path = settings->value("dir_path7", "").toString();
-    
     QString dir = QFileDialog::getExistingDirectory(this, tr("Select Custom Index Directory"),
-                                                 dir_path,
-                                                 QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks);
+                                                    dir_path,
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
     if(dir.length()>0) {
         custom_file->setText(dir);
         settings->setValue("dir_path7", dir);
@@ -487,10 +474,8 @@ void MainWindow::setCustomFile() {
 
 void MainWindow::selectVideo() {
     QString dir_path = settings->value("dir_path6", "").toString();
-    
     QString name = QFileDialog::getOpenFileName(this,
-        tr("Open Video"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
-    
+                                                tr("Open Video"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
     if(name.length() > 0) {
         std::string val = name.toStdString();
         auto pos = val.rfind("/");
@@ -557,14 +542,14 @@ void MainWindow::updateCommand() {
             cmd_list << "-R";
         }
         
-         if(select_video_text->text().length()>0) {
+        if(select_video_text->text().length()>0) {
             cmd_list << "-i";
             cmd_list << QString("\"") + select_video_text->text() + "\"";
         }
     } else if(mode_select->currentIndex()==2) {
         cmd_list << "-G";
     }
-
+    
     if(select_path_text->text().length()>0) {
         cmd_list << "-e";
         cmd_list << QString("\"") + select_path_text->text() + "\"";
