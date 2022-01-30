@@ -19,7 +19,6 @@
 
 QThread *threadx;
 ServerThread *tv;
-
 QString application_path = "/Applications/acidcamGL";
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
@@ -132,7 +131,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     connect(custom_on, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
-    
     custom_file = new QLineEdit(tr(""), this);
     custom_file->setStyleSheet(style_info);
     custom_file->setGeometry(20+10+5+15+10+125+250+20+60+25+10+5+125+5+5+270+75, 60+25+10, 130, 25);
@@ -150,7 +148,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     connect(enable_cam, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
-    
     camera_res = new QLineEdit(tr("1280x720"), this);
     camera_res->setStyleSheet(style_info);
     camera_res->setGeometry(215, 60+25+10+40, 150, 30);
@@ -161,7 +158,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     enable_res->setGeometry(215+150+10+15, 60+25+10+40, 200, 25);
     
     connect(enable_res, SIGNAL(clicked()), this, SLOT(updateCommand()));
-    
     
     window_res = new QLineEdit(tr("1280x720"), this);
     window_res->setStyleSheet(style_info);
@@ -189,8 +185,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     fps->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50+60+30, 60+25+10+40, 50, 30);
     
     connect(fps, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
-    
-    
     
     command_stdout->setReadOnly(true);
     command->setReadOnly(false);
@@ -313,7 +307,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(auto_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
     connect(auto_set, SIGNAL(clicked()), this, SLOT(setAutoFilter()));
-    
     
     updateCommand();
 }
@@ -566,7 +559,6 @@ void MainWindow::updateCommand() {
         }
     }
     
-    
     if(syphon_enabled->isChecked()) {
         cmd_list << "-Y";
     }
@@ -616,11 +608,9 @@ void MainWindow::updateCommand() {
         cmd_list << "-A" << QString("\"") + auto_filter->text() + "\"";
     }
     
-    
     if(custom_on->isChecked() && custom_file->text() != "") {
         cmd_list << "-W" << QString("\"") + custom_file->text() + "\"";
     }
-    
     
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
