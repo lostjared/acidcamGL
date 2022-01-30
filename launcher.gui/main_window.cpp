@@ -26,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setFixedSize(1280, 375+500+10);
     setWindowTitle("acidcamGL - Start New Session");
     setWindowIcon(QPixmap(":/images/icon.png"));
+    settings = new QSettings("LostSideDead", "acidcamGL");
     command_stdout = new QTextEdit("acidcamGL Launcher - written by Jared Bruni", this);
     command_stdout->setGeometry(5, 375, 1280-10, 500);
     command = new QLineEdit("", this);
@@ -360,68 +361,147 @@ void MainWindow::Log(const QString &text) {
 }
 
 void MainWindow::selectShaders() {
+    
+    QString dir_path = settings->value("dir_shaders", "").toString();
+    
     QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),
-                                                 "~",
+                                                 dir_path,
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
-    if(dir.length()>0)
+    if(dir.length()>0) {
         select_filters_text->setText(dir);
+        settings->setValue("dir_shaders",dir);
+
+    }
     updateCommand();
 }
 
 void MainWindow::selectPath() {
 
+    QString dir_path = settings->value("dir_path1", "").toString();
     QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),
-                                                 "~",
+                                                 dir_path,
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
-    if(dir.length()>0)
+    if(dir.length()>0) {
         select_path_text->setText(dir);
+        settings->setValue("dir_path1",dir);
+
+    }
     updateCommand();
 }
 
 void MainWindow::setMatPath() {
+    QString dir_path = settings->value("dir_path2", "").toString();
     QString name = QFileDialog::getOpenFileName(this,
-        tr("Open Video/Image"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
-    material_filename->setText(name);
+        tr("Open Video/Image"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
+    if(name.length() > 0) {
+        material_filename->setText(name);
+        std::string val = name.toStdString();
+        auto pos = val.rfind("/");
+        if(pos == std::string::npos)
+            pos = val.rfind("\\");
+        if(pos != std::string::npos) {
+            val = val.substr(0, pos);
+        }
+        settings->setValue("dir_path2", val.c_str());
+    }
     updateCommand();
 }
 
 void MainWindow::setPlaylistPath() {
+    QString dir_path = settings->value("dir_path3", "").toString();
     QString name = QFileDialog::getOpenFileName(this,
-        tr("Open Playlist"), "/Users", tr("Playlist Files (*.key)"));
-    playlist_file->setText(name);
+        tr("Open Playlist"), dir_path, tr("Playlist Files (*.key)"));
+    if(name.length() > 0) {
+        playlist_file->setText(name);
+        std::string val = name.toStdString();
+        auto pos = val.rfind("/");
+        if(pos == std::string::npos)
+            pos = val.rfind("\\");
+        if(pos != std::string::npos) {
+            val = val.substr(0, pos);
+        }
+        settings->setValue("dir_path3", val.c_str());
+    }
     updateCommand();
 }
 
 void MainWindow::setAutoFilter() {
+    QString dir_path = settings->value("dir_path4", "").toString();
+    
     QString name = QFileDialog::getOpenFileName(this,
-        tr("Open Autofilter"), "/Users", tr("Autofilter Files (*.af)"));
+        tr("Open Autofilter"), dir_path, tr("Autofilter Files (*.af)"));
+    
+    if(name.length() > 0) {
+    
+        std::string val = name.toStdString();
+        auto pos = val.rfind("/");
+        if(pos == std::string::npos)
+            pos = val.rfind("\\");
+        if(pos != std::string::npos) {
+            val = val.substr(0, pos);
+        }
+        settings->setValue("dir_path4", val.c_str());
+    
+        
     auto_filter->setText(name);
+        
+    }
     updateCommand();
 }
 
 void MainWindow::setOutputFile() {
+    QString dir_path = settings->value("dir_path5", "").toString();
+    
     QString name = QFileDialog::getSaveFileName(this,
-        tr("Open Video"), "/Users", tr("Video Files (*.mp4 *.mkv *.m4v *.mov)"));
-    record_name->setText(name);
+        tr("Open Video"), dir_path, tr("Video Files (*.mp4 *.mkv *.m4v *.mov)"));
+    
+    if(name.length() > 0) {
+        std::string val = name.toStdString();
+        auto pos = val.rfind("/");
+        if(pos == std::string::npos)
+            pos = val.rfind("\\");
+        if(pos != std::string::npos) {
+            val = val.substr(0, pos);
+        }
+        settings->setValue("dir_path5", val.c_str());
+        record_name->setText(name);
+    }
     updateCommand();
 }
 
 void MainWindow::setCustomFile() {
+    QString dir_path = settings->value("dir_path7", "").toString();
+    
     QString dir = QFileDialog::getExistingDirectory(this, tr("Select Custom Index Directory"),
-                                                 "~",
+                                                 dir_path,
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
-    if(dir.length()>0)
+    if(dir.length()>0) {
         custom_file->setText(dir);
+        settings->setValue("dir_path7", dir);
+    }
     updateCommand();
 }
 
 void MainWindow::selectVideo() {
+    QString dir_path = settings->value("dir_path6", "").toString();
+    
     QString name = QFileDialog::getOpenFileName(this,
-        tr("Open Video"), "/Users", tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
-    select_video_text->setText(name);
+        tr("Open Video"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
+    
+    if(name.length() > 0) {
+        std::string val = name.toStdString();
+        auto pos = val.rfind("/");
+        if(pos == std::string::npos)
+            pos = val.rfind("\\");
+        if(pos != std::string::npos) {
+            val = val.substr(0, pos);
+        }
+        settings->setValue("dir_path6", val.c_str());
+        select_video_text->setText(name);
+    }
     updateCommand();
 }
 

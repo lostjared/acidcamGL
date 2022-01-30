@@ -12,6 +12,7 @@
 #include<QCheckBox>
 #include<QProcess>
 #include<vector>
+#include<QSettings>
 #include"sock_server.hpp"
 
 class MainWindow : public QMainWindow {
@@ -79,6 +80,7 @@ private:
     QPushButton *custom_set;
     QCheckBox *video_repeat;
     std::vector<FILE*> fptr;
+    QSettings *settings;
 };
 
 
