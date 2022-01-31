@@ -22,6 +22,9 @@ ServerThread *tv;
 QString application_path = "/Applications/acidcamGL";
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+    
+    int offset_y = 25;
+    
     setFixedSize(1280, 375+500+10);
     setWindowTitle("acidcamGL - Start New Session");
     setWindowIcon(QPixmap(":/images/icon.png"));
@@ -29,16 +32,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     command_stdout = new QTextEdit("acidcamGL Launcher - written by Jared Bruni", this);
     command_stdout->setGeometry(5, 375, 1280-10, 500);
     command = new QLineEdit("", this);
-    command->setGeometry(5, 10, 1280-110, 30);
+    command->setGeometry(5, 10+offset_y, 1280-110, 30);
     command_stdout->setReadOnly(true);
     QString style_info = "font-size: 16px; font-family: monaco;";
     command->setStyleSheet(style_info);
     QLabel *temp1 = new QLabel(tr("Mode: "), this);
-    temp1->setGeometry(15, 60, 50, 25);
+    temp1->setGeometry(15, 60+offset_y, 50, 25);
     temp1->setStyleSheet(style_info);
     mode_select = new QComboBox(this);
     mode_select->setStyleSheet(style_info);
-    mode_select->setGeometry(60, 60, 200, 25);
+    mode_select->setGeometry(60, 60+offset_y, 200, 25);
     mode_select->addItem(tr("Capture Device"));
     mode_select->addItem(tr("Video File"));
 #ifdef __APPLE__
@@ -48,14 +51,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QLabel *temp2;
     temp2 = new QLabel(tr("Device Index: "), this);
     temp2->setStyleSheet(style_info);
-    temp2->setGeometry(270, 60, 140, 25);
+    temp2->setGeometry(270, 60+offset_y, 140, 25);
     device_edit = new QLineEdit("0", this);
     device_edit->setStyleSheet(style_info);
-    device_edit->setGeometry(270+140+10, 60, 100, 25);
+    device_edit->setGeometry(270+140+10, 60+offset_y, 100, 25);
     
     QLabel *select_temp = new QLabel(tr("Select Shaders:"), this);
     select_temp->setStyleSheet(style_info);
-    select_temp->setGeometry(15, 60+25+15, 140, 20);
+    select_temp->setGeometry(15, 60+25+15+offset_y, 140, 20);
     QString pwd = QDir().currentPath();
 #ifdef __APPLE__
     pwd = application_path;
@@ -68,23 +71,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 #endif
     select_filters_text = new QLineEdit(pwd+"/filters", this);
     select_filters_text->setStyleSheet(style_info);
-    select_filters_text->setGeometry(15+150+10, 60+25+10, 250, 30);
+    select_filters_text->setGeometry(15+150+10, 60+25+10+offset_y, 250, 30);
     select_filters = new QPushButton(tr("Select"), this);
     select_filters->setStyleSheet(style_info);
-    select_filters->setGeometry(15+140+10+250+20, 60+25+10,100,30);
+    select_filters->setGeometry(15+140+10+250+20, 60+25+10+offset_y,100,30);
     select_video = new QPushButton(tr("Select"), this);
     QLabel *select_temp1 = new QLabel(tr("Select Video: "), this);
-    select_temp1->setGeometry(5+15+140+10+250+20+60+25+10+5, 60, 125, 20);
+    select_temp1->setGeometry(5+15+140+10+250+20+60+25+10+5, 60+offset_y, 125, 20);
     select_video->setStyleSheet(style_info);
-    select_video->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+5, 60, 100, 30);
+    select_video->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+5, 60+offset_y, 100, 30);
     select_temp1->setStyleSheet(style_info);
     select_video_text = new QLineEdit("", this);
     select_video_text->setStyleSheet(style_info);
-    select_video_text->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5, 60, 150, 30);
+    select_video_text->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5, 60+offset_y, 150, 30);
     
     syphon_enabled = new QCheckBox(tr("Syphon Enabled"), this);
     syphon_enabled->setStyleSheet(style_info);
-    syphon_enabled->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10, 60, 200, 30);
+    syphon_enabled->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10, 60+offset_y, 200, 30);
     connect(syphon_enabled, SIGNAL(clicked()), this, SLOT(updateCommand()));
 #ifndef __APPLE__
     syphon_enabled->hide();
@@ -92,12 +95,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     video_repeat = new QCheckBox(tr("Repeat"), this);
     video_repeat->setStyleSheet(style_info);
-    video_repeat->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10+170, 60, 100, 30);
+    video_repeat->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10+170, 60+offset_y, 100, 30);
     connect(video_repeat, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
     connect(device_edit, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     start_button = new QPushButton(tr("Launch"), this);
-    start_button->setGeometry(1280-100, 10, 90, 30);
+    start_button->setGeometry(1280-100, 10+offset_y, 90, 30);
     start_button->setStyleSheet(style_info);
     connect(start_button, SIGNAL(clicked()), this, SLOT(launchProgram()));
     command_stdout->setStyleSheet("background-color: black; color: white; font-size: 20px; font-family: monaco; ");
@@ -111,14 +114,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     threadx->start();
     QLabel *select_temp2 = new QLabel(tr("Set Path: "), this);
     select_temp2->setStyleSheet(style_info);
-    select_temp2->setGeometry(5+15+140+10+250+20+60+25+10+5, 60+25+10,100,30);
+    select_temp2->setGeometry(5+15+140+10+250+20+60+25+10+5, 60+25+10+offset_y,100,30);
     select_path = new QPushButton(tr("Select"), this);
     select_path->setStyleSheet(style_info);
-    select_path->setGeometry(10+5+15+10+250+125+20+60+25+10+5+125+5+150+5+5, 60+25+10, 100, 30);
+    select_path->setGeometry(10+5+15+10+250+125+20+60+25+10+5+125+5+150+5+5, 60+25+10+offset_y, 100, 30);
     select_temp1->setStyleSheet(style_info);
     select_path_text = new QLineEdit("", this);
     select_path_text->setStyleSheet(style_info);
-    select_path_text->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5, 60+25+10, 150, 25);
+    select_path_text->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5, 60+25+10+offset_y, 150, 25);
     connect(select_path_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(select_video_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(select_path, SIGNAL(clicked()), this, SLOT(selectPath()));
@@ -127,62 +130,62 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     custom_on = new QCheckBox(tr("Custom: "), this);
     custom_on->setStyleSheet(style_info);
-    custom_on->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270, 60+25+10, 75, 25);
+    custom_on->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270, 60+25+10+offset_y, 75, 25);
     
     connect(custom_on, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
     custom_file = new QLineEdit(tr(""), this);
     custom_file->setStyleSheet(style_info);
-    custom_file->setGeometry(20+10+5+15+10+125+250+20+60+25+10+5+125+5+5+270+75, 60+25+10, 130, 30);
+    custom_file->setGeometry(20+10+5+15+10+125+250+20+60+25+10+5+125+5+5+270+75, 60+25+10+offset_y, 130, 30);
     
     custom_set = new QPushButton(tr("Select"), this);
     custom_set->setStyleSheet(style_info);
-    custom_set->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270+75+160, 60+25+10, 95, 30);
+    custom_set->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270+75+160, 60+25+10+offset_y, 95, 30);
     
     connect(custom_file, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(custom_set, SIGNAL(clicked()), this, SLOT(setCustomFile()));
     
     enable_cam = new QCheckBox(tr("Camera Resolution: "), this);
     enable_cam->setStyleSheet(style_info);
-    enable_cam->setGeometry(15, 60+25+10+40, 200, 25);
+    enable_cam->setGeometry(15, 60+25+10+40+offset_y, 200, 25);
     
     connect(enable_cam, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
     camera_res = new QLineEdit(tr("1280x720"), this);
     camera_res->setStyleSheet(style_info);
-    camera_res->setGeometry(215, 60+25+10+40, 150, 30);
+    camera_res->setGeometry(215, 60+25+10+40+offset_y, 150, 30);
     connect(camera_res, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
     enable_res = new QCheckBox(tr("Window Resolution: "), this);
     enable_res->setStyleSheet(style_info);
-    enable_res->setGeometry(215+150+10+15, 60+25+10+40, 200, 25);
+    enable_res->setGeometry(215+150+10+15, 60+25+10+40+offset_y, 200, 25);
     
     connect(enable_res, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
     window_res = new QLineEdit(tr("1280x720"), this);
     window_res->setStyleSheet(style_info);
-    window_res->setGeometry(215+150+10+15+200, 60+25+10+40, 150, 30);
+    window_res->setGeometry(215+150+10+15+200, 60+25+10+40+offset_y, 150, 30);
     connect(window_res, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     full_screen = new QCheckBox(tr("Full Screen"), this);
     full_screen_resize = new QCheckBox(tr("Resize"), this);
     full_screen->setStyleSheet(style_info);
     full_screen_resize->setStyleSheet(style_info);
-    full_screen->setGeometry(215+150+10+15+200+150+10, 60+25+10+40, 150, 25);
-    full_screen_resize->setGeometry(215+150+10+15+200+150+10+150, 60+25+10+40, 150, 25);
+    full_screen->setGeometry(215+150+10+15+200+150+10, 60+25+10+40+offset_y, 150, 25);
+    full_screen_resize->setGeometry(215+150+10+15+200+150+10+150, 60+25+10+40+offset_y, 150, 25);
     monitor_ = new QLineEdit(tr("0"), this);
     monitor_->setStyleSheet(style_info);
     QLabel *mon_text = new QLabel(tr("Monitor: "), this);
     mon_text->setStyleSheet(style_info);
-    mon_text->setGeometry(215+150+10+15+200+150+10+150+50+10+50, 60+25+10+40, 100, 30);
-    monitor_->setGeometry(215+150+10+15+200+150+10+150+150+10+10+30, 60+25+10+40, 50, 30);
+    mon_text->setGeometry(215+150+10+15+200+150+10+150+50+10+50, 60+25+10+40+offset_y, 100, 30);
+    monitor_->setGeometry(215+150+10+15+200+150+10+150+150+10+10+30, 60+25+10+40+offset_y, 50, 30);
     
     QLabel *fps_lbl = new QLabel(tr("FPS: "), this);
     fps_lbl->setStyleSheet(style_info);
-    fps_lbl->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50+40, 60+25+10+40, 50, 30);
+    fps_lbl->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50+40, 60+25+10+40+offset_y, 50, 30);
     
     fps = new QLineEdit(tr(""), this);
     fps->setStyleSheet(style_info);
-    fps->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50+60+30, 60+25+10+40, 50, 30);
+    fps->setGeometry(215+150+10+15+200+150+10+150+150+10+10+50+60+30, 60+25+10+40+offset_y, 50, 30);
     
     connect(fps, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
@@ -194,22 +197,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     QLabel *start_lbl = new QLabel(tr("Shader: "), this);
     start_lbl->setStyleSheet(style_info);
-    start_lbl->setGeometry(20, 135+35, 100, 30);
+    start_lbl->setGeometry(20, 135+35+offset_y, 100, 30);
     start_shader = new QLineEdit(tr("0"), this);
-    start_shader->setGeometry(120, 135+35, 100, 30);
+    start_shader->setGeometry(120, 135+35+offset_y, 100, 30);
     start_shader->setStyleSheet(style_info);
     QLabel *start_filter_lbl = new QLabel(tr("Filter: "), this);
-    start_filter_lbl->setGeometry(235, 135+35, 100, 30);
+    start_filter_lbl->setGeometry(235, 135+35+offset_y, 100, 30);
     start_filter_lbl->setStyleSheet(style_info);
     start_filter = new QLineEdit(tr("0"), this);
-    start_filter->setGeometry(335, 135+35, 100, 30);
+    start_filter->setGeometry(335, 135+35+offset_y, 100, 30);
     start_filter->setStyleSheet(style_info);
     QLabel *start_sec_lbl = new QLabel(tr("Start At: "), this);
-    start_sec_lbl->setGeometry(335+110, 135+35, 100, 30);
+    start_sec_lbl->setGeometry(335+110, 135+35+offset_y, 100, 30);
     start_sec_lbl->setStyleSheet(style_info);
     start_sec = new QLineEdit(tr("0"), this);
     start_sec->setStyleSheet(style_info);
-    start_sec->setGeometry(335+210, 135+35, 100, 30);
+    start_sec->setGeometry(335+210, 135+35+offset_y, 100, 30);
     connect(monitor_, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(start_shader, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(start_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
@@ -217,24 +220,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     record_video = new QCheckBox(tr("Record"), this);
     record_video->setStyleSheet(style_info);
-    record_video->setGeometry(20, 135+40+35, 100, 30);
+    record_video->setGeometry(20, 135+40+35+offset_y, 100, 30);
     record_type = new QComboBox(this);
     record_type->setStyleSheet(style_info);
-    record_type->setGeometry(125, 135+40+35, 100, 30);
+    record_type->setGeometry(125, 135+40+35+offset_y, 100, 30);
     record_type->addItem("x264");
     record_type->addItem("x265");
     record_name = new QLineEdit(tr(""), this);
     record_name->setStyleSheet(style_info);
-    record_name->setGeometry(240, 135+40+35, 250, 30);
+    record_name->setGeometry(240, 135+40+35+offset_y, 250, 30);
     record_set = new QPushButton(tr("Select"), this);
     record_set->setStyleSheet(style_info);
-    record_set->setGeometry(240+260, 135+40+35,100,30);
+    record_set->setGeometry(240+260, 135+40+35+offset_y,100,30);
     QLabel *crf_lbl = new QLabel(tr("CRF"), this);
     crf_lbl->setStyleSheet(style_info);
-    crf_lbl->setGeometry(240+260+110, 135+40+35, 100, 30);
+    crf_lbl->setGeometry(240+260+110, 135+40+35+offset_y, 100, 30);
     record_crf = new QLineEdit(tr("22"), this);
     record_crf->setStyleSheet(style_info);
-    record_crf->setGeometry(240+260+40+110, 135+40+35, 100, 30);
+    record_crf->setGeometry(240+260+40+110, 135+40+35+offset_y, 100, 30);
     
     connect(record_crf, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(record_name, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
@@ -247,30 +250,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     QLabel *mat_lbl = new QLabel(tr("Material: "), this);
     mat_lbl->setStyleSheet(style_info);
-    mat_lbl->setGeometry(20, 135+40+35+35, 100, 30);
+    mat_lbl->setGeometry(20, 135+40+35+35+offset_y, 100, 30);
     
     material_filename = new QLineEdit(tr(""), this);
     material_filename->setStyleSheet(style_info);
-    material_filename->setGeometry(125, 135+40+35+35, 200, 30);
+    material_filename->setGeometry(125, 135+40+35+35+offset_y, 200, 30);
     
     material_set = new QPushButton(tr("Select"), this);
     material_set->setStyleSheet(style_info);
-    material_set->setGeometry(330, 135+40+35+35, 100, 30);
+    material_set->setGeometry(330, 135+40+35+35+offset_y, 100, 30);
     
     connect(material_set, SIGNAL(clicked()), this, SLOT(setMatPath()));
     connect(material_filename, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
     QLabel *playlist_lbl = new QLabel(tr("Playlist: "), this);
     playlist_lbl->setStyleSheet(style_info);
-    playlist_lbl->setGeometry(20, 135+40+35+35+35, 100, 30);
+    playlist_lbl->setGeometry(20, 135+40+35+35+35+offset_y, 100, 30);
     
     playlist_file = new QLineEdit(tr(""), this);
     playlist_file->setStyleSheet(style_info);
-    playlist_file->setGeometry(125, 135+40+35+35+35, 200, 30);
+    playlist_file->setGeometry(125, 135+40+35+35+35+offset_y, 200, 30);
     
     playlist_set = new QPushButton(tr("Select"), this);
     playlist_set->setStyleSheet(style_info);
-    playlist_set->setGeometry(330, 135+40+35+35+35, 100, 30);
+    playlist_set->setGeometry(330, 135+40+35+35+35+offset_y, 100, 30);
     
     connect(playlist_file, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
@@ -278,15 +281,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     enable_playback = new QCheckBox(tr("Enable Playback"), this);
     enable_playback->setStyleSheet(style_info);
-    enable_playback->setGeometry(440, 135+40+35+35+35,200, 30);
+    enable_playback->setGeometry(440, 135+40+35+35+35+offset_y,200, 30);
     
     QLabel *ebpm_lbl = new QLabel(tr("Beats per Minute: "), this);
     ebpm_lbl->setStyleSheet(style_info);
-    ebpm_lbl->setGeometry(550+100, 135+40+35+35+35, 200, 30);
+    ebpm_lbl->setGeometry(550+100, 135+40+35+35+35+offset_y, 200, 30);
     
     enable_bpm = new QLineEdit(tr("60"), this);
     enable_bpm->setStyleSheet(style_info);
-    enable_bpm->setGeometry(660+170, 135+40+35+35+35, 50, 30);
+    enable_bpm->setGeometry(660+170, 135+40+35+35+35+offset_y, 50, 30);
     
     connect(enable_bpm, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
@@ -294,15 +297,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     QLabel *auto_lbl = new QLabel(tr("AutoFilter"), this);
     auto_lbl->setStyleSheet(style_info);
-    auto_lbl->setGeometry(20, 135+40+35+35+35+35, 100, 30);
+    auto_lbl->setGeometry(20, 135+40+35+35+35+35+offset_y, 100, 30);
     
     auto_filter = new QLineEdit(tr(""), this);
     auto_filter->setStyleSheet(style_info);
-    auto_filter->setGeometry(125, 135+40+35+35+35+35, 200, 30);
+    auto_filter->setGeometry(125, 135+40+35+35+35+35+offset_y, 200, 30);
     
     auto_set = new QPushButton(tr("Select"), this);
     auto_set->setStyleSheet(style_info);
-    auto_set->setGeometry(330, 135+40+35+35+35+35, 100, 30);
+    auto_set->setGeometry(330, 135+40+35+35+35+35+offset_y, 100, 30);
     
     connect(auto_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
