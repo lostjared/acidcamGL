@@ -308,7 +308,29 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     connect(auto_set, SIGNAL(clicked()), this, SLOT(setAutoFilter()));
     
+    file_menu = menuBar()->addMenu(tr("&File"));
+    help_menu = menuBar()->addMenu(tr("Help"));
+ 
+    file_exit = new QAction(tr("E&xit"), this);
+    file_exit->setShortcut(tr("Ctrl+X"));
+    file_menu->addAction(file_exit);
+   
+    help_about = new QAction(tr("About"), this);
+    help_about->setShortcut(tr("Ctrl+A"));
+    help_menu->addAction(help_about);
+    
+    connect(file_exit, SIGNAL(triggered()), this, SLOT(menu_Exit()));
+    connect(help_about, SIGNAL(triggered()), this, SLOT(menu_About()));
+    
+    
     updateCommand();
+}
+
+void MainWindow::menu_About() {
+    QMessageBox::information(this, tr("About"), tr("acidcamGL Launcher\nSoftware Programmed by Jared Bruni / LostSideDead Software\nVisit me online @: https://lostsidedead.biz"));
+}
+void MainWindow::menu_Exit() {
+    exit(0);
 }
 
 void MainWindow::launchProgram() {

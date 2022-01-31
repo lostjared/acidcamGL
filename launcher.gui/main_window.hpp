@@ -13,6 +13,11 @@
 #include<QProcess>
 #include<vector>
 #include<QSettings>
+#include<QMenu>
+#include<QAction>
+#include<QMenuBar>
+#include<QMessageBox>
+
 #include"sock_server.hpp"
 
 class MainWindow : public QMainWindow {
@@ -35,6 +40,8 @@ public slots:
     void setAutoFilter();
     void setOutputFile();
     void setCustomFile();
+    void menu_About();
+    void menu_Exit();
 signals:
     void LogString(const QString &text);
 private:
@@ -81,6 +88,9 @@ private:
     QCheckBox *video_repeat;
     std::vector<FILE*> fptr;
     QSettings *settings;
+    QMenu *file_menu,*help_menu;
+    QAction *help_about, *file_exit;
+  
 };
 
 
