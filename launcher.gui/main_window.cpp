@@ -330,10 +330,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 }
 
 void MainWindow::menu_About() {
-    QMessageBox::information(this, tr("About"), tr("acidcamGL Launcher\nSoftware Programmed by Jared Bruni / LostSideDead Software\nVisit me online @: https://lostsidedead.biz"));
+    QMessageBox::information(this, tr("About"), tr("acidcamGL Launcher\nSoftware Programmed by Jared Bruni\n\n\n- LostSideDead Software\n\n\nVisit me online @: https://lostsidedead.biz\n\n\nThis Software is dedicated to all the people who experience mental illness."));
 }
 void MainWindow::menu_Exit() {
-    exit(0);
+    QCoreApplication::quit();
 }
 
 void MainWindow::launchProgram() {
