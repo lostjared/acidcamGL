@@ -366,6 +366,10 @@ void MainWindow::launchProgram() {
 #else
     cmd_string = "acidcamGL ";
 #endif
+    
+    if(options_window->exec_enable->isChecked())
+        cmd_string = options_window->exec_path->text() + " ";
+    
     cmd_string += command->text();
     
 #if defined(__APPLE__) || defined(__linux__)
