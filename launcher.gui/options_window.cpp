@@ -2,7 +2,7 @@
 
 
 Options::Options(QWidget *parent) : QDialog(parent) {
-    setFixedSize(600, 100);
+    setFixedSize(600, 85);
     setWindowTitle("acidcamGL - Options");
     setWindowIcon(QPixmap(":/images/icon.png"));
     create_window();
