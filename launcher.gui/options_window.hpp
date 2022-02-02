@@ -5,6 +5,9 @@
 #include<QDialog>
 #include<QLineEdit>
 #include<QCheckBox>
+#include<QPushButton>
+#include<QSettings>
+#include<QFileDialog>
 
 class Options : public QDialog {
 Q_OBJECT
@@ -13,8 +16,13 @@ public:
     
 public slots:
     void chkClicked();
-    void hideWindow();
-    
+    void selectExecutable();
+
+public:
+    QLineEdit *exec_path;
+    QCheckBox *exec_enable;
+    QPushButton *exec_select;
+    QSettings *settings;
 private:
     void create_window();
 };

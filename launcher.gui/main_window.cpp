@@ -326,6 +326,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(help_about, SIGNAL(triggered()), this, SLOT(menu_About()));
     
     options_window = new Options(this);
+    options_window->settings = settings;
     options_window->hide();
     
     file_options = new QAction(tr("Options"), this);
