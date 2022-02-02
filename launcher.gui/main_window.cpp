@@ -325,6 +325,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(file_exit, SIGNAL(triggered()), this, SLOT(menu_Exit()));
     connect(help_about, SIGNAL(triggered()), this, SLOT(menu_About()));
     
+    options_window = new Options(this);
+    options_window->hide();
+    
+    file_options = new QAction(tr("Options"), this);
+    file_options->setShortcut(tr("Ctrl+O"));
+    file_menu->addAction(file_options);
+    
+    connect(file_options, SIGNAL(triggered()),this, SLOT(menu_Options()));
     
     updateCommand();
 }
@@ -334,6 +342,10 @@ void MainWindow::menu_About() {
 }
 void MainWindow::menu_Exit() {
     QCoreApplication::quit();
+}
+
+void MainWindow::menu_Options() {
+    options_window->show();
 }
 
 void MainWindow::launchProgram() {

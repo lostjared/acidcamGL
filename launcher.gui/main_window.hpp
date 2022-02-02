@@ -17,7 +17,7 @@
 #include<QAction>
 #include<QMenuBar>
 #include<QMessageBox>
-
+#include"options_window.hpp"
 #include"sock_server.hpp"
 
 class MainWindow : public QMainWindow {
@@ -42,6 +42,7 @@ public slots:
     void setCustomFile();
     void menu_About();
     void menu_Exit();
+    void menu_Options();
 signals:
     void LogString(const QString &text);
 private:
@@ -89,7 +90,8 @@ private:
     std::vector<FILE*> fptr;
     QSettings *settings;
     QMenu *file_menu,*help_menu;
-    QAction *help_about, *file_exit;
+    QAction *help_about, *file_exit, *file_options;
+    Options *options_window;
   
 };
 
