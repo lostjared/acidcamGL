@@ -26,8 +26,7 @@ void Options::okClicked() {
     
 void Options::selectExecutable() {
     QString dir_path = settings->value("dpath1", "").toString();
-    QString name = QFileDialog::getOpenFileName(this,
-                                                tr("Open EXE"), dir_path, tr("All Files (*.*)"));
+    QString name = QFileDialog::getOpenFileName(this,     tr("Open EXE"), dir_path, tr("All Files (*.*)"));
     if(name.length() > 0) {
         exec_path->setText(name);
         std::string val = name.toStdString();
@@ -57,7 +56,6 @@ void Options::create_window() {
     exec_select = new QPushButton(tr("Select"), this);
     exec_select->setGeometry(470, 25, 100, 30);
     exec_select->setStyleSheet(style_info);
-    
     exec_select->setEnabled(false);
     
     connect(exec_select, SIGNAL(clicked()), this, SLOT(selectExecutable()));
