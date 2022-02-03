@@ -8,11 +8,30 @@ Options::Options(QWidget *parent) : QDialog(parent) {
     create_window();
 }
 
+void Options::load() {
+    QString prog_path = settings->value("prog_path", "acidcamGL").toString();
+    exec_path->setText(prog_path);
+    QString e_checked = settings->value("prog_chk", "0").toString();
+    if(e_checked == "0") {
+        exec_enable->setChecked(false);
+    } else {
+        exec_select->setEnabled(true);
+        exec_path->setEnabled(true);
+        exec_enable->setChecked(true);
+    }
+}
+
+void Options::save() {
+    settings->setValue("prog_path", exec_path->text());
+    settings->setValue("prog_chk", exec_enable->isChecked() ? "1" : "0");
+}
+
 void Options::chkClicked() {
 
     if(exec_enable->isChecked()) {
         exec_path->setEnabled(true);
         exec_select->setEnabled(true);
+        save();
     }
     else {
         exec_path->setEnabled(false);
@@ -21,6 +40,7 @@ void Options::chkClicked() {
 }
 
 void Options::okClicked() {
+    save();
     hide();
 }
     

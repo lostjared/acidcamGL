@@ -334,6 +334,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     options_window = new Options(this);
     options_window->settings = settings;
     options_window->hide();
+    options_window->load();
     
     updateCommand();
 }

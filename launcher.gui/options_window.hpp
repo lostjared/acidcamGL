@@ -13,7 +13,9 @@ class Options : public QDialog {
 Q_OBJECT
 public:
     Options(QWidget *parent = 0);
-    
+    void load();
+    void save();
+
 public slots:
     void chkClicked();
     void selectExecutable();
