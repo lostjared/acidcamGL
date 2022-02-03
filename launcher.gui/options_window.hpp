@@ -17,12 +17,13 @@ public:
 public slots:
     void chkClicked();
     void selectExecutable();
-
+    void okClicked();
 public:
     QLineEdit *exec_path;
     QCheckBox *exec_enable;
     QPushButton *exec_select;
     QSettings *settings;
+    QPushButton *ok_button;
 private:
     void create_window();
 };
