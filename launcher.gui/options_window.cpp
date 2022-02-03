@@ -27,7 +27,6 @@ void Options::save() {
 }
 
 void Options::chkClicked() {
-
     if(exec_enable->isChecked()) {
         exec_path->setEnabled(true);
         exec_select->setEnabled(true);
@@ -81,7 +80,7 @@ void Options::create_window() {
     connect(exec_select, SIGNAL(clicked()), this, SLOT(selectExecutable()));
     
     ok_button = new QPushButton(tr("Ok"), this);
-    ok_button->setGeometry(470, 85, 100, 30);
+    ok_button->setGeometry(470, 60, 100, 30);
     ok_button->setStyleSheet(style_info);
     
     connect(ok_button, SIGNAL(clicked()), this, SLOT(okClicked()));
