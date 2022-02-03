@@ -314,6 +314,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     file_menu = menuBar()->addMenu(tr("&File"));
     help_menu = menuBar()->addMenu(tr("Help"));
  
+    file_options = new QAction(tr("Options"), this);
+    file_options->setShortcut(tr("Ctrl+O"));
+    file_menu->addAction(file_options);
+    
+    connect(file_options, SIGNAL(triggered()),this, SLOT(menu_Options()));
+    
     file_exit = new QAction(tr("E&xit"), this);
     file_exit->setShortcut(tr("Ctrl+X"));
     file_menu->addAction(file_exit);
@@ -329,11 +335,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     options_window->settings = settings;
     options_window->hide();
     
-    file_options = new QAction(tr("Options"), this);
-    file_options->setShortcut(tr("Ctrl+O"));
-    file_menu->addAction(file_options);
-    
-    connect(file_options, SIGNAL(triggered()),this, SLOT(menu_Options()));
+
     
     updateCommand();
 }
