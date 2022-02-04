@@ -59,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QLabel *select_temp = new QLabel(tr("Select Shaders:"), this);
     select_temp->setStyleSheet(style_info);
     select_temp->setGeometry(15, 60+25+15+offset_y, 140, 20);
+    /*
     QString pwd = QDir().currentPath();
 #ifdef __APPLE__
     pwd = application_path;
@@ -68,7 +69,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
         f = f.substr(0, pos);
         pwd = f.c_str();
     }
-#endif
+#endif*/
+    QString pwd = getShaderPath();
+    
     select_filters_text = new QLineEdit(pwd+"/filters", this);
     select_filters_text->setStyleSheet(style_info);
     select_filters_text->setGeometry(15+150+10, 60+25+10+offset_y, 250, 30);
@@ -365,7 +368,7 @@ void MainWindow::load() {
     if(options_window->save_options->isChecked()) {
         select_video_text->setText(settings->value("opt_video_t", "").toString());
         select_path_text->setText(settings->value("opt_path_t", "").toString());
-        select_filters_text->setText(settings->value("opt_filter_t", "").toString());
+        select_filters_text->setText(settings->value("opt_filter_t", getShaderPath()).toString());
         camera_res->setText(settings->value("opt_camera_res", "1280x720").toString());
         window_res->setText(settings->value("opt_window_res", "1280x720").toString());
         start_shader->setText(settings->value("opt_start_sh", "0").toString());
@@ -391,6 +394,20 @@ void MainWindow::save() {
         settings->setValue("opt_autofilter", auto_filter->text());
         settings->setValue("opt_custom", custom_file->text());
     }
+}
+
+QString MainWindow::getShaderPath() {
+    QString pwd = QDir().currentPath();
+#ifdef __APPLE__
+    pwd = application_path;
+    std::string f = pwd.toStdString();
+    auto pos = f.rfind("launcher");
+    if(pos != std::string::npos) {
+        f = f.substr(0, pos);
+        pwd = f.c_str();
+    }
+#endif
+    return pwd;
 }
 
 void MainWindow::launchProgram() {

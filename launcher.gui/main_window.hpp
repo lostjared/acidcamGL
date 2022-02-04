@@ -46,6 +46,7 @@ public slots:
     void menu_Options();
     void load();
     void save();
+    QString getShaderPath();
 signals:
     void LogString(const QString &text);
 private:
