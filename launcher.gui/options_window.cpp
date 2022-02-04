@@ -12,6 +12,13 @@ Options::~Options() {
     save();
 }
 void Options::load() {
+    
+    QString save_opt = settings->value("save_opt", "0").toString();
+    if(save_opt == "0")
+        save_options->setChecked(false);
+    else
+        save_options->setChecked(true);
+    
     QString prog_path = settings->value("prog_path", "acidcamGL").toString();
     exec_path->setText(prog_path);
     QString e_checked = settings->value("prog_chk", "0").toString();
@@ -25,8 +32,13 @@ void Options::load() {
 }
 
 void Options::save() {
-    settings->setValue("prog_path", exec_path->text());
+    
+    if(save_options->isChecked()) {
+        settings->setValue("prog_path", exec_path->text());
     settings->setValue("prog_chk", exec_enable->isChecked() ? "1" : "0");
+    }
+    settings->setValue("save_opt", save_options->isChecked() ? "1" : "0");
+
 }
 
 void Options::chkClicked() {
@@ -86,7 +98,7 @@ void Options::create_window() {
     
     connect(exec_select, SIGNAL(clicked()), this, SLOT(selectExecutable()));
     
-    ok_button = new QPushButton(tr("Save"), this);
+    ok_button = new QPushButton(tr("Okay"), this);
     ok_button->setGeometry(470, 60, 100, 30);
     ok_button->setStyleSheet(style_info);
     
@@ -97,4 +109,9 @@ void Options::create_window() {
     def_button->setStyleSheet(style_info);
     
     connect(def_button, SIGNAL(clicked()), this, SLOT(setDefaults()));
+    
+    save_options = new QCheckBox(tr("Save Options"), this);
+    save_options->setGeometry(25, 60, 150, 30);
+    save_options->setStyleSheet(style_info);
+    
 }

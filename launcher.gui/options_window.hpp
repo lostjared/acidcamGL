@@ -28,6 +28,7 @@ public:
     QPushButton *exec_select;
     QSettings *settings;
     QPushButton *ok_button, *def_button;
+    QCheckBox *save_options;
 private:
     void create_window();
 };
