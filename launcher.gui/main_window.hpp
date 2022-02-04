@@ -89,8 +89,8 @@ private:
     QCheckBox *video_repeat;
     std::vector<FILE*> fptr;
     QSettings *settings;
-    QMenu *file_menu,*help_menu;
-    QAction *help_about, *file_exit, *file_options;
+    QMenu *file_menu,*help_menu, *run_menu;
+    QAction *help_about, *file_exit, *file_options, *run_exec;
     Options *options_window;
   
 };

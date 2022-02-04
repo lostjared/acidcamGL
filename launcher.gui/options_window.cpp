@@ -8,6 +8,9 @@ Options::Options(QWidget *parent) : QDialog(parent) {
     create_window();
 }
 
+Options::~Options() {
+    save();
+}
 void Options::load() {
     QString prog_path = settings->value("prog_path", "acidcamGL").toString();
     exec_path->setText(prog_path);
@@ -58,6 +61,10 @@ void Options::selectExecutable() {
         settings->setValue("dpath1", val.c_str());
     }
 }
+
+void Options::setDefaults() {
+    exec_path->setText("acidcamGL");
+}
     
 void Options::create_window() {
     QString style_info = "font-size: 16px; font-family: monaco;";
@@ -79,10 +86,15 @@ void Options::create_window() {
     
     connect(exec_select, SIGNAL(clicked()), this, SLOT(selectExecutable()));
     
-    ok_button = new QPushButton(tr("Ok"), this);
+    ok_button = new QPushButton(tr("Save"), this);
     ok_button->setGeometry(470, 60, 100, 30);
     ok_button->setStyleSheet(style_info);
     
     connect(ok_button, SIGNAL(clicked()), this, SLOT(okClicked()));
     
+    def_button = new QPushButton(tr("Defaults"), this);
+    def_button->setGeometry(350, 60, 100, 30);
+    def_button->setStyleSheet(style_info);
+    
+    connect(def_button, SIGNAL(clicked()), this, SLOT(setDefaults()));
 }

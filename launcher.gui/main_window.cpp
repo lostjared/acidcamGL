@@ -312,6 +312,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(auto_set, SIGNAL(clicked()), this, SLOT(setAutoFilter()));
     
     file_menu = menuBar()->addMenu(tr("&File"));
+    run_menu = menuBar()->addMenu(tr("&Run"));
     help_menu = menuBar()->addMenu(tr("Help"));
  
     file_options = new QAction(tr("Options"), this);
@@ -328,8 +329,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     help_about->setShortcut(tr("Ctrl+A"));
     help_menu->addAction(help_about);
     
+    run_exec = new QAction(tr("Execute"), this);
+    run_exec->setShortcut(tr("Ctrl+E"));
+    run_menu->addAction(run_exec);
+    
     connect(file_exit, SIGNAL(triggered()), this, SLOT(menu_Exit()));
     connect(help_about, SIGNAL(triggered()), this, SLOT(menu_About()));
+    connect(run_exec, SIGNAL(triggered()), this, SLOT(launchProgram()));
     
     options_window = new Options(this);
     options_window->settings = settings;
