@@ -25,6 +25,7 @@ private:
     Q_OBJECT
 public:
     MainWindow(QWidget *parent = 0);
+    ~MainWindow();
 public slots:
     void launchProgram();
     void LogMessage(const QString &text);
@@ -43,6 +44,8 @@ public slots:
     void menu_About();
     void menu_Exit();
     void menu_Options();
+    void load();
+    void save();
 signals:
     void LogString(const QString &text);
 private:

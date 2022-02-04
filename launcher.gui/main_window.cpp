@@ -341,8 +341,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     options_window->settings = settings;
     options_window->hide();
     options_window->load();
-    
+    load();
     updateCommand();
+}
+
+MainWindow::~MainWindow() {
+    save();
 }
 
 void MainWindow::menu_About() {
@@ -354,6 +358,39 @@ void MainWindow::menu_Exit() {
 
 void MainWindow::menu_Options() {
     options_window->show();
+}
+
+void MainWindow::load() {
+    
+    if(options_window->save_options->isChecked()) {
+        select_video_text->setText(settings->value("opt_video_t", "").toString());
+        select_path_text->setText(settings->value("opt_path_t", "").toString());
+        select_filters_text->setText(settings->value("opt_filter_t", "").toString());
+        camera_res->setText(settings->value("opt_camera_res", "1280x720").toString());
+        window_res->setText(settings->value("opt_window_res", "1280x720").toString());
+        start_shader->setText(settings->value("opt_start_sh", "0").toString());
+        start_filter->setText(settings->value("opt_start_fi", "0").toString());
+        material_filename->setText(settings->value("opt_material_filename", "").toString());
+        playlist_file->setText(settings->value("opt_playlist", "").toString());
+        auto_filter->setText(settings->value("opt_autofilter", "").toString());
+        custom_file->setText(settings->value("opt_custom", "").toString());
+    }
+}
+
+void MainWindow::save() {
+    if(options_window->save_options->isChecked()) {
+        settings->setValue("opt_video_t", select_video_text->text());
+        settings->setValue("opt_path_t", select_path_text->text());
+        settings->setValue("opt_filter_t", select_filters_text->text());
+        settings->setValue("opt_camera_res", camera_res->text());
+        settings->setValue("opt_window_res", window_res->text());
+        settings->setValue("opt_start_sh", start_shader->text());
+        settings->setValue("opt_start_fi",  start_filter->text());
+        settings->setValue("opt_material_filename", material_filename->text());
+        settings->setValue("opt_playlist", playlist_file->text());
+        settings->setValue("opt_autofilter", auto_filter->text());
+        settings->setValue("opt_custom", custom_file->text());
+    }
 }
 
 void MainWindow::launchProgram() {
