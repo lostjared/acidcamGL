@@ -383,6 +383,7 @@ void MainWindow::load() {
         monitor_->setText(settings->value("opt_monitor", "0").toString());
         fps->setText(settings->value("opt_fps", "0").toString());
         record_crf->setText(settings->value("opt_crf", "22").toString());
+        enable_bpm->setText(settings->value("opt_bpm", "60").toString());
     }
 }
 
@@ -404,6 +405,7 @@ void MainWindow::save() {
         settings->setValue("opt_monitor", monitor_->text());
         settings->setValue("opt_fps", fps->text());
         settings->setValue("opt_crf", record_crf->text());
+        settings->setValue("opt_bpm", enable_bpm->text());
     }
 }
 
