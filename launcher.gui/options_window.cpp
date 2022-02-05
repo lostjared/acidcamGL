@@ -12,7 +12,6 @@ Options::~Options() {
     save();
 }
 void Options::load() {
-    
     QString save_opt = settings->value("save_opt", "0").toString();
     if(save_opt == "0")
         save_options->setChecked(false);
@@ -32,13 +31,11 @@ void Options::load() {
 }
 
 void Options::save() {
-    
     if(save_options->isChecked()) {
         settings->setValue("prog_path", exec_path->text());
     settings->setValue("prog_chk", exec_enable->isChecked() ? "1" : "0");
     }
     settings->setValue("save_opt", save_options->isChecked() ? "1" : "0");
-
 }
 
 void Options::chkClicked() {
@@ -113,5 +110,4 @@ void Options::create_window() {
     save_options = new QCheckBox(tr("Save Options"), this);
     save_options->setGeometry(25, 60, 150, 30);
     save_options->setStyleSheet(style_info);
-    
 }
