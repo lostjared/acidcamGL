@@ -22,9 +22,7 @@ ServerThread *tv;
 QString application_path = "/Applications/acidcamGL";
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-    
     int offset_y = 25;
-    
     setFixedSize(1280, 375+500+10);
     setWindowTitle("acidcamGL - Start New Session");
     setWindowIcon(QPixmap(":/images/icon.png"));
@@ -59,19 +57,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QLabel *select_temp = new QLabel(tr("Select Shaders:"), this);
     select_temp->setStyleSheet(style_info);
     select_temp->setGeometry(15, 60+25+15+offset_y, 140, 20);
-    /*
-    QString pwd = QDir().currentPath();
-#ifdef __APPLE__
-    pwd = application_path;
-    std::string f = pwd.toStdString();
-    auto pos = f.rfind("launcher");
-    if(pos != std::string::npos) {
-        f = f.substr(0, pos);
-        pwd = f.c_str();
-    }
-#endif*/
     QString pwd = getShaderPath();
-    
     select_filters_text = new QLineEdit(pwd+"/filters", this);
     select_filters_text->setStyleSheet(style_info);
     select_filters_text->setGeometry(15+150+10, 60+25+10+offset_y, 250, 30);
@@ -196,8 +182,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     command->setReadOnly(false);
     connect(full_screen, SIGNAL(clicked()), this, SLOT(updateCommand()));
     connect(full_screen_resize, SIGNAL(clicked()), this, SLOT(updateCommand()));
-    //Log(QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory));
-    
+   
     QLabel *start_lbl = new QLabel(tr("Shader: "), this);
     start_lbl->setStyleSheet(style_info);
     start_lbl->setGeometry(20, 135+35+offset_y, 100, 30);
@@ -244,11 +229,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     connect(record_crf, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(record_name, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
-    
     connect(record_video, SIGNAL(clicked()), this, SLOT(updateCommand()));
-    
     connect(record_set, SIGNAL(clicked()), this, SLOT(setOutputFile()));
-    
     connect(record_type, SIGNAL(currentIndexChanged(int)), this, SLOT(comboChanged_mode(int)));
     
     QLabel *mat_lbl = new QLabel(tr("Material: "), this);
@@ -364,10 +346,8 @@ void MainWindow::menu_Options() {
 }
 
 void MainWindow::load() {
-    
     if(options_window->save_options->isChecked()) {
         device_edit->setText(settings->value("opt_device", "0").toString());
-        
         select_video_text->setText(settings->value("opt_video_t", "").toString());
         select_path_text->setText(settings->value("opt_path_t", "").toString());
         select_filters_text->setText(settings->value("opt_filter_t", getShaderPath()).toString());
@@ -440,7 +420,6 @@ void MainWindow::launchProgram() {
 #else
     cmd_string = "acidcamGL ";
 #endif
-    
     if(options_window->exec_enable->isChecked())
         cmd_string = options_window->exec_path->text() + " ";
     
@@ -472,10 +451,8 @@ void MainWindow::Log(const QString &text) {
 void MainWindow::selectShaders() {
     
     QString dir_path = settings->value("dir_shaders", "").toString();
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),
-                                                    dir_path,
-                                                    QFileDialog::ShowDirsOnly
-                                                    | QFileDialog::DontResolveSymlinks);
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),dir_path,QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    
     if(dir.length()>0) {
         select_filters_text->setText(dir);
         settings->setValue("dir_shaders",dir);
@@ -485,10 +462,7 @@ void MainWindow::selectShaders() {
 
 void MainWindow::selectPath() {
     QString dir_path = settings->value("dir_path1", "").toString();
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),
-                                                    dir_path,
-                                                    QFileDialog::ShowDirsOnly
-                                                    | QFileDialog::DontResolveSymlinks);
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Shaders Directory"),dir_path,QFileDialog::ShowDirsOnly| QFileDialog::DontResolveSymlinks);
     if(dir.length()>0) {
         select_path_text->setText(dir);
         settings->setValue("dir_path1",dir);
@@ -498,8 +472,7 @@ void MainWindow::selectPath() {
 
 void MainWindow::setMatPath() {
     QString dir_path = settings->value("dir_path2", "").toString();
-    QString name = QFileDialog::getOpenFileName(this,
-                                                tr("Open Video/Image"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
+    QString name = QFileDialog::getOpenFileName(this,tr("Open Video/Image"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
     if(name.length() > 0) {
         material_filename->setText(name);
         std::string val = name.toStdString();
@@ -516,8 +489,7 @@ void MainWindow::setMatPath() {
 
 void MainWindow::setPlaylistPath() {
     QString dir_path = settings->value("dir_path3", "").toString();
-    QString name = QFileDialog::getOpenFileName(this,
-                                                tr("Open Playlist"), dir_path, tr("Playlist Files (*.key)"));
+    QString name = QFileDialog::getOpenFileName(this,tr("Open Playlist"), dir_path, tr("Playlist Files (*.key)"));
     if(name.length() > 0) {
         playlist_file->setText(name);
         std::string val = name.toStdString();
@@ -534,8 +506,7 @@ void MainWindow::setPlaylistPath() {
 
 void MainWindow::setAutoFilter() {
     QString dir_path = settings->value("dir_path4", "").toString();
-    QString name = QFileDialog::getOpenFileName(this,
-                                                tr("Open Autofilter"), dir_path, tr("Autofilter Files (*.af)"));
+    QString name = QFileDialog::getOpenFileName(this,tr("Open Autofilter"), dir_path, tr("Autofilter Files (*.af)"));
     if(name.length() > 0) {
         std::string val = name.toStdString();
         auto pos = val.rfind("/");
@@ -552,8 +523,7 @@ void MainWindow::setAutoFilter() {
 
 void MainWindow::setOutputFile() {
     QString dir_path = settings->value("dir_path5", "").toString();
-    QString name = QFileDialog::getSaveFileName(this,
-                                                tr("Open Video"), dir_path, tr("Video Files (*.mp4 *.mkv *.m4v *.mov)"));
+    QString name = QFileDialog::getSaveFileName(this,tr("Open Video"), dir_path, tr("Video Files (*.mp4 *.mkv *.m4v *.mov)"));
     if(name.length() > 0) {
         std::string val = name.toStdString();
         auto pos = val.rfind("/");
@@ -570,10 +540,7 @@ void MainWindow::setOutputFile() {
 
 void MainWindow::setCustomFile() {
     QString dir_path = settings->value("dir_path7", "").toString();
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Custom Index Directory"),
-                                                    dir_path,
-                                                    QFileDialog::ShowDirsOnly
-                                                    | QFileDialog::DontResolveSymlinks);
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select Custom Index Directory"),dir_path,QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if(dir.length()>0) {
         custom_file->setText(dir);
         settings->setValue("dir_path7", dir);
@@ -583,8 +550,7 @@ void MainWindow::setCustomFile() {
 
 void MainWindow::selectVideo() {
     QString dir_path = settings->value("dir_path6", "").toString();
-    QString name = QFileDialog::getOpenFileName(this,
-                                                tr("Open Video"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
+    QString name = QFileDialog::getOpenFileName(this,tr("Open Video"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
     if(name.length() > 0) {
         std::string val = name.toStdString();
         auto pos = val.rfind("/");
