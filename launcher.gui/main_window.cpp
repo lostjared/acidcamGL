@@ -366,6 +366,8 @@ void MainWindow::menu_Options() {
 void MainWindow::load() {
     
     if(options_window->save_options->isChecked()) {
+        device_edit->setText(settings->value("opt_device", "0").toString());
+        
         select_video_text->setText(settings->value("opt_video_t", "").toString());
         select_path_text->setText(settings->value("opt_path_t", "").toString());
         select_filters_text->setText(settings->value("opt_filter_t", getShaderPath()).toString());
@@ -373,15 +375,20 @@ void MainWindow::load() {
         window_res->setText(settings->value("opt_window_res", "1280x720").toString());
         start_shader->setText(settings->value("opt_start_sh", "0").toString());
         start_filter->setText(settings->value("opt_start_fi", "0").toString());
+        start_sec->setText(settings->value("opt_start_sec", "0").toString());
         material_filename->setText(settings->value("opt_material_filename", "").toString());
         playlist_file->setText(settings->value("opt_playlist", "").toString());
         auto_filter->setText(settings->value("opt_autofilter", "").toString());
         custom_file->setText(settings->value("opt_custom", "").toString());
+        monitor_->setText(settings->value("opt_monitor", "0").toString());
+        fps->setText(settings->value("opt_fps", "0").toString());
+        record_crf->setText(settings->value("opt_crf", "22").toString());
     }
 }
 
 void MainWindow::save() {
     if(options_window->save_options->isChecked()) {
+        settings->setValue("opt_device", device_edit->text());
         settings->setValue("opt_video_t", select_video_text->text());
         settings->setValue("opt_path_t", select_path_text->text());
         settings->setValue("opt_filter_t", select_filters_text->text());
@@ -389,10 +396,14 @@ void MainWindow::save() {
         settings->setValue("opt_window_res", window_res->text());
         settings->setValue("opt_start_sh", start_shader->text());
         settings->setValue("opt_start_fi",  start_filter->text());
+        settings->setValue("opt_start_sec", start_sec->text());
         settings->setValue("opt_material_filename", material_filename->text());
         settings->setValue("opt_playlist", playlist_file->text());
         settings->setValue("opt_autofilter", auto_filter->text());
         settings->setValue("opt_custom", custom_file->text());
+        settings->setValue("opt_monitor", monitor_->text());
+        settings->setValue("opt_fps", fps->text());
+        settings->setValue("opt_crf", record_crf->text());
     }
 }
 
