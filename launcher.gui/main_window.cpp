@@ -357,8 +357,8 @@ void MainWindow::load() {
         start_filter->setText(settings->value("opt_start_fi", "0").toString());
         start_sec->setText(settings->value("opt_start_sec", "0").toString());
         material_filename->setText(settings->value("opt_material_filename", "").toString());
-        playlist_file->setText(settings->value("opt_playlist", "").toString());
-        auto_filter->setText(settings->value("opt_autofilter", "").toString());
+        //playlist_file->setText(settings->value("opt_playlist", "").toString());
+        //auto_filter->setText(settings->value("opt_autofilter", "").toString());
         custom_file->setText(settings->value("opt_custom", "").toString());
         monitor_->setText(settings->value("opt_monitor", "0").toString());
         fps->setText(settings->value("opt_fps", "0").toString());
