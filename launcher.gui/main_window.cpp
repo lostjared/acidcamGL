@@ -379,8 +379,8 @@ void MainWindow::save() {
         settings->setValue("opt_start_fi",  start_filter->text());
         settings->setValue("opt_start_sec", start_sec->text());
         settings->setValue("opt_material_filename", material_filename->text());
-        settings->setValue("opt_playlist", playlist_file->text());
-        settings->setValue("opt_autofilter", auto_filter->text());
+        //settings->setValue("opt_playlist", playlist_file->text());
+        //settings->setValue("opt_autofilter", auto_filter->text());
         settings->setValue("opt_custom", custom_file->text());
         settings->setValue("opt_monitor", monitor_->text());
         settings->setValue("opt_fps", fps->text());
