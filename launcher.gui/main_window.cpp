@@ -335,7 +335,14 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::menu_About() {
-    QMessageBox::information(this, tr("About"), tr("acidcamGL Launcher\nSoftware Programmed by Jared Bruni\n\n- LostSideDead Software\n\n\nVisit me online @: https://lostsidedead.biz\n\n\nThis Software is dedicated to all the people who experience mental illness."));
+    QMessageBox qbox;
+    qbox.setText(tr("acidcamGL Launcher\nSoftware Programmed by Jared Bruni\n(C) 2022 LostSideDead Software\nVisit me online @: https://lostsidedead.biz\n\n\nThis Software is dedicated to all the people who experience mental illness."));
+    QPixmap pixmap = QPixmap(":/images/icon.png");
+    QPixmap spix = pixmap.scaled(64, 64);
+    qbox.setIconPixmap(spix);
+    qbox.setWindowTitle(tr("About this Softwaare"));
+    qbox.exec();
+    //QMessageBox::information(this, tr("About"), tr("acidcamGL Launcher\nSoftware Programmed by Jared Bruni\n(C) 2022 LostSideDead Software\nVisit me online @: https://lostsidedead.biz\n\n\nThis Software is dedicated to all the people who experience mental illness."));
 }
 void MainWindow::menu_Exit() {
     QCoreApplication::quit();
