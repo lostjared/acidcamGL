@@ -2,6 +2,8 @@
 #ifndef __MAIN_WINDOW_H_
 #define __MAIN_WINDOW_H_
 
+#define GUI_VERSION "1.1.0"
+
 #include<QMainWindow>
 #include<QTextEdit>
 #include<QLineEdit>

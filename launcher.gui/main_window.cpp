@@ -336,7 +336,10 @@ MainWindow::~MainWindow() {
 
 void MainWindow::menu_About() {
     QMessageBox qbox;
-    qbox.setText(tr("acidcamGL Launcher\nSoftware Programmed by Jared Bruni\n(C) 2022 LostSideDead Software\nVisit me online @: https://lostsidedead.biz\n\n\nThis Software is dedicated to all the people who experience mental illness."));
+    
+    QString v = "acidcamGL Launcher v" + QString(GUI_VERSION) + "\nSoftware Programmed by Jared Bruni\n(C) 2022 LostSideDead Software\nVisit me online @: https://lostsidedead.biz\n\n\nThis Software is dedicated to all the people who experience mental illness.";
+    
+    qbox.setText(tr(v.toStdString().c_str()));
     QPixmap pixmap = QPixmap(":/images/icon.png");
     QPixmap spix = pixmap.scaled(64, 64);
     qbox.setIconPixmap(spix);
