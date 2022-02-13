@@ -88,6 +88,7 @@ private:
     QPushButton *auto_set;
     QCheckBox *enable_res;
     QCheckBox *enable_cam;
+    QCheckBox *enable_shuffle;
     QLineEdit *fps;
     QCheckBox *custom_on;
     QLineEdit *custom_file;

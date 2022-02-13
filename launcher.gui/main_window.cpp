@@ -276,9 +276,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     enable_bpm->setStyleSheet(style_info);
     enable_bpm->setGeometry(660+170, 135+40+35+35+35+offset_y, 50, 30);
     
+    enable_shuffle = new QCheckBox(tr("Shuffle"), this);
+    enable_shuffle->setStyleSheet(style_info);
+    enable_shuffle->setGeometry(660+170+60, 135+40+35+35+35+offset_y, 100, 30);
+    
     connect(enable_bpm, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
     connect(enable_playback, SIGNAL(clicked()), this, SLOT(updateCommand()));
+    
+    connect(enable_shuffle, SIGNAL(clicked()), this, SLOT(updateCommand()));
     
     QLabel *auto_lbl = new QLabel(tr("AutoFilter"), this);
     auto_lbl->setStyleSheet(style_info);
@@ -692,7 +698,12 @@ void MainWindow::updateCommand() {
     }
     
     if(enable_playback->isChecked() && playlist_file->text() != "") {
-        cmd_list << "-B" << "-q" << "-w" << enable_bpm->text();
+        cmd_list << "-B";
+        
+        if(enable_shuffle->isChecked())
+            cmd_list << "-q";
+        
+        cmd_list << "-w" << enable_bpm->text();
     }
     
     if(auto_filter->text() != "") {
