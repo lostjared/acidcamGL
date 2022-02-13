@@ -94,6 +94,10 @@ material_gridcolor_gradient.glsl
 material_alpha_scale.glsl
 material_alpha.glsl
 material_alphablend.glsl
+material_alphablend_bright.glsl
+material_alphablend_1.glsl
+material_alphablend_2.glsl
+material_alphablend_dark.glsl
 material_alphablend_random.glsl
 material_alphablend_xor.glsl
 material_alphablend_xor_scale.glsl
