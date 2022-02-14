@@ -98,6 +98,7 @@ material_alphablend_bright.glsl
 material_alphablend_1.glsl
 material_alphablend_2.glsl
 material_alphablend_3.glsl
+material_alphablend_4.glsl
 material_alphablend_dark.glsl
 material_alphablend_random.glsl
 material_alphablend_xor.glsl
