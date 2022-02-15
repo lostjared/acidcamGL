@@ -103,6 +103,7 @@ material_alphablend_3.glsl
 material_alphablend_4.glsl
 material_alphablend_dark.glsl
 material_alphablend_random.glsl
+material_alphablend_xor_fade1.glsl
 material_alphablend_xor.glsl
 material_alphablend_xor_scale.glsl
 material_alphablend_sin.glsl
