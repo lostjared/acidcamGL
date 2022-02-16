@@ -109,6 +109,7 @@ material_alphablend_xor_scale.glsl
 material_alphablend_sin.glsl
 material_alphablend_add.glsl
 material_alphablend_normal.glsl
+material_blend_fade.glsl
 material_with_source.glsl
 material_coord.glsl
 material_coord_rev.glsl
