@@ -14,6 +14,7 @@ picolor.glsl
 pigrid.glsl
 gridcolor_gradient.glsl
 average_pixels.glsl
+alpha_fade_blend.glsl
 blurry.glsl
 blur_offset.glsl
 blur_offset_color_fade.glsl
