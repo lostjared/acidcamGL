@@ -66,6 +66,7 @@ all:
 	make -C mirrorcollection install
 	make -C placement install
 	make -C black_square install
+	make -C frame_offset_rsize install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -134,4 +135,4 @@ clean:
 	make -C mirrorcollection clean
 	make -C placement clean
 	make -C black_square clean
-
+	make -C frame_offset_rsize clean
