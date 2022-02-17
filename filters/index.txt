@@ -38,6 +38,7 @@ echo_or_and_xor.glsl
 echo_xor_or_and.glsl
 echo_rgb.glsl
 echo_bgr.glsl
+echo_color.glsl
 reverse.glsl
 reverse_vert.glsl
 reverse_xy.glsl
