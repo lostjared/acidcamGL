@@ -13,6 +13,7 @@ Q_OBJECT
 public:
     Auto(QWidget *parent = 0);
     void createControls();
+    QString createString();
     
 public slots:
     void btn_Add();
