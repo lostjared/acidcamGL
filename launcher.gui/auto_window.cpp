@@ -77,7 +77,7 @@ void Auto::btn_Add() {
     QString text;
     QTextStream stream(&text);
     stream << in_shader->text().trimmed() << ":" << in_filter->text().trimmed() << ":" << in_frames->text().trimmed();
-    box->addItem(text.trimmed());
+    box->addItem(text);
 }
 
 void Auto::btn_Rmv() {
