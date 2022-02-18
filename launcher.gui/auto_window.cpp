@@ -4,6 +4,8 @@
 
 Auto::Auto(QWidget *parent) : QDialog(parent) {
     setFixedSize(640, 480);
+    setWindowTitle("AutoFilter - Editor");
+    setWindowIcon(QPixmap(":/images/icon.png"));
     createControls();
 }
 
@@ -45,7 +47,46 @@ void Auto::createControls() {
     auto_add->setStyleSheet(style_info);
     
     auto_remove = new QPushButton(tr("Remove"), this);
-    auto_remove->setGeometry(25+105, 255+25+30+5+35, 100, 30);
+    auto_remove->setGeometry(25+105+5, 255+25+30+5+35, 100, 30);
     auto_remove->setStyleSheet(style_info);
+    
+    auto_insert = new QPushButton(tr("Insert"), this);
+    auto_insert->setGeometry(25+105+105+10, 255+25+30+5+35, 100, 30);
+    auto_insert->setStyleSheet(style_info);
+    
+    auto_save = new QPushButton(tr("Save"), this);
+    auto_save->setGeometry(25, 255+25+30+35+35+5, 100, 30);
+    auto_save->setStyleSheet(style_info);
+    
+    auto_load = new QPushButton(tr("Load"), this);
+    auto_load->setGeometry(25+105+5, 255+25+30+5+35+30+5, 100, 30);
+    auto_load->setStyleSheet(style_info);
+    
+    connect(auto_add, SIGNAL(clicked()), this, SLOT(btn_Add()));
+    connect(auto_remove, SIGNAL(clicked()), this, SLOT(btn_Rmv()));
+    connect(auto_insert, SIGNAL(clicked()), this, SLOT(btn_Insert()));
+    connect(auto_save, SIGNAL(clicked()), this, SLOT(btn_Save()));
+    connect(auto_load, SIGNAL(clicked()), this, SLOT(btn_Load()));
+    
+}
+
+
+void Auto::btn_Add() {
+    
+}
+
+void Auto::btn_Rmv() {
+    
+}
+
+void Auto::btn_Insert() {
+    
+}
+
+void Auto::btn_Save() {
+    
+}
+
+void Auto::btn_Load() {
     
 }

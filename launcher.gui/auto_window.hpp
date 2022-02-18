@@ -14,10 +14,17 @@ public:
     Auto(QWidget *parent = 0);
     void createControls();
     
+public slots:
+    void btn_Add();
+    void btn_Rmv();
+    void btn_Insert();
+    void btn_Save();
+    void btn_Load();
+    
 private:
     QListWidget *box;
     QLineEdit *in_filter, *in_shader, *in_frames;
-    QPushButton *auto_add, *auto_remove;
+    QPushButton *auto_add, *auto_remove, *auto_insert, *auto_save, *auto_load;
 };
 
 
