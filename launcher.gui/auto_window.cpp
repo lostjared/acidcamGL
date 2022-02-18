@@ -76,8 +76,8 @@ void Auto::createControls() {
 void Auto::btn_Add() {
     QString text;
     QTextStream stream(&text);
-    stream << in_shader->text() << ":" << in_filter->text() << ":" << in_frames->text();
-    box->addItem(text);
+    stream << in_shader->text().trimmed() << ":" << in_filter->text().trimmed() << ":" << in_frames->text().trimmed();
+    box->addItem(text.trimmed());
 }
 
 void Auto::btn_Rmv() {
@@ -92,7 +92,7 @@ void Auto::btn_Insert() {
     if(pos != -1) {
         QString text;
         QTextStream stream(&text);
-        stream << in_shader->text() << ":" << in_filter->text() << ":" << in_frames->text();
+        stream << in_shader->text().trimmed() << ":" << in_filter->text().trimmed() << ":" << in_frames->text().trimmed();
         QListWidgetItem *item = box->item(pos);
         item->setText(text);
     }
