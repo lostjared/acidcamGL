@@ -1,5 +1,7 @@
 
 #include"auto_window.hpp"
+#include<fstream>
+#include<QFileDialog>
 
 
 Auto::Auto(QWidget *parent) : QDialog(parent) {
@@ -72,21 +74,67 @@ void Auto::createControls() {
 
 
 void Auto::btn_Add() {
-    
+    QString text;
+    QTextStream stream(&text);
+    stream << in_shader->text() << ":" << in_filter->text() << ":" << in_frames->text();
+    box->addItem(text);
 }
 
 void Auto::btn_Rmv() {
-    
+    int pos = box->currentRow();
+    if(pos != -1) {
+        box->takeItem(pos);
+    }
 }
 
 void Auto::btn_Insert() {
-    
+    int pos = box->currentRow();
+    if(pos != -1) {
+        QString text;
+        QTextStream stream(&text);
+        stream << in_shader->text() << ":" << in_filter->text() << ":" << in_frames->text();
+        QListWidgetItem *item = box->item(pos);
+        item->setText(text);
+    }
 }
 
 void Auto::btn_Save() {
-    
+    QString name = QFileDialog::getSaveFileName(this,tr("Save AutoFilter File"), "autofilter", tr("AF Files (*.af)"));
+
+    if(name != "") {
+        std::fstream file;
+        file.open(name.toStdString(), std::ios::out);
+        if(!file.is_open()) {
+            return;
+        }
+        for(int i = 0; i < box->count(); ++i) {
+            QListWidgetItem *item = box->item(i);
+            file << item->text().toStdString() << "\n";
+        }
+        file.close();
+    }
 }
 
 void Auto::btn_Load() {
+   
+    QString name = QFileDialog::getOpenFileName(this,tr("Open AutoFilter file"), "autofilter", tr("AF Files (*.af)"));
     
+    if(name != "") {
+        std::fstream file;
+        file.open(name.toStdString(), std::ios::in);
+        if(!file.is_open()) {
+            return;
+        }
+        
+        box->clear();
+        
+        while(!file.eof()) {
+            std::string s;
+            std::getline(file, s);
+            if(file) {
+                box->addItem(s.c_str());
+            }
+        }
+        file.close();
+    }
 }
