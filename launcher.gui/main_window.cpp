@@ -312,6 +312,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     connect(file_options, SIGNAL(triggered()),this, SLOT(menu_Options()));
     
+    open_auto = new QAction(tr("AutoFilter Editor"), this);
+    file_menu->addAction(open_auto);
+    
+    connect(open_auto, SIGNAL(triggered()), this, SLOT(menu_Auto()));
+    
     file_exit = new QAction(tr("E&xit"), this);
     file_exit->setShortcut(tr("Ctrl+X"));
     file_menu->addAction(file_exit);
@@ -332,6 +337,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     options_window->settings = settings;
     options_window->hide();
     options_window->load();
+    
+    auto_window = new Auto(this);
+    auto_window->hide();
+    
     load();
     updateCommand();
 }
@@ -358,6 +367,10 @@ void MainWindow::menu_Exit() {
 
 void MainWindow::menu_Options() {
     options_window->show();
+}
+
+void MainWindow::menu_Auto() {
+    auto_window->show();
 }
 
 void MainWindow::load() {

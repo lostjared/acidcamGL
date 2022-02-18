@@ -20,6 +20,7 @@
 #include<QMenuBar>
 #include<QMessageBox>
 #include"options_window.hpp"
+#include"auto_window.hpp"
 #include"sock_server.hpp"
 
 class MainWindow : public QMainWindow {
@@ -46,6 +47,7 @@ public slots:
     void menu_About();
     void menu_Exit();
     void menu_Options();
+    void menu_Auto();
     void load();
     void save();
     QString getShaderPath();
@@ -97,8 +99,9 @@ private:
     std::vector<FILE*> fptr;
     QSettings *settings;
     QMenu *file_menu,*help_menu, *run_menu;
-    QAction *help_about, *file_exit, *file_options, *run_exec;
+    QAction *help_about, *file_exit, *file_options, *run_exec, *open_auto;
     Options *options_window;
+    Auto *auto_window;
   
 };
 
