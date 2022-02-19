@@ -99,7 +99,10 @@ void Auto::btn_Insert() {
 }
 
 void Auto::btn_Save() {
-    QString name = QFileDialog::getSaveFileName(this,tr("Save AutoFilter File"), "autofilter", tr("AF Files (*.af)"));
+    
+    QString dir_path = settings->value("af_path2", "").toString();
+    
+    QString name = QFileDialog::getSaveFileName(this,tr("Save AutoFilter File"), dir_path, tr("AF Files (*.af)"));
 
     if(name != "") {
         std::fstream file;
@@ -112,12 +115,27 @@ void Auto::btn_Save() {
             file << item->text().toStdString() << "\n";
         }
         file.close();
+        
+        if(name.length() > 0) {
+            std::string val = name.toStdString();
+            auto pos = val.rfind("/");
+            if(pos == std::string::npos)
+                pos = val.rfind("\\");
+            if(pos != std::string::npos) {
+                val = val.substr(0, pos);
+            }
+            settings->setValue("af_path2", val.c_str());
+        }
+        
     }
 }
 
 void Auto::btn_Load() {
    
-    QString name = QFileDialog::getOpenFileName(this,tr("Open AutoFilter file"), "autofilter", tr("AF Files (*.af)"));
+    QString dir_path = settings->value("af_path1", "").toString();
+  
+    
+    QString name = QFileDialog::getOpenFileName(this,tr("Open AutoFilter file"), dir_path, tr("AF Files (*.af)"));
     
     if(name != "") {
         std::fstream file;
@@ -136,5 +154,18 @@ void Auto::btn_Load() {
             }
         }
         file.close();
+        
+        
+        if(name.length() > 0) {
+            std::string val = name.toStdString();
+            auto pos = val.rfind("/");
+            if(pos == std::string::npos)
+                pos = val.rfind("\\");
+            if(pos != std::string::npos) {
+                val = val.substr(0, pos);
+            }
+            settings->setValue("af_path1", val.c_str());
+        }
+        
     }
 }

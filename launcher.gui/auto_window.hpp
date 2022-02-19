@@ -6,6 +6,8 @@
 #include<QLineEdit>
 #include<QLabel>
 #include<QPushButton>
+#include<QSettings>
+
 
 class Auto : public QDialog {
 Q_OBJECT
@@ -14,6 +16,7 @@ public:
     Auto(QWidget *parent = 0);
     void createControls();
     QString createString();
+    QSettings *settings;
     
 public slots:
     void btn_Add();
@@ -21,6 +24,7 @@ public slots:
     void btn_Insert();
     void btn_Save();
     void btn_Load();
+    
     
 private:
     QListWidget *box;

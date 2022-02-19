@@ -339,6 +339,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     options_window->load();
     
     auto_window = new Auto(this);
+    auto_window->settings = settings;
     auto_window->hide();
     
     load();
