@@ -5,7 +5,7 @@
 
 
 Auto::Auto(QWidget *parent) : QDialog(parent) {
-    setFixedSize(640, 480);
+    setFixedSize(640, 440);
     setWindowTitle("AutoFilter - Editor");
     setWindowIcon(QPixmap(":/images/icon.png"));
     createControls();
@@ -134,7 +134,6 @@ void Auto::btn_Load() {
    
     QString dir_path = settings->value("af_path1", "").toString();
   
-    
     QString name = QFileDialog::getOpenFileName(this,tr("Open AutoFilter file"), dir_path, tr("AF Files (*.af)"));
     
     if(name != "") {
@@ -166,6 +165,5 @@ void Auto::btn_Load() {
             }
             settings->setValue("af_path1", val.c_str());
         }
-        
     }
 }
