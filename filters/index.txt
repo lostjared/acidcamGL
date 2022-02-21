@@ -84,6 +84,8 @@ matrix_mul4.glsl
 strobe_colors.glsl
 strobe_light.glsl
 color_increase.glsl
+time_frac.glsl
+time_frac_xor.glsl
 material.glsl
 material_mirror1.glsl
 material_mirror2.glsl

@@ -22,6 +22,7 @@ uniform float time_f;
 uniform float restore_black;
 in float restore_black_value;
 in vec2 iResolution_;
+uniform vec4 inc_value;
 
 
 void main(void)
@@ -29,6 +30,7 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    color = (color * 0.5) + (0.5 * fract(color * time_f));
+    color = (0.5 * color) + (0.5 *  fract(inc_value/255 * time_f));
 }
+
 
