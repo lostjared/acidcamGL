@@ -68,6 +68,7 @@ all:
 	make -C black_square install
 	make -C frame_offset_rsize install
 	make -C frame_offset_rsize_skip install
+	make -C frame_offset_rsize2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -138,3 +139,4 @@ clean:
 	make -C black_square clean
 	make -C frame_offset_rsize clean
 	make -C frame_offset_rsize_skip clean
+	make -C frame_offset_rsize2 clean
