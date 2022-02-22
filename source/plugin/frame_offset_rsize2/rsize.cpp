@@ -31,7 +31,7 @@ extern "C" void filter(cv::Mat &frame) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             
             for(int j = 0; j < 3; ++j) {
-                if(pixel[j] != pixel_diff[j]) {
+                if(abs(pixel[j]-pixel_diff[j]) > 15) {
                     pixel[j] = wrap_cast((pixel[j] * 0.5) + (0.5 * pixel_off[j]));
                 }
             }
