@@ -24,7 +24,7 @@ extern "C" void filter(cv::Mat &frame) {
         int offset_x = 0;
         for(int i = rsize_x; i < frame.cols; ++i) {
             cv::Mat &m = collection.frames[offset];
-            cv::Mat &m2 = collection.frames[7];
+            cv::Mat &m2 = collection.frames[4];
             cv::Vec3b &pixel_diff = m2.at<cv::Vec3b>(z, i);
             cv::Vec3b &pixel_off = m.at<cv::Vec3b>(z, offset_x);
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
