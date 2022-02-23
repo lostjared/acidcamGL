@@ -39,7 +39,7 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    color = echo_loop(color, 8);
+    color = echo_loop(color, 14);
 }
 
 
