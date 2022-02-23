@@ -13,21 +13,25 @@ uniform vec4 optx;
 in vec4 random_value;
 uniform vec4 random_var;
 uniform float alpha_value;
+
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 uniform sampler2D samp;
 uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
-in vec2 iResolution_;
-uniform vec2 iResolution;
+
+
 uniform float restore_black;
 in float restore_black_value;
 
-float random (vec2 st) {
-    return fract(sin(dot(st.xy,
-                         vec2(12.9898,78.233)))*
-        43758.5453123);
+vec4 echo_loop(vec4 color, int count) {
+    vec4 col = color;
+    for(int i = 2; i < count; i += 2) {
+        vec4 pos = texture(samp, tc/ (i * fract(time_f)));
+        col = (0.6 * col) + (0.2 * pos);
+    }
+    return col;
 }
 
 void main(void)
@@ -35,15 +39,9 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    vec4 color2;
-    color2 = texture(samp, tc);
-    vec4 color3;
-    color3 = texture(samp, tc/2);
-    vec4 color4;
-    color4 = texture(samp, tc/4);
-    color[0] = (0.5 * color[0]) + (0.5 * color2[0]);
-    color[1] = (0.5 * color[1]) + (0.5 * color3[1]);
-    color[2] = (0.5 * color[2]) + (0.5 * color4[2]);
+    color = echo_loop(color, 8);
 }
+
+
 
 
