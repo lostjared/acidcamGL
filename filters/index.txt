@@ -137,6 +137,7 @@ material_echo_mod.glsl
 material_echo_mod2.glsl
 material_echo_rand.glsl
 material_echo_blend_size.glsl
+material_mix.glsl
 material_white_light.glsl
 material_white_light_xor.glsl
 material_flash_gradient_strobe.glsl
@@ -218,7 +219,6 @@ material_sheet.glsl
 material_dark_square.glsl
 material_bright.glsl
 material_blank_strobe.glsl
-material_mix.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
