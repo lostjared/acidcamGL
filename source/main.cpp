@@ -635,10 +635,16 @@ int main(int argc, char **argv) {
     if(list_path.length()>0)
         main_window.loadShaderList(list_path);
     if(filter_string.length()>0) {
-        set_index = findFilter(filter_string);
-        if(set_index == -1) {
-            std::cout << "acidcam: Error could not find filter: " << filter_string << "\n";
-            acidcam::updateError();
+        
+        if(filter_string.find(",") != std::string::npos) {
+            set_index = main_window.setCustomFilter(filter_string);
+        }
+        else {
+            set_index = findFilter(filter_string);
+            if(set_index == -1) {
+                std::cout << "acidcam: Error could not find filter: " << filter_string << "\n";
+                acidcam::updateError();
+            }
         }
     }
     main_window.setFilterIndex(set_index);

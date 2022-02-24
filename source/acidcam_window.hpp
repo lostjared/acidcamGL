@@ -915,6 +915,26 @@ namespace acidcam {
                 std::cout << "acidcam: Filter Index: " << index << " - " << ac::solo_filter[index] << "\n";
             }
         }
+                
+        int setCustomFilter(std::string s) {
+            custom_filters["CustomFilterStack"] = std::vector<std::string>();
+            std::vector<std::string> &flist = custom_filters["CustomFilterStack"];
+            auto pos = s.find(",");
+            while(pos != std::string::npos) {
+                std::string left, right;
+                left = s.substr(0, pos);
+                s = s.substr(pos+1, s.length());
+                flist.push_back(left);
+                pos = s.find(",");
+                if(pos == std::string::npos && s.length() > 0) {
+                    flist.push_back(s);
+                }
+            }
+            ac::solo_filter.push_back("CustomFilterStack");
+            std::cout << "acidcam: Custom Loaded: " <<  ac::solo_filter[ac::solo_filter.size()-1] << "\n";
+            return static_cast<int>(ac::solo_filter.size()-1);
+            
+        }
         
         std::fstream *stdout_file;
         
