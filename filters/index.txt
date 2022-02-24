@@ -25,6 +25,8 @@ echo_xor_color_blend.glsl
 echo_2.glsl
 echo_3.glsl
 echo_4.glsl
+echo_div2.glsl
+echo_div4.glsl
 echo_4_rev.glsl
 echo_shift.glsl
 echo_xor.glsl
