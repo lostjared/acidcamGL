@@ -133,6 +133,8 @@ material_rgb_mix_rev2.glsl
 material_random_shift.glsl
 material_echo_div2.glsl
 material_echo_div4.glsl
+material_echo_div248.glsl
+material_echo_div248_rev.glsl
 material_echo_even_div2.glsl
 material_echo_even_div4.glsl
 material_echo_even.glsl
