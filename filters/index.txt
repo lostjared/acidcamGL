@@ -142,6 +142,8 @@ material_echo_even_div4.glsl
 material_echo_even.glsl
 material_echo_half_1.glsl
 material_echo_half_2.glsl
+material_echo_half_3.glsl
+material_echo_half_4.glsl
 material_echo_self.glsl
 material_echo_self_rev.glsl
 material_echo_self_rev2.glsl
