@@ -244,6 +244,7 @@ material_blank_strobe.glsl
 material_square2.glsl
 material_sin_timeval.glsl
 material_math_color.glsl
+material_math_color2.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
