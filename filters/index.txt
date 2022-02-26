@@ -145,6 +145,7 @@ material_echo_half_2.glsl
 material_echo_half_3.glsl
 material_echo_half_4.glsl
 material_echo_half_5.glsl
+material_echo_half_6.glsl
 material_echo_self.glsl
 material_echo_self_rev.glsl
 material_echo_self_rev2.glsl
