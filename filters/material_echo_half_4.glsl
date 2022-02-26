@@ -35,10 +35,10 @@ void main(void)
     
     vec2 tc1 = tc;
     vec2 tc2 = tc;
-    
-    tc1[0] = 0.5-tc1[0];
-    tc2[1] = 0.5-tc2[1];
-    
+   
+    tc1[0] = 1.0-tc1[0];
+    tc2[1] = 1.0-tc2[1];
+
     vec4 color2 = (0.5 * texture(samp, tc2/2)) + (0.5 * texture(mat_samp, tc2/2));
     vec4 color3 = (0.5 * texture(samp, tc/4)) + (0.5 * texture(mat_samp, tc/4));
     vec4 color4 = (0.5 * texture(samp, tc1/6)) + (0.5 * texture(mat_samp, tc1/6));
