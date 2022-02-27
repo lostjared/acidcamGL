@@ -318,3 +318,4 @@ color_bars.glsl
 cos_sin.glsl
 weirdlines.glsl
 wrap_around.glsl
+coord_color.glsl
