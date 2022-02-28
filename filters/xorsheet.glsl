@@ -25,6 +25,28 @@ uniform float time_f;
 uniform float restore_black;
 in float restore_black_value;
 
+vec4 color_blend(vec4 color) {
+    vec4 color2 = color;
+    ivec4 color_source = ivec4(color * 255);
+    color = color*alpha;
+    ivec4 colori = ivec4(color * 255);
+    for(int i = 0; i < 3; ++i) {
+        if(colori[i] >= 255)
+            colori[i] = colori[i]%255;
+        
+        if(color_source[i] >= 255)
+            color_source[i] = color_source[i]%255;
+        
+        colori[i] = colori[i] ^ color_source[i];
+        color[i] = float(colori[i])/255;
+    }
+    
+    for(int i = 0; i < 3; ++i)
+        if(color[i] < 0.2) color[i] = color2[i];
+    return color;
+}
+
+
 void main(void)
 {
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
@@ -39,5 +61,7 @@ void main(void)
     vec2 d = fract(p);
     color[1] = (color[1]+col1[1])*(d[0]+d[1]);
     color[2] = (color[2]+col2[2])*(d[0]+d[1]);
+    
+    color = color_blend(color);
 }
 
