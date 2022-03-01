@@ -924,9 +924,17 @@ namespace acidcam {
                 std::string left, right;
                 left = s.substr(0, pos);
                 s = s.substr(pos+1, s.length());
+                if(find_solo(left) == -1) {
+                    std::cout << "acidcam: Error filter: " << left << " not found!\n";
+                    updateError();
+                }
                 flist.push_back(left);
                 pos = s.find(",");
                 if(pos == std::string::npos && s.length() > 0) {
+                    if(find_solo(s) == -1) {
+                        std::cout << "acidcam: Error filter: " << s << " not found!\n";
+                        updateError();
+                    }
                     flist.push_back(s);
                 }
             }

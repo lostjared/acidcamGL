@@ -654,8 +654,6 @@ int main(int argc, char **argv) {
     main_window.setColorMap(color_map);
     main_window.setStereo(stereo_);
     FILE *fptr = 0;
-
-    
     std::cout << "acidcam: Loaded: " << ac::solo_filter.size() << " Filters\n";
     std::cout << "acidcam: initialized...\n";
     
