@@ -72,6 +72,7 @@ all:
 	make -C frame_offset_rsize_rgb install
 	make -C stuckline install
 	make -C frame_sep install
+	make -C frame_sep2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -145,4 +146,5 @@ clean:
 	make -C frame_offset_rsize2 clean
 	make -C frame_offset_rsize_rgb clean
 	make -C stuckline clean
-	make -C fame_sep clean
+	make -C frame_sep clean
+	make -C frame_sep2 clean
