@@ -70,6 +70,7 @@ all:
 	make -C frame_offset_rsize_skip install
 	make -C frame_offset_rsize2 install
 	make -C frame_offset_rsize_rgb install
+	make -C stuckline install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -142,3 +143,4 @@ clean:
 	make -C frame_offset_rsize_skip clean
 	make -C frame_offset_rsize2 clean
 	make -C frame_offset_rsize_rgb clean
+	make -c stuckline clean
