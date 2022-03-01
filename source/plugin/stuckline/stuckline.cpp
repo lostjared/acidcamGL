@@ -12,8 +12,6 @@ extern "C" void filter(cv::Mat  &frame) {
     if (rand()%10 == 0)
         collection.shiftFrames(frame);
     static int off = 0;
-    static int array_off = 0;
-    
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
