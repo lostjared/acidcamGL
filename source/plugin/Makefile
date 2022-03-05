@@ -73,6 +73,7 @@ all:
 	make -C stuckline install
 	make -C frame_sep install
 	make -C frame_sep2 install
+	make -C frame_sep3 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -148,3 +149,4 @@ clean:
 	make -C stuckline clean
 	make -C frame_sep clean
 	make -C frame_sep2 clean
+	make -C frame_sep3 clean
