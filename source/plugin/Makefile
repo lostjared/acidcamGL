@@ -74,6 +74,7 @@ all:
 	make -C frame_sep install
 	make -C frame_sep2 install
 	make -C frame_sep3 install
+	make -C frame_sep4 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -150,3 +151,4 @@ clean:
 	make -C frame_sep clean
 	make -C frame_sep2 clean
 	make -C frame_sep3 clean
+	make -C frame_sep4 clean
