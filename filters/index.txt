@@ -163,6 +163,7 @@ material_echo_blend_size.glsl
 material_echo_setcolor.glsl
 material_echo_mirror_1.glsl
 material_echo_xor_half_1.glsl
+material_echo_xor_half_2.glsl
 material_mix.glsl
 material_white_light.glsl
 material_white_light_xor.glsl
