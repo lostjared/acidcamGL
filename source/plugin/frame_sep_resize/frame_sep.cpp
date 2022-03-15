@@ -12,7 +12,7 @@ extern "C" void filter(cv::Mat  &frame) {
     static bool on = false;
     static int off = 0;
     
-    cv::Mat old = collection.frames[7].clone();
+    cv::Mat &old = collection.frames[7];
     ac::Square_Block_Resize_Vertical(old);
  
     
