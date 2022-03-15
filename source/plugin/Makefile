@@ -78,6 +78,7 @@ all:
 	make -C frame_sep5 install
 	make -C frame_delay install
 	make -C frame_sep_diff install
+	make -C frame_sep_resize install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -158,3 +159,4 @@ clean:
 	make -C frame_sep5 clean
 	make -C frame_delay clean
 	make -C frame_sep_diff clean
+	make -C frame_sep_resize clean
