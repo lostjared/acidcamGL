@@ -55,3 +55,17 @@ starthought.acidcam
 starthought2.acidcam
 mirrorcollection.acidcam
 placement.acidcam
+frame_offset_rsize.acidcam
+frame_offset_rsize_skip.acidcam
+frame_offset_rsize2.acidcam
+frame_offset_rsize_rgb.acidcam
+stuckline.acidcam
+frame_sep.acidcam
+frame_sep2.acidcam
+frame_sep3.acidcam
+frame_sep4.acidcam
+frame_sep5.acidcam
+frame_delay.acidcam
+frame_sep_diff.acidcam
+frame_sep_resize.acidcam
+frame_sep_resize2.acidcam
