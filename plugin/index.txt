@@ -69,3 +69,4 @@ frame_delay.acidcam
 frame_sep_diff.acidcam
 frame_sep_resize.acidcam
 frame_sep_resize2.acidcam
+frame_sep_square.acidcam
