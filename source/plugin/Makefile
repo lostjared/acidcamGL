@@ -81,6 +81,7 @@ all:
 	make -C frame_sep_resize install
 	make -C frame_sep_resize2 install
 	make -C frame_sep_square install
+	make -C frame_sep_h install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -164,3 +165,4 @@ clean:
 	make -C frame_sep_resize clean
 	make -C frame_sep_resize2 clean
 	make -C frame_sep_square clean
+	make -C frame_sep_h clean
