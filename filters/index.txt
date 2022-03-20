@@ -140,6 +140,8 @@ material_echo_div248.glsl
 material_echo_div248_rev.glsl
 material_echo_div246.glsl
 material_echo_div246_rev.glsl
+material_echo_div12_1.glsl
+material_echo_div12_2.glsl
 material_echo_even_div2.glsl
 material_echo_even_div4.glsl
 material_echo_even.glsl
