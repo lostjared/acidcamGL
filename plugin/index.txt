@@ -74,3 +74,4 @@ frame_sep_h.acidcam
 frame_skip.acidcam
 frame_skip_resize.acidcam
 frame_skip_diag.acidcam
+frame_skip_reverse.acidcam
