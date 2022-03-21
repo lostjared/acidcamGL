@@ -86,6 +86,7 @@ all:
 	make -C frame_skip_resize install
 	make -C frame_skip_diag install
 	make -C frame_skip_reverse install
+	make -C frame_skip_shadow install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -174,4 +175,5 @@ clean:
 	make -C frame_skip_resize clean
 	make -C frame_skip_diag clean
 	make -C frame_skip_reverse clean
+	make -C frame_skip_shadow clean
 
