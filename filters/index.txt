@@ -96,6 +96,7 @@ color_increase.glsl
 time_frac.glsl
 time_frac_xor.glsl
 material.glsl
+material_rgb_blur.glsl
 material_mirror1.glsl
 material_mirror2.glsl
 material_mirror3.glsl
