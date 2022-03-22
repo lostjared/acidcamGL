@@ -18,6 +18,7 @@ alpha_fade_blend.glsl
 blurry.glsl
 blur_offset.glsl
 blur_offset_color_fade.glsl
+rgb_blur.glsl
 echo.glsl
 echo_loop.glsl
 echo_loop2.glsl
