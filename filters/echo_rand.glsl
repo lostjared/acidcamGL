@@ -40,14 +40,13 @@ void main(void)
   
     vec4 iv1 = inc_valuex/255;
     vec4 iv2 = inc_value/255;
-    
     pos1[0] - iv1[0]-pos1[0];
     pos1[1] = iv1[1]-pos1[1];
     pos2[0] = iv2[0]-pos2[0];
     pos2[1] = iv2[1]-pos2[1];
     
-    vec4 color3 = texture(samp, pos1/4);
-    vec4 color4 = texture(samp, pos2/8);
+    vec4 color3 = texture(samp, (pos1*0.9)/4);
+    vec4 color4 = texture(samp, (pos2*0.9)/8);
     color = (color * 0.4) + (color2 * 0.4) + (color3 * 0.4) + (color4 * 0.4) ;
 }
 
