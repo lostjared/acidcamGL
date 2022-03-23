@@ -50,6 +50,7 @@ echo_mirror_1.glsl
 echo_mirror_2.glsl
 echo_mirror_3.glsl
 echo_rand.glsl
+echo_rand_2.glsl
 reverse.glsl
 reverse_vert.glsl
 reverse_xy.glsl
