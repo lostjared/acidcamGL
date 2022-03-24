@@ -22,11 +22,11 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b pix = f.at<cv::Vec3b>(z, i);
             pixel = pix;
         }
-        static int wait = rand()%4;
+        static int wait = rand()%24;
         static int cnt = 0;
         if(++cnt > wait) {
             cnt = 0;
-            wait = rand()%4;
+            wait = rand()%24;
             static int dir = 1;
             if(dir == 1) {
                 ++off;
