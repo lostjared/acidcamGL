@@ -90,6 +90,7 @@ all:
 	make -C frame_sep_h_shadow install
 	make -C frame_skip_shaodw_x2 install
 	make -C frame_stretch install
+	make -C frame_offset_variable install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -182,4 +183,5 @@ clean:
 	make -C frame_sep_h_shadow clean
 	make -C frame_skip_shadow_x2 clean
 	make -C frame_stretch clean
+	make -C frame_offset_variable clean
 
