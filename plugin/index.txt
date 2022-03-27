@@ -81,3 +81,4 @@ frame_skip_shadow_x2.acidcam
 frame_stretch.acidcam
 frame_offset_variable.acidcam
 frame_stretch_col.acidcam
+frame_reverse.acidcam
