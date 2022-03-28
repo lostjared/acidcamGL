@@ -93,6 +93,7 @@ all:
 	make -C frame_offset_variable install
 	make -C frame_stretch_col install
 	make -C frame_reverse install
+	make -C frame_reverse_2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -188,4 +189,5 @@ clean:
 	make -C frame_offset_variable clean
 	make -C frame_stretch_col clean
 	make -C frame_reverse clean
+	make -C frame_reverse_2 clean
 
