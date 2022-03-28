@@ -11,11 +11,11 @@ extern "C" void filter(cv::Mat  &frame) {
         collection.shiftFrames(frame);
     
     static int off = 0;
-    
+    cv::Mat &f = collection.frames[off];
+
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            cv::Mat &f = collection.frames[off];
             cv::Vec3b pix = f.at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q)
             pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
