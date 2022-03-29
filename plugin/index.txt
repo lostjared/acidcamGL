@@ -83,3 +83,4 @@ frame_offset_variable.acidcam
 frame_stretch_col.acidcam
 frame_reverse.acidcam
 frame_reverse_2.acidcam
+frame_reverse_noblend.acidcam
