@@ -85,3 +85,4 @@ frame_reverse.acidcam
 frame_reverse_2.acidcam
 frame_reverse_noblend.acidcam
 frame_reverse_diff.acidcam
+frame_color_distort.acidcam
