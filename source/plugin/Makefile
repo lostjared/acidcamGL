@@ -96,6 +96,7 @@ all:
 	make -C frame_reverse_2 install
 	make -C frame_reverse_noblend install
 	make -C frame_reverse_diff install
+	make -C frame_square_col install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -194,4 +195,5 @@ clean:
 	make -C frame_reverse_2 clean
 	make -C frame_reverse_noblend clean
 	make -C frame_reverse_diff clean
+	make -C frame_square_col clean
 
