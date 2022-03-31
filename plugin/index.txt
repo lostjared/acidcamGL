@@ -87,3 +87,4 @@ frame_reverse_noblend.acidcam
 frame_reverse_diff.acidcam
 frame_color_distort.acidcam
 frame_square_col.acidcam
+frame_mirror.acidcam
