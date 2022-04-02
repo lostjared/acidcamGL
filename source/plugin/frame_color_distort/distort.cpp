@@ -16,10 +16,14 @@ extern "C" void filter(cv::Mat  &frame) {
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+            cv::Vec3b pix = pixel;
             pixel[0] = ac::wrap_cast((0.5 * pixel[0]) + (0.5 * color[0]));
             pixel[1] = ac::wrap_cast((0.5 * pixel[1]) + (0.5 * color[1]));
             pixel[2] = ac::wrap_cast((0.5 * pixel[2]) + (0.5 * color[2]));
-
+            
+            pixel[0] &= pix[0];
+            pixel[1] &= pix[1];
+            pixel[2] &= pix[2];
         }
     }
 
