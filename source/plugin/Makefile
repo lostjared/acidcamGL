@@ -98,6 +98,7 @@ all:
 	make -C frame_reverse_diff install
 	make -C frame_square_col install
 	make -C frame_mirror install
+	make -C frame_swap install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -198,4 +199,5 @@ clean:
 	make -C frame_reverse_diff clean
 	make -C frame_square_col clean
 	make -C frame_mirror clean
+	make -C frame_swap clean
 
