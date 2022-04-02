@@ -89,3 +89,4 @@ frame_color_distort.acidcam
 frame_square_col.acidcam
 frame_mirror.acidcam
 frame_swap.acidcam
+frame_swap_delay.acidcam
