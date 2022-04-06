@@ -101,6 +101,7 @@ all:
 	make -C frame_swap install
 	make -C frame_swap_delay install
 	make -C frame_rand_pos install
+	make -C frame_reverse_display install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -204,4 +205,5 @@ clean:
 	make -C frame_swap clean
 	make -C frame_swap_delay clean
 	make -C frame_rand_pos clean
+	make -C frame_reverse_display clean
 
