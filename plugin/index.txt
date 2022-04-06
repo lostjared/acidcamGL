@@ -92,3 +92,4 @@ frame_swap.acidcam
 frame_swap_delay.acidcam
 frame_rand_pos.acidcam
 frame_reverse_display.acidcam
+frame_merge.acidcam
