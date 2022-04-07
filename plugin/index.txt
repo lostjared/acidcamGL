@@ -94,3 +94,4 @@ frame_rand_pos.acidcam
 frame_reverse_display.acidcam
 frame_merge.acidcam
 frame_merge_two.acidcam
+frame_merge_three.acidcam
