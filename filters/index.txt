@@ -21,6 +21,7 @@ blur_offset_color_fade.glsl
 rgb_blur.glsl
 rgb_blur_time.glsl
 echo.glsl
+echo_mix_colors.glsl
 echo_loop.glsl
 echo_loop2.glsl
 echo_xor_color_blend.glsl
