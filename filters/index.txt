@@ -142,6 +142,7 @@ material_rgb_mix.glsl
 material_rgb_mix_rev.glsl
 material_rgb_mix_rev2.glsl
 material_random_shift.glsl
+material_echo_half_mat.glsl
 material_echo_div2.glsl
 material_echo_div4.glsl
 material_echo_div248.glsl
