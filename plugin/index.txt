@@ -95,3 +95,4 @@ frame_reverse_display.acidcam
 frame_merge.acidcam
 frame_merge_two.acidcam
 frame_merge_three.acidcam
+frame_stop_start.acidcam

@@ -105,6 +105,7 @@ all:
 	make -C frame_merge install
 	make -C frame_merge_two install
 	make -C frame_merge_three install
+	make -C frame_stop_start install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -212,4 +213,5 @@ clean:
 	make -C frame_merge clean
 	make -C frame_merge_two clean
 	make -C frame_merge_three clean
+	make -C frame_stop_start clean
 
