@@ -97,3 +97,4 @@ frame_merge_two.acidcam
 frame_merge_three.acidcam
 frame_stop_start.acidcam
 frame_stop_start_two.acidcam
+frame_mirror_in.acidcam
