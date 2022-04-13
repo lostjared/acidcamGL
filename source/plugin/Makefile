@@ -109,6 +109,7 @@ all:
 	make -C frame_stop_start_two install
 	make -C frame_mirror_in install
 	make -C medianblenddark_fast install
+	make -C setgamma install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -220,4 +221,5 @@ clean:
 	make -C frame_stop_start_two clean
 	make -C frame_mirror_in clean
 	make -C medianblenddark_fast clean
+	make -C setgamma clean
 
