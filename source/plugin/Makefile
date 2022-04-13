@@ -88,7 +88,7 @@ all:
 	make -C frame_skip_reverse install
 	make -C frame_skip_shadow install
 	make -C frame_sep_h_shadow install
-	make -C frame_skip_shaodw_x2 install
+	make -C frame_skip_shadow_x2 install
 	make -C frame_stretch install
 	make -C frame_offset_variable install
 	make -C frame_stretch_col install
