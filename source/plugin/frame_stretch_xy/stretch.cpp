@@ -1,0 +1,53 @@
+#include"ac.h"
+
+extern "C" void filter(cv::Mat  &frame) {
+    static constexpr int MAX = 16;
+    static ac::MatrixCollection<MAX> collection;
+    
+    if(collection.empty()) {
+        collection.shiftFrames(frame);
+        srand(static_cast<unsigned int>(time(0)));
+    } else
+        collection.shiftFrames(frame);
+    
+    static int off = 0;
+    static int frame_x_off = 0;
+    static int frame_y_off = 0;
+    
+    static auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
+        for(int z = offset; z <  offset+size; ++z) {
+            for(int i = 0; i < cols; ++i) {
+                
+                cv::Vec3b &pixel = frame->at<cv::Vec3b>(z, i);
+                cv::Mat &m = collection.frames[off];
+        
+                int off_x = AC_GetFX(frame->cols-1, i, frame->cols+frame_x_off);
+                int off_y = AC_GetFZ(frame->rows-1, z, frame->rows+frame_y_off);
+                
+                cv::Vec3b pix = m.at<cv::Vec3b>(off_y, off_x);
+                
+                pixel[0] = ac::wrap_cast((0.5 * pixel[0]) + (0.5 * pix[0]));
+                pixel[1] = ac::wrap_cast((0.5 * pixel[1]) + (0.5 * pix[1]));
+                pixel[2] = ac::wrap_cast((0.5 * pixel[2]) + (0.5 * pix[2]));
+
+            }
+        }
+    };
+    ac::UseMultipleThreads(frame, ac::getThreadCount(), callback);
+
+    
+    static int dir = 1;
+    if(dir == 1) {
+        frame_x_off += 4;
+        frame_y_off += 4;
+        if((frame_x_off > (frame.cols/2)) || (frame_y_off > (frame.rows/2)))  {
+            dir = 0;
+        }
+    } else {
+        frame_x_off -= 4;
+        frame_y_off -= 4;
+        if(frame_x_off <= 0 || frame_y_off <= 0) {
+            dir = 1;
+        }
+    }
+}

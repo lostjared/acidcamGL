@@ -112,6 +112,7 @@ all:
 	make -C setgamma install
 	make -C frame_resize_split install
 	make -C frame_resize_stretch install
+	make -C frame_stretch_xy install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -226,3 +227,4 @@ clean:
 	make -C setgamma clean
 	make -C frame_resize_split clean
 	make -C frame_resize_stretch clean
+	make -C frame_stretch_xy clean
