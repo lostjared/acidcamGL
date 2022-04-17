@@ -110,6 +110,7 @@ all:
 	make -C frame_mirror_in install
 	make -C medianblenddark_fast install
 	make -C setgamma install
+	make -C frame_resize_split install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -222,4 +223,4 @@ clean:
 	make -C frame_mirror_in clean
 	make -C medianblenddark_fast clean
 	make -C setgamma clean
-
+	make -C frame_resize_split clean
