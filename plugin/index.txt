@@ -101,3 +101,4 @@ frame_mirror_in.acidcam
 medianblenddark_fast.acidcam
 setgamma.acidcam
 frame_resize_split.acidcam
+frame_resize_stretch.acidcam
