@@ -10,7 +10,7 @@ extern "C" void filter(cv::Mat  &frame) {
     } else
         collection.shiftFrames(frame);
     
-    int frame_size = 8;
+    int frame_size = (rand()%8)+1;
     int frame_x_off = 0;
     static int off = 0;
     for(int z = 0; z < frame.rows; z++) {
