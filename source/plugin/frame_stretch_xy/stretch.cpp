@@ -1,25 +1,18 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    static constexpr int MAX = 16;
-    static ac::MatrixCollection<MAX> collection;
-    
-    if(collection.empty()) {
-        collection.shiftFrames(frame);
-        srand(static_cast<unsigned int>(time(0)));
-    } else
-        collection.shiftFrames(frame);
     
     static int off = 0;
     static int frame_x_off = 0;
     static int frame_y_off = 0;
+
+    cv::Mat m = frame.clone();
     
     static auto callback = [&](cv::Mat *frame, int offset, int cols, int size) {
         for(int z = offset; z <  offset+size; ++z) {
             for(int i = 0; i < cols; ++i) {
                 
                 cv::Vec3b &pixel = frame->at<cv::Vec3b>(z, i);
-                cv::Mat &m = collection.frames[off];
         
                 int off_x = AC_GetFX(frame->cols-1, i, frame->cols+frame_x_off);
                 int off_y = AC_GetFZ(frame->rows-1, z, frame->rows+frame_y_off);
@@ -34,7 +27,6 @@ extern "C" void filter(cv::Mat  &frame) {
         }
     };
     ac::UseMultipleThreads(frame, ac::getThreadCount(), callback);
-
     
     static int dir = 1;
     if(dir == 1) {
