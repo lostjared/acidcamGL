@@ -103,3 +103,5 @@ setgamma.acidcam
 frame_resize_split.acidcam
 frame_resize_stretch.acidcam
 frame_stretch_xy.acidcam
+frame_stretch_x.acidcam
+frame_stretch_y.acidcam

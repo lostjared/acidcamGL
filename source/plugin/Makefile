@@ -113,6 +113,8 @@ all:
 	make -C frame_resize_split install
 	make -C frame_resize_stretch install
 	make -C frame_stretch_xy install
+	make -C frame_stretch_x install
+	make -C frame_stretch_y install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -228,3 +230,5 @@ clean:
 	make -C frame_resize_split clean
 	make -C frame_resize_stretch clean
 	make -C frame_stretch_xy clean
+	make -C frame_stretch_x clean
+	make -C frame_stretch_y clean
