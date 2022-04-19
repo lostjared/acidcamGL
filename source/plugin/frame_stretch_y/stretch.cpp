@@ -40,6 +40,8 @@ extern "C" void filter(cv::Mat  &frame) {
         frame_y_off -= 4;
         if(frame_x_off <= 0 || frame_y_off <= 0) {
             dir = 1;
+            frame_x_off = 0;
+            frame_y_off = 0;
         }
     }
 }
