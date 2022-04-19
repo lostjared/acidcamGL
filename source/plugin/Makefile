@@ -115,6 +115,7 @@ all:
 	make -C frame_stretch_xy install
 	make -C frame_stretch_x install
 	make -C frame_stretch_y install
+	make -C frame_stretch_xy_io install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -232,3 +233,4 @@ clean:
 	make -C frame_stretch_xy clean
 	make -C frame_stretch_x clean
 	make -C frame_stretch_y clean
+	make -C frame-stretch_xy_io clean

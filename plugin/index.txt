@@ -105,3 +105,4 @@ frame_resize_stretch.acidcam
 frame_stretch_xy.acidcam
 frame_stretch_x.acidcam
 frame_stretch_y.acidcam
+frame_stretch_xy_io.acidcam
