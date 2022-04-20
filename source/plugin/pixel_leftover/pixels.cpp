@@ -32,7 +32,7 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b pix = m.at<cv::Vec3b>(z, i);
             bool set = false;
             for(int q = 0; q < 3; ++q) {
-                if(abs(pixel[q]-pix[q]) > 25) {
+                if(abs(pixel[q]-pix[q]) > 40) {
                     set = true;
                     break;
                 }
