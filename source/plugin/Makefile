@@ -119,6 +119,7 @@ all:
 	make -C frame_stretch_x_io install
 	make -C frame_stretch_y_io install
 	make -C pixel_leftover install
+	make -C pixel_leftover_fade install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -240,3 +241,4 @@ clean:
 	make -C frame_stretch_x_io clean
 	make -C frame_stretch_y_io clean
 	make -C pixel_leftover clean
+	make -C pixel_leftover_fade clean

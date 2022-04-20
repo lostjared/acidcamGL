@@ -109,3 +109,4 @@ frame_stretch_xy_io.acidcam
 frame_stretch_x_io.acidcam
 frame_stretch_y_io.acidcam
 pixel_leftover.acidcam
+pixel_leftover_fade.acidcam
