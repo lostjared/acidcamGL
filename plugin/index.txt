@@ -106,3 +106,5 @@ frame_stretch_xy.acidcam
 frame_stretch_x.acidcam
 frame_stretch_y.acidcam
 frame_stretch_xy_io.acidcam
+frame_stretch_x_io.acidcam
+frame_stretch_y_io.acidcam
