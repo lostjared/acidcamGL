@@ -47,8 +47,13 @@ extern "C" void filter(cv::Mat  &frame) {
         if(++i->timeout > 3) {
             i = pixels.erase(i);
         } else {
-            i->x += rand()%75;
-            i->y += rand()%75;
+            if(rand()%2 == 0) {
+                i->x += rand()%75;
+                i->y += rand()%75;
+            } else {
+                i->x -= rand()%75;
+                i->y -= rand()%75;
+            }
             i->color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
                 
         for(int y = i->y; y < i->y + 25; ++y)
