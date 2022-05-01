@@ -111,3 +111,4 @@ frame_stretch_y_io.acidcam
 pixel_leftover.acidcam
 pixel_leftover_fade.acidcam
 pixel_leftover_ex.acidcam
+pixel_leftover_xor.acidcam
