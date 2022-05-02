@@ -122,6 +122,7 @@ all:
 	make -C pixel_leftover_fade install
 	make -C pixel_leftover_ex install
 	make -C pixel_leftover_xor install
+	make -C pixel_leftover_pixelate install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -246,3 +247,4 @@ clean:
 	make -C pixel_leftover_fade clean
 	make -C pixel_leftover_ex clean
 	make -C pixel_leftover_xor clean
+	make -C pixel_leftover_pixelate clean
