@@ -17,7 +17,7 @@ extern "C" void filter(cv::Mat  &frame) {
     static ac::MatrixCollection<MAX> collection;
     static std::list<Pixel> pixels;
     static int counter = 0;
-
+    
     if(collection.empty()) {
         srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
@@ -47,16 +47,16 @@ extern "C" void filter(cv::Mat  &frame) {
         if(++i->timeout > 3) {
             i = pixels.erase(i);
         } else {
-                        
-        for(int y = i->y; y < i->y + 25; ++y)
-            for(int x = i->x; x < i->x + 25; ++x) {
-                if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows) {
-                    i->color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
-                    cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
-                    pixel = i->color;
-                    //pixel = pix;
+            
+            for(int y = i->y; y < i->y + 25; ++y)
+                for(int x = i->x; x < i->x + 25; ++x) {
+                    if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows) {
+                        i->color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
+                        cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
+                        pixel = i->color;
+                        //pixel = pix;
+                    }
                 }
-            }
             
             i ++;
         }
