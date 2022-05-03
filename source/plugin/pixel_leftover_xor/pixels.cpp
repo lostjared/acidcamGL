@@ -47,18 +47,24 @@ extern "C" void filter(cv::Mat  &frame) {
         if(++i->timeout > 3) {
             i = pixels.erase(i);
         } else {
-        
+     
+            cv::Vec3b pix1 = frame.at<cv::Vec3b>(i->y, i->x);
+            cv::Vec3b pix = i->color;
+
+            pix1[0] = static_cast<int>(ac::wrap_cast(0.5 * pix1[0])) ^ static_cast<int>(ac::wrap_cast(0.5 * pix[0]));
+            pix1[1] = static_cast<int>(ac::wrap_cast(0.5 * pix1[1])) ^ static_cast<int>(ac::wrap_cast(0.5 * pix[1]));
+            pix1[2] = static_cast<int>(ac::wrap_cast(0.5 * pix1[2])) ^ static_cast<int>(ac::wrap_cast(0.5 * pix[2]));
+            
         for(int y = i->y; y < i->y + 25; ++y)
             for(int x = i->x; x < i->x + 25; ++x) {
                 if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows) {
                     cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
-                    cv::Vec3b &pix = i->color;
-                    pixel[0] = static_cast<int>(ac::wrap_cast(0.5 * pixel[0])) ^ static_cast<int>(ac::wrap_cast(0.5 * pix[0]));
-                    pixel[1] = static_cast<int>(ac::wrap_cast(0.5 * pixel[1])) ^ static_cast<int>(ac::wrap_cast(0.5 * pix[1]));
-                    pixel[2] = static_cast<int>(ac::wrap_cast(0.5 * pixel[2])) ^ static_cast<int>(ac::wrap_cast(0.5 * pix[2]));                }
+                    pixel = pix1;
+                }
             }
-            
+    
             i ++;
+            
         }
     }
 }
