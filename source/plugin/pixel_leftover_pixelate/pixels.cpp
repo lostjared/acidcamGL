@@ -52,12 +52,8 @@ extern "C" void filter(cv::Mat  &frame) {
             for(int x = i->x; x < i->x + 25; ++x) {
                 if(x >= 0 && x < frame.cols && y >= 0 && y < frame.rows) {
                     i->color = cv::Vec3b(rand()%255, rand()%255, rand()%255);
-                   
                     cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
-                    cv::Vec3b &pix = i->color;
-                    pixel[0] = ac::wrap_cast((0.5 * pixel[0]) + (0.5 * pix[0]));
-                    pixel[1] = ac::wrap_cast((0.5 * pixel[1]) + (0.5 * pix[1]));
-                    pixel[2] = ac::wrap_cast((0.5 * pixel[2]) + (0.5 * pix[2]));
+                    pixel = i->color;
                     //pixel = pix;
                 }
             }
