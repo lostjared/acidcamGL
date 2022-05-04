@@ -113,3 +113,4 @@ pixel_leftover_fade.acidcam
 pixel_leftover_ex.acidcam
 pixel_leftover_xor.acidcam
 pixel_leftover_pixelate.acidcam
+pixel_leftover_ex2.acidcam
