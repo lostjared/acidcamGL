@@ -116,3 +116,4 @@ pixel_leftover_pixelate.acidcam
 pixel_leftover_ex2.acidcam
 frame_pixels.acidcam
 frame_x_blend.acidcam
+frame_y_blend.acidcam
