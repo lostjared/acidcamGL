@@ -128,6 +128,7 @@ all:
 	make -C frame_x_blend install
 	make -C frame_y_blend install
 	make -C frame_x_blend_xor install
+	make -C frame_y_blend_xor install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -258,3 +259,4 @@ clean:
 	make -C frame_x_blend clean
 	make -C frame_y_blend clean
 	make -C frame_x_blend_xor clean
+	make -C frame_y_blend_xor clean

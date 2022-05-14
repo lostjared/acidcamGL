@@ -118,3 +118,4 @@ frame_pixels.acidcam
 frame_x_blend.acidcam
 frame_y_blend.acidcam
 frame_x_blend_xor.acidcam
+frame_y_blend_xor.acidcam
