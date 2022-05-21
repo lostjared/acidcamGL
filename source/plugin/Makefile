@@ -130,6 +130,7 @@ all:
 	make -C frame_x_blend_xor install
 	make -C frame_y_blend_xor install
 	make -C frame_pix install
+	make -C strobecycle install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -262,3 +263,4 @@ clean:
 	make -C frame_x_blend_xor clean
 	make -C frame_y_blend_xor clean
 	make -C frame_pix clean
+	make -C strobecycle clean
