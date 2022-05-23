@@ -132,6 +132,7 @@ all:
 	make -C frame_pix install
 	make -C strobecycle install
 	make -C strobecycle_st install
+	make -C strobecycle_st2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -266,3 +267,4 @@ clean:
 	make -C frame_pix clean
 	make -C strobecycle clean
 	make -C strobecycle_st clean
+	make -C strobecycle_st2 clean
