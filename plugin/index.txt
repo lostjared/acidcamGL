@@ -122,4 +122,4 @@ frame_y_blend_xor.acidcam
 frame_pix.acidcam
 strobecycle.acidcam
 strobecycle_st.acidcam
-strobecyele_st2.acidcam
+strobecycle_st2.acidcam
