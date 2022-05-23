@@ -6,7 +6,7 @@ extern "C" void filter(cv::Mat  &frame) {
         srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
     }
-    else if(rand()%4 == 0)
+    else if(rand()%2 == 0)
         collection.shiftFrames(frame);
     static bool strobe = false;
     static int offset = 0;
@@ -28,7 +28,7 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     strobe = (strobe == true) ? false : true;
     static int cnt = 0;
-    if(++cnt > 10) {
+    if(++cnt > 4) {
         ++offset;
         if(offset > 2)
             offset = 0;
