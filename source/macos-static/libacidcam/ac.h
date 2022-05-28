@@ -6,7 +6,7 @@
  
  Website: http://lostsidedead.com
  YouTube: http://youtube.com/LostSideDead
- Instagram: http://instagram.com/lostsidedead
+ Instagram:  
  Twitter: http://twitter.com/jaredbruni
  Facebook: http://facebook.com/LostSideDead0x
  
@@ -2491,8 +2491,29 @@ namespace ac {
     void FrameSepH(cv::Mat &frame);
     void FrameSkip(cv::Mat &frame);
     void FrameSkipResize(cv::Mat &frame);
+    void FrameReverse(cv::Mat &frame);
+    void FrameStretch_X(cv::Mat &frame);
+    void FrameStretch_Y(cv::Mat &frame);
+    void FrameStretch_XY(cv::Mat &frame);
+    void FrameStretch_X_IO(cv::Mat &frame);
+    void FrameStretch_Y_IO(cv::Mat &frame);
+    void FrameStretch_XY_IO(cv::Mat &frame);
+    void FrameSetGamma(cv::Mat &frame);
+    void FramePixelsLeftOver(cv::Mat &frame);
+    void FramePixelsLeftOverBlend(cv::Mat &frame);
+    void FramePixels(cv::Mat &frame);
+    void FrameStopStart(cv::Mat &frame);
+    void FrameStopStart2(cv::Mat &frame);
+    void FrameXBlend(cv::Mat &frame);
+    void FrameYBlend(cv::Mat &frame);
+    void FrameXBlendXor(cv::Mat &frame);
+    void FrameYBlendXor(cv::Mat &frame);
+    void StrobeCycle(cv::Mat &frame);
+    void StrobeCycleSt(cv::Mat &frame);
+    void StrobeCycleSt2(cv::Mat &frame);
+    void StrobeCycleSt3(cv::Mat &frame);
 
-    // #NoFilter
+// #NoFilter
     void NoFilter(cv::Mat &frame);
     void Empty(cv::Mat &frame);
     // Alpha blend with original image
