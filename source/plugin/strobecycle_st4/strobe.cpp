@@ -11,13 +11,14 @@ extern "C" void filter(cv::Mat  &frame) {
     
     static bool strobe = false;
     static int offset = 0;
+    static int offset_x = 0;
     
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             cv::Vec3b pix[4];
-            pix[0] = ac::pixelAt(collection.frames[1], z, i);
-            pix[1] = ac::pixelAt(collection.frames[4], z, i);
+            pix[0] = ac::pixelAt(collection.frames[1], z, offset_x);
+            pix[1] = ac::pixelAt(collection.frames[4], z, offset_x);
             pix[2] = ac::pixelAt(collection.frames[7], z, i);
             for(int j = 0; j < 3; ++j) {
                 if(strobe == false)
@@ -26,6 +27,10 @@ extern "C" void filter(cv::Mat  &frame) {
                     pixel[j] = pix[j][j];
             }
         }
+        ++offset_x;
+        if(offset_x > frame.cols-1)
+            offset_x = 0;
+        
     }
     strobe = (strobe == true) ? false : true;
     static int cnt = 0;
