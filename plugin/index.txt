@@ -124,3 +124,4 @@ strobecycle.acidcam
 strobecycle_st.acidcam
 strobecycle_st2.acidcam
 strobecycle_st3.acidcam
+strobecycle_st4.acidcam
