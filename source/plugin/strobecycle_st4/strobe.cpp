@@ -26,6 +26,9 @@ extern "C" void filter(cv::Mat  &frame) {
                 else
                     pixel[j] = pix[j][j];
             }
+            ++offset_x;
+            if(offset_x > frame.cols-1)
+                offset_x = 0;
         }
         ++offset_x;
         if(offset_x > frame.cols-1)
