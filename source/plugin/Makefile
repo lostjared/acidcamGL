@@ -135,6 +135,7 @@ all:
 	make -C strobecycle_st2 install
 	make -C strobecycle_st3 install
 	make -C strobecycle_st4 install
+	make -C color_shift install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -272,3 +273,4 @@ clean:
 	make -C strobecycle_st2 clean
 	make -C strobecycle_st3 clean
 	make -C strobecycle_st4 clean
+	make -C color_shift clean
