@@ -128,3 +128,4 @@ strobecycle_st4.acidcam
 color_shift.acidcam
 color_shift_y.acidcam
 color_bars_x.acidcam
+color_bars_y.acidcam
