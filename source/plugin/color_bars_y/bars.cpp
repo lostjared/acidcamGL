@@ -16,9 +16,9 @@ extern "C" void filter(cv::Mat  &frame) {
     static int offset_b = rand()%(frame.cols-1);
     
     for(int z = 0; z < frame.rows; ++z) {
-        int off_x = offset_x;
-        int off_g = offset_g;
-        int off_b = offset_b;
+        static int off_x = offset_x;
+        static int off_g = offset_g;
+        static int off_b = offset_b;
         
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
