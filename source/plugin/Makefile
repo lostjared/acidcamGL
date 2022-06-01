@@ -137,6 +137,7 @@ all:
 	make -C strobecycle_st4 install
 	make -C color_shift install
 	make -C color_shift_y install
+	make -C color_bars_x install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -276,3 +277,4 @@ clean:
 	make -C strobecycle_st4 clean
 	make -C color_shift clean
 	make -C color_shift_y clean
+	make -C color_bars_x clean
