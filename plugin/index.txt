@@ -129,3 +129,4 @@ color_shift.acidcam
 color_shift_y.acidcam
 color_bars_x.acidcam
 color_bars_y.acidcam
+color_bars_rand.acidcam

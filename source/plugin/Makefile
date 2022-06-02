@@ -139,6 +139,7 @@ all:
 	make -C color_shift_y install
 	make -C color_bars_x install
 	make -C color_bars_y install
+	make -C color_bars_rand install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -280,3 +281,4 @@ clean:
 	make -C color_shift_y clean
 	make -C color_bars_x clean
 	make -C color_bars_y clean
+	make -C color_bars_rand clean
