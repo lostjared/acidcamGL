@@ -142,6 +142,7 @@ all:
 	make -C color_bars_rand install
 	make -C color_bars_rand2 install
 	make -C outoforder install
+	make -C sep_blocks install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -286,3 +287,4 @@ clean:
 	make -C color_bars_rand clean
 	make -C color_bars_rand2 clean
 	make -C outoforder clean
+	make -C sep_blocks clean
