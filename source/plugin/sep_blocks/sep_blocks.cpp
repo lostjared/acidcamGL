@@ -22,7 +22,7 @@ extern "C" void filter(cv::Mat  &frame) {
                 
             }
         }
-        for(int z = frame.rows/2; z < frame.rows; ++z) {
+        for(int z = rand()%(frame.rows-1); z < frame.rows; ++z) {
             for(int i = 0; i < frame.cols; ++i) {
                 cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
                 pixel = ac::pixelAt(collection.frames[7], z, i);
