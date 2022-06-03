@@ -144,6 +144,7 @@ all:
 	make -C outoforder install
 	make -C sep_blocks install
 	make -C sep_blocks2 install
+	make -C sep_blocks3 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -290,3 +291,4 @@ clean:
 	make -C outoforder clean
 	make -C sep_blocks clean
 	make -C sep_blocks2 clean
+	make -C sep_blocks3 clean
