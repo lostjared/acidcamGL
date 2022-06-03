@@ -133,3 +133,4 @@ color_bars_rand.acidcam
 color_bars_rand2.acidcam
 outoforder.acidcam
 sep_blocks.acidcam
+sep_blocks2.acidcam
