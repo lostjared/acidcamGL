@@ -15,16 +15,16 @@ extern "C" void filter(cv::Mat  &frame) {
     
     if(strobe) {
         
-            for(int i = 0; i < frame.cols; ++i) {
-                for(int z = 0; z < frame.rows/4; ++z) {
+            for(int i = 0; i < frame.cols/4; ++i) {
+                for(int z = 0; z < frame.rows; ++z) {
               
                 cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
                 pixel = ac::pixelAt(collection.frames[offset], z, i);
                 
             }
         }
-            for(int i = 0; i < frame.cols; ++i) {
-                for(int z = rand()%(frame.rows-1); z < frame.rows; ++z) {
+            for(int i = rand()%(frame.cols/4); i < frame.cols; ++i) {
+                for(int z = 0; z < frame.rows; ++z) {
                 
                 cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
                 pixel = ac::pixelAt(collection.frames[7], z, i);
