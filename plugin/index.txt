@@ -136,3 +136,4 @@ sep_blocks.acidcam
 sep_blocks2.acidcam
 sep_blocks3.acidcam
 sep_blocks_h.acidcam
+strobecycle_blocks.acidcam
