@@ -147,6 +147,7 @@ all:
 	make -C sep_blocks3 install
 	make -C sep_blocks_h install
 	make -C strobecycle_blocks install
+	make -C intertwine_frames install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -296,3 +297,4 @@ clean:
 	make -C sep_blocks3 clean
 	make -C sep_blocks_h clean
 	make -C strobecycle_blocks clean
+	make -C interwtine_frames clean
