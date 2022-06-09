@@ -138,3 +138,4 @@ sep_blocks3.acidcam
 sep_blocks_h.acidcam
 strobecycle_blocks.acidcam
 square_frame.acidcam
+pixel_inc_blend.acidcam

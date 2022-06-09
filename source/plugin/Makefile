@@ -149,6 +149,7 @@ all:
 	make -C strobecycle_blocks install
 	make -C intertwine_frames install
 	make -C square_frame install
+	make -C pixel_inc_blend install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -300,3 +301,4 @@ clean:
 	make -C strobecycle_blocks clean
 	make -C interwtine_frames clean
 	make -C square_frame clean
+	make -C pixel_inc_blend clean
