@@ -15,7 +15,7 @@ extern "C" void filter(cv::Mat  &frame) {
             for(int x = 0; x < SIZE_X && x+i < frame.cols; x++) {
                 for(int y = 0; y < SIZE_Y && y+z < frame.rows; y++) {
                     cv::Vec3b &pixel = ac::pixelAt(frame, z+y, i+x);
-                    pixel[col] = ac::wrap_cast(blend * pixel[rand()%3]);
+                    pixel[col] = ac::wrap_cast(blend * pixel[col]);
                 }
             }
             blend += inc;
