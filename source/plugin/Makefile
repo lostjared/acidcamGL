@@ -152,6 +152,7 @@ all:
 	make -C pixel_inc_blend install
 	make -C pixel_inc_blend2 install
 	make -C alphablend_tri install
+	make -C alphablend_five install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -306,3 +307,4 @@ clean:
 	make -C pixel_inc_blend clean
 	make -C pixel_inc_blend2 clean
 	make -C alphablend_tri clean
+	make -C alphablend_five clean
