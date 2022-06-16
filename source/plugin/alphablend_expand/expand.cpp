@@ -1,28 +1,36 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    static constexpr int MAX = 8;
+    static constexpr int MAX = 10;
     static ac::MatrixCollection<MAX> collection;
     if(collection.empty())
         collection.shiftFrames(frame);
     collection.shiftFrames(frame);
-    
+    static int iter = 1;
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
-            
-            cv::Vec3b pix[5];
-            pix[0] = ac::pixelAt(collection.frames[0], z, i);
-            pix[1] = ac::pixelAt(collection.frames[1], z, i);
-            pix[2] = ac::pixelAt(collection.frames[2], z, i);
-            pix[3] = ac::pixelAt(collection.frames[3], z, i);
-            pix[4] = ac::pixelAt(collection.frames[4], z, i);
-
-
-            pixel[0] = (0.2 * pix[0][0]) + (0.2 * pix[1][0]) + (0.2 * pix[2][0]) + (0.2 * pix[3][0]) + (0.2 * pix[4][0]);
-            pixel[1] = (0.2 * pix[0][1]) + (0.2 * pix[1][1]) + (0.2 * pix[2][1]) + (0.2 * pix[3][1]) + (0.2 * pix[4][1]);;
-            pixel[2] = (0.2 * pix[0][2]) + (0.2 * pix[1][2]) + (0.2 * pix[2][2]) + (0.2 * pix[3][2]) + (0.2 * pix[4][2]);;
-
+            pixel = cv::Vec3b(0, 0, 0);
+            for(int q = 0; q < iter; ++q) {
+                cv::Vec3b pix;
+                pix = ac::pixelAt(collection.frames[q], z, i);
+                pixel[0] += ac::wrap_cast(1.0/iter * pix[0]);
+                pixel[1] += ac::wrap_cast(1.0/iter * pix[1]);
+                pixel[2] += ac::wrap_cast(1.0/iter * pix[2]);
+            }
+           
+        }
+    }
+    static int dir = 1;
+    if(dir == 1) {
+        if(++iter > 9) {
+            iter = 9;
+            dir = 0;
+        }
+    } else {
+        if(--iter <= 1) {
+            iter = 1;
+            dir = 1;
         }
     }
 }
