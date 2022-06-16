@@ -142,3 +142,4 @@ pixel_inc_blend.acidcam
 pixel_inc_blend2.acidcam
 alphablend_tri.acidcam
 alphablend_five.acidcam
+alphablend_expand.acidcam
