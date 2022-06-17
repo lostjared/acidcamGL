@@ -34,7 +34,19 @@ extern "C" void filter(cv::Mat  &frame) {
     if(index > frame.cols)
         index = 0;
     ac::MirrorLeftBottomToTop(frame);
-    if(++offset > MAX-1) {
-        offset = 0;
+    
+    static int dir = 1;
+    
+    if(dir == 1) {
+        if(++offset > MAX-1) {
+            offset = MAX-1;
+            dir = 0;
+        }
+    } else {
+        if(--offset <= 1) {
+            offset = 1;
+            dir = 1;
+        }
     }
 }
+    
