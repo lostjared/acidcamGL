@@ -33,8 +33,33 @@ extern "C" void filter(cv::Mat  &frame) {
     ++index;
     if(index > frame.cols)
         index = 0;
-    ac::MirrorLeftBottomToTop(frame);
     
+    static int f_index = 0;
+    static int count = 0;
+    
+    switch(f_index) {
+        case 0:
+            ac::MirrorLeftBottomToTop(frame);
+            break;
+        case 1:
+            ac::MirrorLeft(frame);
+            break;
+        case 2:
+            ac::MirrorLeftTopToBottom(frame);
+            break;
+        case 3:
+            ac::MirrorFlipXMirrorLeft(frame);
+            break;
+        case 4:
+            ac::MirrorFlipYMirrorLeft(frame);
+            break;
+    }
+    if(++count > 4) {
+        if(++f_index > 4) {
+            f_index = 0;
+        }
+        count = 0;
+    }
     static int dir = 1;
     
     if(dir == 1) {
