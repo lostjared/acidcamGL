@@ -155,6 +155,7 @@ all:
 	make -C alphablend_five install
 	make -C alphablend_expand install
 	make -C alpha_diamond install
+	make -C alpha_diamond2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -312,3 +313,4 @@ clean:
 	make -C alphablend_five clean
 	make -C alphablend_expand clean
 	make -C alpha_diamond clean
+	make -C alpha_diamond2 clean

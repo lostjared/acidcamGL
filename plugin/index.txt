@@ -144,3 +144,4 @@ alphablend_tri.acidcam
 alphablend_five.acidcam
 alphablend_expand.acidcam
 alpha_diamond.acidcam
+alpha_diamond2.acidcam
