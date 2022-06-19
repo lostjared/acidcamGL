@@ -53,9 +53,24 @@ extern "C" void filter(cv::Mat  &frame) {
         case 4:
             ac::MirrorFlipYMirrorLeft(frame);
             break;
+        case 5:
+            ac::MirrorRight(frame);
+            break;
+        case 6:
+            ac::MirrorRightTopToBottom(frame);
+            break;
+        case 7:
+            ac::MirrorRightBottomToTop(frame);
+            break;
+        case 8:
+            ac::MirrorFlipXMirrorRight(frame);
+            break;
+        case 9:
+            ac::MirrorFlipYMirrorRight(frame);
+            break;
     }
     if(++count > ac::fps/2) {
-        if(++f_index > 4) {
+        if(++f_index > 9) {
             f_index = 0;
         }
         count = 0;
