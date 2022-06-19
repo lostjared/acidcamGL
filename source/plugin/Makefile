@@ -305,7 +305,7 @@ clean:
 	make -C sep_blocks3 clean
 	make -C sep_blocks_h clean
 	make -C strobecycle_blocks clean
-	make -C interwtine_frames clean
+	make -C intertwine_frames clean
 	make -C square_frame clean
 	make -C pixel_inc_blend clean
 	make -C pixel_inc_blend2 clean
