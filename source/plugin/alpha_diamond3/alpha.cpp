@@ -86,6 +86,7 @@ extern "C" void filter(cv::Mat  &frame) {
                 f_index = 0;
                 dir1 = 1;
             }
+            count = 0;
         }
     }
     static int dir = 1;
