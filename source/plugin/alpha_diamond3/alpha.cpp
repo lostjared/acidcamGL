@@ -23,7 +23,7 @@ extern "C" void filter(cv::Mat  &frame) {
             pixel[0] = ac::wrap_cast((0.5 * pixel[0]) + (0.5 * pix[0]));
             pixel[1] = ac::wrap_cast((0.5 * pixel[1]) + (0.5 * pix[1]));
             pixel[2] = ac::wrap_cast((0.5 * pixel[2]) + (0.5 * pix[2]));
-//            pixel = pix;
+            //            pixel = pix;
             ++start_x;
         }
         ++off_x;
@@ -45,16 +45,16 @@ extern "C" void filter(cv::Mat  &frame) {
             ac::MirrorLeft(frame);
             break;
         case 2:
-            ac::MirrorLeftTopToBottom(frame);
+            ac::MirrorRight(frame);
             break;
         case 3:
-            ac::MirrorFlipXMirrorLeft(frame);
+            ac::MirrorLeftTopToBottom(frame);
             break;
         case 4:
             ac::MirrorFlipYMirrorLeft(frame);
             break;
         case 5:
-            ac::MirrorRight(frame);
+            ac::MirrorFlipXMirrorLeft(frame);
             break;
         case 6:
             ac::MirrorRightTopToBottom(frame);
@@ -69,11 +69,24 @@ extern "C" void filter(cv::Mat  &frame) {
             ac::MirrorFlipYMirrorRight(frame);
             break;
     }
-    if(++count > ac::fps/2) {
-        if(++f_index > 9) {
-            f_index = 0;
+    
+    static int dir1 = 1;
+    
+    if(dir1 == 1) {
+        if(++count > ac::fps/2) {
+            if(++f_index > 9) {
+                f_index = 9;
+                dir1 = 0;
+            }
+            count = 0;
         }
-        count = 0;
+    } else {
+        if(++count > ac::fps/2) {
+            if(--index <= 0) {
+                f_index = 0;
+                dir1 = 1;
+            }
+        }
     }
     static int dir = 1;
     
@@ -89,4 +102,4 @@ extern "C" void filter(cv::Mat  &frame) {
         }
     }
 }
-    
+
