@@ -10,6 +10,8 @@ extern "C" void filter(cv::Mat  &frame) {
     
     static int index = 0;
     static int offset = 0;
+    static double alpha = 0.1;
+    
     int start_x = 0;
     int off_x = index;
     for(int z = 0; z < frame.rows; ++z) {
@@ -20,9 +22,9 @@ extern "C" void filter(cv::Mat  &frame) {
             }
             cv::Vec3b &pixel = ac::pixelAt(frame,z, start_x);
             cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z, i);
-            pixel[0] = ac::wrap_cast((0.5 * pixel[0]) + (0.5 * pix[0]));
-            pixel[1] = ac::wrap_cast((0.5 * pixel[1]) + (0.5 * pix[1]));
-            pixel[2] = ac::wrap_cast((0.5 * pixel[2]) + (0.5 * pix[2]));
+            pixel[0] = ac::wrap_cast((alpha * pixel[0]) + ((1.0-alpha) * pix[0]));
+            pixel[1] = ac::wrap_cast((alpha * pixel[1]) + ((1.0-alpha) * pix[1]));
+            pixel[2] = ac::wrap_cast((alpha * pixel[2]) + ((1.0-alpha) * pix[2]));
             //            pixel = pix;
             ++start_x;
         }
@@ -100,6 +102,22 @@ extern "C" void filter(cv::Mat  &frame) {
         if(--offset <= 1) {
             offset = 1;
             dir = 1;
+        }
+    }
+    
+    static int alpha_dir = 1;
+    
+    if(alpha_dir == 1) {
+        alpha += 0.05;
+        if(alpha >= 1.0) {
+            alpha = 1.0;
+            alpha_dir = 0;
+        }
+    } else {
+        alpha -= 0.05;
+        if(alpha <= 0.1) {
+            alpha = 0.1;
+            alpha_dir = 1;
         }
     }
 }
