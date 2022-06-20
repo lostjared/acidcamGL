@@ -82,7 +82,7 @@ extern "C" void filter(cv::Mat  &frame) {
         }
     } else {
         if(++count > ac::fps/2) {
-            if(--index <= 0) {
+            if(--f_index <= 0) {
                 f_index = 0;
                 dir1 = 1;
             }
