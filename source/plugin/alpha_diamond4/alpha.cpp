@@ -1,5 +1,7 @@
 #include"ac.h"
 
+typedef void (*MirrorCall)(cv::Mat &frame);
+
 extern "C" void filter(cv::Mat  &frame) {
     static constexpr int MAX = 8;
     static ac::MatrixCollection<MAX> collection;
@@ -38,59 +40,20 @@ extern "C" void filter(cv::Mat  &frame) {
     
     static int f_index = 0;
     static int count = 0;
+
+    static MirrorCall m_call[] = { ac::MirrorLeftBottomToTop,
+        ac::MirrorLeft,
+        ac::MirrorRight,
+        ac::MirrorLeftTopToBottom,
+        ac::MirrorFlipYMirrorLeft,
+        ac::MirrorFlipXMirrorLeft,
+        ac::MirrorRightTopToBottom,
+        ac::MirrorRightBottomToTop,
+        ac::MirrorFlipXMirrorRight,
+        ac::MirrorFlipYMirrorRight
+    };
     
-    switch(f_index) {
-        case 0:
-            ac::MirrorLeftBottomToTop(frame);
-            break;
-        case 1:
-            ac::MirrorLeft(frame);
-            break;
-        case 2:
-            ac::MirrorRight(frame);
-            break;
-        case 3:
-            ac::MirrorLeftTopToBottom(frame);
-            break;
-        case 4:
-            ac::MirrorFlipYMirrorLeft(frame);
-            break;
-        case 5:
-            ac::MirrorFlipXMirrorLeft(frame);
-            break;
-        case 6:
-            ac::MirrorRightTopToBottom(frame);
-            break;
-        case 7:
-            ac::MirrorRightBottomToTop(frame);
-            break;
-        case 8:
-            ac::MirrorFlipXMirrorRight(frame);
-            break;
-        case 9:
-            ac::MirrorFlipYMirrorRight(frame);
-            break;
-    }
-    
-    static int dir1 = 1;
-    
-    if(dir1 == 1) {
-        if(++count > ac::fps/2) {
-            if(++f_index > 9) {
-                f_index = 9;
-                dir1 = 0;
-            }
-            count = 0;
-        }
-    } else {
-        if(++count > ac::fps/2) {
-            if(--f_index <= 0) {
-                f_index = 0;
-                dir1 = 1;
-            }
-            count = 0;
-        }
-    }
+    m_call[rand()%9](frame);
     static int dir = 1;
     
     if(dir == 1) {
