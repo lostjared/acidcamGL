@@ -157,7 +157,8 @@ all:
 	make -C alpha_diamond install
 	make -C alpha_diamond2 install
 	make -C alpha_diamond3 install
-	make -C alpha_diamodn4 install
+	make -C alpha_diamond4 install
+	make -C alpha_diamond5 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -318,3 +319,4 @@ clean:
 	make -C alpha_diamond2 clean
 	make -C alpha_diamond3 clean
 	make -C alpha_diamond4 clean
+	make -C alpha_diamond5 clean
