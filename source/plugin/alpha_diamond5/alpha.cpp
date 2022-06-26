@@ -7,8 +7,8 @@ extern "C" void filter(cv::Mat  &frame) {
     static ac::MatrixCollection<MAX> collection;
     if(collection.empty())
         collection.shiftFrames(frame);
-    
-    collection.shiftFrames(frame);
+    else if(rand()%4 == 0)
+        collection.shiftFrames(frame);
     
     static int index = 0;
     static int offset = 0;
@@ -38,7 +38,7 @@ extern "C" void filter(cv::Mat  &frame) {
     if(index > frame.cols)
         index = 0;
     
-    static int f_index = 0;
+    static int f_index = rand()%9;
     static int count = 0;
 
     static MirrorCall m_call[] = { ac::MirrorLeftBottomToTop,
@@ -53,8 +53,12 @@ extern "C" void filter(cv::Mat  &frame) {
         ac::MirrorFlipYMirrorRight
     };
     
-    m_call[rand()%9](frame);
+    m_call[f_index](frame);
     static int dir = 1;
+    
+    if(++f_index >= 9) {
+        f_index = rand()%9;
+    }
     
     if(dir == 1) {
         if(++offset > MAX-1) {
