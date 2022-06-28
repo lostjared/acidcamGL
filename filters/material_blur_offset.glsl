@@ -43,8 +43,8 @@ void main(void)
     vec2 pos1 = tc;
     vec2 pos2 = tc;
     
-    pos1[0] += (0.05*fract(timeval));
-    pos2[0] -= (0.05*fract(timeval));
+    pos1[0] += (0.1*alpha);
+    pos2[0] -= (0.1*alpha);
     
     pos1[0] = fract(pos1[0]);
     pos2[0] = fract(pos2[0]);
@@ -56,6 +56,7 @@ void main(void)
     
     
 }
+
 
 
 

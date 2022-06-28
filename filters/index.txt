@@ -105,6 +105,7 @@ material.glsl
 material_rgb_blur.glsl
 material_blurry.glsl
 material_blur_time.glsl
+material_blur_offset.glsl
 material_mirror1.glsl
 material_mirror2.glsl
 material_mirror3.glsl
