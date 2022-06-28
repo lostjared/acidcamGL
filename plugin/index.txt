@@ -148,3 +148,4 @@ alpha_diamond2.acidcam
 alpha_diamond3.acidcam
 alpha_diamond4.acidcam
 alpha_diamond5.acidcam
+frame_offset_draw.acidcam
