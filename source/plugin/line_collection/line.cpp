@@ -7,9 +7,22 @@ extern "C" void filter(cv::Mat  &frame) {
         collection.shiftFrames(frame);
     collection.shiftFrames(frame);
     
+    
     for(int z = 0; z < frame.rows; ++z) {
+        
+        static int cnt = 0;
+        int offset = 0;
+      
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
+            cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z, i);
+            pixel = pix;
+            
+            if(++cnt > frame.cols/32) {
+                cnt = 0;
+                if(++offset > MAX-1)
+                    offset = 0;
+            }
         }
     }
 }
