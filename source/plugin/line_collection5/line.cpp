@@ -21,7 +21,7 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z, i);
             pixel = pix;
             
-            if(++cnt > rand()%10) {
+            if(++cnt > rand()%50) {
                 cnt = 0;
                 if(++offset > MAX-1)
                     offset = 0;
