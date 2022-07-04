@@ -152,3 +152,4 @@ frame_offset_draw.acidcam
 line_collection.acidcam
 line_collection2.acidcam
 line_collection3.acidcam
+line_collection4.acidcam
