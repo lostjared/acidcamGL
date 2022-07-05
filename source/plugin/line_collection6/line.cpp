@@ -7,8 +7,8 @@ extern "C" void filter(cv::Mat  &frame) {
         srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
     }
-    else
-    collection.shiftFrames(frame);
+    else if(rand()%3 == 0)
+        collection.shiftFrames(frame);
     
     
     for(int z = 0; z < frame.rows; ++z) {
