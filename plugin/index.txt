@@ -154,3 +154,4 @@ line_collection2.acidcam
 line_collection3.acidcam
 line_collection4.acidcam
 line_collection5.acidcam
+line_collection6.acidcam

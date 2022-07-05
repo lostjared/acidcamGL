@@ -165,6 +165,7 @@ all:
 	make -C line_collection3 install
 	make -C line_collection4 install
 	make -C line_collection5 install
+	make -C line_collection6 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -332,3 +333,4 @@ clean:
 	make -C line_collection3 clean
 	make -C line_collection4 clean
 	make -C line_collection5 clean
+	make -C line_collection6 clean
