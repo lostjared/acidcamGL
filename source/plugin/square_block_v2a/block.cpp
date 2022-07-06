@@ -13,9 +13,7 @@ extern "C" void filter(cv::Mat  &frame) {
                     if(z+y < (frame.rows-1) && i+x < (frame.cols-1)) {
                         cv::Vec3b &pixel = ac::pixelAt(frame,z+y, i+x);
                         cv::Vec3b pix = collection.frames[index].at<cv::Vec3b>(z+y, i+x);
-                        for(int j = 0; j < 3; ++j) {
-                            pixel[j] = static_cast<unsigned char>((0.5 * pixel[j]) + (0.5 * pix[j]));
-                        }
+                        pixel = pix;
                     }
                 }
             }
@@ -36,8 +34,8 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     if(square_dir == 1) {
         square_size += 2;
-        if(square_size >= 64) {
-            square_size = 64;
+        if(square_size >= 8) {
+            square_size = 8;
             square_dir = 0;
         }
     } else {
