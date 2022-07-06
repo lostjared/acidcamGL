@@ -7,9 +7,11 @@ extern "C" void filter(cv::Mat  &frame) {
         srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
     }
-    else if(rand()%3 == 0)
+    else
         collection.shiftFrames(frame);
     
+    
+    static int r_count = rand()%50;
     
     for(int z = 0; z < frame.rows; ++z) {
         
@@ -21,8 +23,9 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z, i);
             pixel = pix;
             
-            if(++cnt > rand()%50) {
+            if(++cnt > r_count) {
                 cnt = 0;
+                r_count = rand()%50;
                 if(++offset > MAX-1)
                     offset = 0;
             }
