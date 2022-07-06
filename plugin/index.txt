@@ -157,3 +157,4 @@ line_collection5.acidcam
 line_collection6.acidcam
 line_collection7.acidcam
 line_collection_rgb.acidcam
+square_block_v2a.acidcam
