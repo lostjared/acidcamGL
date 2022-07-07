@@ -13,7 +13,8 @@ extern "C" void filter(cv::Mat  &frame) {
                     if(z+y < (frame.rows-1) && i+x < (frame.cols-1)) {
                         cv::Vec3b &pixel = ac::pixelAt(frame,z+y, i+x);
                         cv::Vec3b pix = collection.frames[index].at<cv::Vec3b>(z+y, i+x);
-                        pixel = pix;
+                        for(int j = 0; j < 3; ++j)
+                            pixel[j] = ac::wrap_cast((0.5 * pixel[j]) + (0.5 * pix[j]));
                     }
                 }
             }
