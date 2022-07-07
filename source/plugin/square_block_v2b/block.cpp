@@ -32,11 +32,15 @@ extern "C" void filter(cv::Mat  &frame) {
             }
         }
     }
+    
+    static int square_size_max = rand()%32;
+    
     if(square_dir == 1) {
         square_size += 2;
-        if(square_size >= 8) {
+        if(square_size >= square_size_max) {
             square_size = 8;
             square_dir = 0;
+            square_size_max = rand()%32;
         }
     } else {
         square_size -= 2;
