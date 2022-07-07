@@ -169,7 +169,8 @@ all:
 	make -C line_collection7 install
 	make -C line_collection_rgb install
 	make -C square_block_v2a install
-	make -C square_block_V2b install
+	make -C square_block_v2b install
+	make -C square_block_v2c install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -342,3 +343,4 @@ clean:
 	make -C line_collection_rgb clean
 	make -C square_block_v2a clean
 	make -C square_block_v2b clean
+	make -C square_block_v2c clean
