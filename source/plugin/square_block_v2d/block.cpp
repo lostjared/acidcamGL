@@ -6,6 +6,8 @@ extern "C" void filter(cv::Mat  &frame) {
     static int square_size = 4, square_dir = 1;
     static int index = 0;
     static int dir = 1;
+    static int rgb = 0;
+    
     for(int z = 0; z < frame.rows; z += square_size) {
         for(int i = 0; i < frame.cols; i += square_size) {
             for(int y = 0; y < square_size; ++y) {
@@ -13,12 +15,16 @@ extern "C" void filter(cv::Mat  &frame) {
                     if(z+y < (frame.rows-1) && i+x < (frame.cols-1)) {
                         cv::Vec3b &pixel = ac::pixelAt(frame,z+y, i+x);
                         cv::Vec3b pix = collection.frames[index].at<cv::Vec3b>(z+y, i+x);
-                        for(int j = 0; j < 3; ++j)
-                            pixel[j] = ac::wrap_cast((0.5 * pixel[j]) + (0.5 * pix[j]));
+                        pixel[rgb] = ac::wrap_cast((0.5 * pixel[rgb]) + (0.5 * pix[rgb]));
                     }
                 }
             }
+            if(++rgb > 2)
+                rgb = 0;
         }
+        
+        
+        
         if(dir == 1) {
             ++index;
             if(index > (collection.size()-1)) {
