@@ -160,3 +160,4 @@ line_collection_rgb.acidcam
 square_block_v2a.acidcam
 square_block_v2b.acidcam
 square_block_v2c.acidcam
+square_block_v2d.acidcam
