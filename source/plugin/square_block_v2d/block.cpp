@@ -15,7 +15,8 @@ extern "C" void filter(cv::Mat  &frame) {
                     if(z+y < (frame.rows-1) && i+x < (frame.cols-1)) {
                         cv::Vec3b &pixel = ac::pixelAt(frame,z+y, i+x);
                         cv::Vec3b pix = collection.frames[index].at<cv::Vec3b>(z+y, i+x);
-                        pixel[rgb] = ac::wrap_cast((0.5 * pixel[rgb]) + (0.5 * pix[rgb]));
+                        //pixel[rgb] = ac::wrap_cast((0.5 * pixel[rgb]) + (0.5 * pix[rgb]));
+                        pixel[rgb] = pix[rgb];
                     }
                 }
             }
