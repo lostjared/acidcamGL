@@ -19,12 +19,11 @@ extern "C" void filter(cv::Mat  &frame) {
                         pixel[rgb] = pix[rgb];
                     }
                 }
+                if(++rgb > 2)
+                    rgb = 0;
             }
-            if(++rgb > 2)
-                rgb = 0;
+            
         }
-        
-        
         
         if(dir == 1) {
             ++index;
@@ -41,14 +40,11 @@ extern "C" void filter(cv::Mat  &frame) {
         }
     }
     
-    static int square_size_max = rand()%32;
-    
     if(square_dir == 1) {
         square_size += 2;
-        if(square_size >= square_size_max) {
+        if(square_size >= 12) {
             square_size = 8;
             square_dir = 0;
-            square_size_max = rand()%32;
         }
     } else {
         square_size -= 2;
