@@ -1,7 +1,7 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    static ac::MatrixCollection<32> collection;
+    static ac::MatrixCollection<8> collection;
     collection.shiftFrames(frame);
     static int square_size = 4, square_dir = 1;
     static int index = 0;
@@ -17,10 +17,10 @@ extern "C" void filter(cv::Mat  &frame) {
                         cv::Vec3b pix = collection.frames[index].at<cv::Vec3b>(z+y, i+x);
                         //pixel[rgb] = ac::wrap_cast((0.5 * pixel[rgb]) + (0.5 * pix[rgb]));
                         if(abs(pixel[rgb]-pix[rgb]) > 25)
-                            pixel[rgb] = pix[rgb];
+                            pixel[rgb] ^= pix[rgb];
                     }
                     if(++rgb > 2)
-                        rgb = 0;
+                        rgb = rand()%2;
                 }
                
             }
