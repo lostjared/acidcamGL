@@ -173,6 +173,7 @@ all:
 	make -C square_block_v2c install
 	make -C square_block_v2d install
 	make -C square_block_v2e install
+	make -C square_block_v2f install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -348,3 +349,4 @@ clean:
 	make -C square_block_v2c clean
 	make -C square_block_v2d clean
 	make -C square_block_v2e clean
+	make -C square_block_v2f clean
