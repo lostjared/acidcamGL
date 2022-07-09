@@ -16,11 +16,13 @@ extern "C" void filter(cv::Mat  &frame) {
                         cv::Vec3b &pixel = ac::pixelAt(frame,z+y, i+x);
                         cv::Vec3b pix = collection.frames[index].at<cv::Vec3b>(z+y, i+x);
                         //pixel[rgb] = ac::wrap_cast((0.5 * pixel[rgb]) + (0.5 * pix[rgb]));
-                        pixel[rgb] = pix[rgb];
+                        if(abs(pixel[rgb]-pix[rgb]) > 25)
+                            pixel[rgb] = pix[rgb];
                     }
+                    if(++rgb > 2)
+                        rgb = 0;
                 }
-                if(++rgb > 2)
-                    rgb = 0;
+               
             }
             
         }
