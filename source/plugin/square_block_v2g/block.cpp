@@ -46,7 +46,7 @@ extern "C" void filter(cv::Mat  &frame) {
     
     if(square_dir == 1) {
         square_size += 2;
-        if(square_size >= 12) {
+        if(square_size >= 64) {
             square_size = 8;
             square_dir = 0;
         }
