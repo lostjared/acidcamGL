@@ -42,8 +42,7 @@ void main(void)
         discard;
     color = texture(samp, tc);
     vec2 pos = gl_FragCoord.xy/iResolution.xy;
-    color = color * vec4(pos, 1, 1);
-    color *= 2.0;
+    color = color * vec4(pos*alpha, 1, 1);
 }
 
 
