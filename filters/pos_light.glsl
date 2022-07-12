@@ -20,24 +20,30 @@ uniform sampler2D samp;
 uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
-
+uniform vec2 iResolution;
 uniform float restore_black;
 in float restore_black_value;
+
+vec4 xor_RGB(vec4 icolor, ivec4 isource) {
+    ivec3 int_color;
+    for(int i = 0; i < 3; ++i) {
+        int_color[i] = int(255 * icolor[i]);
+        int_color[i] = int_color[i]^isource[i];
+        if(int_color[i] > 255)
+            int_color[i] = int_color[i]%255;
+        icolor[i] = float(int_color[i])/255;
+    }
+    return icolor;
+}
 
 void main(void)
 {
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    for(int i = 0; i < 3; ++i) {
-        color[i] += cos(color[i] * timeval);
-    }
-    ivec3 int_color;
-    for(int i = 0; i < 3; ++i) {
-        int_color[i] = int(255 * color[i]);
-        if(int_color[i] > 255)
-            int_color[i] = int_color[i]%255;
-        color[i] = float(int_color[i])/255;
-    }
+    vec2 pos = gl_FragCoord.xy/iResolution.xy;
+    color = color * vec4(pos, 1, 1);
+    color *= 2.0;
 }
+
 
