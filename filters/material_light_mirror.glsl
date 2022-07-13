@@ -41,7 +41,7 @@ void main(void)
     color2 = texture(mat_samp, tc);
     vec2 pos = tc;
     pos[0] = 1.0-pos[0];
-    vec4 color3 = texture(mat_samp, tc);
+    vec4 color3 = texture(mat_samp, pos);
     color = ((0.2 * color) + (0.2 * color2) + (0.2 * color3)) * alpha;;
 }
 
