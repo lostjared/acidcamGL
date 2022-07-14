@@ -177,6 +177,7 @@ all:
 	make -C square_block_v2g install
 	make -C square_block_v2h install
 	make -C diff install
+	make -C opposite_dir install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -356,3 +357,4 @@ clean:
 	make -C square_block_v2g clean
 	make -C square_block_v2h clean
 	make -C diff clean
+	make -C opposite_dir clean
