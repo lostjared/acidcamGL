@@ -9,6 +9,7 @@ extern "C" void filter(cv::Mat  &frame) {
     
     static int offset = 0;
     static int cx = rand()%50;
+    static int max_cx = rand()%100;
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
@@ -22,8 +23,10 @@ extern "C" void filter(cv::Mat  &frame) {
             if(++offset >(MAX-1))
                 offset = 0;
             c = 0;
-            if(++cx > 100)
+            if(++cx > max_cx) {
                 cx = rand()%50;
+                max_cx = rand()%100;
+            }
         }
 
     }
@@ -40,8 +43,10 @@ extern "C" void filter(cv::Mat  &frame) {
             if(--offset <= 0)
                 offset = MAX-1;
             c = 0;
-            if(++cx > 100)
+            if(++cx > max_cx) {
                 cx = rand()%50;
+                max_cx = rand()%100;
+            }
         }
     }
 }
