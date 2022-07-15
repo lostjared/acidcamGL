@@ -5,7 +5,8 @@ extern "C" void filter(cv::Mat  &frame) {
     static ac::MatrixCollection<MAX> collection;
     if(collection.empty())
         collection.shiftFrames(frame);
-    collection.shiftFrames(frame);
+    else if(rand()%3 == 0)
+        collection.shiftFrames(frame);
     
     static int offset = 0;
     static int cx = rand()%50;
