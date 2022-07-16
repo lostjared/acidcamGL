@@ -179,6 +179,7 @@ all:
 	make -C diff install
 	make -C opposite_dir install
 	make -C opposite_dir2 install
+	make -C fade install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -360,3 +361,4 @@ clean:
 	make -C diff clean
 	make -C opposite_dir clean
 	make -C opposite_dir2 clean
+	make -C fade clean

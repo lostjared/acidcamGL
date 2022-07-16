@@ -168,3 +168,4 @@ square_block_v2h.acidcam
 diff.acidcam
 opposite_dir.acidcam
 opposite_dir2.acidcam
+fade.acidcam
