@@ -180,6 +180,7 @@ all:
 	make -C opposite_dir install
 	make -C opposite_dir2 install
 	make -C fade install
+	make -C fade2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -362,3 +363,4 @@ clean:
 	make -C opposite_dir clean
 	make -C opposite_dir2 clean
 	make -C fade clean
+	make -C fade2 clean

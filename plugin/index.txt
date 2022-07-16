@@ -169,3 +169,4 @@ diff.acidcam
 opposite_dir.acidcam
 opposite_dir2.acidcam
 fade.acidcam
+fade2.acidcam
