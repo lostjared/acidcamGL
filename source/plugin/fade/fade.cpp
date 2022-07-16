@@ -22,6 +22,7 @@ extern "C" void filter(cv::Mat  &frame) {
     if(init == 0) {
         ac::init();
         init = 1;
+        srand(static_cast<unsigned int>(time(0)));
     }
     
     static int offset1 = rand()%(ac::solo_filter.size()-1);
