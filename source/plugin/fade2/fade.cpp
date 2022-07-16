@@ -34,6 +34,7 @@ extern "C" void filter(cv::Mat  &frame) {
     ac::CallFilter(ac::solo_filter[offset2], cpy);
     alphablend(frame, cpy, alpha);
     static int dir = 1;
+    static int one = 1;
     if(dir == 1) {
         alpha += 0.05;
         if(alpha >= 1) {
@@ -45,8 +46,13 @@ extern "C" void filter(cv::Mat  &frame) {
         if(alpha <= 0.1) {
             alpha = 0.1;
             dir = 1;
-            offset1 = rand()%(ac::solo_filter.size()-1);
-            offset2 = rand()%(ac::solo_filter.size()-1);
+            if(one == 1) {
+                offset1 = rand()%(ac::solo_filter.size()-1);
+                one = 0;
+            } else {
+                offset2 = rand()%(ac::solo_filter.size()-1);
+                one = 1;
+            }
         }
     }
 }
