@@ -32,7 +32,7 @@ extern "C" void filter(cv::Mat  &frame) {
     cv::Mat cpy = frame.clone();
     ac::CallFilter(ac::solo_filter[offset1], frame);
     ac::CallFilter(ac::solo_filter[offset2], cpy);
-    alphablend(frame, cpy, alpha);
+    alphablend(frame, cpy, 0.5);
     static int dir = 1;
     if(dir == 1) {
         alpha += 0.05;
