@@ -18,20 +18,24 @@ void alphablend(cv::Mat &src, cv::Mat &cpy, double alpha) {
 
 extern "C" void filter(cv::Mat  &frame) {
     
+    static std::vector<std::string> fname;
     static int init = 0;
     if(init == 0) {
         ac::init();
         init = 1;
         srand(static_cast<unsigned int>(time(0)));
+        std::copy(ac::solo_filter.begin(), ac::solo_filter.end(), std::back_inserter(fname));
+        unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+             std::shuffle(fname.begin(), fname.end(), std::default_random_engine(seed));
     }
     
-    static int offset1 = rand()%(ac::solo_filter.size()-1);
-    static int offset2 = rand()%(ac::solo_filter.size()-1);
+    static int offset1 = 0;
+    static int offset2 = 1;
     static double alpha = 0.1;
     
     cv::Mat cpy = frame.clone();
-    ac::CallFilter(ac::solo_filter[offset1], frame);
-    ac::CallFilter(ac::solo_filter[offset2], cpy);
+    ac::CallFilter(fname[offset1], frame);
+    ac::CallFilter(fname[offset2], cpy);
     alphablend(frame, cpy, alpha);
     static int dir = 1;
     if(dir == 1) {
@@ -39,14 +43,25 @@ extern "C" void filter(cv::Mat  &frame) {
         if(alpha >= 1) {
             alpha = 1;
             dir = 0;
-            offset2 = rand()%(ac::solo_filter.size()-1);
+            offset2++;
+            if(offset2 > (fname.size()-1)) {
+                offset2 = 0;
+                unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+                     std::shuffle(fname.begin(), fname.end(), std::default_random_engine(seed));
+            }
+            
         }
     } else {
         alpha -= 0.05;
         if(alpha <= 0.1) {
             alpha = 0.1;
             dir = 1;
-            offset1 = rand()%(ac::solo_filter.size()-1);
+            offset1++;
+            if(offset1 > (fname.size()-1)) {
+                offset1 = 0;
+                unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
+                     std::shuffle(fname.begin(), fname.end(), std::default_random_engine(seed));
+            }
             
         }
     }
