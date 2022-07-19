@@ -185,6 +185,7 @@ all:
 	make -C filter_half install
 	make -C fade_shuffle install
 	make -C fade3_slow install
+	make -C fade3_fast install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -372,3 +373,4 @@ clean:
 	make -C filter_half clean
 	make -C fade_shuffle clean
 	make -C fade3_slow clean
+	make -C fade3_fast clean
