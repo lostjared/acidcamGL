@@ -35,14 +35,14 @@ extern "C" void filter(cv::Mat  &frame) {
     alphablend(frame, cpy, alpha);
     static int dir = 1;
     if(dir == 1) {
-        alpha += 0.05;
+        alpha += 0.1;
         if(alpha >= 1) {
             alpha = 1;
             dir = 0;
             offset2 = rand()%(ac::solo_filter.size()-1);
         }
     } else {
-        alpha -= 0.05;
+        alpha -= 0.1;
         if(alpha <= 0.1) {
             alpha = 0.1;
             dir = 1;
