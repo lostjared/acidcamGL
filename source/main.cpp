@@ -255,6 +255,7 @@ int main(int argc, char **argv) {
     int value_index = 0;
     std::string output_format="png";
     std::string autofilter_file;
+    std::string custom_index;
     while((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:")) != -1) {
         switch(opt) {
             case '9':
@@ -367,6 +368,7 @@ int main(int argc, char **argv) {
                 repeat = true;
                 break;
             case 'S':
+                custom_index = optarg;
                 set_index = atoi(optarg);
                 break;
             case 'M':
@@ -635,7 +637,6 @@ int main(int argc, char **argv) {
     if(list_path.length()>0)
         main_window.loadShaderList(list_path);
     if(filter_string.length()>0) {
-        
         if(filter_string.find(",") != std::string::npos) {
             set_index = main_window.setCustomFilter(filter_string);
         }
@@ -646,6 +647,9 @@ int main(int argc, char **argv) {
                 acidcam::updateError();
             }
         }
+    }
+    if(custom_index.length() > 0 && custom_index.find(",") != std::string::npos) {
+        set_index = main_window.setCustomFilterByIndex(custom_index);
     }
     main_window.setFilterIndex(set_index);
     main_window.setPrintText(print_text);
