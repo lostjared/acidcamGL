@@ -9,7 +9,7 @@ void alphablend(cv::Mat &src, cv::Mat &cpy, double alpha) {
             cv::Vec3b &pixel = src.at<cv::Vec3b>(z, i);
             cv::Vec3b &pix = cpy.at<cv::Vec3b>(z, i);
             for(int j = 0; j < 3; ++j) {
-                pixel[j] = ac::wrap_cast((alpha * pixel[j]) + ( 1-alpha * pix[j]));
+                pixel[j] = ac::wrap_cast((alpha * pixel[j]) + ( (1-alpha) * pix[j]));
             }
         }
     }

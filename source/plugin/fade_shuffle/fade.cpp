@@ -9,15 +9,13 @@ void alphablend(cv::Mat &src, cv::Mat &cpy, double alpha) {
             cv::Vec3b &pixel = src.at<cv::Vec3b>(z, i);
             cv::Vec3b &pix = cpy.at<cv::Vec3b>(z, i);
             for(int j = 0; j < 3; ++j) {
-                pixel[j] = ac::wrap_cast((alpha * pixel[j]) + ( 1-alpha * pix[j]));
+                pixel[j] = ac::wrap_cast((alpha * pixel[j]) + ( (1-alpha) * pix[j]));
             }
         }
     }
 }
 
-
 extern "C" void filter(cv::Mat  &frame) {
-    
     static std::vector<std::string> fname;
     static int init = 0;
     if(init == 0) {
@@ -28,11 +26,9 @@ extern "C" void filter(cv::Mat  &frame) {
         unsigned int seed = std::chrono::system_clock::now().time_since_epoch().count();
              std::shuffle(fname.begin(), fname.end(), std::default_random_engine(seed));
     }
-    
     static int offset1 = 0;
     static int offset2 = 1;
     static double alpha = 0.1;
-    
     cv::Mat cpy = frame.clone();
     ac::CallFilter(fname[offset1], frame);
     ac::CallFilter(fname[offset2], cpy);
