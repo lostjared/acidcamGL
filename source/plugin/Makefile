@@ -375,6 +375,6 @@ clean:
 	make -C filter_half clean
 	make -C fade_shuffle clean
 	make -C fade3_slow clean
-	make -C fade3_fast clea
+	make -C fade3_fast clean
 	make -C rsquare clean
 	make -C rand_trail clean
