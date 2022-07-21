@@ -22,4 +22,5 @@ extern "C" void filter(cv::Mat  &frame) {
         int h = 10+rand()%(frame.rows-10);
         drawSquare(frame, x, y, w, h, collection.frames[rand()%(MAX-1)]);
     }
+    ac::FrameSep2(frame);
 }
