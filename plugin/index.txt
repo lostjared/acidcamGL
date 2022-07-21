@@ -175,3 +175,4 @@ filter_half.acidcam
 fade_shuffle.acidcam
 fade3_slow.acidcam
 fade3_fast.acidcam
+rsquare.acidcam
