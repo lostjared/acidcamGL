@@ -188,6 +188,7 @@ all:
 	make -C fade3_fast install
 	make -C rsquare install
 	make -C rand_trail install
+	make -C rsquare2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -378,3 +379,4 @@ clean:
 	make -C fade3_fast clean
 	make -C rsquare clean
 	make -C rand_trail clean
+	make -C rsquare2 clean
