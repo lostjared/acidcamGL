@@ -178,3 +178,4 @@ fade3_fast.acidcam
 rsquare.acidcam
 rand_trail.acidcam
 rsquare2.acidcam
+rsquare3.acidcam

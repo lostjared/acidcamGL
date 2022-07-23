@@ -189,6 +189,7 @@ all:
 	make -C rsquare install
 	make -C rand_trail install
 	make -C rsquare2 install
+	make -C rsquare3 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -380,3 +381,4 @@ clean:
 	make -C rsquare clean
 	make -C rand_trail clean
 	make -C rsquare2 clean
+	make -C rsquare3 clean
