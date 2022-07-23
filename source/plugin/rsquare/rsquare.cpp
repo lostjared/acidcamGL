@@ -12,8 +12,10 @@ void drawSquare(cv::Mat &frame, int x, int y, int w, int h, cv::Mat &off) {
 extern "C" void filter(cv::Mat  &frame) {
     static constexpr int MAX = 8;
     static ac::MatrixCollection<MAX> collection;
-    if(collection.empty())
+    if(collection.empty()) {
+        srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
+    }
     collection.shiftFrames(frame);
     for(int i = 0; i < (50+rand()%50); ++i) {
         int x = rand()%frame.cols;
