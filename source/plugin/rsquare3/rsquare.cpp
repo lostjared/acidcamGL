@@ -4,7 +4,10 @@ void drawSquare(cv::Mat &frame, int x, int y, int w, int h, cv::Mat &off) {
     for(int i = x; i < w; ++i) {
         for(int z = y; z < h; ++z) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            pixel = off.at<cv::Vec3b>(z, i);
+            cv::Vec3b pix;
+            pix = off.at<cv::Vec3b>(z, i);
+            for(int j = 0; j < 3; ++j)
+                pixel[j] = ac::wrap_cast((0.5 * pixel[j]) + (0.5 * pix[j]));
         }
     }
 }
