@@ -179,3 +179,4 @@ rsquare.acidcam
 rand_trail.acidcam
 rsquare2.acidcam
 rsquare3.acidcam
+rsquare4.acidcam
