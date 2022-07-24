@@ -17,12 +17,27 @@ extern "C" void filter(cv::Mat  &frame) {
         collection.shiftFrames(frame);
     }
     collection.shiftFrames(frame);
-    for(int i = 0; i < (50+rand()%50); ++i) {
+    
+    static int num_square = 25;
+    for(int i = 0; i < num_square; ++i) {
         int x = rand()%frame.cols;
         int y = rand()%frame.rows;
-        int w = 10+rand()%(frame.cols-10);
-        int h = 10+rand()%(frame.rows-10);
+        int w = 25+rand()%(frame.cols-25);
+        int h = 25+rand()%(frame.rows-25);
         drawSquare(frame, x, y, w, h, collection.frames[rand()%(MAX-1)]);
     }
     ac::FrameSep2(frame);
+    
+    static int dir = 1;
+    if(dir == 1) {
+        num_square += 10;
+        if(num_square >= 100) {
+            dir = 0;
+        }
+    } else {
+        num_square -= 10;
+        if(num_square <= 25) {
+            dir = 1;
+        }
+    }
 }
