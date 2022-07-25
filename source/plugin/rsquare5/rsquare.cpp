@@ -16,14 +16,30 @@ extern "C" void filter(cv::Mat  &frame) {
         srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
     }
-    else if(rand()%3 == 0)
+    else
         collection.shiftFrames(frame);
-    for(int i = 0; i < (25+rand()%50); ++i) {
+    
+    static int offset = 0;
+    
+    for(int i = 0; i < (5+rand()%50); ++i) {
         int x = rand()%frame.cols;
         int y = rand()%frame.rows;
         int w = 10+rand()%(frame.cols-10);
         int h = 10+rand()%(frame.rows-10);
-        drawSquare(frame, x, y, w, h, collection.frames[rand()%(MAX-1)]);
+        drawSquare(frame, x, y, w, h, collection.frames[offset]);
+
+        static int dir = 1;
+        if(dir == 1) {
+            if(++offset > MAX-1) {
+                offset = MAX-1;
+                dir = 0;
+            }
+        } else {
+            if(--offset <= 0) {
+                offset = 0;
+                dir = 1;
+            }
+        }
     }
     ac::FrameSep2(frame);
 }
