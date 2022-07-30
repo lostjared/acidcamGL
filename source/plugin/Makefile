@@ -193,6 +193,7 @@ all:
 	make -C rsquare4 install
 	make -C rsquare5 install
 	make -C frame_slide01 install
+	make -C frame_slide02 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -388,3 +389,4 @@ clean:
 	make -C rsquare4 clean
 	nake -C rsquare5 clean
 	make -C frame_slide01 clean
+	make -C frame_slide02 clean
