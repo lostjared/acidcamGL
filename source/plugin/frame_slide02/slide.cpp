@@ -6,38 +6,31 @@ extern "C" void filter(cv::Mat  &frame) {
     if(collection.empty())
         collection.shiftFrames(frame);
     collection.shiftFrames(frame);
-    
-    static int offset_x = 0;
+    static int offset_y = 0;
     static int offset = 0;
-    static int offset_width = frame.cols/2;
-    
-    
-    for(int z = 0; z < frame.rows; ++z) {
-        for(int i = 0; i < offset_width; ++i) {
-            if(offset_x+i < frame.cols) {
-                cv::Vec3b &pixel = ac::pixelAt(frame, z, offset_x+i);
-                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(z, offset_x+i);
+    static int offset_height = frame.rows/2;
+    for(int z = 0; z < offset_height; ++z) {
+        for(int i = 0; i < frame.cols; ++i) {
+            if(offset_y+z < frame.rows) {
+                cv::Vec3b &pixel = ac::pixelAt(frame, offset_y+z, i);
+                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(offset_y+z, i);
                 pixel = pix;
             }
         }
     }
-    
-    
     if(++offset > MAX-1)
         offset = 0;
-    
     static int dir = 1;
-    
     if(dir == 1) {
-        offset_x += 10;
-        if(offset_x > frame.cols-offset_width-1) {
-            offset_x = frame.cols-offset_width-1;
+        offset_y += 10;
+        if(offset_y > frame.rows-offset_height-1) {
+            offset_y = frame.rows-offset_height-1;
             dir = 0;
         }
     } else {
-        offset_x -= 10;
-        if(offset_x <= 0) {
-            offset_x = 0;
+        offset_y -= 10;
+        if(offset_y <= 0) {
+            offset_y = 0;
             dir = 1;
         }
     }
