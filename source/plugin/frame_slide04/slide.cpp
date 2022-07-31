@@ -7,7 +7,7 @@ extern "C" void filter(cv::Mat  &frame) {
         collection.shiftFrames(frame);
     collection.shiftFrames(frame);
     static int offset_y = 0;
-    static int offset = 0;
+    int offset = rand()%(MAX-1);
     static int offset_height = frame.rows/2;
     for(int z = 0; z < offset_height; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
@@ -18,8 +18,6 @@ extern "C" void filter(cv::Mat  &frame) {
             }
         }
     }
-    if(++offset > MAX-1)
-        offset = 0;
     static int dir = 1;
     if(dir == 1) {
         offset_y += 10;
