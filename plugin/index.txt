@@ -183,3 +183,4 @@ rsquare4.acidcam
 rsquare5.acidcam
 frame_slide01.acidcam
 frame_slide02.acidcam
+frame_slide03.acidcam
