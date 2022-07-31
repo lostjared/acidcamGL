@@ -9,11 +9,12 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     collection.shiftFrames(frame);
     
-    static int line_start_x = rand()%(frame.cols-1);
-    static int line_dip = rand()%50;
+    int line_start_x = rand()%(frame.cols-1);
+    int line_dip = rand()%10;
     static int cnt = 0;
     static int rnd_max = rand()%50;
     static bool none = false;
+    static int offset = 0;
     if(++cnt > rnd_max) {
         cnt = 0;
         rnd_max = rand()%50;
@@ -35,14 +36,14 @@ extern "C" void filter(cv::Mat  &frame) {
             
             if(z+line_inc < frame.rows) {
                 cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z+line_inc, i);
-                pixel = pix;
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                }
             }
         }
     }
     
-    line_start_x += 100;
-    if(line_start_x > frame.cols) {
-        line_start_x = rand()%(frame.cols-1);
-        line_dip = rand()%50;
+    if((++offset > (MAX-1))) {
+        offset = rand()%(MAX-1);
     }
 }
