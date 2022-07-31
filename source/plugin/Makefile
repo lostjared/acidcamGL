@@ -195,6 +195,7 @@ all:
 	make -C frame_slide01 install
 	make -C frame_slide02 install
 	make -C frame_slide03 install
+	make -C frame_slide04 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -392,3 +393,4 @@ clean:
 	make -C frame_slide01 clean
 	make -C frame_slide02 clean
 	make -C frame_slide03 clean
+	make -C frame_slide04 clean
