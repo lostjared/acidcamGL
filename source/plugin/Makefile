@@ -199,6 +199,7 @@ all:
 	make -C frame_diagline01 install
 	make -C frame_diagline02 install
 	make -C frame_diagline03 install
+	make -C frame_diagline04 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -400,3 +401,4 @@ clean:
 	make -C frame_diagline01 clean
 	make -C frame_diagline02 clean
 	make -C frame_diagline03 clean
+	make -C frame_diagline04 clean
