@@ -28,8 +28,8 @@ extern "C" void filter(cv::Mat  &frame) {
                 ++line_inc;
             }
             
-            if(z+line_inc < frame.rows) {
-                cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z+line_inc, i);
+            if(z-line_inc > 0) {
+                cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z-line_inc, i);
                 pixel = pix;
             }
         }
