@@ -34,8 +34,8 @@ extern "C" void filter(cv::Mat  &frame) {
                 ++line_inc;
             }
             
-            if(z+line_inc < frame.rows) {
-                cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z+line_inc, i);
+            if(z-line_inc > 0) {
+                cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z-line_inc, i);
                 for(int q = 0; q < 3; ++q) {
                     pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
                 }
