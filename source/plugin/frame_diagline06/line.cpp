@@ -28,10 +28,17 @@ extern "C" void filter(cv::Mat  &frame) {
                 ++line_inc;
             }
             
-            if(z+line_inc < frame.rows) {
+            if(z+line_inc < frame.rows-1) {
                 cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z+line_inc, i);
                 pixel = pix;
             }
+            
+            if(z-line_inc > 0) {
+                cv::Vec3b pix = collection.frames[offset].at<cv::Vec3b>(z-line_inc, i);
+
+                pixel = pix;
+            }
+
         }
     }
     
@@ -41,7 +48,7 @@ extern "C" void filter(cv::Mat  &frame) {
     
     line_start_x += 50;
     if(line_start_x > frame.cols-1) {
-        line_start_x = rand()%50;
+        line_start_x = rand()%10;
         line_dip = rand()%150;
     }
 }
