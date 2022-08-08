@@ -203,6 +203,7 @@ all:
 	make -C frame_diagline05 install
 	make -C frame_diagline06 install
 	make -C color_rect install
+	make -C rand_rect install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -408,3 +409,4 @@ clean:
 	make -C frame_diagline05 clean
 	make -C frame_diagline06 clean
 	make -C color_rect clean
+	make -C rand_rect clean
