@@ -3,8 +3,10 @@
 extern "C" void filter(cv::Mat  &frame) {
     static constexpr int MAX = 8;
     static ac::MatrixCollection<MAX> collection;
-    if(collection.empty())
+    if(collection.empty()) {
+        srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
+    }
     collection.shiftFrames(frame);
    
     int cy_start = rand()%(frame.rows-1);
