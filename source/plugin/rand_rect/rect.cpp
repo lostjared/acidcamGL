@@ -10,7 +10,7 @@ extern "C" void filter(cv::Mat  &frame) {
     collection.shiftFrames(frame);
    
     int cy_start = rand()%(frame.rows-1);
-    int cy_stop = cy_start+(rand()%frame.rows/8);
+    int cy_stop = cy_start+(rand()%frame.rows/6);
     
     int offset = rand()%(MAX-1);
     int off = rand()%3;
@@ -19,8 +19,7 @@ extern "C" void filter(cv::Mat  &frame) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             cv::Vec3b cpix = collection.frames[offset].at<cv::Vec3b>(z, i);
-            cpix[off] = 255;
-            pixel = cpix;
+             pixel = cpix;
         }
     }
 }
