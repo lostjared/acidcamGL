@@ -193,3 +193,4 @@ frame_diagline05.acidcam
 frame_diagline06.acidcam
 color_rect.acidcam
 rand_rect.acidcam
+rand_rect_mul.acidcam
