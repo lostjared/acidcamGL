@@ -205,6 +205,7 @@ all:
 	make -C color_rect install
 	make -C rand_rect install
 	make -C rand_rect_mul install
+	make -C rsquare_even install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -412,3 +413,4 @@ clean:
 	make -C color_rect clean
 	make -C rand_rect clean
 	make -C rand_rect_mul clean
+	make -C rsquare_even clean
