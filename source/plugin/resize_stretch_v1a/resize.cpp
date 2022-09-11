@@ -24,12 +24,12 @@ extern "C" void filter(cv::Mat  &frame) {
     };
     
     static int wait = 0;
-    static int timeout = 10+rand()%30;
+    static int timeout = 10+rand()%10;
     int inc = 2;
     if(++wait > timeout) {
         
         wait = 0;
-        timeout = 10+rand()%30;
+        timeout = 10+rand()%10;
         int new_h = rand()%(frame.rows-1);
         
         for(int i = 0; i < frame.cols; ++i) {
@@ -48,9 +48,7 @@ extern "C" void filter(cv::Mat  &frame) {
         ++offset;
         if(offset > (MAX-1))
             offset = 0;
-        
-        inc++;
-        if(inc > 8)
-            inc = 2;
+
+        inc = 1+(rand()%16);
     }
 }
