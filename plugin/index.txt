@@ -195,3 +195,4 @@ color_rect.acidcam
 rand_rect.acidcam
 rand_rect_mul.acidcam
 rsquare_even.acidcam
+resize_stretch_v1a.acidcam
