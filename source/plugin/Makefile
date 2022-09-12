@@ -207,7 +207,8 @@ all:
 	make -C rand_rect_mul install
 	make -C rsquare_even install
 	make -C resize_stretch_v1a install
-	make -C resize_stretcH_v1b install
+	make -C resize_stretch_v1b install
+	make -C frame_jump install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -418,3 +419,4 @@ clean:
 	make -C rsquare_even clean
 	make -C resize_stretch_v1a clean
 	make -C resize_stretch_v1b clean
+	make -C frame_jump clean
