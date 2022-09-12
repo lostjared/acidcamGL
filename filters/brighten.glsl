@@ -16,32 +16,25 @@ uniform float alpha_value;
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 uniform sampler2D samp;
-uniform sampler2D mat_samp;
-
 uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
-in vec2 iResolution_;
-uniform vec2 iResolution;
+
+
+
 uniform float restore_black;
 in float restore_black_value;
-
-float random (vec2 st) {
-    return fract(sin(dot(st.xy,
-                         vec2(12.9898,78.233)))*
-        43758.5453123);
-}
 
 void main(void)
 {
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    vec4 color2;
-    color2 = texture(mat_samp, tc);
-    vec2 pos = tc;
-    pos[0] = 1.0-pos[0];
-    vec4 color3 = texture(mat_samp, pos);
-    color = ((0.2 * color) + (0.2 * color2) + (0.2 * color3)) * alpha;
+    vec4 cb = color;
+    color[0] = color[0]*cb[2]*2.3;
+    color[1] = color[1]*cb[1]*2.3;
+    color[2] = color[2]*cb[0]*2.3;
 }
+
+
 
