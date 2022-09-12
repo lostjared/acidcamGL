@@ -353,3 +353,4 @@ coord_color.glsl
 xorsheet.glsl
 xorsheet_2.glsl
 brighten.glsl
+brighten_rev.glsl
