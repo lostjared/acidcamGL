@@ -198,3 +198,4 @@ rsquare_even.acidcam
 resize_stretch_v1a.acidcam
 resize_stretch_v1b.acidcam
 frame_jump.acidcam
+resize_stretch_v1c.acidcam
