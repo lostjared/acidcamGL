@@ -37,6 +37,7 @@ extern "C" void filter(cv::Mat  &frame) {
             wait = 0;
             timeout = 10+rand()%60;
             drawStretchedRect(y, frame.rows/4, nw, nh);
+            collection.shiftFrames(frame);
         }
     };
     int rnd = 1+(rand()%2);
