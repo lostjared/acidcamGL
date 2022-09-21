@@ -210,6 +210,7 @@ all:
 	make -C resize_stretch_v1b install
 	make -C frame_jump install
 	make -C resize_stretch_v1c install
+	make -C slice_frame install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -422,3 +423,4 @@ clean:
 	make -C resize_stretch_v1b clean
 	make -C frame_jump clean
 	make -C resize_stretch_v1c clean
+	make -C slice_frame clean
