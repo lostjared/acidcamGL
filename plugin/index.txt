@@ -201,3 +201,4 @@ frame_jump.acidcam
 resize_stretch_v1c.acidcam
 slice_frame.acidcam
 slice_frame_w.acidcam
+fast_mono_color_trails.acidcam
