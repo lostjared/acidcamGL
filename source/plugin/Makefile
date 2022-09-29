@@ -214,6 +214,7 @@ all:
 	make -C slice_frame_w install
 	make -C fast_mono_color_trails install
 	make -C frame_split install
+	make -C frame_split_v2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -430,3 +431,4 @@ clean:
 	make -C slice_frame_w clean
 	make -C fast_mono_color_trails clean
 	make -C frame_split clean
+	make -C frame_split_v2 clean
