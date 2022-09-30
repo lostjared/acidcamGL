@@ -32,6 +32,7 @@ extern "C" void filter(cv::Mat  &frame) {
         if(++offset > (MAX-1)) {
             offset = 0;
         }
+        square_h = 1+rand()%128;
     }
     
 }
