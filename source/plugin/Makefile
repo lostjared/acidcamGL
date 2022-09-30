@@ -217,6 +217,7 @@ all:
 	make -C frame_split_v2 install
 	make -C frame_start_stop install
 	make -C rsquare_small install
+	make -C square_diff install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -436,3 +437,4 @@ clean:
 	make -C frame_split_v2 clean
 	make -C frame_start_stop clean
 	make -C rsquare_small clean
+	make -C square_diff clean
