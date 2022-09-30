@@ -204,3 +204,4 @@ slice_frame_w.acidcam
 fast_mono_color_trails.acidcam
 frame_split.acidcam
 frame_split_v2.acidcam
+frame_start_stop.acidcam
