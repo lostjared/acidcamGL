@@ -30,7 +30,7 @@ extern "C" void filter(cv::Mat  &frame) {
             drawSquare(collection.frames[offset], i, z, square_w, square_h);
         }
         if(++offset > (MAX-1)) {
-            offset = 0;
+            offset = rand()%(MAX-1);
         }
         square_h = 1+rand()%128;
     }
