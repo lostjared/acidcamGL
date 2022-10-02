@@ -34,11 +34,6 @@ void main(void)
     vec4 color3 = texture(samp, tc/ 4);
     vec4 color4 = texture(samp, tc/ 8);
     color = (color * 0.4) + (color2 * 0.4) + (color3 * 0.4) + (color4 * 0.4) ;
-
-    ivec3 source;
-    for(int i = 0; i < 3; ++i) {
-        source[i] = int(255 * color[i]);
-    }
     vec2 cord1 = vec2(tc[0]/2, tc[1]/2);
     vec2 cord2 = vec2(tc[0]/4, tc[1]/4);
     vec2 cord3 = vec2(tc[0]/8, tc[1]/8);
