@@ -207,3 +207,4 @@ frame_split_v2.acidcam
 frame_start_stop.acidcam
 rsquare_small.acidcam
 square_diff.acidcam
+color_fade_ex1.acidcam
