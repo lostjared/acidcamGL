@@ -20,7 +20,7 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     
     for(int q = 0; q < 3; ++q) {
-        color[q] += 1;
+        color[q] += rand()%25;
         if(color[q] >= 254) {
             color[q] = rand()%255;
         }
