@@ -14,11 +14,15 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             for(int q = 0; q < 3; ++q) {
                 pixel[q] = ac::wrap_cast((pixel[q]+color[q]));
-                color[q] += 1;
-                if(color[q] >= 254) {
-                    color[q] = rand()%255;
-                }
+               
             }
+        }
+    }
+    
+    for(int q = 0; q < 3; ++q) {
+        color[q] += 1;
+        if(color[q] >= 254) {
+            color[q] = rand()%255;
         }
     }
 }
