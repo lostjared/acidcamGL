@@ -219,6 +219,7 @@ all:
 	make -C rsquare_small install
 	make -C square_diff install
 	make -C color_fade_ex1 install
+	make -C color_fade_ex2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -440,3 +441,4 @@ clean:
 	make -C rsquare_small clean
 	make -C square_diff clean
 	make -C color_fade_ex1 clean
+	make -C color_fade_ex2 clean
