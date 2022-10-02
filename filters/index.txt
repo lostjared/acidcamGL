@@ -48,6 +48,11 @@ echo_xor_or_and.glsl
 echo_rgb.glsl
 echo_bgr.glsl
 echo_color.glsl
+echo_color1.glsl
+echo_color2.glsl
+echo_color3.glsl
+echo_color4.glsl
+echo_color5.glsl
 echo_mix.glsl
 echo_mirror_1.glsl
 echo_mirror_2.glsl
