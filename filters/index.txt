@@ -57,6 +57,7 @@ echo_color5.glsl
 echo_x2.glsl
 echo_x3.glsl
 echo_x4.glsl
+echo_x5.glsl
 echo_mix.glsl
 echo_mirror_1.glsl
 echo_mirror_2.glsl
