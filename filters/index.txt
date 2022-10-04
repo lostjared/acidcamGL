@@ -65,6 +65,7 @@ echo_mirror_2.glsl
 echo_mirror_3.glsl
 echo_rand.glsl
 echo_rand_2.glsl
+echo_strobe_x1.glsl
 strobe_x1.glsl
 random_pixels_static.glsl
 reverse.glsl
