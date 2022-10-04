@@ -29,16 +29,17 @@ void main(void)
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    for(int i = 0; i < 3; ++i) {
-        color[i] += sin(color[i] * timeval);
+    float value = fract(timeval);
+    if(value >= 0 && value <= 0.3) {
+        color[0] *= value;
+    } else if (value >= 0.3 && value <= 0.6) {
+        color[1] *= value;
+    } else if(value >= 0.6 && value <= 1.0) {
+        color[2] *= value;
     }
-    ivec3 int_color;
-    for(int i = 0; i < 3; ++i) {
-        int_color[i] = int(255 * color[i]);
-        if(int_color[i] > 255)
-            int_color[i] = int_color[i]%255;
-        color[i] = float(int_color[i])/255;
-    }
+    
+    color = color * (alpha/2);
 }
+
 
 
