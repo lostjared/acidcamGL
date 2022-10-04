@@ -192,6 +192,15 @@ Example exporting the enviorment varaible:
 
       export SHADER_PATH=/Users/jared/Downloads/acidcamGL/filters
 
+
+Launch Webcam Device:
+
+	acidcamGL -d 0 -g -p filters
+
+Launch Filepath
+
+	acidcamGL -i file_path -g -p filters
+
 Full Screen Monitor 0
 
 	acidcamGL -g -p filters -F -M 0
