@@ -17,6 +17,7 @@ uniform float alpha_value;
 uniform mat4 mv_matrix;
 uniform mat4 proj_matrix;
 uniform sampler2D samp;
+uniform sampler2D mat_samp;
 uniform float value_alpha_r, value_alpha_g, value_alpha_b;
 uniform float index_value;
 uniform float time_f;
@@ -25,22 +26,25 @@ uniform float time_f;
 uniform float restore_black;
 in float restore_black_value;
 
+
+
 void main(void)
 {
     if(restore_black_value == 1.0 && texture(samp, tc) == vec4(0, 0, 0, 1))
         discard;
     color = texture(samp, tc);
-    
-    vec2 tc1 = tc;
-    tc1[0] = 1.0-tc[0];
-//    tc1[1] = 1.0-tc[1];
-    
-    vec4 color2 = texture(samp, tc1/2);
-    vec4 color3 = texture(samp, tc1/4);
-    vec4 color4 = texture(samp, tc1/8);
-    color = (color * 0.4) + (color2 * 0.4) + (color3 * 0.4) + (color4 * 0.4) ;
-}
+    vec4 color2 = texture(samp, tc);
+    vec4 color3 = texture(mat_samp, tc/3);
+    vec4 color4 = texture(samp, tc/6);
+    vec4 color5 = texture(mat_samp, tc/6);
 
+    color2[0] *= (alpha/8);
+    color3[1] *= (alpha/12);
+    color4[2] *= (alpha/14);
+
+    color = (0.3 * color) + (0.3 * color2) + (0.3 * color3) + (0.3 * color4) + (0.3 * color5);
+
+}
 
 
 
