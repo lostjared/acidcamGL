@@ -6,6 +6,8 @@
 #endif
 #include<cstdlib>
 #include"stereo.h"
+
+
 acidcam::AcidCam_Window main_window;
 std::unordered_map<std::string, int> draw_strings_map;
 
@@ -756,7 +758,10 @@ int main(int argc, char **argv) {
         syphon_exit();
     }
 #endif
-    
+#ifdef FOR_LINUX
+    if(acidcam::screen_shot != nullptr)
+        delete acidcam::screen_shot;
+#endif
     glfwTerminate();
     return EXIT_SUCCESS;
 }

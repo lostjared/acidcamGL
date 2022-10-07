@@ -1,0 +1,19 @@
+
+#generic Makefile for macOS
+
+OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
+CFLAGS= -std=c++11 -O2 -DFOR_LINUX `pkg-config glfw3 glew acidcam` -DNO_SCREEN_GRAB 
+LDFLAGS=`pkg-config glfw3 --libs` -lX11
+
+%.o: %.cpp
+	$(CXX) $(CFLAGS) $< -c -o $@
+
+acidcamGL: $(OBJ)
+	$(CXX) -std=c++11 -o acidcamGL $(OBJ) $(LDFLAGS)
+
+all: example
+
+.PHONY: clean
+clean:
+	rm -f acidcamGL *.o
+

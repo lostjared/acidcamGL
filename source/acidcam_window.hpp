@@ -30,6 +30,9 @@
 #ifdef SYPHON_SERVER
 extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #endif
+#ifdef FOR_LINUX
+#include"x11-screen.hpp"
+#endif
 #include"ffmpeg_write.h"
 #ifdef _WIN32
 #define SPOUT_SERVER
@@ -48,7 +51,10 @@ namespace acidcam {
     extern cv::VideoCapture cap, cap_second;
     extern int redir;
     extern int syphon_enabled;
-   
+
+#ifdef FOR_LINUX
+    extern ScreenShot *screen_shot;
+#endif
     class AcidCam_Window : public glWindow {
         static constexpr int numVAOs = 1;
         static constexpr int numVBOs = 2;
@@ -651,6 +657,16 @@ namespace acidcam {
 #ifdef SYPHON_SERVER
                 cv::Mat cvMat, temp_frame;
                 ScreenGrabRect(screen_x, screen_y, window_width, window_height, cvMat);
+                cv::cvtColor(cvMat, temp_frame, cv::COLOR_RGBA2BGR);
+                cv::resize(temp_frame, cvMat, cv::Size(sx, sy));
+                frame = cvMat;
+#endif
+#ifdef FOR_LINUX
+                if(screen_shot == nullptr) {
+                    screen_shot = new ScreenShot();
+                }
+                cv::Mat cvMat, temp_frame;
+                (*screen_shot)(cvMat, screen_x, screen_y, window_width, window_height);
                 cv::cvtColor(cvMat, temp_frame, cv::COLOR_RGBA2BGR);
                 cv::resize(temp_frame, cvMat, cv::Size(sx, sy));
                 frame = cvMat;
