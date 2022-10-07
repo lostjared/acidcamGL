@@ -2,7 +2,7 @@
 #generic Makefile for macOS
 
 OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
-CFLAGS= -std=c++11 -O2 -DFOR_LINUX `pkg-config opencv4 glfw3 glew acidcam` -DNO_SCREEN_GRAB 
+CFLAGS= -std=c++11 -O2 -DFOR_LINUX `pkg-config opencv4 glfw3 glew acidcam --cflags` -DNO_SCREEN_GRAB 
 LDFLAGS=`pkg-config glfw3 glew opencv4--libs` -lX11
 
 %.o: %.cpp
