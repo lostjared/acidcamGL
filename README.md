@@ -85,16 +85,20 @@ Install it
 for macOS static build with Syphon enter the macos-static directory and
 
 	make -j4
+    
+You will still need to use install_name_tool on an app bundle see copy.sh for how I do it
 
 for Linux build with Desktop capture support (only Xorg not Wayland) enter source directory and
 
 	make -f Makefile.linux && sudo make -f Makefile.linux install
 
-You will still need to use install_name_tool on an app bundle see copy.sh for how I do it
+Run the program: (recommd first exporting shell variable SHADER_PATH with path to filters) example:
 
-Run the program:
+    export SHADER_PATH=/home/jared/acidcamGL/filters
+    
+or pass the path when executing the program
 
-	acidcamGL -g -p ../filters
+    acidcamGL -g -p ../filters
 
 The default Resolution is:
 
