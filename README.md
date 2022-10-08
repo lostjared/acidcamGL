@@ -86,6 +86,10 @@ for macOS static build with Syphon enter the macos-static directory and
 
 	make -j4
 
+for Linux build with Desktop capture support (only Xorg not Wayland) enter source directory and
+
+	make -f Makefile.linux && sudo make -f Makefile.linux install
+
 You will still need to use install_name_tool on an app bundle see copy.sh for how I do it
 
 Run the program:
