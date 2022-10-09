@@ -336,3 +336,5 @@ You can also turn a regular video into stereo mode by using the -x argument
     acidcamGL -i file.mp4 -g -x
 
 Or press the '1' key to toggle stereo on and off.
+
+Press < and > to shuffle through different Color Maps.
