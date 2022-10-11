@@ -30,7 +30,9 @@ extern "C" void filter(cv::Mat  &frame) {
                 for(int y = 0; y < 16 && z+y < frame.rows; ++y) {
                     cv::Vec3b &pixel = ac::pixelAt(frame, z+y,i+x);
 
-                    cv::Vec3b &pix = collection.frames[off].at<cv::Vec3b>(z+y, i+x);
+                    int off_i = AC_GetFX(frame.cols-1, i+x, frame.cols*(off+1));
+                    
+                    cv::Vec3b &pix = collection.frames[off].at<cv::Vec3b>(z+y, off_i);
                     
                     pixel = pix;
                 }
