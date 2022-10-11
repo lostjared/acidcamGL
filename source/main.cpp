@@ -262,6 +262,7 @@ int main(int argc, char **argv) {
     while((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:")) != -1) {
         switch(opt) {
             case '8':
+                if(optarg != 0)
                 ac::setMaxAllocated(atoi(optarg));
                 break;
             case '9':
