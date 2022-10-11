@@ -3,8 +3,11 @@
 extern "C" void filter(cv::Mat  &frame) {
     static constexpr int MAX = 8;
     static ac::MatrixCollection<MAX> collection;
-    if(collection.empty())
+    if(collection.empty()) {
+        srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
+    }
+    else
     collection.shiftFrames(frame);
     
     for(int z = 0; z < frame.rows; ++z) {
