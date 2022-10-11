@@ -77,6 +77,7 @@ std::string outstr_arr[] = {
     "    -7 for video start offset in seconds.",
     "    -3 Plugin Path",
     "    -9 Number of threads",
+    "    -8 Set Max Allocated Frames",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
     "    --list display capture device list",
     "    --rotate src output",
@@ -258,8 +259,11 @@ int main(int argc, char **argv) {
     std::string output_format="png";
     std::string autofilter_file;
     std::string custom_index;
-    while((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:")) != -1) {
+    while((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:")) != -1) {
         switch(opt) {
+            case '8':
+                ac::setMaxAllocated(atoi(optarg));
+                break;
             case '9':
                 if(optarg != 0) {
                     int count = atoi(optarg);
