@@ -151,6 +151,7 @@ Arguments:
     -l list search
     -7 jump to location in video by seconds
     -v version
+    -8 Set Max Frames for Memory pool
     -9 Threads
     -1 ffmpeg path
     -4 enable ffmpeg x264 support
