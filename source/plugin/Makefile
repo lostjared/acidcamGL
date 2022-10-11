@@ -220,6 +220,7 @@ all:
 	make -C square_diff install
 	make -C color_fade_ex1 install
 	make -C color_fade_ex2 install
+	make -C frame_x2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -413,7 +414,7 @@ clean:
 	make -C rsquare2 clean
 	make -C rsquare3 clean
 	make -C rsquare4 clean
-	nake -C rsquare5 clean
+	make -C rsquare5 clean
 	make -C frame_slide01 clean
 	make -C frame_slide02 clean
 	make -C frame_slide03 clean
@@ -442,3 +443,4 @@ clean:
 	make -C square_diff clean
 	make -C color_fade_ex1 clean
 	make -C color_fade_ex2 clean
+	make -C frame_x2 clean
