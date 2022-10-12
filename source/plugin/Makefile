@@ -222,6 +222,7 @@ all:
 	make -C color_fade_ex2 install
 	make -C frame_x2 install
 	make -C frame_x3 install
+	make -C frame.stutter.filter install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -446,3 +447,4 @@ clean:
 	make -C color_fade_ex2 clean
 	make -C frame_x2 clean
 	make -C frame_x3 clean
+	make -C frame.stutter.filter clean

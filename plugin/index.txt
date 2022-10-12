@@ -211,3 +211,4 @@ color_fade_ex1.acidcam
 color_fade_ex2.acidcam
 frame_x2.acidcam
 frame_x3.acidcam
+frame.stutter.filter.acidcam
