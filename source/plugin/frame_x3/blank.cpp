@@ -9,10 +9,20 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     else
     collection.shiftFrames(frame);
-    
-    for(int z = 0; z < frame.rows; ++z) {
-        for(int i = 0; i < frame.cols; ++i) {
-            cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
+    static int offset = 0;
+
+    frame = collection.frames[offset].clone();
+
+    static int dir = 1;
+    if(dir == 1) {
+        if(++offset > (MAX-1)) {
+            offset = rand()%(MAX-1);
+            dir = 0;
+        }
+    } else {
+        if(--offset <= 0) {
+            offset = rand()%(MAX-1);
+            dir = 1;
         }
     }
 }
