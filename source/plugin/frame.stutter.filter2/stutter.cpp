@@ -10,8 +10,14 @@ extern "C" void filter(cv::Mat  &frame) {
     else
     collection.shiftFrames(frame);
     static int offset = 0;
+    static int wait = rand()%30;
+    static int count = 0;
 
-    frame = collection.frames[offset].clone();
+    if(++count > wait) {
+        count = 0;
+        wait = rand()%30;
+        frame = collection.frames[offset].clone();
+    } 
 
     static int dir = 1;
     if(dir == 1) {
