@@ -209,6 +209,7 @@ int main(int argc, char **argv) {
         exit(0);
     }
     if(!glfwInit()) {
+        std::cout << "acidcam: Error initalizing GLFW...\n";
         acidcam::updateError();
     }
     ac::init();
