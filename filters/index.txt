@@ -164,6 +164,7 @@ material_rgb_mix.glsl
 material_rgb_mix_rev.glsl
 material_rgb_mix_rev2.glsl
 material_random_shift.glsl
+material_echo_x5.glsl
 material_echo_half_mat.glsl
 material_echo_half_mat_2.glsl
 material_echo_half_mat_alpha.glsl
