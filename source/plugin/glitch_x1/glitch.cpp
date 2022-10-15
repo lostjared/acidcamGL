@@ -10,9 +10,32 @@ extern "C" void filter(cv::Mat  &frame) {
     else
     collection.shiftFrames(frame);
     
-    for(int z = 0; z < frame.rows; ++z) {
-        for(int i = 0; i < frame.cols; ++i) {
-            cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
+    auto drawRect = [&](cv::Mat &col_frame, int x, int y, int w, int h) {
+      
+        cv::Vec3b col(rand()%255, rand()%255, rand()%255);
+        
+        for(int z = y; z < y+h && z < frame.rows; ++z) {
+            for(int i = x; i < x+w && i < frame.cols; ++i) {
+                frame.at<cv::Vec3b>(z, i) = col_frame.at<cv::Vec3b>(z, i);
+            }
         }
+        
+        
+    };
+    
+    int size = frame.rows/4;
+    static int offset = 0;
+    
+    for(int j = 0; j < 4; ++j) {
+  
+        if(!(rand()%4 == 0)) continue;
+        
+        drawRect(collection.frames[offset], 0, size*j, frame.cols, size);
+    
+        if(++offset > (MAX-1))
+            offset = 0;
     }
+    
+  
+    
 }
