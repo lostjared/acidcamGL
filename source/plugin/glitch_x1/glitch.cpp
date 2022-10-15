@@ -12,15 +12,11 @@ extern "C" void filter(cv::Mat  &frame) {
     
     auto drawRect = [&](cv::Mat &col_frame, int x, int y, int w, int h) {
       
-        cv::Vec3b col(rand()%255, rand()%255, rand()%255);
-        
         for(int z = y; z < y+h && z < frame.rows; ++z) {
             for(int i = x; i < x+w && i < frame.cols; ++i) {
                 frame.at<cv::Vec3b>(z, i) = col_frame.at<cv::Vec3b>(z, i);
             }
         }
-        
-        
     };
     
     int size = frame.rows/4;
@@ -35,7 +31,5 @@ extern "C" void filter(cv::Mat  &frame) {
         if(++offset > (MAX-1))
             offset = 0;
     }
-    
-  
     
 }
