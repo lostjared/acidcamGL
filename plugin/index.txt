@@ -213,3 +213,4 @@ frame_x2.acidcam
 frame_x3.acidcam
 frame.stutter.filter.acidcam
 frame.stutter.filter2.acidcam
+glitch_x1.acidcam
