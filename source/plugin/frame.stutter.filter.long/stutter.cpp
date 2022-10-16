@@ -1,7 +1,7 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    static constexpr int MAX = 8;
+    static constexpr int MAX = 32;
     static ac::MatrixCollection<MAX> collection;
     if(collection.empty()) {
         srand(static_cast<unsigned int>(time(0)));
@@ -31,5 +31,4 @@ extern "C" void filter(cv::Mat  &frame) {
             dir = 1;
         }
     }
-    ac::FrameSep2(frame);
 }
