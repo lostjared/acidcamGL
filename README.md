@@ -211,10 +211,13 @@ Launch Filepath
 	acidcamGL -i file_path -g -p filters
 
 If you device has smaller amount of ram set the memory pool size in frames Examples would be:
+	
 	acidcamGL -i file_path -g -8 100
 
 or
+	
 	acidcamGL -i file_path -g -8 500
+
 
 Full Screen Monitor 0
 
