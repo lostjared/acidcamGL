@@ -277,7 +277,7 @@ Record as x264 using FFmpeg:
 
 Record as x265 using FFmpeg
 
-	acidcamGL -g -pf ilters -i file.mp4 -5 -o output.mp4
+	acidcamGL -g -p filters -i file.mp4 -5 -o output.mp4
 
 List all included filters by index:
 
