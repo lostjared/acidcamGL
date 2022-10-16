@@ -226,6 +226,7 @@ all:
 	make -C frame.stutter.filter2 install
 	make -C glitch_x1 install
 	make -C rsquare.pix install
+	make -C frame.stutter.filter.long install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -454,3 +455,4 @@ clean:
 	make -C frame.stutter.filter2 clean
 	make -C glitch_x1 clean
 	make -C rsquare.pix clean
+	make -C frame.stutter.filter.long clean
