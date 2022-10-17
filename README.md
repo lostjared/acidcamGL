@@ -6,6 +6,10 @@
 
 ![ScreenShot3](https://github.com/lostjared/acidcamGL/blob/master/screens/windows.jpg?raw=true "screenshot3")
 
+Join us on Discord: https://discord.gg/kSxTe6M8
+
+
+
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
 
 To be able to download and run binaries from this project you will need to enter the terminal and type
