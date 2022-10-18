@@ -10,9 +10,17 @@ extern "C" void filter(cv::Mat  &frame) {
     else
     collection.shiftFrames(frame);
     
-    for(int z = 0; z < frame.rows; ++z) {
-        for(int i = 0; i < frame.cols; ++i) {
+    static int offset = 0;
+
+    if(++offset > (MAX-1)) {
+        offset = 0;
+    }
+
+    for(int z = 0; z < frame.rows; z += 2) {
+        for(int i = 0; i < frame.cols; i += 2) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
+            cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(z, i);
+            pixel = pix;
         }
     }
 }
