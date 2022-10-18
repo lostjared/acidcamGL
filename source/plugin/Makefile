@@ -228,6 +228,7 @@ all:
 	make -C rsquare.pix install
 	make -C frame.stutter.filter.long install
 	make -C color_distort install
+	make -C unknown install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -458,3 +459,4 @@ clean:
 	make -C rsquare.pix clean
 	make -C frame.stutter.filter.long clean
 	make -C color_distort clean
+	make -C unknown clean

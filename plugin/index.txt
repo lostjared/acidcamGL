@@ -216,3 +216,4 @@ glitch_x1.acidcam
 rsquare.pix.acidcam
 frame.stutter.filter.long.acidcam
 color_distort.acidcam
+unknown.acidcam
