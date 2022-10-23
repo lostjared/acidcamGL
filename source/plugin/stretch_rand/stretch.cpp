@@ -36,8 +36,8 @@ public:
     }
     void update(int MAX, int w, int h) {
         for(auto it = cont.begin(); it != cont.end(); ++it) {
-            it->x++;
-            it->y++;
+            it->x += rand()%5;
+            it->y += rand()%5;
             it->w += rand()%5;
             it->h += rand()%5;
             
@@ -71,7 +71,7 @@ extern "C" void filter(cv::Mat  &frame) {
     static RectContainer cont;
     if(collection.empty()) {
         srand(static_cast<unsigned int>(time(0)));
-        cont.init(MAX, 25, frame.cols, frame.rows);
+        cont.init(MAX, 20, frame.cols, frame.rows);
         collection.shiftFrames(frame);
     }
     else
