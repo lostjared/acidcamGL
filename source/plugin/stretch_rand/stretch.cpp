@@ -6,7 +6,6 @@ struct AC_Rect {
     int offset;
     bool dir;
     int ex_w, ex_h;
-    
     AC_Rect() : x{0}, y{0}, w{0}, h{0}, offset{0} {}
     void setRect(int xx, int yy, int ww, int hh) {
         x = xx;
@@ -34,12 +33,12 @@ public:
             cont.push_back(rc);
         }
     }
-    void update(int MAX, int w, int h) {
+    void update(int MAX, int w, int h, int step) {
         for(auto it = cont.begin(); it != cont.end(); ++it) {
-            it->x += rand()%5;
-            it->y += rand()%5;
-            it->w += rand()%5;
-            it->h += rand()%5;
+            it->x += rand()%(1+step);
+            it->y += rand()%(1+step);
+            it->w += rand()%(1+step);
+            it->h += rand()%(1+step);
             
             if(it->dir == true) {
                 if(it->offset ++ > (MAX-1)) {
@@ -77,13 +76,12 @@ extern "C" void filter(cv::Mat  &frame) {
     else
         collection.shiftFrames(frame);
     
-    cont.update(MAX, frame.cols, frame.rows);
+    cont.update(MAX, frame.cols, frame.rows, rand()%10);
     for(auto i = cont.cont.begin(); i != cont.cont.end(); ++i) {
         for(int x = i->x; x < i->x + i->w && x < frame.cols; ++x) {
             for(int y = i->y; y < i->y + i->h && y < frame.rows; ++y) {
                 cv::Vec3b &pixel = frame.at<cv::Vec3b>(y, x);
                 cv::Vec3b &pix = collection.frames[i->offset].at<cv::Vec3b>(y, x);
-                
                 for(int q = 0; q < 3; ++q) {
                     pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
                 }
