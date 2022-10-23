@@ -218,3 +218,4 @@ frame.stutter.filter.long.acidcam
 color_distort.acidcam
 unknown.acidcam
 unknown2.acidcam
+unknown3.acidcam

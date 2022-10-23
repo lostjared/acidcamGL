@@ -230,6 +230,7 @@ all:
 	make -C color_distort install
 	make -C unknown install
 	make -C unknown2 install
+	make -C unknown3 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -462,3 +463,4 @@ clean:
 	make -C color_distort clean
 	make -C unknown clean
 	make -C unknown2 clean
+	make -C unknown3 clean
