@@ -221,3 +221,4 @@ unknown2.acidcam
 unknown3.acidcam
 unknown4.acidcam
 unknown5.acidcam
+stretch_rand.acidcam
