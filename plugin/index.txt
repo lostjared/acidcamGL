@@ -219,3 +219,4 @@ color_distort.acidcam
 unknown.acidcam
 unknown2.acidcam
 unknown3.acidcam
+unknown4.acidcam
