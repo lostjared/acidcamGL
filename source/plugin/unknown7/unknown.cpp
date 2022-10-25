@@ -1,7 +1,7 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    static constexpr int MAX = 8;
+    static constexpr int MAX = 12;
     static ac::MatrixCollection<MAX> collection;
     if(collection.empty()) {
         srand(static_cast<unsigned int>(time(0)));
@@ -34,23 +34,17 @@ extern "C" void filter(cv::Mat  &frame) {
             offset = MAX-1;
             dir = 0;
         }
-        
         nw += (rand()%15);
         nh += (rand()%15);
-        
         if(nw > frame.cols+(frame.cols/16)) {
             nw = frame.cols;
         }
-        
         if(nh > frame.rows+(frame.rows/16)) {
             nh = frame.rows;
         }
-        
     } else {
-        
         static int wait = 0;
         static int timeout = rand()%10;
-        
         if(++wait > timeout) {
             wait = 0;
             timeout = rand()%10;
