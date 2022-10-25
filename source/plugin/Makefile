@@ -236,6 +236,7 @@ all:
 	make -C stretch_rand install
 	make -C unknown6 install
 	make -C unknown7 install
+	make -C unknown8 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -474,3 +475,4 @@ clean:
 	make -C stretch_rand clean
 	make -C unknown6 clean
 	make -C unknown7 clean
+	make -C unknown8 clean
