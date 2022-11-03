@@ -12,7 +12,7 @@ extern "C" void filter(cv::Mat  &frame) {
     static int dir = 1;
     static int offset = 0;
     static int div = 2;
-    static int size_y = frame.rows/2;
+    static int size_y = frame.rows/16;
     
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
@@ -27,7 +27,7 @@ extern "C" void filter(cv::Mat  &frame) {
         }
         size_y ++;
         if(size_y > frame.rows*2)
-            size_y = frame.rows/4;
+            size_y = frame.rows/16;
     }
     
     if(++offset > (MAX-1)) {
