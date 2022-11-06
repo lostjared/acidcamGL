@@ -244,6 +244,7 @@ all:
 	make -C unknown13 install
 	make -C unknown14 install
 	make -C unknown15 install
+	make -C unknown16 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -490,3 +491,4 @@ clean:
 	make -C unknown13 clean
 	make -C unknown14 clean
 	make -C unknown15 clean
+	make -C unknown16 clean
