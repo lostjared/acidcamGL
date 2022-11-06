@@ -11,7 +11,6 @@ extern "C" void filter(cv::Mat  &frame) {
         collection.shiftFrames(frame);
     static int dir = 1;
     static int offset = 0;
-    static int div = 2;
     static int size_x = frame.cols/16;
     
     for(int z = 0; z < frame.rows; ++z) {
@@ -22,10 +21,19 @@ extern "C" void filter(cv::Mat  &frame) {
                 cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(z, cx);
                 pixel = pix;
             }
+            
+            if(dir == 1) {
+                size_x ++;
+                if(size_x > frame.cols*2)
+                    dir = 0;
+            } else {
+                size_x --;
+                if(size_x <= 0) {
+                    dir = 1;
+                    size_x = 0;
+                }
+            }
         }
-        size_x ++;
-        if(size_x > frame.cols*2)
-            size_x = frame.cols/16;
     }
     
     if(++offset > (MAX-1)) {
