@@ -25,7 +25,7 @@ extern "C" void filter(cv::Mat  &frame) {
         }
         size_y ++;
         if(size_y > frame.rows*2)
-            size_y = frame.rows/16;
+            size_y = rand()%(frame.rows-1);
     }
     
     if(++offset > (MAX-1)) {
