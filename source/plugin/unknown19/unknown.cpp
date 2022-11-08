@@ -23,9 +23,11 @@ extern "C" void filter(cv::Mat  &frame) {
                 pixel = pix;
             }
         }
-        size_y--;
-        if(size_y <= 0)
+        static int cnt = 0;
+        if(++cnt > frame.rows/2) {
+            cnt = 0;
             size_y = rand()%(frame.rows-1);
+        }
     }
     
     if(++offset > (MAX-1)) {
