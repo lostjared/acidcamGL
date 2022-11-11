@@ -17,12 +17,10 @@ extern "C" void filter(cv::Mat  &frame) {
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            int cy = AC_GetFX(frame.cols-1, z, size_y);
-            if(cy >= 0 && cy < frame.cols && i >= 0 && i < frame.cols) {
-                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(z, cy);
-                for(int q = 0; q < 3; ++q) {
-                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
-                }
+            int cy = AC_GetFZ(frame.rows-1, i, size_y);
+            if(cy >= 0 && cy < frame.rows && i >= 0 && i < frame.cols) {
+                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
+                pixel = pix;
             }
         }
         size_y ++;
