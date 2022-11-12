@@ -11,15 +11,15 @@ extern "C" void filter(cv::Mat  &frame) {
         collection.shiftFrames(frame);
     static int dir = 1;
     static int offset = 0;
-    static int div = 2;
     static int size_y = frame.rows/16;
     
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             int cy = AC_GetFZ(frame.rows-1, i, size_y);
-            if(cy >= 0 && cy < frame.rows && i >= 0 && i < frame.cols) {
-                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
+            int cx = AC_GetFX(frame.cols-1, z, size_y);
+            if(cy >= 0 && cy < frame.rows && cx >= 0 && cx < frame.cols) {
+                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, cx);
                 pixel = pix;
             }
         }
