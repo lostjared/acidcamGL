@@ -20,7 +20,7 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             int cy = AC_GetFZ(frame.rows-1, i, size_y);
          
-            int cx = i/size_x;
+            int cx = AC_GetFX(frame.cols-1, z, size_x);
             
             
             if(cy >= 0 && cy < frame.rows && cx >= 0 && cx < frame.cols) {
@@ -38,17 +38,19 @@ extern "C" void filter(cv::Mat  &frame) {
             if(size_y <= 2)
                 dir = 1;
         }
+        
+        if(dir2 == 1) {
+            size_x ++;
+            if(size_x > frame.rows*4)
+                dir2 = 0;
+        } else {
+            size_x --;
+            if(size_x <= 2)
+                dir2 = 1;
+        }
     }
     
-    if(dir2 == 1) {
-        size_x ++;
-        if(size_x > 32)
-            dir2 = 0;
-    } else {
-        size_x --;
-        if(size_x <= 2)
-            dir2 = 1;
-    }
+    
     
     if(++offset > (MAX-1)) {
         offset = 0;
