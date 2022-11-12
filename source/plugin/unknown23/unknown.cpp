@@ -23,9 +23,16 @@ extern "C" void filter(cv::Mat  &frame) {
                 pixel = pix;
             }
         }
-        size_y ++;
-        if(size_y > frame.rows*2)
-            size_y = frame.rows/16;
+        
+        if(dir == 1) {
+            size_y ++;
+            if(size_y > frame.rows*2)
+                dir = 0;
+        } else {
+            size_y --;
+            if(size_y <= 2)
+                dir = 1;
+        }
     }
     
     if(++offset > (MAX-1)) {
