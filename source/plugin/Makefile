@@ -250,6 +250,7 @@ all:
 	make -C unknown19 install
 	make -C unknown20 install
 	make -C unknown21 install
+	make -C unknown22 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -502,3 +503,4 @@ clean:
 	make -C unknown19 clean
 	make -C unknown20 clean
 	make -C unknown21 clean
+	make -C unknown22 clean
