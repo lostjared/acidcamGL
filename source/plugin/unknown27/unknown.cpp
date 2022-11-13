@@ -18,6 +18,9 @@ extern "C" void filter(cv::Mat  &frame) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             int cy = AC_GetFZ(frame.rows-1, z, size_y);
+            
+            cy = frame.rows-cy-1;
+            
             if(cy >= 0 && cy < frame.rows && i >= 0 && i < frame.cols) {
                 cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
                 pixel = pix;
