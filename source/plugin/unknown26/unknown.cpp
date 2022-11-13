@@ -18,11 +18,14 @@ extern "C" void filter(cv::Mat  &frame) {
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            int cy = AC_GetFZ(frame.rows-1, i, size_y);
-            int cx = AC_GetFX(frame.cols-1, z, size_x);
+            int cy = AC_GetFX(frame.rows-1, i, size_y);
+            int cx = AC_GetFZ(frame.cols-1, z, size_x);
+            
+            cy = frame.rows-cy-1;
+            cx = frame.cols-cx-1;
             
             if(cy >= 0 && cy < frame.rows && cx >= 0 && cx < frame.cols) {
-                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, cx);
+                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy,cx);
                 pixel = pix;
             }
         }
@@ -39,7 +42,7 @@ extern "C" void filter(cv::Mat  &frame) {
         
         if(dir2 == 1) {
             size_x ++;
-            if(size_x > frame.rows*4)
+            if(size_x > frame.cols*2)
                 dir2 = 0;
         } else {
             size_x --;
