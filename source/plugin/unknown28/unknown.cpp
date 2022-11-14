@@ -28,23 +28,31 @@ extern "C" void filter(cv::Mat  &frame) {
         }
         
         if(dir == 1) {
-            size_y ++;
-            if(size_y > frame.rows*2)
+            size_y += rand()%10;
+            if(size_y > frame.rows*2) {
                 dir = 0;
+                size_y = frame.rows*2;
+            }
         } else {
-            size_y --;
-            if(size_y <= 2)
+            size_y -= rand()%10;
+            if(size_y <= 2) {
                 dir = 1;
+                size_y = 2;
+            }
         }
         
         if(dir2 == 1) {
-            size_x ++;
-            if(size_x > frame.rows*4)
+            size_x += rand()%10;
+            if(size_x > frame.rows*4) {
                 dir2 = 0;
+                size_x = frame.rows*4;
+            }
         } else {
-            size_x --;
-            if(size_x <= 2)
+            size_x -= rand()%10;
+            if(size_x <= 2) {
                 dir2 = 1;
+                size_x = 2;
+            }
         }
     }
     
