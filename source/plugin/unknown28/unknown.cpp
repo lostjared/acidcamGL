@@ -14,6 +14,7 @@ extern "C" void filter(cv::Mat  &frame) {
     static int size_y = frame.rows/16;
     static int size_x = 2;
     static int dir2 = 1;
+    static int direction = 1;
     
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
@@ -56,7 +57,15 @@ extern "C" void filter(cv::Mat  &frame) {
         }
     }
     
-    if(++offset > (MAX-1)) {
-        offset = 0;
+    if(direction == 1) {
+        if(++offset > (MAX-1)) {
+            direction = 0;
+            offset = MAX-1;
+        }
+    } else {
+        if(--offset <= 0) {
+            direction = 1;
+            offset = 0;
+        }
     }
 }
