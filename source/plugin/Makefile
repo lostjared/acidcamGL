@@ -257,6 +257,7 @@ all:
 	make -C unknown26 install
 	make -C unknown27 install
 	make -C unknown28 install
+	make -C unknown29 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -516,3 +517,4 @@ clean:
 	make -C unknown26 clean
 	make -C unknown27 clean
 	make -C unknown28 clean
+	make -C unknown29 clean
