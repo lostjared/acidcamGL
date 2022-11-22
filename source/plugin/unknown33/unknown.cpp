@@ -32,7 +32,7 @@ extern "C" void filter(cv::Mat  &frame) {
                     pixel = pix;
                 }
             }
-            size_y ++;
+            size_y --;
         }
         
         for(int z = frame.rows/2; z < frame.rows; ++z) {
@@ -45,7 +45,7 @@ extern "C" void filter(cv::Mat  &frame) {
                     pixel = pix;
                 }
             }
-            size_y --;
+            size_y ++;
         }
         
         
