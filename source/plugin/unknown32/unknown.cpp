@@ -9,40 +9,49 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     else
         collection.shiftFrames(frame);
-    static int dir = 1;
-    static int offset = 0;
-    int size_y = 0;
     
-    size_y = rand()%frame.rows;
+    static int wait = rand()%30;
+    static int counter = 0;
     
-    for(int z = 0; z < frame.rows/2; ++z) {
-        for(int i = 0; i < frame.cols; ++i) {
-            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            int cy = AC_GetFZ(frame.rows-1, z, size_y);
-            if(cy >= 0 && cy < frame.rows) {
-                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
-                pixel = pix;
+    if(++counter > wait) {
+        counter = 0;
+        wait = rand()%30;
+        
+        static int dir = 1;
+        static int offset = 0;
+        int size_y = 0;
+        
+        size_y = rand()%frame.rows;
+        
+        for(int z = 0; z < frame.rows/2; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                int cy = AC_GetFZ(frame.rows-1, z, size_y);
+                if(cy >= 0 && cy < frame.rows) {
+                    cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
+                    pixel = pix;
+                }
             }
+            size_y ++;
         }
-        size_y ++;
-    }
-    
-    for(int z = frame.rows/2; z < frame.rows; ++z) {
-        for(int i = 0; i < frame.cols; ++i) {
-            cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-            int cy = AC_GetFZ(frame.rows-1, z, size_y);
-            
-            if(cy >= 0 && cy < frame.rows) {
-                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
-                pixel = pix;
+        
+        for(int z = frame.rows/2; z < frame.rows; ++z) {
+            for(int i = 0; i < frame.cols; ++i) {
+                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                int cy = AC_GetFZ(frame.rows-1, z, size_y);
+                
+                if(cy >= 0 && cy < frame.rows) {
+                    cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
+                    pixel = pix;
+                }
             }
+            size_y --;
         }
-        size_y --;
+        
+        
+        if(++offset > (MAX-1)) {
+            offset = 0;
+        }
+        
     }
-    
-    
-    if(++offset > (MAX-1)) {
-        offset = 0;
-    }
-    
 }
