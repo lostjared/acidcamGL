@@ -7,7 +7,7 @@ extern "C" void filter(cv::Mat  &frame) {
         srand(static_cast<unsigned int>(time(0)));
         collection.shiftFrames(frame);
     }
-    else
+    else if(rand()%2 == 0)
         collection.shiftFrames(frame);
     
     static bool flash = true;
