@@ -10,92 +10,99 @@ extern "C" void filter(cv::Mat  &frame) {
     else if(rand()%2 == 0)
         collection.shiftFrames(frame);
     
-    static bool flash = true;
-    if(flash) {
-        static int dir = 1;
-        static int offset = 0;
-        static int size_y = frame.rows/16;
-        static int size_x = 2;
-        static int dir2 = 1;
-        static int direction = 1;
-        
-        for(int z = 0; z < frame.rows; ++z) {
-            for(int i = 0; i < frame.cols; ++i) {
-                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-                int cy = AC_GetFZ(frame.rows-1, i, size_y);
-                int cx = AC_GetFX(frame.cols-1, z, size_x);
-                
-                if(cy >= 0 && cy < frame.rows && cx >= 0 && cx < frame.cols) {
-                    cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, cx);
-                    pixel = pix;
+    static int flash = 0;
+    switch(flash) {
+        case 0: {
+            static int dir = 1;
+            static int offset = 0;
+            for(int z = 0; z < frame.rows; ++z) {
+                for(int i = 0; i < frame.cols; ++i) {
+                    cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
+                    cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(z, i);
+                    for(int q = 0; q < 3; ++q) {
+                        pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                    }
                 }
             }
-            
             if(dir == 1) {
-                size_y += rand()%10;
-                if(size_y > frame.rows*2) {
+                static int wait = 0;
+                static int timeout = rand()%10;
+                if(++offset > (MAX-1)) {
+                    offset = 0;
+                }
+                if(++wait > timeout) {
+                    wait = 0;
+                    timeout = rand()%10;
                     dir = 0;
-                    size_y = frame.rows*2;
                 }
             } else {
-                size_y -= rand()%10;
-                if(size_y <= 2) {
+                static int wait = 0;
+                static int timeout = rand()%10;
+                if(--offset <= 0) {
+                    offset = MAX-1;
+                }
+                if(++wait > timeout) {
+                    wait = 0;
+                    timeout = rand()%10;
                     dir = 1;
-                    size_y = 2;
-                }
-            }
-            
-            if(dir2 == 1) {
-                size_x += rand()%10;
-                if(size_x > frame.rows*4) {
-                    dir2 = 0;
-                    size_x = frame.rows*4;
-                }
-            } else {
-                size_x -= rand()%10;
-                if(size_x <= 2) {
-                    dir2 = 1;
-                    size_x = 2;
                 }
             }
         }
-        
-        if(direction == 1) {
-            if(++offset > (MAX-1)) {
-                direction = 0;
-                offset = MAX-1;
+            break;
+        case 1: {
+            static int dir = 1;
+            static int offset = 0;
+            static int div = 2;
+            static int size_y = frame.rows/16;
+            
+            for(int z = 0; z < frame.rows; ++z) {
+                for(int i = 0; i < frame.cols; ++i) {
+                    cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                    int cy = AC_GetFZ(frame.rows-1, z, size_y);
+                    if(cy >= 0 && cy < frame.rows && i >= 0 && i < frame.cols) {
+                        cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
+                        pixel = pix;
+                    }
+                }
+                size_y ++;
+                if(size_y > frame.rows*2)
+                    size_y = frame.rows/16;
             }
-        } else {
-            if(--offset <= 0) {
-                direction = 1;
+            
+            if(++offset > (MAX-1)) {
                 offset = 0;
             }
         }
-        
-    } else {
-        static int dir = 1;
-        static int offset = 0;
-        static int div = 2;
-        static int size_y = frame.rows/16;
-        
-        for(int z = 0; z < frame.rows; ++z) {
-            for(int i = 0; i < frame.cols; ++i) {
-                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-                int cy = AC_GetFZ(frame.rows-1, z, size_y);
-                if(cy >= 0 && cy < frame.rows && i >= 0 && i < frame.cols) {
-                    cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
-                    pixel = pix;
+            break;
+        case 2: {
+            static int dir = 1;
+            static int offset = 0;
+            static int div = 2;
+            static int size_x = frame.cols/16;
+            
+            for(int z = 0; z < frame.rows; ++z) {
+                for(int i = 0; i < frame.cols; ++i) {
+                    cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                    int cx = AC_GetFX(frame.cols-1, i, size_x);
+                    if(cx >= 0 && cx < frame.cols && z >= 0 && z < frame.rows) {
+                        cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(z, cx);
+                        pixel = pix;
+                    }
                 }
+                size_x ++;
+                if(size_x > frame.cols*2)
+                    size_x = frame.cols/16;
             }
-            size_y ++;
-            if(size_y > frame.rows*2)
-                size_y = frame.rows/16;
+            
+            if(++offset > (MAX-1)) {
+                offset = 0;
+            }
+            
         }
-        
-        if(++offset > (MAX-1)) {
-            offset = 0;
-        }
+            break;
     }
     
-    flash = (flash == true) ? false : true;
+    if(++flash > 2)
+        flash = 0;
+    
 }
