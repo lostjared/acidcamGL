@@ -14,39 +14,26 @@ extern "C" void filter(cv::Mat  &frame) {
     if(flash) {
         static int dir = 1;
         static int offset = 0;
-        int size_y = 0;
+        static int div = 2;
+        static int size_y = frame.rows/16;
         
-        size_y = rand()%frame.rows;
-        
-        for(int z = 0; z < frame.rows/2; ++z) {
+        for(int z = 0; z < frame.rows; ++z) {
             for(int i = 0; i < frame.cols; ++i) {
                 cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
                 int cy = AC_GetFZ(frame.rows-1, z, size_y);
-                if(cy >= 0 && cy < frame.rows) {
+                if(cy >= 0 && cy < frame.rows && i >= 0 && i < frame.cols) {
                     cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
                     pixel = pix;
                 }
             }
             size_y ++;
-        }
-        
-        for(int z = frame.rows/2; z < frame.rows; ++z) {
-            for(int i = 0; i < frame.cols; ++i) {
-                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-                int cy = AC_GetFZ(frame.rows-1, z, size_y);
-                
-                if(cy >= 0 && cy < frame.rows) {
-                    cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
-                    pixel = pix;
-                }
-            }
-            size_y --;
+            if(size_y > frame.rows*2)
+                size_y = frame.rows/16;
         }
         
         if(++offset > (MAX-1)) {
             offset = 0;
         }
-        
     } else {
         static int dir = 1;
         static int offset = 0;
@@ -57,6 +44,9 @@ extern "C" void filter(cv::Mat  &frame) {
             for(int i = 0; i < frame.cols; ++i) {
                 cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
                 int cy = AC_GetFZ(frame.rows-1, z, size_y);
+                
+                cy = frame.rows-cy-1;
+                
                 if(cy >= 0 && cy < frame.rows && i >= 0 && i < frame.cols) {
                     cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(cy, i);
                     pixel = pix;
