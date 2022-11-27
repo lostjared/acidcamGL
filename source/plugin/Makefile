@@ -272,6 +272,7 @@ all:
 	make -C unknown41 install
 	make -C unknown42 install
 	make -C unknown43 install
+	make -C gamma_equalize install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -546,3 +547,4 @@ clean:
 	make -C unknown41 clean
 	make -C unknown42 clean
 	make -C unknown43 clean
+	make -C gamma_equalize clean
