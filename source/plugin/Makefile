@@ -276,6 +276,7 @@ all:
 	make -C gamma_equalize_flip install
 	make -C unknown44 install
 	make -C unknown45 install
+	make -C unknown46 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -554,3 +555,4 @@ clean:
 	make -C gamma_equalize_flip clean
 	make -C unknown44 clean
 	make -C unknown45 clean
+	make -C unknown46 clean
