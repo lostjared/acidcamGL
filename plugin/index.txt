@@ -265,3 +265,4 @@ gamma_equalize_flip.acidcam
 unknown44.acidcam
 unknown45.acidcam
 unknown46.acidcam
+unknown47.acidcam
