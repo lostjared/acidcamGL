@@ -23,7 +23,8 @@ extern "C" void filter(cv::Mat  &frame) {
             if(xpos >= 0 && xpos < frame.cols) {
                 cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(z, xpos);
                 pixel[0] = ac::wrap_cast((0.5 * pixel[0]) + (0.5 * pix[0]));
-            } else
+            }
+            
             if(xpos2 >= 0 && xpos2 < frame.cols) {
                 cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(z, xpos2);
                 pixel[0] = ac::wrap_cast((0.5 * pixel[0]) + (0.5 * pix[0]));
@@ -36,7 +37,7 @@ extern "C" void filter(cv::Mat  &frame) {
                 cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(ypos, i);
                 pixel[1] = ac::wrap_cast((0.5 * pixel[1]) + (0.5 * pix[1]));
 
-            } else
+            }
             if(ypos2 >= 0 && ypos2 < frame.rows) {
                 cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(ypos2, i);
                 pixel[2] = ac::wrap_cast((0.5 * pixel[2]) + (0.5 * pix[2]));
