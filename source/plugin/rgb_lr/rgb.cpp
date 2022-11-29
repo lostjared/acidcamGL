@@ -13,6 +13,7 @@ extern "C" void filter(cv::Mat  &frame) {
     static int start_x[2] = {0};
     static int start_y[2] = {0};
     static int offset = 0;
+    
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
@@ -39,7 +40,6 @@ extern "C" void filter(cv::Mat  &frame) {
             }
         }
     }
-    
     start_x[0] += 50;
     if(start_x[0] > frame.cols) {
         start_x[0] = 0;
@@ -48,8 +48,6 @@ extern "C" void filter(cv::Mat  &frame) {
     if(start_x[1] <= 0) {
         start_x[1] = frame.cols;
     }
-
-    
     start_y[0] += 50;
     if(start_y[0] > frame.rows) {
         start_y[0] = 0;
@@ -60,5 +58,5 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     
     if(++offset > (MAX-1))
-        offset = 0;
+        offset = rand()%(MAX-1);
 }
