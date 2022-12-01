@@ -267,3 +267,4 @@ unknown45.acidcam
 unknown46.acidcam
 unknown47.acidcam
 rgb_lr.acidcam
+unknown48.acidcam

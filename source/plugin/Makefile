@@ -279,6 +279,7 @@ all:
 	make -C unknown46 install
 	make -C unknown47 install
 	make -C rgb_lr install
+	make -C unknown48 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -560,3 +561,4 @@ clean:
 	make -C unknown46 clean
 	make -C unknown47 clean
 	make -C rgb_lr clean
+	make -C unknown48 clean
