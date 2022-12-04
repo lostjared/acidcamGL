@@ -3,6 +3,8 @@
 extern "C" void filter(cv::Mat  &frame) {
   
     static int offset_x = 0;
+    static int max_x = 100;
+    
     ac::MatrixCollection<2> collection;
     collection.shiftFrames(frame);
     
@@ -18,8 +20,18 @@ extern "C" void filter(cv::Mat  &frame) {
                 }
             }
             offset_x ++;
-            if(offset_x > frame.cols+(frame.cols/2)) {
+            if(offset_x > max_x) {
                 offset_x = 2;
+                static int dir = 1;
+                if(dir == 1) {
+                    max_x += 10;
+                    if(max_x > (frame.cols+(frame.cols/2)))
+                        dir = 0;
+                } else {
+                    max_x -= 10;
+                    if(max_x <= 100)
+                        dir = 1;
+                }
             }
         }
     }
