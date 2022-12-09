@@ -11,7 +11,7 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             
             for(int q = 0; q < 3; ++q)
-                pixel[q] ^= (unsigned int) ac::wrap_cast(num * pixel[q]);
+                pixel[q] ^= ac::wrap_cast(num * pixel[q]);
             
         }
         
