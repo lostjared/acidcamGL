@@ -1,4 +1,4 @@
-This is where I test new code before adding it to libacidcam
+This is where I test/play around with  new code before adding it to libacidcam
 
 Make sure you have opencv and libacidcam installed and
 run 
