@@ -295,6 +295,7 @@ all:
 	make -C unknown61 install
 	make -C unknown62 install
 	make -C unknown63 install
+	make -C unknown64 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -592,3 +593,4 @@ clean:
 	make -C unknown61 clean
 	make -C unknown62 clean
 	make -C unknown63 clean
+	make -C unknown64 clean
