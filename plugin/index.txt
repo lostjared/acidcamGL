@@ -288,3 +288,4 @@ unknown65.acidcam
 unknown66.acidcam
 line_down.acidcam
 line_down2.acidcam
+line_down_xor.acidcam
