@@ -34,6 +34,7 @@ extern "C" void filter(cv::Mat  &frame) {
             row.rows[i] = rand()%25;
             row.row_speed[i] = 2+rand()%100;
         }
+        row_w = frame.cols;
     }
     
     for(int z = 0; z < frame.rows; ++z) {
