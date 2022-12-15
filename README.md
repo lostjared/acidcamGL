@@ -103,6 +103,8 @@ Run the program: (recommd first exporting shell variable SHADER_PATH with path t
 or pass the path when executing the program
 
     acidcamGL -g -p ../filters
+    
+The source/plugin directory contains some test files I have been working on.
 
 The default Resolution is:
 
@@ -324,11 +326,11 @@ Use:
 
 	acidcamGL -L playist.txt -g -p filters
 
-After enabling plugins (with the shell variable pointing to path) and having the list of plugins in index.txt to load one from the command line use:
+After enabling plugins (used for testing) (with the shell variable pointing to path) and having the list of plugins in index.txt to load one from the command line use:
 
 	acidcamGL -g -p filters -Z plugin.acidcam
 
-Project comes with some example plugin files in the acidcamGL/source/plugin folder. To compile these enter the directory and type 
+Project comes with some example test plugin files in the acidcamGL/source/plugin folder. To compile these enter the directory and type 
 
     make
 
