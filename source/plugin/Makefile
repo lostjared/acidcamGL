@@ -304,7 +304,8 @@ all:
 	make -C line_down_blend install
 	make -C line_down_restart install
 	make -C line_down_and install
-	make -C line_down_across install
+	make -C line_across_side install
+	make -C line_across_side_rand install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -611,4 +612,5 @@ clean:
 	make -C line_down_blend clean
 	make -C line_down_restart clean
 	make -C line_down_and clean
-	make -C line_down_across clean
+	make -C line_across_side clean
+	make -C line_across_side_rand clean
