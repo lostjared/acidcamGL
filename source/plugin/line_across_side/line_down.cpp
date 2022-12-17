@@ -49,11 +49,11 @@ extern "C" void filter(cv::Mat  &frame) {
     
     for(int i = 0; i < row_w; ++i) {
         if(row.item[i].on) {
-            row.item[i].col ++;
-            if(row.item[i].col > 250)
+            row.item[i].col += 25;
+            if(row.item[i].col > frame.cols)
                 row.item[i].on = false;
         } else {
-            row.item[i].col --;
+            row.item[i].col -= 25;
             if(row.item[i].col <= 1) {
                 row.item[i].col = 1;
                 row.item[i].on = true;
