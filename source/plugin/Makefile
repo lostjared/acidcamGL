@@ -303,6 +303,7 @@ all:
 	make -C line_down_xor install
 	make -C line_down_blend install
 	make -C line_down_restart install
+	make -C line_down_and install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -608,3 +609,4 @@ clean:
 	make -C line_down_xor clean
 	make -C line_down_blend clean
 	make -C line_down_restart clean
+	make -C line_down_and clean

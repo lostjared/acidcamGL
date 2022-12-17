@@ -291,3 +291,4 @@ line_down2.acidcam
 line_down_xor.acidcam
 line_down_blend.acidcam
 line_down_restart.acidcam
+line_down_and.acidcam
