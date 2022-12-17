@@ -2,15 +2,15 @@
 #include<memory>
 
 
-struct Impl {
+struct LineAcrossImpl {
     struct Item {
         int col, speed;
         bool on;
         Item() : col{rand()%50}, speed{rand()%25}, on{true}  {}
     };
     Item *item = nullptr;
-    Impl() = default;
-    ~Impl() {
+    LineAcrossImpl() = default;
+    ~LineAcrossImpl() {
         if(item != nullptr)
             delete [] item;
         
@@ -18,19 +18,18 @@ struct Impl {
 };
 
 
-
 extern "C" void filter(cv::Mat  &frame) {
     static ac::MatrixCollection<2> collection;
     collection.shiftFrames(frame);
     static int row_w = 0;
-    static Impl row;
+    static LineAcrossImpl row;
     
     if(row_w == 0 || row_w != frame.rows) {
         if(row.item != nullptr) {
             delete [] row.item;
         }
         row_w = frame.rows;
-        row.item = new Impl::Item[row_w+1];
+        row.item = new LineAcrossImpl::Item[row_w+1];
     }
     
     for(int z = 0; z < frame.rows; ++z) {
