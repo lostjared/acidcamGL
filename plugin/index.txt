@@ -294,3 +294,4 @@ line_down_restart.acidcam
 line_down_and.acidcam
 line_across_side.acidcam
 line_across_side_rand.acidcam
+line_across_side_xor.acidcam
