@@ -307,6 +307,7 @@ all:
 	make -C line_across_side install
 	make -C line_across_side_rand install
 	make -C line_across_side_xor install
+	make -C line_across_side_blend install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -616,3 +617,4 @@ clean:
 	make -C line_across_side clean
 	make -C line_across_side_rand clean
 	make -C line_across_side_xor clean
+	make -C line_across_side_blend clean
