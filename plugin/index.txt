@@ -296,3 +296,4 @@ line_across_side.acidcam
 line_across_side_rand.acidcam
 line_across_side_xor.acidcam
 line_across_side_blend.acidcam
+line_across_side_rev.acidcam
