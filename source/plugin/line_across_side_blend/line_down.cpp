@@ -1,6 +1,4 @@
 #include"ac.h"
-#include<memory>
-
 
 struct LineAcrossImpl {
     struct Item {
