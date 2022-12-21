@@ -301,3 +301,4 @@ line_across_side_rev2.acidcam
 line_across_side_rev3.acidcam
 line_across_side_rev4.acidcam
 line_across_side2.acidcam
+line_across_side3.acidcam
