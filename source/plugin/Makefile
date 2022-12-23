@@ -317,6 +317,7 @@ all:
 	make -C line_across_side4 install
 	make -C line_across_side5 install
 	make -C line_across_side6 install
+	make -C line_across_side7 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -636,3 +637,4 @@ clean:
 	make -C line_across_side4 clean
 	make -C line_across_side5 clean
 	make -C line_across_side6 clean
+	make -C line_across_side7 clean
