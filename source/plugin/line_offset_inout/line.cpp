@@ -11,7 +11,7 @@ extern "C" void filter(cv::Mat  &frame) {
         collection.shiftFrames(frame);
     
     static int offset = 0;
-    static int num = 1+(rand()%50);
+    static int num = 1+(rand()%100);
 
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
