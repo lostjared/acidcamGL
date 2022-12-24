@@ -307,3 +307,4 @@ line_across_side5.acidcam
 line_across_side6.acidcam
 line_across_side7.acidcam
 line_across_side8.acidcam
+line_offset_inout.acidcam
