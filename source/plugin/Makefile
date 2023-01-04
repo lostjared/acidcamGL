@@ -320,6 +320,7 @@ all:
 	make -C line_across_side7 install
 	make -C line_across_side8 install
 	make -C line_offset_inout install
+	make -C line_offset_inout2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -642,3 +643,4 @@ clean:
 	make -C line_across_side7 clean
 	make -C line_across_side8 clean
 	make -C line_offset_inout clean
+	make -C line_offset_inout2 clean
