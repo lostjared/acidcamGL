@@ -310,3 +310,4 @@ line_across_side8.acidcam
 line_offset_inout.acidcam
 line_offset_inout2.acidcam
 line_offset_inout3.acidcam
+setframe_wait.acidcam
