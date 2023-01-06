@@ -311,3 +311,4 @@ line_offset_inout.acidcam
 line_offset_inout2.acidcam
 line_offset_inout3.acidcam
 setframe_wait.acidcam
+setframe_wait_xor.acidcam
