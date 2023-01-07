@@ -324,6 +324,7 @@ all:
 	make -C line_offset_inout3 install
 	make -C setframe_wait install
 	make -C setframe_wait_xor install
+	make -C setframe_wait2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -650,3 +651,4 @@ clean:
 	make -C line_offset_inout3 clean
 	make -C setframe_wait clean
 	make -C setframe_wait_xor clean
+	make -C setframe_wait2 clean
