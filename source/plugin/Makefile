@@ -325,6 +325,7 @@ all:
 	make -C setframe_wait install
 	make -C setframe_wait_xor install
 	make -C setframe_wait2 install
+	make -C setframe_wait3 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -652,3 +653,4 @@ clean:
 	make -C setframe_wait clean
 	make -C setframe_wait_xor clean
 	make -C setframe_wait2 clean
+	make -C setframe_wait3 clean
