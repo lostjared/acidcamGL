@@ -315,3 +315,4 @@ setframe_wait_xor.acidcam
 setframe_wait2.acidcam
 setframe_wait3.acidcam
 setframe_wait4.acidcam
+setframe_wait5.acidcam
