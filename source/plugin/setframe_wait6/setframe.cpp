@@ -29,7 +29,7 @@ extern "C" void filter(cv::Mat  &frame) {
                             
                             cv::Vec3b &pixel = ac::pixelAt(frame, z+y, i+x);
                             for(int q = 0; q < 3; ++q)
-                            pixel[q] = pixel[q]+(alpha*pix[q]);
+                            pixel[q] = ac::wrap_cast( pixel[q]+(alpha*pix[q]));
                             
                             alpha += 0.05;
                             if(alpha > 5)
