@@ -46,7 +46,7 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     
     if(++skip > 5)
-        skip = 2;
+        skip = 1+(rand()%5);
     
     static int dir = 1;
     if(dir == 1) {
