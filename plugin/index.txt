@@ -317,3 +317,4 @@ setframe_wait3.acidcam
 setframe_wait4.acidcam
 setframe_wait5.acidcam
 setframe_wait6.acidcam
+setframe_wait7.acidcam
