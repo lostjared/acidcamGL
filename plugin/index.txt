@@ -320,3 +320,4 @@ setframe_wait6.acidcam
 setframe_wait7.acidcam
 setframe_wait8.acidcam
 store_frame1.acidcam
+store_frame2.acidcam
