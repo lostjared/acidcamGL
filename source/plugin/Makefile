@@ -333,6 +333,7 @@ all:
 	make -C setframe_wait8 install
 	make -C store_frame1 install
 	make -C store_frame2 install
+	make -C store_frame3 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -668,3 +669,4 @@ clean:
 	make -C setframe_wait8 clean
 	make -C store_frame1 clean
 	make -C store_frame2 clean
+	make -C store_frame3 clean
