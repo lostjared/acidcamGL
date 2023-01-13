@@ -323,3 +323,4 @@ store_frame1.acidcam
 store_frame2.acidcam
 store_frame3.acidcam
 store_frame4.acidcam
+store_frame5.acidcam
