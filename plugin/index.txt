@@ -327,3 +327,4 @@ store_frame5.acidcam
 store_frame6.acidcam
 store_frame7.acidcam
 store_frame8.acidcam
+store_frame9.acidcam

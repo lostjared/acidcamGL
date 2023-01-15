@@ -339,6 +339,7 @@ all:
 	make -C store_frame6 install
 	make -C store_frame7 install
 	make -C store_frame8 install
+	make -C store_frame9 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -680,3 +681,4 @@ clean:
 	make -C store_frame6 clean
 	make -C store_frame7 clean
 	make -C store_frame8 clean
+	make -C store_frame9 clean
