@@ -32,8 +32,8 @@ extern "C" void filter(cv::Mat  &frame) {
     
     if(++size_x > 32) {
         if(++size_y > 32) {
-            size_y = rand()%32;
+            size_y = 1+(rand()%32);
         }
-        size_x = rand()%32;
+        size_x = 1+(rand()%32);
     }
 }
