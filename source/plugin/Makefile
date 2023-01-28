@@ -302,13 +302,13 @@ all:
 	make -C line_down2 install
 	make -C line_down_xor install
 	make -C line_down_blend install
-	make -C line_down_restart install
+#	make -C line_down_restart install
 	make -C line_down_and install
 	make -C line_across_side install
 	make -C line_across_side_rand install
 	make -C line_across_side_xor install
-	make -C line_across_side_blend instal
-	make -C line_across_side_rev installl
+	make -C line_across_side_blend install
+	make -C line_across_side_rev install
 	make -C line_across_side_rev2 install
 	make -C line_across_side_rev3 install
 	make -C line_across_side_rev4 install
