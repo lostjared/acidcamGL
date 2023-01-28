@@ -19,9 +19,10 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             int offx = AC_GetFX(frame.cols-1, i, nw);
             int offy = AC_GetFZ(frame.rows-1, z, nh);
-            cv::Vec3b &cpix = collection.frames[offset].at<cv::Vec3b>(offy, offx);
-            
-            pixel = cpix;
+            if(offx >= 0 && offx < frame.cols && offy >= 0 && offy < frame.rows) {
+                cv::Vec3b &cpix = collection.frames[offset].at<cv::Vec3b>(offy, offx);
+                pixel = cpix;
+            }
         }
         
         if((rand()%10) == 0) {
