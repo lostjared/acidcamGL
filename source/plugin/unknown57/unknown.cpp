@@ -1,7 +1,7 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    ac::MatrixCollection<2> collection;
+    static ac::MatrixCollection<2> collection;
     collection.shiftFrames(frame);
     static int offset_x = frame.cols;
     for(int z = 0; z < frame.rows; ++z) {

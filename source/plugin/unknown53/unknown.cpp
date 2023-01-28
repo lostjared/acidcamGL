@@ -5,7 +5,7 @@ extern "C" void filter(cv::Mat  &frame) {
     static int offset_x = 0;
     static int max_x = frame.cols+(frame.cols/2);
     
-    ac::MatrixCollection<2> collection;
+    static ac::MatrixCollection<2> collection;
     collection.shiftFrames(frame);
     
     for(int z = 0; z < frame.rows; ++z) {
