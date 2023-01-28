@@ -20,12 +20,14 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             int offx = AC_GetFX(frame.cols-1, i, nw);
             int offy = AC_GetFZ(frame.rows-1, z, nh);
-            cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(offy, offx);
             
-            for(int q = 0; q < 3; ++q) {
-                pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+            
+            if(offx >= 0 && offx < frame.cols && offy >= 0 && offy < frame.rows) {
+                cv::Vec3b &pix = collection.frames[offset].at<cv::Vec3b>(offy, offx);
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
+                }
             }
-            
         }
     }
  
