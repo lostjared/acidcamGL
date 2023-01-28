@@ -21,12 +21,11 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             
             int offx = AC_GetFX(frame.cols-1, i, width);
-            
-            cv::Vec3b &cpix = collection.frames[offset].at<cv::Vec3b>(z, offx);
-            
-            
-            for(int q = 0; q < 3; ++q) {
-                pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * cpix[q]));
+            if(offx >= 0 && offx < frame.cols) {
+                cv::Vec3b &cpix = collection.frames[offset].at<cv::Vec3b>(z, offx);
+                for(int q = 0; q < 3; ++q) {
+                    pixel[q] = ac::wrap_cast((0.5 * pixel[q]) + (0.5 * cpix[q]));
+                }
             }
             
         }

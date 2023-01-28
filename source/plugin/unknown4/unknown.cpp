@@ -24,9 +24,7 @@ extern "C" void filter(cv::Mat  &frame) {
         
             pixel = cpix;
         }
-        
         width += 1+(rand()%5);
-        
         if(width%10) {
             if(++offset > (MAX-1))
                 offset = 0;

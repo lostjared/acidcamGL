@@ -1,7 +1,6 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    
     for(int z = 0; z < frame.rows; z += 2) {
         int col_start = frame.cols/4+rand()%50;
         int col_space = rand()%frame.cols/2;
