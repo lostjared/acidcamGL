@@ -11,10 +11,11 @@ extern "C" void filter(cv::Mat  &frame) {
     collection.shiftFrames(frame);
     
     auto drawRect = [&](cv::Mat &col_frame, int x, int y, int w, int h) {
-      
         for(int z = y; z < y+h && z < frame.rows; ++z) {
             for(int i = x; i < x+w && i < frame.cols; ++i) {
-                frame.at<cv::Vec3b>(z, i) = col_frame.at<cv::Vec3b>(z, i);
+                if(i >= 0 && i < frame.cols && z >= 0 && z < frame.rows) {
+                    frame.at<cv::Vec3b>(z, i) = col_frame.at<cv::Vec3b>(z, i);
+                }
             }
         }
     };
