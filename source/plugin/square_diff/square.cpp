@@ -13,9 +13,11 @@ extern "C" void filter(cv::Mat  &frame) {
     auto drawSquare = [&](cv::Mat sframe, int x, int y, int w, int h) {
         for(int i = x; i < x+w && i < frame.cols; ++i) {
             for(int z = y; z < y+h && z < frame.rows; ++z) {
-                cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
-                cv::Vec3b &pix = sframe.at<cv::Vec3b>(z, i);
-                pixel = pix;
+                if(i >= 0 && i < frame.cols && z >= 0 && z < frame.cols) {
+                    cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
+                    cv::Vec3b &pix = sframe.at<cv::Vec3b>(z, i);
+                    pixel = pix;
+                }
             }
         }
     };
