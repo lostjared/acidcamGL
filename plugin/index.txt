@@ -330,3 +330,4 @@ store_frame8.acidcam
 store_frame9.acidcam
 store_frame10.acidcam
 store_frame11.acidcam
+unknown67.acidcam
