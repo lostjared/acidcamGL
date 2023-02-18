@@ -9,13 +9,16 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     else
     collection.shiftFrames(frame);
-    
     for(int z = 0; z < frame.rows; ++z) {
         for(int i = 0; i < frame.cols; ++i) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             cv::Vec3b &pix = collection.frames[rand()%(MAX-1)].at<cv::Vec3b>(z, i);
-            if((rand()%2) == 0)
-                pixel = pix;
+            for(int q = 0; q < 3; ++q) {
+                if(std::abs(pixel[q]-pix[q]) > 5) {
+                    if((rand()%2) == 0)
+                        pixel[q] ^= pix[q];
+                }
+            }
         }
     }
 }
