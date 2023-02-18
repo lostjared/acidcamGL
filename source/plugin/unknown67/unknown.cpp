@@ -14,9 +14,9 @@ extern "C" void filter(cv::Mat  &frame) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
             cv::Vec3b &pix = collection.frames[rand()%(MAX-1)].at<cv::Vec3b>(z, i);
             for(int q = 0; q < 3; ++q) {
-                if(std::abs(pixel[q]-pix[q]) > 5) {
+                if(std::abs(pixel[q]-pix[q]) > 25) {
                     if((rand()%2) == 0)
-                        pixel[q] ^= pix[q];
+                        pixel[q] ^= ac::wrap_cast((0.5 * pixel[q]) + (0.5 * pix[q]));
                 }
             }
         }
