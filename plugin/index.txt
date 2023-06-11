@@ -333,3 +333,4 @@ store_frame11.acidcam
 unknown67.acidcam
 unknown68.acidcam
 unknown69.acidcam
+unknown70.acidcam
