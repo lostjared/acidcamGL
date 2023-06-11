@@ -343,6 +343,7 @@ all:
 	make -C store_frame10 install
 	make -C store_frame11 install
 	make -C unknown67 install
+	make -C unknown68 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -688,3 +689,4 @@ clean:
 	make -C store_frame10 clean
 	make -C store_frame11 clean
 	make -C unknown64 clean
+	make -C unknown68 clean
