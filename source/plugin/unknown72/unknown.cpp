@@ -3,7 +3,6 @@
 
 extern "C" void filter(cv::Mat  &frame) {
     static double alpha[3] = {3.0, 1.0, 3.0};
-    
     for(int z = 0; z < frame.rows; z++) {
         for(int i = 0; i < frame.cols; i++) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
@@ -12,7 +11,7 @@ extern "C" void filter(cv::Mat  &frame) {
                 value[q] = ac::wrap_cast(alpha[q] * pixel[q]);
                 pixel[q] = pixel[q]^value[q];
             }
-           
+            
         }
     }
     static int dir[3] = {0, 1, 0};
