@@ -19,7 +19,7 @@ extern "C" void filter(cv::Mat  &frame) {
     if(dir == 1) {
         alpha += 0.01;
         if(alpha >= 3.0) {
-            alpha = 1.0;
+            alpha = 3.0;
             dir = 0;
         }
     } else {
