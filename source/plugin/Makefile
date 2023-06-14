@@ -350,6 +350,7 @@ all:
 	make -C unknown72 install
 	make -C unknown73 install
 	make -C unknown74 install
+	make -C unknown75 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -702,3 +703,4 @@ clean:
 	make -C unknown72 clean
 	make -C unknown73 clean
 	make -C unknown74 clean
+	make -C unknown75 clean
