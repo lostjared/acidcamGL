@@ -2,6 +2,7 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
+    srand(static_cast<unsigned int>(time(0)));
     static double alpha[3] = {
         static_cast<double>(rand()%4),
         static_cast<double>(rand()%4),
