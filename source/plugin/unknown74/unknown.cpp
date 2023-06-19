@@ -2,12 +2,21 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
-    srand(static_cast<unsigned int>(time(0)));
+    static int lazy = 0;
     static double alpha[3] = {
         static_cast<double>(rand()%4),
         static_cast<double>(rand()%4),
         static_cast<double>(rand()%4)
     };
+  
+    if(lazy == 0) {
+        srand(static_cast<unsigned int>(time(0)));
+        alpha[0] = static_cast<double>(rand()%4);
+        alpha[1] = static_cast<double>(rand()%4);
+        alpha[2] = static_cast<double>(rand()%4);
+        lazy = 1;
+    }
+
     for(int z = 0; z < frame.rows; z++) {
         for(int i = 0; i < frame.cols; i++) {
             cv::Vec3b &pixel = ac::pixelAt(frame, z, i);
