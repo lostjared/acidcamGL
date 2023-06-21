@@ -52,8 +52,8 @@ extern "C" void filter(cv::Mat  &frame) {
             }
         } else {
             alpha[q] -= 0.01*r;
-            if(alpha[q] <= 3.0) {
-                alpha[q] = 3.0;
+            if(alpha[q] <= 1.5) {
+                alpha[q] = 1.5;
                 dir[q] = rand()%5;
             }
         }
