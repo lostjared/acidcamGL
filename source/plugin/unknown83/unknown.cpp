@@ -55,7 +55,7 @@ extern "C" void filter(cv::Mat  &frame) {
             if(alpha[q] >= max_x) {
                 alpha[q] = max_x;
                 dir[q] = rand()%2;
-                op_type[q] = rand()%2;
+                op_type[q] = rand()%3;
                 double r2 = static_cast<double>(rand()%10);
                 double rv = 0.01*r2;
                 max_x += rv;
@@ -66,7 +66,7 @@ extern "C" void filter(cv::Mat  &frame) {
             alpha[q] -= 0.01*r;
             if(alpha[q] <= min_x) {
                 alpha[q] = min_x;
-                op_type[q] = rand()%2;
+                op_type[q] = rand()%3;
                 dir[q] = rand()%2;
                 double r2 = static_cast<double>(rand()%10);
                 double rv = 0.01*r2;
