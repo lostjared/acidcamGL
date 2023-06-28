@@ -1,14 +1,14 @@
 #include"ac.h"
 
 extern "C" void filter(cv::Mat  &frame) {
+
     static ac::MatrixCollection<2> collection;
     collection.shiftFrames(frame);
-    
     static int col_g = 0;
-    
     static int offset_x = frame.cols;
+    
     for(int z = 0; z < frame.rows; ++z) {
-        for(int i = frame.cols; i > 0; --i) {
+        for(int i = frame.cols-1; i > 0; --i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             int off_x = AC_GetFZ(frame.rows-1, i, offset_x);
             offset_x++;
