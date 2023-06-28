@@ -5,7 +5,7 @@ extern "C" void filter(cv::Mat  &frame) {
     collection.shiftFrames(frame);
     static int offset_x = frame.cols;
     for(int z = 0; z < frame.rows; ++z) {
-        for(int i = frame.cols; i > 0; i--) {
+        for(int i = frame.cols-1; i > 0; i--) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
             int off_x = AC_GetFX(frame.cols-1, i, offset_x);
             offset_x++;
