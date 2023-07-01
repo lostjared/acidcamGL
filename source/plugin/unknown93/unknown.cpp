@@ -68,7 +68,7 @@ extern "C" void filter(cv::Mat  &frame) {
                     r[q] = static_cast<double>(rand()%10);
                     inc[q] = 0.01 * r[q];
                 }
-                q = rand()%2;
+                q = rand()%3;
             }
         } else {
             alpha[q] -= inc[q];
@@ -80,7 +80,7 @@ extern "C" void filter(cv::Mat  &frame) {
                     r[q] = static_cast<double>(rand()%10);
                     inc[q] = 0.01 * r[q];
                 }
-                q = rand()%2;
+                q = rand()%3;
             }
         }
 }
