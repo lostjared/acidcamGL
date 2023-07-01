@@ -368,6 +368,7 @@ all:
 	make -C unknown90 install
 	make -C unknown91 install
 	make -C unknown92 install
+	make -C unknown93 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -738,3 +739,4 @@ clean:
 	make -C unknown90 clean
 	make -C unknown91 clean
 	make -C unknown92 clean
+	make -C unknown93 clean
