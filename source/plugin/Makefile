@@ -374,6 +374,7 @@ all:
 	make -C unknown96 install
 	make -C unknown97 install
 	make -C unknown98 install
+	make -C bars_col install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -750,3 +751,4 @@ clean:
 	make -C unknown96 clean
 	make -C unknown97 clean
 	make -C unknown98 clean
+	make -C bars_col clean
