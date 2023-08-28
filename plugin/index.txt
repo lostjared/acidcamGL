@@ -363,3 +363,4 @@ unknown96.acidcam
 unknown97.acidcam
 unknown98.acidcam
 bars_col.acidcam
+bars_col_alpha.acidcam
