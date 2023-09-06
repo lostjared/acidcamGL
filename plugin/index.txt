@@ -365,3 +365,4 @@ unknown98.acidcam
 bars_col.acidcam
 bars_col_alpha.acidcam
 bars_horiz.acidcam
+bars_horiz_alpha.acidcam

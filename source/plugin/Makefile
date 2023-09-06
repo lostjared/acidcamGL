@@ -377,6 +377,7 @@ all:
 	make -C bars_col install
 	make -C bars_col_alpha install
 	make -C bars_horiz install
+	make -C bars_horiz_alpha install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -756,3 +757,4 @@ clean:
 	make -C bars_col clean
 	make -C bars_col_alpha clean
 	make -C bars_horiz clean
+	make -C bars_horiz_alpha clean
