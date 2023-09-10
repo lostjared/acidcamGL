@@ -379,6 +379,7 @@ all:
 	make -C bars_horiz install
 	make -C bars_horiz_alpha install
 	make -C rect_grad install
+	make -C rect_size install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -760,3 +761,4 @@ clean:
 	make -C bars_horiz clean
 	make -C bars_horiz_alpha clean
 	make -C rect_grad clean
+	make -C rect_size clean

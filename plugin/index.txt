@@ -367,3 +367,4 @@ bars_col_alpha.acidcam
 bars_horiz.acidcam
 bars_horiz_alpha.acidcam
 rect_grad.acidcam
+rect_size.acidcam
