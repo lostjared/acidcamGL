@@ -368,3 +368,4 @@ bars_horiz.acidcam
 bars_horiz_alpha.acidcam
 rect_grad.acidcam
 rect_size.acidcam
+rect_size_x.acidcam
