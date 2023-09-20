@@ -381,6 +381,7 @@ all:
 	make -C rect_grad install
 	make -C rect_size install
 	make -C rect_size_x install
+	make -C rect_size_row install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -764,3 +765,4 @@ clean:
 	make -C rect_grad clean
 	make -C rect_size clean
 	make -C rect_size_x clean
+	make -C rect_size_row clean
