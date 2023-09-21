@@ -370,3 +370,4 @@ rect_grad.acidcam
 rect_size.acidcam
 rect_size_x.acidcam
 rect_size_row.acidcam
+rect_size_rgb.acidcam

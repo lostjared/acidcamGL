@@ -382,6 +382,7 @@ all:
 	make -C rect_size install
 	make -C rect_size_x install
 	make -C rect_size_row install
+	make -C rect_size_rgb install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -766,3 +767,4 @@ clean:
 	make -C rect_size clean
 	make -C rect_size_x clean
 	make -C rect_size_row clean
+	make -C rect_size_rgb clean
