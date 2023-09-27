@@ -372,3 +372,4 @@ rect_size_x.acidcam
 rect_size_row.acidcam
 rect_size_rgb.acidcam
 rect_size_rgb_order.acidcam
+rect_size_rev.acidcam
