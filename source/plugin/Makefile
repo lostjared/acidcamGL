@@ -387,6 +387,7 @@ all:
 	make -C rect_size_rev install
 	make -C rect_size_rev_rgb install
 	make -C rect_size_xor install
+	make -C rect_size_fade install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -776,3 +777,4 @@ clean:
 	make -C rect_size_rev clean
 	make -C rect_size_rev_rgb clean
 	make -C rect_size_xor clean
+	make -C rect_size_fade clean
