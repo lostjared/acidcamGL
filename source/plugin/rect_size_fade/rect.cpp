@@ -3,7 +3,7 @@
 
 void Glitch_Rect_Size_drawBlock(double &alpha, int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src) {
     
-    double alpha_value = 1.0 / (double(frame.cols)*double(frame.rows));
+    double alpha_value = 1.0 / (double(w)*double(h));
     double a = 0;
     
     for(int z = y; z < y+h && z < frame.rows; ++z) {
