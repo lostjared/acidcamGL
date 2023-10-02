@@ -1,7 +1,7 @@
 #include"ac.h"
 
 
-void Glitch_Rect_Size_drawBlock(double &alpha, int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src) {
+void Glitch_Rect_Size_drawBlock(double alpha, int x, int y,  int w, int h, cv::Mat &frame, const cv::Mat &src) {
     for(int z = y; z < y+h && z < frame.rows; ++z) {
         for(int i = x;  i < x+w && i < frame.cols; ++i) {
             cv::Vec3b &pixel = frame.at<cv::Vec3b>(z, i);
@@ -29,8 +29,7 @@ extern "C" void filter(cv::Mat  &frame) {
     
     for(int y = 0; y < frame.rows; y += row_size) {
         for(int x = 0; x < frame.cols; x += col_size) {
-            double alpha = 1.5;
-            Glitch_Rect_Size_drawBlock(alpha, x, y, col_size, row_size, frame, collection.frames[rand()%(MAX-1)]);
+            Glitch_Rect_Size_drawBlock(1.5, x, y, col_size, row_size, frame, collection.frames[rand()%(MAX-1)]);
         }
     }
     
