@@ -377,3 +377,4 @@ rect_size_rev_rgb.acidcam
 rect_size_xor.acidcam
 rect_size_fade.acidcam
 rect_size_over.acidcam
+rect_size_col.acidcam
