@@ -390,6 +390,7 @@ all:
 	make -C rect_size_fade install
 	make -C rect_size_over install
 	make -C rect_size_col install
+	make -C rect_size_rand install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -782,3 +783,4 @@ clean:
 	make -C rect_size_fade clean
 	make -C rect_size_over clean
 	make -C rect_size_col clean
+	make -C rect_size_rand clean
