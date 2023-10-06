@@ -35,8 +35,8 @@ extern "C" void filter(cv::Mat  &frame) {
     }
     num_rows += 2;
     num_cols += 2;
-    if(num_rows >= 64) {
-        num_rows = rand()%64;
-        num_cols = rand()%64;
+    if(num_rows > 64) {
+        num_rows = 1+(rand()%64);
+        num_cols = 1+(rand()%64);
     }
 }
