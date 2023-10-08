@@ -379,3 +379,4 @@ rect_size_fade.acidcam
 rect_size_over.acidcam
 rect_size_col.acidcam
 rect_size_rand.acidcam
+rect_size2.acidcam
