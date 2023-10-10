@@ -392,6 +392,7 @@ all:
 	make -C rect_size_col install
 	make -C rect_size_rand install
 	make -C rect_size2 install
+	make -C line_effect_down_v2 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -786,3 +787,4 @@ clean:
 	make -C rect_size_col clean
 	make -C rect_size_rand clean
 	make -C rect_size2 clean
+	make -C line_effect_down_v2 clean

@@ -380,3 +380,4 @@ rect_size_over.acidcam
 rect_size_col.acidcam
 rect_size_rand.acidcam
 rect_size2.acidcam
+line_effect_down_v2.acidcam
