@@ -383,3 +383,4 @@ rect_size2.acidcam
 line_effect_down_v2.acidcam
 line_effect_down_v4.acidcam
 line_effect_down_v5.acidcam
+line_effect_down_v6.acidcam

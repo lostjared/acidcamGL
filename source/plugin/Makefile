@@ -395,6 +395,7 @@ all:
 	make -C line_effect_down_v2 install
 	make -C line_effect_down_V4 install
 	make -C line_effect_down_v5 install
+	make -C line_effect_down_v6 install
 clean:
 	make -C fill_edges clean
 	make -C newbars clean
@@ -792,3 +793,4 @@ clean:
 	make -C line_effect_down_v2 clean
 	make -C line_effect_down_v4 clean
 	make -C line_effect_down_v5 clean
+	make -C line_effect_down_v6 clean
