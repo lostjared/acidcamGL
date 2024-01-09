@@ -5,7 +5,7 @@
  
  Website: http://lostsidedead.com
  YouTube: http://youtube.com/LostSideDead
- Instagram: http://instagram.com/lostsidedead
+ Instagram:  
  Twitter: http://twitter.com/jaredbruni
  Facebook: http://facebook.com/LostSideDead0x
  
@@ -488,28 +488,33 @@ void ac::ShiftPixels(cv::Mat &frame) {
     for(int z = 0; z < h; ++z) {
         int start = 0;
         for(int i = offset; i < w && start < w; ++i) {
-            cv::Vec3b &pixel = pixelAt(frame,z, i);
-            cv::Vec3b &source = pixelAt(frame,z, start);
-            pixel[0] += source[0];
-            pixel[1] += source[1];
-            pixel[2] += source[2];
-            ++start;
-            // swap colors
-            swapColors(frame, z, i);
-            // if isNegative true invert pixel
-            if(isNegative) invert(frame, z, i);
+            if(z < frame.rows && i < frame.cols && start < frame.cols) {
+                cv::Vec3b &pixel = pixelAt(frame,z, i);
+                cv::Vec3b &source = pixelAt(frame,z, start);
+                pixel[0] += source[0];
+                pixel[1] += source[1];
+                pixel[2] += source[2];
+                ++start;
+                // swap colors
+                swapColors(frame, z, i);
+                // if isNegative true invert pixel
+                if(isNegative) invert(frame, z, i);
+            }
         }
         for(int i = 0; i < offset-1 && start < w; ++i) {
-            cv::Vec3b &pixel = pixelAt(frame,z, i);
-            cv::Vec3b &source = pixelAt(frame,z, start);
-            pixel[0] += source[0];
-            pixel[1] += source[1];
-            pixel[2] += source[2];
-            ++start;
-            // swap colors
-            swapColors(frame, z, i);
-            // if isNegative true invert pixel
-            if(isNegative) invert(frame, z, i);
+            if(z < frame.rows && i < frame.cols && start < frame.cols) {
+                
+                cv::Vec3b &pixel = pixelAt(frame,z, i);
+                cv::Vec3b &source = pixelAt(frame,z, start);
+                pixel[0] += source[0];
+                pixel[1] += source[1];
+                pixel[2] += source[2];
+                ++start;
+                // swap colors
+                swapColors(frame, z, i);
+                // if isNegative true invert pixel
+                if(isNegative) invert(frame, z, i);
+            }
         }
     }
     static int direction = 1;
@@ -536,29 +541,35 @@ void ac::ShiftPixelsDown(cv::Mat &frame) {
     static double pos = 1.0, pos_max = 7.0;
     for(int i = 0; i < w; ++i) {
         int start = 0;
-        for(int z = offset; z < h && start < h; ++z) {
-            cv::Vec3b &pixel = pixelAt(frame,z, i);
-            cv::Vec3b &source = pixelAt(frame,z, start);
-            pixel[0] += static_cast<unsigned char>(source[0]*pos);
-            pixel[1] += static_cast<unsigned char>(source[1]*pos);
-            pixel[2] += static_cast<unsigned char>(source[2]*pos);
-            ++start;
-            // swap colors
-            swapColors(frame, z, i);
-            // if isNegative true invert pixel
-            if(isNegative) invert(frame, z, i);
+        for(int z = offset; z < h && start < w; ++z) {
+            if(z < frame.rows && i < frame.cols && start < frame.cols) {
+                
+                cv::Vec3b &pixel = pixelAt(frame,z, i);
+                cv::Vec3b &source = pixelAt(frame,z, start);
+                pixel[0] += static_cast<unsigned char>(source[0]*pos);
+                pixel[1] += static_cast<unsigned char>(source[1]*pos);
+                pixel[2] += static_cast<unsigned char>(source[2]*pos);
+                ++start;
+                // swap colors
+                swapColors(frame, z, i);
+                // if isNegative true invert pixel
+                if(isNegative) invert(frame, z, i);
+            }
         }
-        for(int z = 0; z < offset-1 && start < h; ++z) {
-            cv::Vec3b &pixel = pixelAt(frame,z, i);
-            cv::Vec3b &source = pixelAt(frame,z, start);
-            pixel[0] += static_cast<unsigned char>(source[0]*pos);
-            pixel[1] += static_cast<unsigned char>(source[1]*pos);
-            pixel[2] += static_cast<unsigned char>( source[2]*pos);
-            ++start;
-            // swap colors
-            swapColors(frame, z, i);
-            // if isNegative true invert pixel
-            if(isNegative) invert(frame, z, i);
+        for(int z = 0; z < offset-1 && start < w; ++z) {
+            if(z < frame.rows && i < frame.cols && start < frame.cols) {
+                
+                cv::Vec3b &pixel = pixelAt(frame,z, i);
+                cv::Vec3b &source = pixelAt(frame,z, start);
+                pixel[0] += static_cast<unsigned char>(source[0]*pos);
+                pixel[1] += static_cast<unsigned char>(source[1]*pos);
+                pixel[2] += static_cast<unsigned char>( source[2]*pos);
+                ++start;
+                // swap colors
+                swapColors(frame, z, i);
+                // if isNegative true invert pixel
+                if(isNegative) invert(frame, z, i);
+            }
         }
     }
     static int direction = 1;
