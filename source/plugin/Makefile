@@ -700,7 +700,7 @@ clean:
 	make -C line_down2 clean
 	make -C line_down_xor clean
 	make -C line_down_blend clean
-	make -C line_down_restart clean
+#	make -C line_down_restart clean
 	make -C line_down_and clean
 	make -C line_across_side clean
 	make -C line_across_side_rand clean
