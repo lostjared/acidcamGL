@@ -6,7 +6,7 @@
  
  Website: http://lostsidedead.com
  YouTube: http://youtube.com/LostSideDead
- Instagram: http://instagram.com/lostsidedead
+ Instagram:  
  Twitter: http://twitter.com/jaredbruni
  Facebook: http://facebook.com/LostSideDead0x
  
@@ -134,20 +134,24 @@ void ac::SquareShiftDirVertical(cv::Mat &frame) {
                 if(on == 0) {
                     for(int z = off; z < frame.rows; ++z) {
                         if(z < frame.rows && i < frame.cols) {
-                            cv::Vec3b &pixel = pixelAt(frame,z, i);
-                            cv::Vec3b pix = copy1.at<cv::Vec3b>(z, pos);
-                            ++pos;
-                            pixel = pix;
+                            if(z >= 0 && z < frame.rows && i >= 0 && i < frame.cols && pos < copy1.cols && z < copy1.rows) {
+                                cv::Vec3b &pixel = pixelAt(frame,z, i);
+                                cv::Vec3b pix = copy1.at<cv::Vec3b>(z, pos);
+                                ++pos;
+                                pixel = pix;
+                            }
                         }
                     }
                 } else {
                     pos = frame.cols-1;
                     for(int z = frame.rows-1-off; z > 1; --z) {
                         if(i < frame.cols && z < frame.rows) {
-                            cv::Vec3b &pixel = pixelAt(frame,z, i);
-                            cv::Vec3b pix = copy1.at<cv::Vec3b>(z, pos);
-                            --pos;
-                            pixel = pix;
+                            if(z >= 0 && z < frame.rows && i >= 0 && z < copy1.cols && i < frame.cols && pos >= 0 && pos < frame.cols) {
+                                cv::Vec3b &pixel = pixelAt(frame,z, i);
+                                cv::Vec3b pix = copy1.at<cv::Vec3b>(z, pos);
+                                pixel = pix;
+                                --pos;
+                            }
                         }
                     }
                 }
@@ -186,7 +190,7 @@ void ac::StretchLineCol(cv::Mat &frame) {
     for(int i = 0; i < frame.cols; ++i) {
         for(int z = 0; z < frame.rows; ++z) {
             cv::Vec3b &pixel = pixelAt(frame,z, i);
-            int nw = AC_GetFZ(frame.rows, z, stretch_x);
+           int nw = AC_GetFZ(frame.rows, z, stretch_x);
             if(nw >= 0 && nw < frame.rows) {
                 cv::Vec3b pix = copy1.at<cv::Vec3b>(nw, i);
                 pixel = pix;
