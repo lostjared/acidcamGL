@@ -299,6 +299,7 @@ material_star.glsl
 material_water.glsl
 material_twist.glsl
 material_frost.glsl
+material_fire_gradient.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
