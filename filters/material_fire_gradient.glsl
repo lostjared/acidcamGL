@@ -6,6 +6,18 @@ uniform float time_f;
 uniform sampler2D samp;
 uniform sampler2D mat_samp;
 
+vec4 xor_RGB(vec4 icolor, ivec4 isource) {
+    ivec3 int_color;
+    for(int i = 0; i < 3; ++i) {
+        int_color[i] = int(255 * icolor[i]);
+        int_color[i] = int_color[i]^isource[i];
+        if(int_color[i] > 255)
+            int_color[i] = int_color[i]%255;
+        icolor[i] = float(int_color[i])/255;
+    }
+    return icolor;
+}
+
 void main(void) {
     float speed = 4.0;
     float intensity = 0.3;
@@ -32,7 +44,5 @@ if (flameFactor > 0.2) {
     }
 
     vec4 color_s = mix(texture(samp, tc), texture(mat_samp, tc), 0.5);
-    color = mix(color, color_s, 0.8);
-    
-    
+    color = xor_RGB(color, ivec4(color_s * 255));
 }
