@@ -34,7 +34,6 @@ vec3 smoothBaseColor(float t) {
 
 void main(void) {
     float aspectRatio = iResolution.x / iResolution.y;
-
     vec2 adjustedTC = tc;
     adjustedTC.y /= aspectRatio;
     vec2 center = vec2(0.5, 0.5);

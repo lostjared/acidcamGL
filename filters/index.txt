@@ -386,4 +386,6 @@ air.glsl
 air_full.glsl
 fisheye.glsl
 crystalball.glsl
+glitch_wave.glsl
 nl.glsl
+
