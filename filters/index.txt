@@ -295,6 +295,7 @@ material_square2.glsl
 material_sin_timeval.glsl
 material_math_color.glsl
 material_math_color2.glsl
+material_star.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
