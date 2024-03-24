@@ -297,6 +297,7 @@ material_math_color.glsl
 material_math_color2.glsl
 material_star.glsl
 material_water.glsl
+material_twist.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
@@ -376,3 +377,6 @@ brighten.glsl
 brighten_rev.glsl
 star.glsl
 water.glsl
+water_full.glsl
+twist.glsl
+twist_full.glsl
