@@ -390,3 +390,4 @@ glitch_wave.glsl
 nl.glsl
 rainbow_left.glsl
 rainbow_top.glsl
+new_xor_scale_strobe.glsl
