@@ -388,4 +388,5 @@ fisheye.glsl
 crystalball.glsl
 glitch_wave.glsl
 nl.glsl
-
+rainbow_left.glsl
+rainbow_top.glsl
