@@ -397,3 +397,4 @@ psych.glsl
 psych_xor.glsl
 plasma.glsl
 plasma_xor.glsl
+fractal.glsl
