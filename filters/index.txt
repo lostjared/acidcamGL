@@ -393,3 +393,5 @@ rainbow_top.glsl
 new_xor_scale_strobe.glsl
 mix_diag.glsl
 warp_tunnel.glsl
+psych.glsl
+psych_xor.glsl
