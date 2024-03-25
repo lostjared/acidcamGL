@@ -398,3 +398,4 @@ psych_xor.glsl
 plasma.glsl
 plasma_xor.glsl
 fractal.glsl
+psych_pattern.glsl
