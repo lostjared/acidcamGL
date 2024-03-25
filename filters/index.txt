@@ -395,3 +395,5 @@ mix_diag.glsl
 warp_tunnel.glsl
 psych.glsl
 psych_xor.glsl
+plasma.glsl
+plasma_xor.glsl
