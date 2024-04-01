@@ -13,7 +13,7 @@ Just to create something that I can use to create fun video and artwork to share
 # Requirements
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
-Please read this entire document before using the software.
+Please read this entire document before using the software. On MacOS you may have to give the Terminal or the application privileges to use the webcam and capture the desktop.
 
 # How to compile on macOS:
 
@@ -81,6 +81,10 @@ for macOS static build with Syphon enter the macos-static directory and
     
 You will still need to use install_name_tool on an app bundle see copy.sh for how I do it
 
+# How to Compile on Linux
+
+First install the required libraries
+
 for Linux build with Desktop capture support (only Xorg not Wayland) enter source directory and
 
 	make -f Makefile.linux && sudo make -f Makefile.linux install
@@ -94,6 +98,8 @@ or pass the path when executing the program
     acidcamGL -g -p ../filters
     
 The source/plugin directory contains some test files I have been working on.
+
+# Defaults
 
 The default Resolution is:
 
