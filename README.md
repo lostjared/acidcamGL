@@ -12,31 +12,17 @@ Join us on Discord: https://discord.gg/kSxTe6M8
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
 
-To be able to download and run binaries from this project you will need to enter the terminal and type
-
-sudo spctl --master-disable
-
-Then go to System settings and select Security & Privacy. Select Anywhere as the location of apps.
-
-How to compile for macOS: 
-
-This project is still in very early stages of development.
-This project is an implementation of Acid Cam using OpenGL/Shaders.
-It is designed more for visualizations or live streaming with OBS versus a Video Editor like the other versions of Acid Cam.
-The program is controlled with the qwerty keyboard but, currently looking into MIDI.
-The best way to use this program is to compile an up to date version from source code.
-
 How to compile on macOS:
 
-This project reqeuires libacidcam,GLFW,GLEW,OpenGL,OpenCV,FFmpeg
+This project requires libacidcam,GLFW,GLEW,OpenGL,OpenCV,FFmpeg
 
-First install homebrew: https://brew.sh
+First, install homebrew: https://brew.sh
 
 Then install GLFW,GLEW,OpenGL,OpenCV,FFmpeg
 
 	brew install glfw3 glew opencv ffmpeg
 
-Dependending on what you have installed this could take quite some time.
+Depending on what you have installed this could take quite some time.
 You can choose to statically compile
 
 Next download libacidcam:
@@ -115,7 +101,8 @@ Window Size: 1280x720
 you can change that using arguments passed to the program
 How to use the program:
 
-Arguments:
+# Arguments
+
 - `-A <autofilter file>`: Specify an autofilter file to use.
 - `-X <codec>`: Set the codec for video encoding.
 - `-o <output filename>`: Define the output filename for the video.
@@ -165,45 +152,47 @@ Arguments:
 - `--mux <outputted_file source_file>`: Mux audio (copy audio) from the source file to the outputted file.
 - `--list`: Display the list of available capture devices.
 - `--rotate <src output>`: Rotate the source video and output.
-Enviorment Variables: (you should export these)
 
-        SHADER_PATH - path to shaders	
-        AC_PLUGIN_PATH - path to compiled plugins
-        AC_CUSTOM_PATH - path to custom filter stack text files
-        FFMPEG_PATH - path to ffmpeg executable
-Controls:
-    
-    L - enable disable playlist
-    N - set index to the end
-    P - index reset to zero
-    K - jump forward index by 25
-    J - jump backwar index by 25
-    Z - take screenshot
-    H - Shuffle Playlist
-    [SHIFT]+H - AutoFilter Shuffle Lock On/Off
-    M - Enable/Disable Playlist Slideside random timeout
-    F - process keyboard input for index
-    S - process keyboard input for shader
-    C - clear keyboard input
-    [+] - increase blend percentage
-    [-] = decrease blend percentage
-    [SPACE] - Acid Cam filters enabled/disabled
-    [SHIFT]+[SPACE] - Toggle Autofilter on and off
-    [LEFT] - Filter index move left
-    [RIGHT] - filter index move right
-    [UP] - Shader Index move up
-    [DOWN] - Shader Index move down
-    [ENTER] - Jump to currently typed index (type index with number keys at anytime)
-    [SHIFT]+[ENTER] - Release Stored Frames
-    [PAGEUP] - Store Index Position
-    [PAGEDOWN] - Restore Position Index
-     Q,Q,E,R,Y,U,I,O - move movement rate
-     T - reset color offset
+# Environment Variables
+
+- `SHADER_PATH`: Path to shaders.
+- `AC_PLUGIN_PATH`: Path to compiled plugins.
+- `AC_CUSTOM_PATH`: Path to custom filter stack text files.
+- `FFMPEG_PATH`: Path to ffmpeg executable.Controls:
+
+# Keyboard Input
+
+- `L`: Enable/disable playlist.
+- `N`: Set index to the end.
+- `P`: Index reset to zero.
+- `K`: Jump forward index by 25.
+- `J`: Jump backward index by 25.
+- `Z`: Take a screenshot.
+- `H`: Shuffle Playlist.
+- `[SHIFT]+H`: AutoFilter Shuffle Lock On/Off.
+- `M`: Enable/Disable Playlist Slideshow random timeout.
+- `F`: Process keyboard input for index.
+- `S`: Process keyboard input for shader.
+- `C`: Clear keyboard input.
+- `[+]`: Increase blend percentage.
+- `[-]`: Decrease blend percentage.
+- `[SPACE]`: Acid Cam filters enabled/disabled.
+- `[SHIFT]+[SPACE]`: Toggle AutoFilter on and off.
+- `[LEFT]`: Filter index move left.
+- `[RIGHT]`: Filter index move right.
+- `[UP]`: Shader Index move up.
+- `[DOWN]`: Shader Index move down.
+- `[ENTER]`: Jump to currently typed index (type index with number keys at any time).
+- `[SHIFT]+[ENTER]`: Release Stored Frames.
+- `[PAGEUP]`: Store Index Position.
+- `[PAGEDOWN]`: Restore Position Index.
+- `Q, Q, E, R, Y, U, I, O`: Move movement rate.
+- `T`: Reset color offset.
 
 
 Run the program:
-You will need to ethier set the SHADER_PATH enviorment variable or pass the path to the shaders when exeucting the program with the -p argument. Each shader is listed in a index.txt file in the order you want the program to cycle through them. The program comes with over 100 example shaders.
-Example exporting the enviorment varaible:
+You will need to either set the SHADER_PATH environment variable or pass the path to the shaders when executing the program with the -p argument. Each shader is listed in an index.txt file in the order you want the program to cycle through them. The program comes with over 100 example shaders.
+Example exporting the environment variable:
 
       export SHADER_PATH=/Users/jared/Downloads/acidcamGL/filters
 
@@ -216,7 +205,7 @@ Launch Filepath
 
 	acidcamGL -i file_path -g -p filters
 
-If you device has smaller amount of ram set the memory pool size in frames Examples would be:
+If your device has a smaller amount of RAM set the memory pool size in frames Examples would be:
 	
 	acidcamGL -i file_path -g -8 100
 
@@ -225,7 +214,7 @@ or
 	acidcamGL -i file_path -g -8 500
 
 
-Full Screen Monitor 0
+Full-Screen Monitor 0
 
 	acidcamGL -g -p filters -F -M 0
 
@@ -289,14 +278,14 @@ List all included filters by index:
 
 	acidcamGL -l
 
-Jump to location in vidoe file by seconds
+Jump to location in video file by seconds
 
 	acidcamGL -g -p filters -i file.mp4 -7 25
 
 
 Key shortcut format:
 
-in a text file add each line for the desired keyshort cuts in this format:
+in a text file add each line for the desired key short cuts in this format:
 
 key filter_index shader_index
 
@@ -304,7 +293,7 @@ an example file would be
 
 	F 75 0
 	Q 25 7
-If you saved this to keys.key you would use it with -k key like his:
+If you saved this to keys.key you would use with -k key like his:
 
 	acidcamGL -g -p filters -k keys.key
 
@@ -313,7 +302,7 @@ Playlist file:
 use:
 	acidcamGL -l
 
-Playlist Now uses String names versus ID identifiers:
+The playlist Now uses String names versus ID identifiers:
 to list the different filters
 then list them one after the other in a text file line by line like this:
 
@@ -321,12 +310,12 @@ then list them one after the other in a text file line by line like this:
 	SelfAlphaBlend
 
 save the file then when in the program press the L key to toggle the playlist on and off and use the arrow keys to move through the list.
-To use the playlist file its he same as the keys just with
+To use the playlist file it's the same as the keys just with
 Use:
 
 	acidcamGL -L playist.txt -g -p filters
 
-After enabling plugins (used for testing) (with the shell variable pointing to path) and having the list of plugins in index.txt to load one from the command line use:
+After enabling plugins (used for testing) (with the shell variable pointing to a path) and having the list of plugins in index.txt to load one from the command line use:
 
 	acidcamGL -g -p filters -Z plugin.acidcam
 
@@ -339,7 +328,7 @@ To export these after compiling them use
 
     export AC_PLUGIN_PATH=/path/to/acidcamGL/plugin
     
-add the export commands to your .bash_profile to not have to issue them everytime you start a new session  in the terminal.
+add the export commands to your .bash_profile to not have to issue them every time you start a new session  in the terminal.
 
 To use stereo mode, have two webcams of the same type and use:
 
