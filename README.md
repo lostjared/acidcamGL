@@ -13,6 +13,7 @@ Just to create something that I can use to create fun video and artwork to share
 # Requirements
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
+Please read this entire document before using the software.
 
 # How to compile on macOS:
 
