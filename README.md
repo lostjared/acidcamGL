@@ -89,7 +89,9 @@ for Linux build with Desktop capture support (only Xorg not Wayland) enter sourc
 
 	make -f Makefile.linux && sudo make -f Makefile.linux install
 
-Run the program: (recommd first exporting shell variable SHADER_PATH with path to filters) example:
+Otherwise follow the same instructions as macOS, clone libacidcam, compile it, install it, clone acidcamGL, compile it, install it.
+
+Run the program: (recommend first exporting shell variable SHADER_PATH with path to filters) example:
 
     export SHADER_PATH=/home/jared/acidcamGL/filters
     
