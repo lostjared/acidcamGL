@@ -116,55 +116,55 @@ you can change that using arguments passed to the program
 How to use the program:
 
 Arguments:
-
-    -A autofilter file
-    -X codec
-    -o output filename
-    -S filter start index
-    -H shader start index
-    -Z starting filter name
-    -C set color map
-    -T set material texture (image/video) filename
-    -s image output format (png/tif/jpeg)
-    -N play list slideshow timeout
-    -k shortcut-key file
-    -L playlist of filters
-    -b restore black
-    -g output debug strings
-    -u fps
-    -n print filter name
-    -e snapshot prefix
-    -p shader path
-    -M monitor index
-    -f fullscreen (resize)
-    -F fullscreen (windowed mode)
-    -d capture device
-    -i input_video.mp4
-    -R loop input video
-    -x Stereo Mode
-    -r resolution 1920x1080
-    -c Camera resolution 1280x720
-    -G Screen Capture Mode
-    -Y Enable Syphon Server
-    -U Screen Capture Position X,Y
-    -P Redirect Standard Output to Socket
-    -W custom filter path
-    -B enable playback filter mode
-    -q shuffle playlist
-    -w beats per minute for shuffle
-    -l list filters
-    -t list filters no info
-    -l list search
-    -7 jump to location in video by seconds
-    -v version
-    -8 Set Max Frames for Memory pool
-    -9 Threads
-    -1 ffmpeg path
-    -4 enable ffmpeg x264 support
-    -5 enable ffmpeg x265 support
-    -m crf for x265 for video mode
-    --mux outputted_file source_file [ Mux audio (copy audio) ]
-
+- `-A <autofilter file>`: Specify an autofilter file to use.
+- `-X <codec>`: Set the codec for video encoding.
+- `-o <output filename>`: Define the output filename for the video.
+- `-S <filter start index>`: Set the starting index for filters.
+- `-H <shader start index>`: Specify the starting index for shaders.
+- `-Z <Starting filter by Name>`: Specify the starting filter by its name.
+- `-C <set color map>`: Set the color map.
+- `-T <set material texture filename>`: Specify the material texture filename.
+- `-s <image output format>`: Set the image output format (e.g., png, jpg).
+- `-N <play list slideshow timeout>`: Set the playlist slideshow timeout.
+- `-k <shortcut-key file>`: Specify the shortcut-key file.
+- `-L <playlist of filters>`: Specify a playlist of filters.
+- `-b`: Restore black in the output.
+- `-g`: Output debug strings.
+- `-u <fps>`: Set the frames per second for the video.
+- `-n`: Print the name of the currently applied filter.
+- `-e <snapshot prefix>`: Set the prefix for snapshot filenames.
+- `-p <shader path>`: Specify the path to the shader files.
+- `-M <monitor index>`: Select the monitor index for fullscreen mode.
+- `-f`: Enable fullscreen (resize to fit).
+- `-F`: Enable fullscreen (windowed mode).
+- `-d <capture device>`: Specify the capture device.
+- `-i <input_video.mp4>`: Specify the input video file.
+- `-R`: Loop input video.
+- `-x <Stereo Mode>`: Enable stereo mode.
+- `-r <resolution 1920x1080>`: Set the resolution.
+- `-c <Camera resolution 1280x720>`: Set the camera resolution.
+- `-G`: Enable screen capture mode.
+- `-Y`: Enable Syphon Server (macOS only).
+- `-U <Screen Capture Position X,Y>`: Set the screen capture position.
+- `-P`: Redirect standard output to socket.
+- `-W <custom filter path>`: Specify a custom filter path.
+- `-B`: Enable playback filter mode.
+- `-q`: Shuffle playlist.
+- `-w <beats per minute for shuffle>`: Set beats per minute for shuffle mode.
+- `-l`: List filters.
+- `-t`: List filters without additional information.
+- `-v`: Display the version information.
+- `-4`: Enable FFmpeg x264 support.
+- `-5`: Enable FFmpeg x265 support.
+- `-m <crf for x265 for video mode>`: Specify the CRF for x265 encoding mode.
+- `-1 <ffmpeg path>`: Set the path to the FFmpeg executable.
+- `-7 <video start offset in seconds>`: Set the video start offset in seconds.
+- `-3 <Plugin Path>`: Specify the plugin path.
+- `-9 <Number of threads>`: Set the number of threads for processing.
+- `-8 <Set Max Allocated Frames>`: Set the maximum number of allocated frames.
+- `--mux <outputted_file source_file>`: Mux audio (copy audio) from the source file to the outputted file.
+- `--list`: Display the list of available capture devices.
+- `--rotate <src output>`: Rotate the source video and output.
 Enviorment Variables: (you should export these)
 
         SHADER_PATH - path to shaders	
