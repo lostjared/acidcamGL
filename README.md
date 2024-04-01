@@ -6,13 +6,15 @@
 
 ![ScreenShot3](https://github.com/lostjared/acidcamGL/blob/master/screens/windows.jpg?raw=true "screenshot3")
 
-Join us on Discord: https://discord.gg/kSxTe6M8
+# Motivation
 
+Just to create something that I can use to create fun video and artwork to share online.
 
+# Requirements
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
 
-How to compile on macOS:
+# How to compile on macOS:
 
 This project requires libacidcam,GLFW,GLEW,OpenGL,OpenCV,FFmpeg
 
