@@ -5,8 +5,7 @@ uniform float time_f;
 uniform sampler2D samp;
 uniform vec2 iResolution;
 
-void main(void)
-{
+void main(void) {
     vec2 normPos = (gl_FragCoord.xy / iResolution.xy) * 2.0 - 1.0;
     float dist = length(normPos);
     float phase = sin(dist * 10.0 - time_f * 4.0);

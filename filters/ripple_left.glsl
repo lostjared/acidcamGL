@@ -5,10 +5,8 @@ uniform float time_f;
 uniform sampler2D samp;
 uniform vec2 iResolution;
 
-void main(void)
-{
+void main(void) {
     vec2 normTC = gl_FragCoord.xy / iResolution.xy;
-    
     float diagonalDist = length(vec2(normTC.x + normTC.y - 1.0, normTC.x - normTC.y));
 
     float phase = sin(diagonalDist * 20.0 - time_f * 5.0);
