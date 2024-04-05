@@ -406,3 +406,4 @@ ripple_cycle.glsl
 code_wave.glsl
 code_wave_rev.glsl
 code_wave_side.glsl
+psyche_wave.glsl
