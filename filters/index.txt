@@ -404,3 +404,5 @@ ripple_out.glsl
 ripple_left.glsl
 ripple_cycle.glsl
 code_wave.glsl
+code_wave_rev.glsl
+code_wave_side.glsl
