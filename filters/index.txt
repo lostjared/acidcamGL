@@ -415,3 +415,5 @@ breathe.glsl
 zigzag.glsl
 expand_contract_.glsl
 deform.glsl
+deform_cos.glsl
+deform_tan.glsl
