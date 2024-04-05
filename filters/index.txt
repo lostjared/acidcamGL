@@ -401,3 +401,4 @@ fractal.glsl
 psych_pattern.glsl
 glitch_effect.glsl
 ripple_out.glsl
+ripple_left.glsl
