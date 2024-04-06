@@ -426,3 +426,4 @@ ocean_fast.glsl
 pebble.glsl
 pebble_fast.glsl
 apart.glsl
+spiral_mirror.glsl
