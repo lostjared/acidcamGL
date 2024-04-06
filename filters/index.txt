@@ -422,3 +422,5 @@ pull_out.glsl
 tear.glsl
 tornado.glsl
 ocean.glsl
+ocean_fast.glsl
+pebble.glsl
