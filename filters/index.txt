@@ -429,3 +429,4 @@ apart.glsl
 spiral_mirror.glsl
 spiral_mirror_rev.glsl
 spiral_mirror_top.glsl
+wave_spiral.glsl
