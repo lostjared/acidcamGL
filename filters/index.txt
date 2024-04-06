@@ -419,3 +419,4 @@ deform_cos.glsl
 deform_tan.glsl
 pull.glsl
 pull_out.glsl
+tear.glsl
