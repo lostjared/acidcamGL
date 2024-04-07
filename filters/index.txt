@@ -438,3 +438,4 @@ funny_mirror.glsl
 rect1.glsl
 rect_spiral.glsl
 matrix.glsl
+spaz.glsl
