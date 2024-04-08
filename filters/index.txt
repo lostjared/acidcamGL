@@ -300,6 +300,7 @@ material_water.glsl
 material_twist.glsl
 material_frost.glsl
 material_fire_gradient.glsl
+material_psyche_ripple.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
