@@ -441,3 +441,4 @@ rect_spiral.glsl
 matrix.glsl
 spaz.glsl
 balloon.glsl
+psyche_ripple.glsl
