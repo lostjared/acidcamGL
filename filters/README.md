@@ -3,7 +3,7 @@
 
 ## Overview
 
-Just simply add shaders to index.txt and use thems with the arrow keys when the  program is loaded.d
+Just simply add shaders to index.txt and use the arrow keys when the  program is loaded to move between them.
 
 This document provides instructions on how to manage shader files in your project. Shaders are essential for rendering graphics in our application. They define the visual aspects of pixels and vertices on the screen. To efficiently manage and access these shaders, we use an `index.txt` file. This file acts as a central list of all shader files used by the application.
 d
