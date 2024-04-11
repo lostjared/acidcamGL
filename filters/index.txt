@@ -444,3 +444,4 @@ spaz.glsl
 balloon.glsl
 psyche_ripple.glsl
 twist_directions.glsl
+ripple.glsl
