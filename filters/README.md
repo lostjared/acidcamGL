@@ -12,15 +12,15 @@ This document provides instructions on how to manage shader files in your projec
 
 - Basic understanding of how shaders work in graphics programming.
 
-
-1. **Locate the `index.txt` File**: This file is located in the root of the project directory. If it does not exist, create a new text file named `index.txt`.
+1. **Locate the `index.txt` File**: This file is located in the root of the filters directory.
 
 2. **Add Shader Filenames**: Open `index.txt` in a text editor. Add the full filename of each shader you wish to use in the program, one filename per line. For example:
+ 
     ```
     shader1.glsl
     shadedr2.glsl
     ```
-    Ensure that each filename matches exactly with the name of the shader file in your project directory.
+    Ensure that each filename matches exactly with the name of the shader file in your project filters directory.
 
 3. **Save Changes**: After adding all necessary shader filenames, save and close `index.txt`.
 
