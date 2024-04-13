@@ -392,6 +392,7 @@ plasma_xor.glsl
 fractal.glsl
 psych_pattern.glsl
 glitch_effect.glsl
+glitch1.glsl
 water.glsl
 water_full.glsl
 twist.glsl
@@ -446,3 +447,4 @@ psyche_ripple.glsl
 twist_directions.glsl
 ripple.glsl
 minimize.glsl
+
