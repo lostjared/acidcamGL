@@ -393,6 +393,7 @@ fractal.glsl
 psych_pattern.glsl
 glitch_effect.glsl
 glitch1.glsl
+glitch_jump.glsl
 block_pixels.glsl
 water.glsl
 water_full.glsl
