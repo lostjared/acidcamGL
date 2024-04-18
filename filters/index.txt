@@ -396,6 +396,7 @@ glitch1.glsl
 glitch_jump.glsl
 block_pixels.glsl
 shake.glsl
+new_glitch.glsl
 water.glsl
 water_full.glsl
 twist.glsl
