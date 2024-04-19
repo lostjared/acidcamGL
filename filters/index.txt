@@ -452,4 +452,4 @@ twist_directions.glsl
 ripple.glsl
 minimize.glsl
 neon.glsl
-
+geometric.glsl
