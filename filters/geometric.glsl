@@ -8,6 +8,7 @@ uniform float time_f;
 void main(void) {
     vec2 uv = tc * iResolution / vec2(iResolution.y);
     float time = time_f * 0.5;
+    float time_t = mod(time_f, 10.0);
     float angle = time;
     vec2 center = vec2(0.5, 0.5) * iResolution / vec2(iResolution.y);
     vec2 toCenter = uv - center;
@@ -18,5 +19,5 @@ void main(void) {
     vec3 finalColor = (0.2 + 0.8 * pattern) + colorShift * pattern;
     vec4 text_color = texture(samp, tc);
     vec4 fc = vec4(finalColor, 1.0);
-    color = mix(text_color, fc, 0.5 * time);
+    color = mix(text_color, fc, 0.3);
 }
