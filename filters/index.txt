@@ -454,3 +454,4 @@ minimize.glsl
 neon.glsl
 geometric.glsl
 geometric2.glsl
+geometric3.glsl
