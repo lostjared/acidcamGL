@@ -460,3 +460,4 @@ geometric5.glsl
 star5.glsl
 starX.glsl
 starX2.glsl
+starX3.glsl
