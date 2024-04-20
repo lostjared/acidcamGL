@@ -457,3 +457,4 @@ geometric2.glsl
 geometric3.glsl
 geometric4.glsl
 geometric5.glsl
+star5.glsl
