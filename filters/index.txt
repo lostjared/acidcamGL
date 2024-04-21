@@ -462,3 +462,4 @@ starX.glsl
 starX2.glsl
 starX3.glsl
 starX4.glsl
+smoke.glsl
