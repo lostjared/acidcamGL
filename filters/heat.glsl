@@ -11,11 +11,11 @@ float noise(vec2 st) {
 
 void main(void) {
     vec2 uv = tc;
-    float time = time_f * 0.1;
-    vec2 noiseOffset = vec2(noise(uv + time), noise(uv - time));
-    noiseOffset = (noiseOffset - 0.5) * 0.2;
-    vec2 nuv = uv + noiseOffset;
+    float time = time_f * 0.5;
+    float noiseValue = noise(uv * 10.0 + time);
+    vec2 heatWaveOffset = vec2(noiseValue - 0.5, 0.0) * 0.02;
+    vec2 nuv = uv + heatWaveOffset;
     vec4 texColor = texture(samp, nuv);
-    vec4 smokeColor = mix(texColor, vec4(0.6, 0.6, 0.6, 1.0), 0.2);
-    color = smokeColor;
+    color = texColor;
 }
+
