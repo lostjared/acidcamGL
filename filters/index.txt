@@ -465,6 +465,7 @@ starX4.glsl
 kale.glsl
 kale2.glsl
 kale3.glsl
+kale4.glsl
 smoke.glsl
 heat.glsl
 focus.glsl
