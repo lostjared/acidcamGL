@@ -470,3 +470,4 @@ smoke.glsl
 heat.glsl
 focus.glsl
 diamond.glsl
+effect.glsl
