@@ -14,7 +14,12 @@ Just to create something that I can use to create fun video and artwork to share
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
 Please read this entire document before using the software. On MacOS you may have to give the Terminal or the application privileges to use the webcam and capture the desktop.
+This program requires a lot of ram. If you wish to run with lower ram set 
+the size of the memory pool with -8 flag. Example:
 
+```bash
+	acidcamGL -d 0 -c 1920x1080 -r 1920x1080 -u 30 -8 200
+```
 # How to compile on macOS:
 
 This project requires libacidcam,GLFW,GLEW,OpenGL,OpenCV,FFmpeg
