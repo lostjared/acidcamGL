@@ -20,7 +20,8 @@ void main(void) {
     );
     float feedback = rand(uv + time_f);
     vec2 feedbackUv = tc;//warp /*+ feedback * 0.01*/;
+    float time_t = mod(time_f, 10);
     vec4 texColor = texture(samp, feedbackUv);
-    vec3 finalColor = texColor.rgb + sin(colorShift * time_f * 0.5);
-    color = cos(vec4(finalColor, texColor.a) * (time_f * 0.5));
+    vec3 finalColor = texColor.rgb + colorShift;
+    color = cos(vec4(finalColor, texColor.a) * (time_t * 0.5));
 }
