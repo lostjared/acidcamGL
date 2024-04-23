@@ -34,9 +34,9 @@ void main(void) {
     );
     float feedback = rand(uv + time_f);
     vec2 feedbackUv = tc;//warp /*+ feedback * 0.01*/;
-    float time_t = mod(time_f, 50);
+    float time_t = mod(time_f, 10);
     vec4 texColor = texture(samp, feedbackUv);
     vec3 finalColor = texColor.rgb + colorShift;
-    color = tan(vec4(finalColor, texColor.a) * time_t);
-
+    color = vec4(finalColor, texColor.a);
+    color = xor_RGB(texture(samp, tc), color);
 }
