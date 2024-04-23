@@ -19,8 +19,8 @@ void main(void) {
         0.5 * sin(time_f * 0.3 + 4.0) + 0.5
     );
     float feedback = rand(uv + time_f);
-    vec2 feedbackUv = warp;/// + feedback * 0.01;
+    vec2 feedbackUv = tc;//warp /*+ feedback * 0.01*/;
     vec4 texColor = texture(samp, feedbackUv);
-    vec3 finalColor = texColor.rgb + colorShift;
-    color = sin(vec4(finalColor, texColor.a) * (time_f * 0.5));
+    vec3 finalColor = texColor.rgb + sin(colorShift * time_f * 0.5);
+    color = cos(vec4(finalColor, texColor.a) * (time_f * 0.5));
 }
