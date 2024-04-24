@@ -19,7 +19,7 @@ void main() {
     vec2 waterUV = vec2(uv.x, uv.y + waterAmount);
 
     vec4 texColor1 = texture(samp, rippleUV);
-    vec4 texColor2 = texture(mat_samp, waterUV);
+    vec4 texColor2 = texture(mat_samp, rippleUV);
     float mixFactor = 0.5 + 0.5 * sin(time_f);
     vec4 finalColor = mix(texColor1, texColor2, 0.5);
 
