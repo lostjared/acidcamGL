@@ -473,3 +473,4 @@ diamond.glsl
 effect.glsl
 color_effect.glsl
 color_effect_xor.glsl
+grad.glsl
