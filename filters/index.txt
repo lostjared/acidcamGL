@@ -301,6 +301,8 @@ material_twist.glsl
 material_frost.glsl
 material_fire_gradient.glsl
 material_psyche_ripple.glsl
+material_stretch.glsl
+material_ripple.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
@@ -476,3 +478,4 @@ color_effect_xor.glsl
 grad.glsl
 grad2.glsl
 grad3.glsl
+
