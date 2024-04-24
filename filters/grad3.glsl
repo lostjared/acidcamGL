@@ -28,9 +28,9 @@ void main(void) {
         sin(uv.x * 20.0 + time_f) * 0.1
     );
     vec3 colorShift = vec3(
-        0.5 * sin(time_f * 0.2) + 0.8,
-        0.5 * sin(time_f * 0.4 + 6.0) + 0.5,
-        0.5 * sin(time_f * 0.6 + 4.0) + 0.5
+        0.2 * sin(time_f * 0.2) + 0.8,
+        0.4 * sin(time_f * 0.4 + 6.0) + 0.5,
+        0.8 * sin(time_f * 0.6 + 4.0) + 0.5
     );
     float time_t = mod(time_f, 50);
     float feedback = rand(uv + time_f);
