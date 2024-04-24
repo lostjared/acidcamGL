@@ -474,3 +474,5 @@ effect.glsl
 color_effect.glsl
 color_effect_xor.glsl
 grad.glsl
+grad2.glsl
+grad3.glsl
