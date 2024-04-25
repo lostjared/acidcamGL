@@ -303,6 +303,7 @@ material_fire_gradient.glsl
 material_psyche_ripple.glsl
 material_stretch.glsl
 material_ripple.glsl
+material_twist_directions.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
