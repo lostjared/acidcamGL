@@ -309,6 +309,7 @@ material_kale.glsl
 material_mix_diag.glsl
 material_ripple_cycle.glsl
 material_cyclone.glsl
+material_wow.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
