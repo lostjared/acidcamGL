@@ -311,6 +311,7 @@ material_ripple_cycle.glsl
 material_cyclone.glsl
 material_wow.glsl
 material_matrix.glsl
+material_strange.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
@@ -487,3 +488,4 @@ grad.glsl
 grad2.glsl
 grad3.glsl
 alpha_diamond.glsl
+
