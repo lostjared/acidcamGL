@@ -312,6 +312,7 @@ material_cyclone.glsl
 material_wow.glsl
 material_matrix.glsl
 material_strange.glsl
+material_wave_diag.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
