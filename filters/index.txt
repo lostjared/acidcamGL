@@ -463,6 +463,7 @@ psyche_ripple.glsl
 twist_directions.glsl
 ripple.glsl
 minimize.glsl
+snake.glsl
 neon.glsl
 geometric.glsl
 geometric2.glsl
