@@ -316,6 +316,7 @@ material_wave_diag.glsl
 material_expand_mul_fast.glsl
 material_circle_s.glsl
 material_xor_two.glsl
+material_xor_sin_two.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
