@@ -464,6 +464,8 @@ twist_directions.glsl
 ripple.glsl
 minimize.glsl
 snake.glsl
+snake_updown.glsl
+snake_dir.glsl
 neon.glsl
 geometric.glsl
 geometric2.glsl
