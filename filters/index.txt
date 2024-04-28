@@ -313,6 +313,8 @@ material_wow.glsl
 material_matrix.glsl
 material_strange.glsl
 material_wave_diag.glsl
+material_expand_mul_fast.glsl
+material_circle_s.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
@@ -495,3 +497,4 @@ glitch_light.glsl
 snake_dir.glsl
 expand_mul.glsl
 expand_mul_fast.glsl
+
