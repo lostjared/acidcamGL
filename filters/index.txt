@@ -493,3 +493,4 @@ grad3.glsl
 alpha_diamond.glsl
 glitch_light.glsl
 snake_dir.glsl
+expand_mul.glsl
