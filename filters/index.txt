@@ -465,7 +465,6 @@ ripple.glsl
 minimize.glsl
 snake.glsl
 snake_updown.glsl
-snake_dir.glsl
 neon.glsl
 geometric.glsl
 geometric2.glsl
@@ -493,3 +492,4 @@ grad2.glsl
 grad3.glsl
 alpha_diamond.glsl
 glitch_light.glsl
+snake_dir.glsl

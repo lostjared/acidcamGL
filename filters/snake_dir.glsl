@@ -6,7 +6,7 @@ in vec2 tc;
 uniform sampler2D samp;
 uniform float time_f;
 uniform vec2 iResolution;
-uniform float alpha;
+in float alpha;
 
 vec4 snake1() {
     vec2 uv = tc * iResolution;
@@ -25,5 +25,6 @@ vec4 snake2() {
 }
 
 void main(void) {
-    color = mix(snake1(), snake2(), 0.5);
+    float time_t = mod(time_f, 10);
+    color = sin(mix(snake1(), snake2(), 0.5) * (alpha * time_t));
 }
