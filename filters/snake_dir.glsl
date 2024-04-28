@@ -25,5 +25,5 @@ vec4 snake2() {
 }
 
 void main(void) {
-    color = mix(snake1(), snake2(), 1.0);
+    color = mix(snake1(), snake2(), 0.5);
 }
