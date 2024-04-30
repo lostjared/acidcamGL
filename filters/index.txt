@@ -500,3 +500,4 @@ snake_dir.glsl
 expand_mul.glsl
 expand_mul_fast.glsl
 pool.glsl
+color_pool.glsl
