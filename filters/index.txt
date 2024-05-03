@@ -502,3 +502,4 @@ expand_mul_fast.glsl
 pool.glsl
 color_pool.glsl
 light_spiral.glsl
+goo.glsl
