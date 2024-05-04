@@ -503,3 +503,4 @@ pool.glsl
 color_pool.glsl
 light_spiral.glsl
 goo.glsl
+blackhole.glsl
