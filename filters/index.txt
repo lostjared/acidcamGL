@@ -505,3 +505,4 @@ light_spiral.glsl
 goo.glsl
 blackhole.glsl
 wave-l.glsl
+mirror-l.glsl
