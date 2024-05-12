@@ -511,3 +511,4 @@ color-f.glsl
 color-f-diag.glsl
 color-f2.glsl
 color-mod.glsl
+color-mod-dark.glsl
