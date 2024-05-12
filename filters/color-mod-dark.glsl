@@ -18,16 +18,12 @@ void main(void) {
     vec3 hsvColor = vec3(hue, 1.0, 1.0);
     vec3 smoothColor = hsv2rgb(hsvColor);
     vec3 blendedColor = mix(ctx.rgb, smoothColor, 0.5);
-
-    // Calculate modulation value for fade in and out
     float modulation = (sin(time_f) + 1.0) / 2.0;
 
-    // Blend the texture color with a darker version and a lighter version
-    vec3 darkColor = blendedColor * 0.5; // Darker version of the color
-    vec3 brightColor = blendedColor * 1.5; // Brighter version of the color
+    vec3 darkColor = blendedColor * 0.5;
+    vec3 brightColor = blendedColor * 1.5;
 
-    // Interpolate between dark and bright color based on modulation value
-    vec3 finalColor = mix(darkColor, brightColor, modulation);
+     vec3 finalColor = mix(darkColor, brightColor, modulation);
 
     color = vec4(finalColor, ctx.a);
 }
