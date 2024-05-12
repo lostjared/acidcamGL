@@ -507,3 +507,5 @@ blackhole.glsl
 wave-l.glsl
 mirror-l.glsl
 lucy.glsl
+color-f.glsl
+color-f-diag.glsl
