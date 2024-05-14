@@ -25,4 +25,3 @@ void main(void) {
     
     color = mix(texColor, (shiftedColor1 + shiftedColor2) * 0.5, 0.5);
 }
-
