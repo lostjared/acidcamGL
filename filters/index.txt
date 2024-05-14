@@ -514,3 +514,4 @@ color-mod.glsl
 color-mod-dark.glsl
 glitchy-squish.glsl
 glitchy-rainbow.glsl
+color-o.glsl
