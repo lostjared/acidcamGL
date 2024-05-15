@@ -517,3 +517,4 @@ glitchy-rainbow.glsl
 color-o.glsl
 splash.glsl
 splash-x.glsl
+splash-y.glsl
