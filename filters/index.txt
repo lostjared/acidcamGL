@@ -518,3 +518,4 @@ color-o.glsl
 splash.glsl
 splash-x.glsl
 splash-y.glsl
+fractal2.glsl
