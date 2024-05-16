@@ -520,3 +520,4 @@ splash-x.glsl
 splash-y.glsl
 fractal2.glsl
 sac-geo.glsl
+sac-geo-xor.glsl
