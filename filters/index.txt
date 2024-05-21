@@ -521,3 +521,4 @@ splash-y.glsl
 fractal2.glsl
 sac-geo.glsl
 sac-geo-xor.glsl
+expand_spot.glsl
