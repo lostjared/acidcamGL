@@ -525,3 +525,4 @@ expand_spot.glsl
 tearing.glsl
 tearing_single.glsl
 tearing_max.glsl
+tearing_spiral.glsl
