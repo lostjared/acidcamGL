@@ -527,3 +527,4 @@ tearing_single.glsl
 tearing_max.glsl
 tearing_spiral.glsl
 fractal3.glsl
+square_grid.glsl
