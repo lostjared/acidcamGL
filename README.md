@@ -10,6 +10,20 @@
 
 Just to create something that I can use to create fun video and artwork to share online.
 
+# Notes:
+
+If downloading the Windows setup be sure to update to the most up-to-date shaders by downloading the project source code
+and copying the files in the filter/ directory into the same directory in the installation folder.
+Otherwise, you will be using an outdated list of default filters. The default folder for installation is:
+
+
+C:\Program Files\LostSideDead\acidcamGL\acidcamGL\acidcamGL_x64
+
+so the shaders directory is:
+
+C:\Program Files\LostSideDead\acidcamGL\acidcamGL\acidcamGL_x64\filters
+
+
 # Requirements
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
