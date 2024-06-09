@@ -12,7 +12,7 @@ Just to create something that I can use to create fun video and artwork to share
 
 # Notes:
 
-If downloading the Windows setup be sure to update to the most up-to-date shaders by downloading the project
+If downloading the Windows setup be sure to update to the most up-to-date shaders by downloading the project source code
 and copying the files in the filter/ directory into the same directory in the installation folder.
 Otherwise, you will be using an outdated list of default filters. The default folder for installation is:
 
