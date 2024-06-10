@@ -81,14 +81,6 @@ void mux_audio(const char *output, const char *src, const char *final_file) {
         std::cerr << "Error: could not open ffmpeg\n";
         return;
     }
-    while(!feof(fptr)) {
-        char buf[256];
-        fgets(buf, 256, fptr);
-        std::cout << buf;
-#if defined(__APPLE__) || defined(__linux__)
-        sendString(buf);
-#endif
-    }
 #ifndef _WIN32
     pclose(fptr);
 #else
@@ -108,14 +100,6 @@ void rotate_90(const char *output, const char *src) {
     if(!fptr) {
         std::cerr << "Error: could not open ffmpeg\n";
         return;
-    }
-    while(!feof(fptr)) {
-        char buf[256];
-        fgets(buf, 256, fptr);
-        std::cout << buf;
-#if defined(__APPLE__) || defined(__linux__)
-        sendString(buf);
-#endif
     }
 #ifndef _WIN32
     pclose(fptr);
