@@ -536,3 +536,5 @@ disk.glsl
 disk2.glsl
 bi_cycle.glsl
 yin-yang.glsl
+dark_rainbow.glsl
+bright_rainbow.glsl
