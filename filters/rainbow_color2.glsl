@@ -19,11 +19,11 @@ void main(void) {
     uv.y *= iResolution.y / iResolution.x;
     float angle = atan(uv.y, uv.x) + time_f * 20.0;
 
-    vec3 rainbow_color = rainbow(sin(angle * time_f) / (2.0 * 3.14159));
+    vec3 rainbow_color = rainbow(angle * time_f / (2.0 * 3.14159));
 
     vec4 original_color = texture(samp, tc);
     vec3 blended_color = mix(original_color.rgb, rainbow_color, 0.5);
 
-    color = vec4(tan(blended_color * time_f), original_color.a);
+    color = vec4(cos(blended_color * mod(time_f, 25.0)), original_color.a);
 }
 
