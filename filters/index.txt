@@ -539,3 +539,4 @@ yin-yang.glsl
 dark_rainbow.glsl
 bright_rainbow.glsl
 rainbow_color1.glsl
+rainbow_color2.glsl
