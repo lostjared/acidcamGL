@@ -26,7 +26,7 @@ vec2 swirl(vec2 p, float t, float seed) {
 }
 
 void main(void) {
-    float mod_time = mod(time_f, 19.0);
+    float mod_time = mod(time_f, 25.0);
     vec2 uv = tc * 2.0 - 1.0;
     uv.y *= iResolution.y / iResolution.x;
 
