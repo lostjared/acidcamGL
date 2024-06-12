@@ -7,6 +7,9 @@
 #include<cstdlib>
 #include"stereo.h"
 
+#ifdef MIDI_ENABLED
+#include"midi.hpp"
+#endif
 
 acidcam::AcidCam_Window main_window;
 std::unordered_map<std::string, int> draw_strings_map;
@@ -181,6 +184,31 @@ void system_pause() {
 #endif
 }
 
+#ifdef MIDI_ENABLED
+void the_callback(std::vector<unsigned char> *message) {
+    unsigned int nBytes = message->size();
+    std::cout << "acidcam: MIDI message: {\n";
+      for ( unsigned int i=0; i<nBytes; i++ ) {
+          std::cout << "Byte " << i << " = " << (int)message->at(i) << "\n";
+      }
+    std::cout << "\n}\n";
+    
+    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 36 && message->at(2) == 0) {
+        main_window.keypress(GLFW_KEY_LEFT, 0, GLFW_RELEASE,0);
+    }
+
+    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 38 && message->at(2) == 0) {
+        main_window.keypress(GLFW_KEY_RIGHT, 0, GLFW_RELEASE,0);
+    }
+    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 40 && message->at(2) == 0) {
+        main_window.keypress(GLFW_KEY_UP, 0, GLFW_RELEASE,0);
+    }
+    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 41 && message->at(2) == 0) {
+        main_window.keypress(GLFW_KEY_DOWN, 0, GLFW_RELEASE,0);
+    }
+
+}
+#endif
 
 int main(int argc, char **argv) {
     atexit(system_pause);
@@ -212,6 +240,11 @@ int main(int argc, char **argv) {
         std::cout << "acidcam: Error initalizing GLFW...\n";
         acidcam::updateError();
     }
+    
+#ifdef MIDI_ENABLED
+    setup_main(&the_callback);
+#endif
+    
     ac::init();
     std::string filename;
     int w = 1280, h = 720;
@@ -756,6 +789,11 @@ int main(int argc, char **argv) {
     if(camera_mode == 1 && ffmpeg_enabled) {
        mux_audio_ac(output_file, filename);
     }
+    
+#ifdef MIDI_ENABLED
+    midi_cleanup();
+    std::cout << "acidcam: Midi shutdown.\n";
+#endif
     std::cout << "acidcam: exited\n";
 
     if(acidcam::redir == 1) {
