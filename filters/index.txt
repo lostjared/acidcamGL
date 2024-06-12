@@ -546,3 +546,5 @@ rainbow_color_swirl.glsl
 rainbow_expand.glsl
 rainbow_swirl_limit.glsl
 dark_rainbow_limit.glsl
+bit_rainbow.glsl
+8bit.glsl
