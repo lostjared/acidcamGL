@@ -544,6 +544,7 @@ rainbow_color3.glsl
 dark_rainbow_rubber_soul.glsl
 rainbow_color_swirl.glsl
 rainbow_expand.glsl
+rainbow_expand_noise.glsl
 rainbow_swirl_limit.glsl
 dark_rainbow_limit.glsl
 bit_rainbow.glsl
