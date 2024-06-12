@@ -193,17 +193,17 @@ void the_callback(std::vector<unsigned char> *message) {
       }
     std::cout << "\n}\n";
     
-    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 36 && message->at(2) == 0) {
+    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 48 && message->at(2) == 0) {
         main_window.keypress(GLFW_KEY_LEFT, 0, GLFW_RELEASE,0);
     }
 
-    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 38 && message->at(2) == 0) {
+    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 50 && message->at(2) == 0) {
         main_window.keypress(GLFW_KEY_RIGHT, 0, GLFW_RELEASE,0);
     }
-    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 40 && message->at(2) == 0) {
+    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 52 && message->at(2) == 0) {
         main_window.keypress(GLFW_KEY_UP, 0, GLFW_RELEASE,0);
     }
-    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 41 && message->at(2) == 0) {
+    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 53 && message->at(2) == 0) {
         main_window.keypress(GLFW_KEY_DOWN, 0, GLFW_RELEASE,0);
     }
 
