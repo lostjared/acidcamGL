@@ -28,5 +28,6 @@ void main(void) {
     vec4 original_color = texture(samp, tc);
     vec3 blended_color = mix(original_color.rgb, rainbow_color, 0.5);
 
-    color = vec4(sin(blended_color * time_f), original_color.a);
+    float time_t = mod(time_f, 30.0);
+    color = vec4(sin(blended_color * time_t), original_color.a);
 }
