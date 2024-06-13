@@ -9,7 +9,7 @@ DEPS := $(wildcard *.hpp)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(OUTPUT_NAME): $(OBJ_FILES)
-	$(CXX) $(LDFLAGS) $^ -o $@
+	$(CXX)  $^ -o $@ $(LDFLAGS)
 
 all: $(OUTPUT_NAME)
 
