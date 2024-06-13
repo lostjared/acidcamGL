@@ -1,0 +1,168 @@
+#include"midi_cfg.hpp"
+#include<iostream>
+#include "RtMidi.h"
+#include<array>
+
+bool chooseMidiPort( RtMidiIn *rtmidi );
+RtMidi::Api chooseMidiApi();
+void midi_cleanup();
+RtMidiIn *midiin = 0;
+std::vector<unsigned char> bytes;
+bool done = false;
+int setup_main();
+
+void mycallback( double deltatime, std::vector< unsigned char > *message, void */*userData*/ )
+{
+    for(int i = 0; i < message->size(); ++i) {
+        bytes.push_back(message->at(i));
+    }
+    done = true;
+}
+
+    std::vector<std::array<std::string, 3>> keys {
+        {"GLFW_KEY_LEFT", "263", "Filter index move left"},
+        {"GLFW_KEY_RIGHT", "262", "Filter index move right"},
+        {"GLFW_KEY_UP", "265", "Shader Index move up"},
+        {"GLFW_KEY_DOWN", "264", "Shader Index move down"},
+        {"GLFW_KEY_SPACE", "32", "Acid Cam filters enabled/disabled"},
+        {"GLFW_KEY_C", "67", "clear keyboard input"},
+        {"GLFW_KEY_E", "69", "move movement rate"},
+        {"GLFW_KEY_ENTER", "257", "Jump to currently typed index (type index with number keys at anytime)"},
+        {"GLFW_KEY_EQUAL", "61", "increase blend percentage"},
+        {"GLFW_KEY_F", "70", "process keyboard input for index"},
+        {"GLFW_KEY_G", "71", "Not used in descriptions"},
+        {"GLFW_KEY_H", "72", "Shuffle Playlist"},
+        {"GLFW_KEY_I", "73", "move movement rate"},
+        {"GLFW_KEY_J", "74", "jump backward index by 25"},
+        {"GLFW_KEY_K", "75", "jump forward index by 25"},
+        {"GLFW_KEY_L", "76", "enable disable playlist"},
+        {"GLFW_KEY_M", "77", "Enable/Disable Playlist Slideside random timeout"},
+        {"GLFW_KEY_MINUS", "45", "decrease blend percentage"},
+        {"GLFW_KEY_N", "78", "set index to the end"},
+        {"GLFW_KEY_O", "79", "move movement rate"},
+        {"GLFW_KEY_P", "80", "index reset to zero"},
+        {"GLFW_KEY_PAGE_DOWN", "267", "Restore Position Index"},
+        {"GLFW_KEY_PAGE_UP", "266", "Store Index Position"},
+        {"GLFW_KEY_Q", "81", "move movement rate"},
+        {"GLFW_KEY_R", "82", "move movement rate"},
+        {"GLFW_KEY_S", "83", "process keyboard input for shader"},
+        {"GLFW_KEY_SEMICOLON", "59", "Not used in descriptions"},
+        {"GLFW_KEY_T", "84", "reset color offset"},
+        {"GLFW_KEY_U", "85", "move movement rate"},
+        {"GLFW_KEY_W", "87", "move movement rate"},
+        {"GLFW_KEY_Y", "89", "move movement rate"},
+        {"GLFW_KEY_Z", "90", "take screenshot"}
+    };
+
+int main(int argc, char **argv) {
+    midi::MIDI_Config config;
+    setup_main();
+
+    for(int i = 0; i < keys.size(); ++i) {
+        std::cout << "Press Key on Controller for ASCII Keyboard Value: \n";
+        done = false;
+        std::cout << keys[i][0] << " value: " << keys[i][1] << "\n";
+        std::cout << "Desccription: " << keys[i][2] << "\n";
+        while(done == false) {}
+        done = false;
+        while(done == false) {}
+
+        std::cout << "Do you wish to use the Press Down, or Press Up:\n";
+        std::cout << "1 - Down\n2 - Up\n3 - Skip and Write File\n";
+        int ud = 0;
+        std::cin >> ud;
+        
+        if(ud == 1 && bytes.size() >= 2)
+            config.addCode(atoi(keys[i][0].c_str()), midi::Key(bytes[0], bytes[1], bytes[2]));
+        else if(ud == 2 && bytes.size() >= 5) 
+            config.addCode(atoi(keys[i][1].c_str()), midi::Key(bytes[3], bytes[4], bytes[5]));
+        else if(ud == 3) 
+            break;
+
+        if(!bytes.empty())
+            bytes.erase(bytes.begin(), bytes.end());
+
+        std::cout << "Keycode added\n";
+    }
+
+    midi_cleanup();
+    config.write("midi.midi_cfg");
+    std::cout << "Wrote: midi.midi_cfg\n";
+    return 0;
+}
+
+int setup_main()
+{
+  try {
+
+    midiin = new RtMidiIn(chooseMidiApi());
+    if ( chooseMidiPort( midiin ) == false ) {
+        midi_cleanup();
+        return 0;
+    }
+    midiin->setCallback( &mycallback );
+    midiin->ignoreTypes( false, false, false );
+    
+  } catch ( RtMidiError &error ) {
+    error.printMessage();
+  }
+    return 0;
+}
+
+void midi_cleanup() {
+  delete midiin;
+}
+
+bool chooseMidiPort( RtMidiIn *rtmidi )
+{
+  rtmidi->openVirtualPort();
+  std::string portName;
+  unsigned int i = 0, nPorts = rtmidi->getPortCount();
+  if ( nPorts == 0 ) {
+    std::cout << "No input ports available!" << std::endl;
+    return false;
+  }
+
+  if ( nPorts == 1 ) {
+    std::cout << "\nOpening " << rtmidi->getPortName() << std::endl;
+  }
+  else {
+    for ( i=0; i<nPorts; i++ ) {
+      portName = rtmidi->getPortName(i);
+      std::cout << "  Input port #" << i << ": " << portName << '\n';
+    }
+
+    do {
+      std::cout << "\nChoose a port number: ";
+      std::cin >> i;
+    } while ( i >= nPorts );
+      std::string keyHit;
+    std::getline( std::cin, keyHit );  // used to clear out stdin
+  }
+
+  rtmidi->openPort( i );
+
+  return true;
+}
+
+RtMidi::Api chooseMidiApi()
+{
+  std::vector< RtMidi::Api > apis;
+  RtMidi::getCompiledApi( apis );
+
+  if (apis.size() <= 1)
+      return RtMidi::Api::UNSPECIFIED;
+
+  std::cout << "\nAPIs\n  API #0: unspecified / default\n";
+  for (size_t n = 0; n < apis.size(); n++)
+      std::cout << "  API #" << apis[n] << ": " << RtMidi::getApiDisplayName(apis[n]) << "\n";
+
+  std::cout << "\nChoose an API number: ";
+  unsigned int i;
+  std::cin >> i;
+
+  std::string dummy;
+  std::getline( std::cin, dummy );  // used to clear out stdin
+
+  return static_cast< RtMidi::Api >( i );
+}
