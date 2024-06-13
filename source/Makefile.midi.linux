@@ -1,0 +1,19 @@
+#generic Makefile for Linux with rtmidi
+
+OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
+CFLAGS= -std=c++11 -O2 -DMIDI_ENABLED `pkg-config acidcam opencv4 glfw3 glew rtmidi --cflags` -DNO_SCREEN_GRAB 
+LDFLAGS=`pkg-config glfw3 glew opencv4 acidcam rtmidi --libs` 
+
+%.o: %.cpp
+	$(CXX) $(CFLAGS) $< -c -o $@
+
+acidcamGL: $(OBJ)
+	$(CXX) -std=c++11 -o acidcamGL.mid $(OBJ) $(LDFLAGS)
+
+all: example
+
+.PHONY: clean
+clean:
+	rm -f acidcamGL *.o
+install:
+	cp acidcamGL.mid /usr/local/bin
