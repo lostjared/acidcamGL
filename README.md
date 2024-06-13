@@ -26,6 +26,18 @@ C:\Program Files\LostSideDead\acidcamGL\acidcamGL\acidcamGL_x64\filters
 
 # Requirements
 
+Update: To compile in MIDI support (this is still in the progress of development) install rtmidi on Debian its called:
+
+ librtmidi-dev
+
+```bash
+make -f Makefile.midi.linux
+```
+or on macOS use
+```bash
+make -f Makefile.midi
+```
+
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
 Please read this entire document before using the software. On MacOS you may have to give the Terminal or the application privileges to use the webcam and capture the desktop.
 This program requires a lot of ram. If you wish to run with lower ram set 
