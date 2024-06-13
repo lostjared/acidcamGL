@@ -9,7 +9,6 @@
 
 #ifdef MIDI_ENABLED
 #include"midi.hpp"
-#include"midi_cfg.hpp"
 
 midi::MIDI_Config config;
 
