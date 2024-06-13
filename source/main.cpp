@@ -9,6 +9,10 @@
 
 #ifdef MIDI_ENABLED
 #include"midi.hpp"
+#include"midi_cfg.hpp"
+
+midi::MIDI_Config config;
+
 #endif
 
 acidcam::AcidCam_Window main_window;
@@ -186,6 +190,22 @@ void system_pause() {
 
 #ifdef MIDI_ENABLED
 void the_callback(std::vector<unsigned char> *message) {
+    
+    if(message->size() >= 2) {
+        unsigned int nBytes = message->size();
+        std::cout << "acidcam: MIDI message: {\n";
+        for (unsigned int i=0; i<nBytes; i++ ) {
+              std::cout << (int)message->at(i) << " ";
+        }
+        std::cout << "\n}\n";
+        int keyd = config.lookup(midi::Key(message->at(0), message->at(1), message->at(2)));
+        if(keyd != -1) {
+            
+            main_window.keypress(keyd, 0, GLFW_RELEASE, 0);
+        }
+    }
+    
+    /*
     unsigned int nBytes = message->size();
     std::cout << "acidcam: MIDI message: {\n";
       for ( unsigned int i=0; i<nBytes; i++ ) {
@@ -206,7 +226,9 @@ void the_callback(std::vector<unsigned char> *message) {
     if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 53 && message->at(2) == 0) {
         main_window.keypress(GLFW_KEY_DOWN, 0, GLFW_RELEASE,0);
     }
-
+    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 49 && message->at(2) == 0) {
+        main_window.keypress(GLFW_KEY_SPACE, 0, GLFW_RELEASE,0);
+    }*/
 }
 #endif
 
@@ -242,6 +264,12 @@ int main(int argc, char **argv) {
     }
     
 #ifdef MIDI_ENABLED
+    char *m_p = getenv("AC_MIDI");
+    if(m_p == NULL) {
+        std::cerr << "acidcam: Error requires enviorment variable AC_MIDI \nwith path to midi_config file.\n";
+        exit(EXIT_FAILURE);
+    }
+    config.read(m_p);
     setup_main(&the_callback);
 #endif
     

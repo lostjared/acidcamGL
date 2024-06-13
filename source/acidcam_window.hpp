@@ -44,6 +44,13 @@ extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #include"plugin-program.hpp"
 #include"stereo.h"
 
+#ifdef MIDI_ENABLED
+#include"midi_cfg.hpp"
+
+extern midi::MIDI_Config config;
+
+#endif
+
 extern int findFilter(std::string f);
 
 namespace acidcam {
