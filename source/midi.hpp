@@ -41,7 +41,8 @@ int setup_main(callback cbk)
 }
 
 void midi_cleanup() {
-  delete midiin;
+  if(midiin != 0)
+    delete midiin;
 }
 
 bool chooseMidiPort( RtMidiIn *rtmidi )

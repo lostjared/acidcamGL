@@ -3,8 +3,8 @@
 
 OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
 #OPECV_LIBS= ./static/*a
-CFLAGS= -mmacosx-version-min=10.13 -std=c++11 -O2 `pkg-config glfw3 glew acidcam` -DNO_SCREEN_GRAB -I./macos/include -I.
-LDFLAGS=-mmacosx-version-min=10.13 `pkg-config glfw3 --libs` -framework VideoDecodeAcceleration  -lblas -lcblas -lclapack -llapack -lf77lapack -framework CoreVideo -framework CoreMedia -framework OpenGL -framework Cocoa -framework IOKit -framework AVKit -framework AVFoundation  -framework OpenCL  -lbz2  macos/cvlibs/*a
+CFLAGS= -mmacosx-version-min=10.14 -std=c++11 -O2 `pkg-config glfw3 glew acidcam` -DNO_SCREEN_GRAB -I./macos/include -I.
+LDFLAGS=-mmacosx-version-min=10.14 `pkg-config glfw3 --libs` -framework VideoDecodeAcceleration  -lblas -lcblas -lclapack -llapack -lf77lapack -framework CoreVideo -framework CoreMedia -framework OpenGL -framework Cocoa -framework IOKit -framework AVKit -framework AVFoundation  -framework OpenCL  -lbz2  macos/cvlibs/*a
 
 %.o: %.cpp
 	$(CXX) $(CFLAGS) $< -c -o $@

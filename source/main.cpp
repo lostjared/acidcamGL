@@ -189,7 +189,6 @@ void system_pause() {
 
 #ifdef MIDI_ENABLED
 void the_callback(std::vector<unsigned char> *message) {
-    
     if(message->size() >= 2) {
         unsigned int nBytes = message->size();
         std::cout << "acidcam: MIDI message: {\n";
@@ -203,31 +202,6 @@ void the_callback(std::vector<unsigned char> *message) {
             main_window.keypress(keyd, 0, GLFW_RELEASE, 0);
         }
     }
-    
-    /*
-    unsigned int nBytes = message->size();
-    std::cout << "acidcam: MIDI message: {\n";
-      for ( unsigned int i=0; i<nBytes; i++ ) {
-          std::cout << "Byte " << i << " = " << (int)message->at(i) << "\n";
-      }
-    std::cout << "\n}\n";
-    
-    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 48 && message->at(2) == 0) {
-        main_window.keypress(GLFW_KEY_LEFT, 0, GLFW_RELEASE,0);
-    }
-
-    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 50 && message->at(2) == 0) {
-        main_window.keypress(GLFW_KEY_RIGHT, 0, GLFW_RELEASE,0);
-    }
-    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 52 && message->at(2) == 0) {
-        main_window.keypress(GLFW_KEY_UP, 0, GLFW_RELEASE,0);
-    }
-    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 53 && message->at(2) == 0) {
-        main_window.keypress(GLFW_KEY_DOWN, 0, GLFW_RELEASE,0);
-    }
-    if(nBytes >= 2 && message->at(0) == 128 && message->at(1) == 49 && message->at(2) == 0) {
-        main_window.keypress(GLFW_KEY_SPACE, 0, GLFW_RELEASE,0);
-    }*/
 }
 #endif
 
