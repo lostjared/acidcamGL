@@ -59,7 +59,7 @@ export AC_MIDI=/Users/jared/acidcamGL/midi.midi_cfg
 Your MIDI controller should now be configured and ready for use with the program.
 Be sure to run the right acidcamGL program the Linux and MacOS Makefiles give the program different names
 
-## Requirements
+## System Requirements
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
 Please read this entire document before using the software. On MacOS you may have to give the Terminal or the application privileges to use the webcam and capture the desktop.
