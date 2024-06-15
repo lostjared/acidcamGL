@@ -2,7 +2,7 @@
 
 ![ScreenShot](https://github.com/lostjared/acidcamGL/blob/master/screens/acgl.jpg "windows screenshot")
 
-![ScreenShot1](https://github.com/lostjared/acidcamGL/blob/master/screens/obs.jpg?raw=true "screenshot1")
+![ScreenShot1](https://github.com/lostjared/acidcamGL/blob/master/screens/ac.mac.jpg?raw=true "screenshot1")
 
 ![ScreenShot2](https://github.com/lostjared/acidcamGL/blob/master/screens/screen_linux.jpg?raw=true "screenshot2")
 
