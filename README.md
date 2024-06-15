@@ -32,11 +32,34 @@ Update: To compile in MIDI support (this is still in the progress of development
 
 ```bash
 make -f Makefile.midi.linux
+sudo make -f Makefile.midi.linux install
 ```
 or on macOS use
 ```bash
 make -f Makefile.midi
+sudo make -f Makefile.midi install
 ```
+
+To configure your MIDI controller, follow these steps:
+
+- Compile and run the midi-cfg configuration tool in source code sub-directory midi-cfg/
+
+- Use the tool to configure your MIDI controller.
+
+- Copy the outputted configuration file, midi.midi_cfg, to your application directory.
+
+- Set the environment variable by running the following command to point to the location of midi.midi_cfg
+
+```bash
+export AC_MIDI=/Users/jared/acidcamGL/midi.midi_cfg
+```
+
+- Run the application like normal
+
+Your MIDI controller should now be configured and ready for use with the program.
+Be sure to run the right acidcamGL program the Linux and MacOS Makefiles give the program different names
+
+## Requirements
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
 Please read this entire document before using the software. On MacOS you may have to give the Terminal or the application privileges to use the webcam and capture the desktop.
