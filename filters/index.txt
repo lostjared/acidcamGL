@@ -555,3 +555,4 @@ rainbow_ink.glsl
 ripple_rainbow.glsl
 psych_ripple.glsl
 psych_wave_rainbow.glsl
+dark_psych.glsl
