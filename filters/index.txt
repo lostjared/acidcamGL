@@ -553,3 +553,4 @@ bit_rainbow.glsl
 rainbow_ink_t.glsl
 rainbow_ink.glsl
 ripple_rainbow.glsl
+psych_ripple.glsl
