@@ -556,3 +556,4 @@ ripple_rainbow.glsl
 psych_ripple.glsl
 psych_wave_rainbow.glsl
 dark_psych.glsl
+dark_psych_wave.glsl
