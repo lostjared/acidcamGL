@@ -2,8 +2,8 @@
 
 OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
 #OPECV_LIBS= ./static/*a
-CFLAGS= -F. -mmacosx-version-min=10.14 -DSYPHON_SERVER -std=c++11 -O2 `pkg-config glfw3 glew acidcam` -I./macos/include -I.
-LDFLAGS=-mmacosx-version-min=10.14 `pkg-config glfw3 --libs` -framework VideoDecodeAcceleration  -lblas -lcblas -lclapack -llapack -lf77lapack -framework CoreVideo -framework CoreMedia -framework OpenGL -framework Cocoa -framework IOKit -framework AVKit -framework AVFoundation  -framework OpenCL  -lbz2  macos/cvlibs/*a -framework Cocoa -framework AppKit -framework Foundation
+CFLAGS= -F. -mmacosx-version-min=10.14 -DSYPHON_SERVER -DMIDI_ENABLED -std=c++11 -O2 `pkg-config glfw3 glew acidcam rtmidi --cflags` -I./macos/include -I.
+LDFLAGS=-mmacosx-version-min=10.14 `pkg-config glfw3 rtmidi --libs` -framework VideoDecodeAcceleration  -lblas -lcblas -lclapack -llapack -lf77lapack -framework CoreVideo -framework CoreMedia -framework OpenGL -framework Cocoa -framework IOKit -framework AVKit -framework AVFoundation  -framework OpenCL  -lbz2  macos/cvlibs/*a -framework Cocoa -framework AppKit -framework Foundation
 
 %.o: %.cpp
 	$(CXX) $(CFLAGS) $< -c -o $@
@@ -11,13 +11,13 @@ LDFLAGS=-mmacosx-version-min=10.14 `pkg-config glfw3 --libs` -framework VideoDec
 acidcamGL: $(OBJ) *.hpp
 	$(CXX) $(CFLAGS) -DSYPHON_SERVER syphon.mm -c
 	make -C libacidcam
-	$(CXX) -std=c++11 -o acidcamGL $(OBJ) syphon.o  libacidcam/libacidcam.a $(LDFLAGS) -F. -framework AGL -framework Syphon 
+	$(CXX) -std=c++11 -o acidcamGL_midi  $(OBJ) syphon.o  libacidcam/libacidcam.a $(LDFLAGS) -F. -framework AGL -framework Syphon 
 
 all: acidcamGL
 
 .PHONY: clean
 clean:
-	rm -f acidcamGL *.o
+	rm -f acidcamGL_midi *.o
 
 install:
-	cp acidcamGL /usr/local/bin/acidcamGL
+	cp acidcamGL_midi /usr/local/bin/acidcamGL_midi
