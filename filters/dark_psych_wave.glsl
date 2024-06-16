@@ -28,7 +28,6 @@ void main(void) {
         sin(colorIntensity * 6.28318 + 2.09439) * 0.5 + 0.5,
         sin(colorIntensity * 6.28318 + 4.18879) * 0.5 + 0.5
     );
-    vec3 baseColor = psychedelicColor;
 
     uv = tc * 2.0 - 1.0;
     float t = mod(time_f, 20);
@@ -39,12 +38,13 @@ void main(void) {
     vec3 blendedColor = mix(originalColor.rgb, rainbowColor, 0.5);
     vec4 finalColor = vec4(sin(blendedColor * t), originalColor.a);
 
+    finalColor = mix(finalColor, vec4(psychedelicColor, 1.0), 0.5);
+
     vec2 normCoord = ((gl_FragCoord.xy / iResolution.xy) * 2.0 - 1.0) * vec2(iResolution.x / iResolution.y, 1.0);
     float distanceFromCenter = length(normCoord);
     float wave = sin(distanceFromCenter * 12.0 - time_f * 4.0);
     vec2 tcAdjusted = tc + (normCoord * 0.301 * wave);
     vec4 textureColor = texture(samp, tcAdjusted);
 
-    finalColor = mix(finalColor, vec4(baseColor, 1.0), 0.5);
     color = mix(textureColor, finalColor, 0.5);
 }
