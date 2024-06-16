@@ -552,3 +552,4 @@ bit_rainbow.glsl
 8bit.glsl
 rainbow_ink_t.glsl
 rainbow_ink.glsl
+ripple_rainbow.glsl
