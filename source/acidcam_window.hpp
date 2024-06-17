@@ -126,6 +126,7 @@ namespace acidcam {
         bool time_manip = false;
         float time_manip_f = 1.0f;
         bool time_keys[2];
+        bool restore_value = false;
     public:
         
         AcidCam_Window() = default;
@@ -563,15 +564,23 @@ namespace acidcam {
             if(time_keys[0]) {
                 if(time_manip_f > 1.0) {
                     time_manip_f -= 0.05;
-                    std::cout << "acidcm: Time: " << time_manip_f << " shifted back.\n";
+                    std::cout << "acidcam: Time: " << time_manip_f << " shifted back.\n";
                 }
             } else if(time_keys[1]) {
                     time_manip_f += 0.05;
-                    std::cout << "acidcm: Time: " << time_manip_f << " shifted forward.\n";
+                    std::cout << "acidcam: Time: " << time_manip_f << " shifted forward.\n";
+            }
+
+            if(restore_value == true) {
+                time_manip_f = timeval;
+                restore_value = false;
+                std::cout << "acidcam: Restored time value to current.\n";
             }
             
             if(time_manip)
                 timeval = time_manip_f;
+
+
 
             if(enable_cubeapp) {
                 update_cube(timeval);
@@ -1066,6 +1075,9 @@ namespace acidcam {
                             std::cout << "acidcam: Manual time manipulation toggled on.\n";
                         else
                             std::cout << "acidcam: Manual time manipulation toggled off.\n";
+                        break;
+                    case GLFW_KEY_3:
+                        restore_value = true;
                         break;
                     case GLFW_KEY_SEMICOLON:
                         blur_enabled = !blur_enabled;
