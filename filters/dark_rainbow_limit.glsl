@@ -14,10 +14,15 @@ vec3 rainbow(float t) {
     return clamp(vec3(r, g, b), 0.0, 1.0);
 }
 
+float pingPong(float x, float length) {
+    float modVal = mod(x, length * 2.0);
+    return modVal <= length ? modVal : length * 2.0 - modVal;
+}
+
 void main(void) {
     vec2 uv = tc * 2.0 - 1.0;
     
-    float t = mod(time_f, 20);
+    float t = pingPong(time_f, 20) + 1.0;
     
     uv.y *= iResolution.y / iResolution.x;
     float angle = atan(uv.y, uv.x) + t * 20.0;
