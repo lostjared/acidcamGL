@@ -559,3 +559,5 @@ dark_psych.glsl
 dark_psych_wave.glsl
 plasma_rainbow.glsl
 rainbow_light_swirl.glsl
+echo_rainbow_spin.glsl
+echo_rainbow_swirl.glsl
