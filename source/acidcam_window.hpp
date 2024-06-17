@@ -123,6 +123,9 @@ namespace acidcam {
         AutoFilter af;
         bool af_enabled = false;
         std::string material_file;
+        bool time_manip = false;
+        float time_manip_f = 1.0f;
+        bool time_keys[2];
     public:
         
         AcidCam_Window() = default;
@@ -556,7 +559,20 @@ namespace acidcam {
         virtual void update(double timeval) override {
             if (paused)
                 return;
+
+            if(time_keys[0]) {
+                if(time_manip_f > 1.0) {
+                    time_manip_f -= 0.05;
+                    std::cout << "acidcm: Time: " << time_manip_f << " shifted back.\n";
+                }
+            } else if(time_keys[1]) {
+                    time_manip_f += 0.05;
+                    std::cout << "acidcm: Time: " << time_manip_f << " shifted forward.\n";
+            }
             
+            if(time_manip)
+                timeval = time_manip_f;
+
             if(enable_cubeapp) {
                 update_cube(timeval);
                 return;
@@ -1009,8 +1025,21 @@ namespace acidcam {
             if(key == GLFW_KEY_ESCAPE) {
                 quit();
                 return;
+            }   
+            if(action == GLFW_PRESS) {
+                if(mode == GLFW_MOD_SHIFT) {
+                    switch(key) {
+                        case GLFW_KEY_LEFT:
+                        time_keys[0] = true;
+                        time_keys[1] = false;
+                        break;
+                        case GLFW_KEY_RIGHT:
+                        time_keys[1] = true;
+                        time_keys[0] = false;
+                        break;
+                    }
+                }
             }
-            
             if(action == GLFW_RELEASE) {
                 int f = 0, s = 0;
                 if(mapped_keys.checkKey(key, f, s)) {
@@ -1018,6 +1047,7 @@ namespace acidcam {
                     std::cout << "acidcam: Filter: " << ac::solo_filter[index] << "\n";
                     setShader(s);
                     return;
+                
                 }
                 
                 switch(key) {
@@ -1029,6 +1059,13 @@ namespace acidcam {
                             else
                                 std::cout << "acidcam Stereo: off\n";
                         }
+                        break;
+                    case GLFW_KEY_2:
+                        time_manip = !time_manip;
+                        if(time_manip) 
+                            std::cout << "acidcam: Manual time manipulation toggled on.\n";
+                        else
+                            std::cout << "acidcam: Manual time manipulation toggled off.\n";
                         break;
                     case GLFW_KEY_SEMICOLON:
                         blur_enabled = !blur_enabled;
@@ -1143,6 +1180,11 @@ namespace acidcam {
                         }
                         break;
                     case GLFW_KEY_LEFT:
+
+                        if(mode == GLFW_MOD_SHIFT) {
+                            time_keys[0] = false;
+                        }
+
                         if(list_enabled == false) {
                             if(index > 0) {
                                 --index;
@@ -1163,6 +1205,12 @@ namespace acidcam {
                         }
                         break;
                     case GLFW_KEY_RIGHT:
+
+                        if(mode == GLFW_MOD_SHIFT) {
+                            time_keys[1] = false;
+                            break;
+                        }
+
                         if(list_enabled == false) {
                             if(index < ac::solo_filter.size()-1) {
                                 ++index;
@@ -1810,6 +1858,7 @@ namespace acidcam {
             glUniform1i(mat_samp, 1);
             glUniform1f(c_index, (float)index);
             glUniform1f(c_tf, timeval);
+
             glUniform4fv(inc_value_pos, 1, glm::value_ptr(inc_value));
             glUniform4fv(inc_value_posx, 1, glm::value_ptr(inc_valuex));
             
