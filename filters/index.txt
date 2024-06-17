@@ -561,3 +561,4 @@ plasma_rainbow.glsl
 rainbow_light_swirl.glsl
 echo_rainbow_spin.glsl
 echo_rainbow_swirl.glsl
+echo_div4_rainbow.glsl
