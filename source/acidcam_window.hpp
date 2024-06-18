@@ -1201,6 +1201,7 @@ namespace acidcam {
 
                         if(mode == GLFW_MOD_SHIFT) {
                             time_keys[0] = false;
+                            break;
                         }
 
                         if(list_enabled == false) {
