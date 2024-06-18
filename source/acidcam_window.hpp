@@ -1061,23 +1061,29 @@ namespace acidcam {
                 
                 switch(key) {
                     case GLFW_KEY_1:
-                        if(video_mode == true) {
-                            stereo_mode =!stereo_mode;
-                            if(stereo_mode)
-                                std::cout << "acidcam: Stereo: on\n";
-                            else
-                                std::cout << "acidcam Stereo: off\n";
-                        }
+                        if(mode == GLFW_MOD_SHIFT) {
+                            if(video_mode == true) {
+                                stereo_mode =!stereo_mode;
+                                if(stereo_mode)
+                                    std::cout << "acidcam: Stereo: on\n";
+                                else
+                                    std::cout << "acidcam Stereo: off\n";
+                            }
+                    }
                         break;
                     case GLFW_KEY_2:
-                        time_manip = !time_manip;
-                        if(time_manip) 
-                            std::cout << "acidcam: Manual time manipulation toggled on.\n";
-                        else
-                            std::cout << "acidcam: Manual time manipulation toggled off.\n";
+                        if(mode == GLFW_MOD_SHIFT) {
+                            time_manip = !time_manip;
+                            if(time_manip) 
+                                std::cout << "acidcam: Manual time manipulation toggled on.\n";
+                            else
+                                std::cout << "acidcam: Manual time manipulation toggled off.\n";
+                        }
                         break;
                     case GLFW_KEY_3:
-                        restore_value = true;
+                        if(mode == GLFW_MOD_SHIFT) {
+                            restore_value = true;
+                        }
                         break;
                     case GLFW_KEY_SEMICOLON:
                         blur_enabled = !blur_enabled;
