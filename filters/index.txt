@@ -563,3 +563,4 @@ echo_rainbow_spin.glsl
 echo_rainbow_swirl.glsl
 echo_div4_rainbow.glsl
 rainbow_swirl_limit_discard.glsl
+color_grad1.glsl
