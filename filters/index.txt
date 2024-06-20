@@ -566,3 +566,4 @@ rainbow_swirl_limit_discard.glsl
 color_grad1.glsl
 color_grad_rainbow.glsl
 slither.glsl
+slither_vert.glsl
