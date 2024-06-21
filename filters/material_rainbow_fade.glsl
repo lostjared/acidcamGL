@@ -7,6 +7,11 @@ uniform sampler2D mat_samp;
 uniform float time_f;
 uniform vec2 iResolution;
 
+float pingPong(float x, float length) {
+    float modVal = mod(x, length * 2.0);
+    return modVal <= length ? modVal : length * 2.0 - modVal;
+}
+
 float hash(float n) {
     return fract(sin(n) * 43758.5453123);
 }
@@ -48,6 +53,6 @@ void main(void) {
     float blend_factor = (sin(time_f) + 1.0) * 0.5;
     vec4 blended_color = mix(color1, color2, blend_factor);
     vec3 final_color = mix(blended_color.rgb, rainbow_color, 0.5);
-    float time_t = mod(time_f, 30.0);
+    float time_t = pingPong(time_f, 30.0) + 2.0;
     color = vec4(sin(final_color * time_t), blended_color.a);
 }
