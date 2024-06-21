@@ -570,3 +570,4 @@ slither_vert.glsl
 spiral_mirror_wave.glsl
 grid_pattern.glsl
 shrink_texture.glsl
+shrink_texture_4.glsl
