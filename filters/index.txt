@@ -573,3 +573,5 @@ shrink_texture.glsl
 shrink_texture_4.glsl
 open_up.glsl
 open_shadow.glsl
+open_shadow_multi.glsl
+open_shadow_jump.glsl
