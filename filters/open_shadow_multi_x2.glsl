@@ -21,5 +21,5 @@ void main(void) {
 
     vec4 shadowColor = (shadowColor1 + shadowColor2 + shadowColor3) / 3.0;
 
-    color = mix(currentColor, shadowColor, 0.5);
+    color = mix(currentColor, shadowColor, 0.9);
 }
