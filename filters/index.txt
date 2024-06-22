@@ -575,3 +575,4 @@ open_up.glsl
 open_shadow.glsl
 open_shadow_multi.glsl
 open_shadow_jump.glsl
+open_shadow_multi_x2.glsl
