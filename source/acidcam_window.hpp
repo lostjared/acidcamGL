@@ -288,6 +288,10 @@ namespace acidcam {
         int index;
         
         void setShader(int index) {
+            if(index < 0 || index > shaders.size()) {
+                std::cerr << "acidcam: Shader Index: Out of range setting default...\n";
+                index = 0;
+            }
             program = shaders[index];
             if(debug) {
                 std::cout << "acidcam: Shader Program: " << index << " - Loaded: " << program.name() << "\n";
