@@ -572,3 +572,4 @@ grid_pattern.glsl
 shrink_texture.glsl
 shrink_texture_4.glsl
 open_up.glsl
+open_shadow.glsl
