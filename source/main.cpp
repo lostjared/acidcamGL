@@ -95,6 +95,9 @@ std::string outstr_arr[] = {
 #ifndef _WIN32
     "    AC_PLUGIN_PATH",
 #endif
+#ifdef MIDI_ENABLED
+    "    AC_MIDI",
+#endif
     "    ",
     "Controls:",
     "    ",
