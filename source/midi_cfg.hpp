@@ -21,7 +21,8 @@ namespace midi {
     class MIDI_Config {
     public:
         void addCode(int key, const Key &k) {
-            codes[key] = k;
+            codes.insert({key, k});
+            //codes[key] = k;
         }
 
         void write(const std::string &filename) {
@@ -101,7 +102,7 @@ namespace midi {
         }
 
     protected:
-        std::unordered_map<int, Key> codes;
+        std::unordered_multimap<int, Key> codes;
     };
 
 }
