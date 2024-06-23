@@ -195,24 +195,48 @@ void system_pause() {
 #endif
 }
 
+
 #ifdef MIDI_ENABLED
+
+std::unordered_map<std::pair<int, int>, int> key_values;
+
 void the_callback(std::vector<unsigned char> *message) {
+
     if(message->size() >= 2) {
         unsigned int nBytes = message->size();
         std::cout << "acidcam: MIDI message: {\n";
         for (unsigned int i=0; i<nBytes; i++ ) {
-              std::cout << (int)message->at(i) << " ";
+              std::cout << static_cast<int>(message->at(i)) << " ";
         }
         std::cout << "\n}\n";
-        int keyd = config.lookup(midi::Key(message->at(0), message->at(1), message->at(2)));
-        if(keyd != -1) {
+        auto keyd = config.lookup_nov(midi::Key(message->at(0), message->at(1), message->at(2)));
+        if(keyd.first != -1) {
+            if(keyd.second == 0 && message->at(2) == 0)
+                main_window.keypress(keyd.first, 0, GLFW_RELEASE, 0);
+
+            if (keyd.second != 0) {
+                if(key_values[keyd] == 0)
+                    key_values[keyd] = message->at(2);
+                else {
+                    int val = key_values[keyd];
+                    if (val < message->at(2)) {
+                        main_window.keypress(keyd.first, 0, GLFW_RELEASE, 0);
+                        key_values[keyd] = val;
+                    }
+                    else if (val > message->at(2)) {
+                        main_window.keypress(keyd.second, 0, GLFW_RELEASE, 0);
+                        key_values[keyd] = val;
+                    }
+                }
+            }
+        }
+        else {
             
-            main_window.keypress(keyd, 0, GLFW_RELEASE, 0);
         }
     }
 }
 #endif
-
+ 
 int main(int argc, char **argv) {
     atexit(system_pause);
     if(argc == 1) {
