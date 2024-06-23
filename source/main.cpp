@@ -245,11 +245,15 @@ int main(int argc, char **argv) {
     }
     
 #ifdef MIDI_ENABLED
-    char *m_p = getenv("AC_MIDI");
+#ifdef _WIN32
+    const char *m_p = "midi.midi_cfg";
+#else
+    const char *m_p = getenv("AC_MIDI");
     if(m_p == NULL) {
         std::cerr << "acidcam: Error requires enviorment variable AC_MIDI \nwith path to midi_config file.\n";
         exit(EXIT_FAILURE);
     }
+#endif
     config.read(m_p);
     setup_main(&the_callback);
 #endif
