@@ -12,7 +12,8 @@ Key::Key(unsigned char byte1, unsigned char byte2, unsigned char byte3) {
 }
 
 void MIDI_Config::addCode(int key, const Key &k) {
-    codes[key] = k;
+    codes.insert({key, k});
+    //codes[key] = k;
 }
 
 void MIDI_Config::write(const std::string &filename) {
@@ -65,6 +66,7 @@ void MIDI_Config::read(const std::string &filename) {
 }
 
 int MIDI_Config::lookup(const Key &k) {
+    
     for(auto it = codes.begin(); it != codes.end(); ++it) {
         if(it->second.bytes.size() >= k.bytes.size()) {
             bool t = true;

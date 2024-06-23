@@ -22,7 +22,7 @@ namespace midi {
         int lookup(const Key &k);
         void print(std::ostream &out);
     protected:
-        std::unordered_map<int, Key> codes;
+        std::unordered_multimap<int, Key> codes;
     };
 }
 
