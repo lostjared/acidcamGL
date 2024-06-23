@@ -47,11 +47,17 @@ std::vector<std::array<std::string, 3>> keys{
 };
 
 int main(int argc, char **argv) {
+    std::string output_file = "midi.midi_cfg";
+
+    if(argc == 3) {
+        output_file = argv[2];
+    }
+
     midi::MIDI_Config config;
     setup_main();
 
     for (int i = 0; i < keys.size(); ++i) {
-        std::cout << "Press Key on Controller for ASCII Keyboard Value: \n";
+        std::cout << "Press Key on Controller for Keyboard Value: \n";
         done = false;
         std::cout << keys[i][0] << " value: " << keys[i][1] << "\n";
         std::cout << "Description: " << keys[i][2] << "\n";
@@ -63,6 +69,10 @@ int main(int argc, char **argv) {
             double stamp = midiin->getMessage(&message);
             if (!message.empty()) {
                 bytes.insert(bytes.end(), message.begin(), message.end());
+                std::cout << "MIDI Key - [ ";
+                for(int q = 0; q  < message.size(); ++q)
+                    std::cout << static_cast<int>(message[q]) << " ";
+                std::cout << "]\n";
                 num++;
                 if(num >= 2)
                     done = true;
@@ -73,11 +83,9 @@ int main(int argc, char **argv) {
         int ud = 0;
        
        do {
-
-        std::cout << "Do you wish to use the Press Down, or Press Up:\n";
-        std::cout << "1 - Down\n2 - Up\n3 - Skip and Write File\n";
-        std::cin >> ud;
-
+            std::cout << "Do you wish to use the Press Down, or Press Up:\n";
+            std::cout << "1 - Down\n2 - Up\n3 - Skip and Write File\n";
+            std::cin >> ud;
        } while(ud != 1 && ud != 2 && ud != 3);        
 
         if (ud == 1 && bytes.size() >= 2)
@@ -94,8 +102,8 @@ int main(int argc, char **argv) {
     }
 
     midi_cleanup();
-    config.write("midi.midi_cfg");
-    std::cout << "Wrote: midi.midi_cfg\n";
+    config.write(output_file);
+    std::cout << "Wrote: " << output_file << "\n";
     return 0;
 }
 int setup_main() {
