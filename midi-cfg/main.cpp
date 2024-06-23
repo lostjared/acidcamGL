@@ -49,7 +49,7 @@ std::vector<std::array<std::string, 3>> keys{
 int main(int argc, char **argv) {
     std::string output_file = "midi.midi_cfg";
 
-    if(argc == 3) {
+    if(argc == 2) {
         output_file = argv[2];
     }
 
