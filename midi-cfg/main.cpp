@@ -58,7 +58,10 @@ int main(int argc, char **argv) {
     }
 
     midi::MIDI_Config config;
-    setup_main();
+    if (setup_main() != 0) {
+        std::cerr << "Error could not open MIDI device...\n";
+        exit(EXIT_FAILURE);
+    }
 
     for (int i = 0; i < keys.size(); ++i) {
         std::cout << "Press Key on Controller for Keyboard Value: \n";
@@ -88,19 +91,28 @@ int main(int argc, char **argv) {
        
        do {
             std::cout << "Do you wish to use the Press Down, or Press Up:\n";
-            std::cout << "1 - Down\n2 - Up\n3 - Skip and Write File\n";
-            std::cin >> ud;
-       } while(ud != 1 && ud != 2 && ud != 3);        
+            std::cout << "1 - Down\n2 - Up\n3 - Skip and Write File\n4 - Skip and Continue\n";
+            std::string input;
+            std::getline(std::cin, input);
+            if (input.length()>0) {
+                ud = atoi(input.c_str());
+            }
+       } while(ud != 1 && ud != 2 && ud != 3 && ud != 4);        
 
-        if (ud == 1 && bytes.size() >= 2)
-            config.addCode(atoi(keys[i][0].c_str()), midi::Key(bytes[0], bytes[1], bytes[2]));
-        else if (ud == 2 && bytes.size() >= 5)
-            config.addCode(atoi(keys[i][1].c_str()), midi::Key(bytes[3], bytes[4], bytes[5]));
-        else if (ud == 3)
-            break;
+       if (ud == 1 && bytes.size() >= 2)
+           config.addCode(atoi(keys[i][0].c_str()), midi::Key(bytes[0], bytes[1], bytes[2]));
+       else if (ud == 2 && bytes.size() >= 5)
+           config.addCode(atoi(keys[i][1].c_str()), midi::Key(bytes[3], bytes[4], bytes[5]));
+       else if (ud == 3)
+           break;
 
         if (!bytes.empty())
-            bytes.clear();
+            bytes.erase(bytes.begin(), bytes.end());
+
+        if (ud == 4) {
+            std::cout << "Keycode skipped.\n";
+            continue;
+        }
 
         std::cout << "Keycode added\n";
     }
