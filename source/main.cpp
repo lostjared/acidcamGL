@@ -116,7 +116,7 @@ std::string outstr_arr[] = {
     "    [SHIFT]+[SPACE] - Toggle Autofilter on and off",
     "    [LEFT] - Filter index move left",
     "    [RIGHT] - filter index move right",
-    "    [SHIFT}+1 - Stereo Mode toggle On/Off",
+    "    [SHIFT]+1 - Stereo Mode toggle On/Off",
     "    [SHIFT]+2 - Toggle Time Control On / Off ",
     "    [SHIFT]+3 - Restore Time Value ",
     "    [SHIFT]+[LEFT] - Time control move backard",
