@@ -11,11 +11,12 @@ namespace midi {
     struct Key {
         std::vector<unsigned char> bytes;
         Key() = default;
-        Key(unsigned char byte1, unsigned char byte2, unsigned char byte3);
+        Key(unsigned char status, unsigned char key, unsigned char velocity);
     };
 
     class MIDI_Config {
     public:
+        MIDI_Config() = default;
         void addCode(int key, const Key &k);
         void write(const std::string &filename);
         void read(const std::string &filename);
