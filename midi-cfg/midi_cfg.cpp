@@ -65,8 +65,7 @@ void MIDI_Config::read(const std::string &filename) {
     file.close();
 }
 
-int MIDI_Config::lookup(const Key &k) {
-    
+int MIDI_Config::lookup(const Key &k) {   
     for(auto it = codes.begin(); it != codes.end(); ++it) {
         if(it->second.bytes.size() >= k.bytes.size()) {
             bool t = true;
@@ -92,7 +91,6 @@ void MIDI_Config::print(std::ostream &out) {
         out << "\n";
     }
 }
-
 
 }
 

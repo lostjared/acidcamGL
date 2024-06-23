@@ -1039,6 +1039,31 @@ namespace acidcam {
                 quit();
                 return;
             }   
+
+            if(key == 500) {
+                time_keys[0] = true;
+                time_keys[1] = false;
+                return;
+            }
+            if(key == 501) {
+                time_keys[0] = false;
+                time_keys[1] = true;
+                return;
+            }
+            if(key == 502) {
+                time_keys[0] = false;
+                time_keys[1] = false;
+                return;
+            }
+            if(key == 503) {
+                time_manip = !time_manip;
+                if(time_manip) 
+                    std::cout << "acidcam: Manual time manipulation toggled on.\n";
+                else
+                   std::cout << "acidcam: Manual time manipulation toggled off.\n";
+                return;
+            }
+
             if(action == GLFW_PRESS) {
                 if(mode == GLFW_MOD_SHIFT) {
                     switch(key) {
