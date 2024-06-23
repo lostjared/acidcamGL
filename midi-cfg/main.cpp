@@ -50,12 +50,27 @@ std::vector<std::array<std::string, 3>> keys{
     {"GLFW_KEY_Z", "90", "take screenshot"}
 };
 
+template<typename T>
+bool contains(const std::vector<T>& c, const std::vector<T>& sub) {
+    if (sub.empty()) {
+        return true; 
+    }
+    if (c.size() < sub.size()) {
+        return false;
+    }
+    auto it = std::search(c.begin(), c.end(), sub.begin(), sub.end());
+    return it != c.end();
+}
+
+
+
 int main(int argc, char **argv) {
     std::string output_file = "midi.midi_cfg";
 
     if(argc == 2) {
         output_file = argv[2];
     }
+
 
     midi::MIDI_Config config;
     if (setup_main() != 0) {
@@ -70,19 +85,22 @@ int main(int argc, char **argv) {
         std::cout << "Description: " << keys[i][2] << "\n";
 
         int num = 0;
-        
+
+
+
         while (!done) {
             std::vector<unsigned char> message;
             double stamp = midiin->getMessage(&message);
-            if (!message.empty()) {
+            if (!message.empty() && contains(bytes, message) == false) {
                 bytes.insert(bytes.end(), message.begin(), message.end());
                 std::cout << "MIDI Key - [ ";
-                for(int q = 0; q  < message.size(); ++q)
+                for (int q = 0; q < message.size(); ++q)
                     std::cout << static_cast<int>(message[q]) << " ";
                 std::cout << "]\n";
                 num++;
-                if(num >= 2)
+                if (num >= 2) {
                     done = true;
+                }
             }
         }
         done = false;
@@ -113,8 +131,14 @@ int main(int argc, char **argv) {
             std::cout << "Keycode skipped.\n";
             continue;
         }
-
+        finished:
         std::cout << "Keycode added\n";
+        std::vector<unsigned char> message;
+        while (1) {
+            midiin->getMessage(&message);
+            if (message.empty())
+                break;
+        }
     }
 
     midi_cleanup();
