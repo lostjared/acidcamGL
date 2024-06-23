@@ -5,10 +5,10 @@
 namespace midi {
 
 
-Key::Key(unsigned char byte1, unsigned char byte2, unsigned char byte3) {
-    bytes.push_back(byte1);
-    bytes.push_back(byte2);
-    bytes.push_back(byte3);
+Key::Key(unsigned char status, unsigned char key, unsigned char velocity) {
+    bytes.push_back(status);
+    bytes.push_back(key);
+    bytes.push_back(velocity);
 }
 
 void MIDI_Config::addCode(int key, const Key &k) {
