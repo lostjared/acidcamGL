@@ -11,6 +11,12 @@ std::vector<unsigned char> bytes;
 bool done = false;
 int setup_main();
 
+std::vector<std::array<std::string, 4>> knobs{
+    {"GLFW_KEY_LEFT_RIGHT_Knob", "262", "263", "Filter index move left/right"},
+    {"GLFW_KEY_UP_DOWN_Knob", "264", "265", "Shader Index move down/up"},
+    {"TimeForward_Knob", "500", "501", "Move Time Forward/Back"},
+};
+
 std::vector<std::array<std::string, 3>> keys{
     {"GLFW_KEY_LEFT", "263", "Filter index move left"},
     {"GLFW_KEY_RIGHT", "262", "Filter index move right"},
@@ -19,8 +25,6 @@ std::vector<std::array<std::string, 3>> keys{
     {"GLFW_KEY_SPACE", "32", "Acid Cam filters enabled/disabled"},
     {"TimeForward", "500", "Move Time Forward"},
     {"TimeBackward", "501", "Move Time Backward"},
-    {"TimeFreeze", "502", "Time Freeze"},
-    {"TimeControl", "503", "Time Control On/Off"},
     {"GLFW_KEY_C", "67", "clear keyboard input"},
     {"GLFW_KEY_E", "69", "move movement rate"},
     {"GLFW_KEY_ENTER", "257", "Jump to currently typed index (type index with number keys at anytime)"},
@@ -78,16 +82,39 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
 
+    for (int i = 0; i < knobs.size(); ++i) {
+        std::cout << "Press the Knob up or down\n";
+        done = false;
+        std::cout << knobs[i][0] << " value " << knobs[i][1] << ":" << knobs[i][2] << "\n";
+        std::cout << "Description: " << knobs[i][3] << "\n";
+        std::vector<unsigned char> message;
+        double stamp;
+        while (message.empty()) {
+            stamp = midiin->getMessage(&message);
+        }
+        std::cout << "MIDI Key - [ ";
+        for (int q = 0; q < message.size(); ++q)
+            std::cout << static_cast<int>(message[q]) << " ";
+        std::cout << "]\n";
+        int keycode = message[1];
+
+        config.addCode({ atoi(knobs[i][1].c_str()), atoi(knobs[i][2].c_str()) }, midi::Key(message[0], message[1], message[2]));
+        std::cout << "Keycode added\n";
+        while (1) {
+            midiin->getMessage(&message);
+            if (!message.empty()) {
+                if (message[1] == keycode)
+                    break;
+            }
+        }
+      }
+
     for (int i = 0; i < keys.size(); ++i) {
         std::cout << "Press Key on Controller for Keyboard Value: \n";
         done = false;
         std::cout << keys[i][0] << " value: " << keys[i][1] << "\n";
         std::cout << "Description: " << keys[i][2] << "\n";
-
         int num = 0;
-
-
-
         while (!done) {
             std::vector<unsigned char> message;
             double stamp = midiin->getMessage(&message);
@@ -109,7 +136,7 @@ int main(int argc, char **argv) {
        
        do {
             std::cout << "Do you wish to use the Press Down, or Press Up:\n";
-            std::cout << "1 - Down\n2 - Up\n3 - Skip and Write File\n4 - Skip and Continue\n";
+            std::cout << "1 - Key Down\n2 - Key Up\n3 - Skip and Write File\n4 - Skip and Continue\n";
             std::string input;
             std::getline(std::cin, input);
             if (input.length()>0) {
@@ -118,9 +145,9 @@ int main(int argc, char **argv) {
        } while(ud != 1 && ud != 2 && ud != 3 && ud != 4);        
 
        if (ud == 1 && bytes.size() >= 2)
-           config.addCode(atoi(keys[i][0].c_str()), midi::Key(bytes[0], bytes[1], bytes[2]));
+           config.addCode({ atoi(keys[i][0].c_str()), 0 }, midi::Key(bytes[0], bytes[1], bytes[2]));
        else if (ud == 2 && bytes.size() >= 5)
-           config.addCode(atoi(keys[i][1].c_str()), midi::Key(bytes[3], bytes[4], bytes[5]));
+           config.addCode({ atoi(keys[i][1].c_str()), 0 }, midi::Key(bytes[3], bytes[4], bytes[5]));
        else if (ud == 3)
            break;
 
@@ -131,7 +158,6 @@ int main(int argc, char **argv) {
             std::cout << "Keycode skipped.\n";
             continue;
         }
-        finished:
         std::cout << "Keycode added\n";
         std::vector<unsigned char> message;
         while (1) {
@@ -183,7 +209,7 @@ bool chooseMidiPort(RtMidiIn *rtmidi) {
         }
 
         do {
-            std::cout << "\nChoose a port number: ";
+            std::cout << "\nChoose a port number: "; 
             std::cin >> i;
         } while (i >= nPorts);
         std::string keyHit;
