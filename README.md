@@ -17,6 +17,10 @@ and copying the files in the filter/ directory into the same directory in the in
 Otherwise, you will be using an outdated list of default filters. The default folder for installation is:
 
 
+* The Windows version of this project requires Visual Studio 2919 Runtime download from Microsoft.
+
+
+
 C:\Program Files\LostSideDead\acidcamGL\acidcamGL\acidcamGL_x64
 
 so the shaders directory is:
@@ -42,7 +46,7 @@ sudo make -f Makefile.midi install
 
 To configure your MIDI controller, follow these steps:
 
-- Compile and run the midi-cfg configuration tool in source code sub-directory midi-cfg/
+- Compile and run the midi-cfg configuration tool in source code sub-directory midi-cfg/ or download windows EXE from releases
 
 - Use the tool to configure your MIDI controller.
 
