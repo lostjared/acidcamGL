@@ -42,7 +42,7 @@ namespace midi {
                 throw std::runtime_error("Could not open file");
             }
             for (auto it = codes.begin(); it != codes.end(); ++it) {
-                file << it->first.first << ":" << it->first.second << "{";
+                file << it->first.first << ":" << it->first.second << " {";
                 for (int j = 0; j < it->second.bytes.size() - 1; ++j) {
                     file << static_cast<int>(it->second.bytes[j]) << " ";
                 }

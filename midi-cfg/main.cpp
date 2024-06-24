@@ -2,6 +2,8 @@
 #include <iostream>
 #include "RtMidi.h"
 #include <array>
+#include<thread>
+#include<chrono>
 
 bool chooseMidiPort(RtMidiIn* rtmidi);
 RtMidi::Api chooseMidiApi();
@@ -25,33 +27,19 @@ std::vector<std::array<std::string, 3>> keys{
     {"GLFW_KEY_SPACE", "32", "Acid Cam filters enabled/disabled"},
     {"TimeForward", "500", "Move Time Forward"},
     {"TimeBackward", "501", "Move Time Backward"},
-    {"GLFW_KEY_C", "67", "clear keyboard input"},
-    {"GLFW_KEY_E", "69", "move movement rate"},
-    {"GLFW_KEY_ENTER", "257", "Jump to currently typed index (type index with number keys at anytime)"},
+    {"TimePause", "502", "Pause Time"},
+    {"TimeOnOff", "503", "Toggle On/Off"},
     {"GLFW_KEY_EQUAL", "61", "increase blend percentage"},
-    {"GLFW_KEY_F", "70", "process keyboard input for index"},
-    {"GLFW_KEY_G", "71", "Not used in descriptions"},
+     {"GLFW_KEY_MINUS", "45", "decrease blend percentage"},
     {"GLFW_KEY_H", "72", "Shuffle Playlist"},
-    {"GLFW_KEY_I", "73", "move movement rate"},
-    {"GLFW_KEY_J", "74", "jump backward index by 25"},
-    {"GLFW_KEY_K", "75", "jump forward index by 25"},
-    {"GLFW_KEY_L", "76", "enable disable playlist"},
-    {"GLFW_KEY_M", "77", "Enable/Disable Playlist Slideside random timeout"},
-    {"GLFW_KEY_MINUS", "45", "decrease blend percentage"},
+    {"GLFW_KEY_L", "76", "Enable disable playlist"},
     {"GLFW_KEY_N", "78", "set index to the end"},
-    {"GLFW_KEY_O", "79", "move movement rate"},
     {"GLFW_KEY_P", "80", "index reset to zero"},
     {"GLFW_KEY_PAGE_DOWN", "267", "Restore Position Index"},
     {"GLFW_KEY_PAGE_UP", "266", "Store Index Position"},
-    {"GLFW_KEY_Q", "81", "move movement rate"},
-    {"GLFW_KEY_R", "82", "move movement rate"},
-    {"GLFW_KEY_S", "83", "process keyboard input for shader"},
-    {"GLFW_KEY_SEMICOLON", "59", "Not used in descriptions"},
-    {"GLFW_KEY_T", "84", "reset color offset"},
-    {"GLFW_KEY_U", "85", "move movement rate"},
-    {"GLFW_KEY_W", "87", "move movement rate"},
-    {"GLFW_KEY_Y", "89", "move movement rate"},
-    {"GLFW_KEY_Z", "90", "take screenshot"}
+    {"GLFW_KEY_COMMA", "44", "Color Map Decrease"},
+    {"GLFW_KEY_PERIOD", "46", "Color Map Increase"},
+    {"GLFW_KEY_SLASH", "47", "Random Shader Toggle"}
 };
 
 template<typename T>
@@ -107,6 +95,8 @@ int main(int argc, char** argv) {
 
         config.addCode({ atoi(knobs[i][1].c_str()), atoi(knobs[i][2].c_str()) }, midi::Key(message[0], message[1], message[2]));
         std::cout << "Keycode added\n";
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        
     }
 
     for (int i = 0; i < keys.size(); ++i) {
@@ -163,7 +153,7 @@ int main(int argc, char** argv) {
             continue;
         }
         std::cout << "Keycode added\n";
-
+        std::this_thread::sleep_for(std::chrono::seconds(3));
         // Clear leftover messages
         clearMidiMessages();
     }
