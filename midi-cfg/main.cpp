@@ -3,10 +3,10 @@
 #include "RtMidi.h"
 #include <array>
 
-bool chooseMidiPort(RtMidiIn *rtmidi);
+bool chooseMidiPort(RtMidiIn* rtmidi);
 RtMidi::Api chooseMidiApi();
 void midi_cleanup();
-RtMidiIn *midiin = 0;
+RtMidiIn* midiin = nullptr;
 std::vector<unsigned char> bytes;
 bool done = false;
 int setup_main();
@@ -57,7 +57,7 @@ std::vector<std::array<std::string, 3>> keys{
 template<typename T>
 bool contains(const std::vector<T>& c, const std::vector<T>& sub) {
     if (sub.empty()) {
-        return true; 
+        return true;
     }
     if (c.size() < sub.size()) {
         return false;
@@ -66,15 +66,19 @@ bool contains(const std::vector<T>& c, const std::vector<T>& sub) {
     return it != c.end();
 }
 
+void clearMidiMessages() {
+    std::vector<unsigned char> message;
+    do {
+        midiin->getMessage(&message);
+    } while (!message.empty());
+}
 
-
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     std::string output_file = "midi.midi_cfg";
 
-    if(argc == 2) {
-        output_file = argv[2];
+    if (argc == 2) {
+        output_file = argv[1];
     }
-
 
     midi::MIDI_Config config;
     if (setup_main() != 0) {
@@ -87,10 +91,13 @@ int main(int argc, char **argv) {
         done = false;
         std::cout << knobs[i][0] << " value " << knobs[i][1] << ":" << knobs[i][2] << "\n";
         std::cout << "Description: " << knobs[i][3] << "\n";
+
+        // Clear leftover messages
+        clearMidiMessages();
+
         std::vector<unsigned char> message;
-        double stamp;
         while (message.empty()) {
-            stamp = midiin->getMessage(&message);
+            midiin->getMessage(&message);
         }
         std::cout << "MIDI Key - [ ";
         for (int q = 0; q < message.size(); ++q)
@@ -100,14 +107,7 @@ int main(int argc, char **argv) {
 
         config.addCode({ atoi(knobs[i][1].c_str()), atoi(knobs[i][2].c_str()) }, midi::Key(message[0], message[1], message[2]));
         std::cout << "Keycode added\n";
-        while (1) {
-            midiin->getMessage(&message);
-            if (!message.empty()) {
-                if (message[1] == keycode)
-                    break;
-            }
-        }
-      }
+    }
 
     for (int i = 0; i < keys.size(); ++i) {
         std::cout << "Press Key on Controller for Keyboard Value: \n";
@@ -115,9 +115,13 @@ int main(int argc, char **argv) {
         std::cout << keys[i][0] << " value: " << keys[i][1] << "\n";
         std::cout << "Description: " << keys[i][2] << "\n";
         int num = 0;
+
+        // Clear leftover messages
+        clearMidiMessages();
+
         while (!done) {
             std::vector<unsigned char> message;
-            double stamp = midiin->getMessage(&message);
+            midiin->getMessage(&message);
             if (!message.empty() && contains(bytes, message) == false) {
                 bytes.insert(bytes.end(), message.begin(), message.end());
                 std::cout << "MIDI Key - [ ";
@@ -133,23 +137,23 @@ int main(int argc, char **argv) {
         done = false;
 
         int ud = 0;
-       
-       do {
+
+        do {
             std::cout << "Do you wish to use the Press Down, or Press Up:\n";
             std::cout << "1 - Key Down\n2 - Key Up\n3 - Skip and Write File\n4 - Skip and Continue\n";
             std::string input;
             std::getline(std::cin, input);
-            if (input.length()>0) {
+            if (input.length() > 0) {
                 ud = atoi(input.c_str());
             }
-       } while(ud != 1 && ud != 2 && ud != 3 && ud != 4);        
+        } while (ud != 1 && ud != 2 && ud != 3 && ud != 4);
 
-       if (ud == 1 && bytes.size() >= 2)
-           config.addCode({ atoi(keys[i][0].c_str()), 0 }, midi::Key(bytes[0], bytes[1], bytes[2]));
-       else if (ud == 2 && bytes.size() >= 5)
-           config.addCode({ atoi(keys[i][1].c_str()), 0 }, midi::Key(bytes[3], bytes[4], bytes[5]));
-       else if (ud == 3)
-           break;
+        if (ud == 1 && bytes.size() >= 2)
+            config.addCode({ atoi(keys[i][0].c_str()), 0 }, midi::Key(bytes[0], bytes[1], bytes[2]));
+        else if (ud == 2 && bytes.size() >= 5)
+            config.addCode({ atoi(keys[i][1].c_str()), 0 }, midi::Key(bytes[3], bytes[4], bytes[5]));
+        else if (ud == 3)
+            break;
 
         if (!bytes.empty())
             bytes.erase(bytes.begin(), bytes.end());
@@ -159,12 +163,9 @@ int main(int argc, char **argv) {
             continue;
         }
         std::cout << "Keycode added\n";
-        std::vector<unsigned char> message;
-        while (1) {
-            midiin->getMessage(&message);
-            if (message.empty())
-                break;
-        }
+
+        // Clear leftover messages
+        clearMidiMessages();
     }
 
     midi_cleanup();
@@ -172,6 +173,7 @@ int main(int argc, char **argv) {
     std::cout << "Wrote: " << output_file << "\n";
     return 0;
 }
+
 int setup_main() {
     try {
         midiin = new RtMidiIn(chooseMidiApi());
@@ -180,18 +182,19 @@ int setup_main() {
             return 1;
         }
         midiin->ignoreTypes(false, false, false);
-    } catch (RtMidiError &error) {
+    }
+    catch (RtMidiError& error) {
         error.printMessage();
     }
     return 0;
 }
 
 void midi_cleanup() {
-    if(midiin != NULL)
+    if (midiin != nullptr)
         delete midiin;
 }
 
-bool chooseMidiPort(RtMidiIn *rtmidi) {
+bool chooseMidiPort(RtMidiIn* rtmidi) {
     std::string portName;
     unsigned int i = 0, nPorts = rtmidi->getPortCount();
     if (nPorts == 0) {
@@ -202,14 +205,15 @@ bool chooseMidiPort(RtMidiIn *rtmidi) {
     if (nPorts == 1) {
         std::cout << "\nOpening " << rtmidi->getPortName() << std::endl;
         rtmidi->openPort(0); // Open the only available port
-    } else {
+    }
+    else {
         for (i = 0; i < nPorts; i++) {
             portName = rtmidi->getPortName(i);
             std::cout << "  Input port #" << i << ": " << portName << '\n';
         }
 
         do {
-            std::cout << "\nChoose a port number: "; 
+            std::cout << "\nChoose a port number: ";
             std::cin >> i;
         } while (i >= nPorts);
         std::string keyHit;
