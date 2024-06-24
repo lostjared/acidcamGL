@@ -10,16 +10,13 @@
 
 Just to create something that I can use to create fun video and artwork to share online.
 
-# Notes:
+# Notes for Windows:
+
+* The Windows version of this project requires Visual Studio 2919 Runtime download from Microsoft.
 
 If downloading the Windows setup be sure to update to the most up-to-date shaders by downloading the project source code
 and copying the files in the filter/ directory into the same directory in the installation folder.
 Otherwise, you will be using an outdated list of default filters. The default folder for installation is:
-
-
-* The Windows version of this project requires Visual Studio 2919 Runtime download from Microsoft.
-
-
 
 C:\Program Files\LostSideDead\acidcamGL\acidcamGL\acidcamGL_x64
 
