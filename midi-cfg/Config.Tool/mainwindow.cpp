@@ -187,6 +187,7 @@ void MainWindow::handleKeyPress() {
 }
 
 void MainWindow::saveConfig() {
+#ifndef _WIN32
     QString fileName = QFileDialog::getSaveFileName(this, "Save Config File", outputFileLineEdit->text(), "Config Files (*.midi_cfg);;All Files (*)");
     if (fileName.isEmpty()) {
         qDebug() << "Save config canceled";
@@ -195,6 +196,11 @@ void MainWindow::saveConfig() {
     config.write(fileName.toStdString());
     QMessageBox::information(this, "Config Saved", "Configuration saved to " + fileName);
     qDebug() << "Configuration saved to:" << fileName;
+#else
+    config.write(outputFileLineEdit->text().toStdString());
+    QMessageBox::information(this, "Config Saved", "Configuration saved to " + outputFileLineEdit->text());
+#endif
+
 }
 
 void MainWindow::onKnobInputReceived(std::vector<unsigned char> message, int index) {
