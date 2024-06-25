@@ -130,7 +130,7 @@ void MainWindow::handleKnobPress() {
         return;
     }
 
-   for (int i = 0; i < knobs.size(); ++i) {
+   for (size_t i = 0; i < knobs.size(); ++i) {
         QMessageBox::information(this, "Knob Configuration", QString::fromStdString(knobs[i][3]) + "\nTurn Knob Now then press Ok");
         while(downBytes.empty()) {
             midiin->getMessage(&downBytes);
@@ -152,7 +152,7 @@ void MainWindow::handleKeyPress() {
     }
 
 
-    for (int i = 0; i < keys.size(); ++i) {
+    for (size_t i = 0; i < keys.size(); ++i) {
         QMessageBox::information(this, "Key Configuration", QString::fromStdString(keys[i][2]) + "\nPress Key Now then click Ok");
 
         downBytes.clear();

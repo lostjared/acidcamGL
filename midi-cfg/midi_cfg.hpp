@@ -43,7 +43,7 @@ namespace midi {
             }
             for (auto it = codes.begin(); it != codes.end(); ++it) {
                 file << it->first.first << ":" << it->first.second << " {";
-                for (int j = 0; j < it->second.bytes.size() - 1; ++j) {
+                for (size_t j = 0; j < it->second.bytes.size() - 1; ++j) {
                     file << static_cast<int>(it->second.bytes[j]) << " ";
                 }
                 file << static_cast<int>(it->second.bytes[it->second.bytes.size() - 1]) << "}\n";
@@ -119,7 +119,7 @@ namespace midi {
         void print(std::ostream& out) {
             for (auto it = codes.begin(); it != codes.end(); ++it) {
                 out << "acidcam: Mapped Function Keys: " << it->first.first << ":" << it->first.second << " Bytes: ";
-                for (int j = 0; j < it->second.bytes.size(); ++j) {
+                for (size_t j = 0; j < it->second.bytes.size(); ++j) {
                     out << static_cast<int>(it->second.bytes[j]) << " ";
                 }
                 out << "\n";
