@@ -569,12 +569,10 @@ namespace acidcam {
                 if(time_manip_f > 1.0) {
                     time_manip_f -= 0.05;
                     std::cout << "acidcam: Time: " << time_manip_f << " shifted back.\n";
-                    return;
                 }
             } else if(time_manip == true && time_keys[1]) {
                     time_manip_f += 0.05;
                     std::cout << "acidcam: Time: " << time_manip_f << " shifted forward.\n";
-                    return;
             }
 
 
