@@ -5,15 +5,13 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include <QComboBox>
 #include <QLineEdit>
 #include "RtMidi.h"
 #include "midi_cfg.hpp"
 #include <vector>
 #include <array>
-#include<QDialog>
-#include<QCoreApplication>
-class MidiInputDialog;
+#include <QThread>
+#include"cap.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -22,13 +20,19 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    void knobInputProcessed();
+    void keyInputProcessed();
+    void startKnobInputProcessing(int index);
+
 private slots:
     void setupMidi();
     void chooseMidiPort();
     void handleKnobPress();
     void handleKeyPress();
     void saveConfig();
-    void onMidiInputCaptured(std::vector<unsigned char> message);
+    void onKnobInputReceived(std::vector<unsigned char> message, int index);
+    void onKeyInputReceived(std::vector<unsigned char> downMessage, std::vector<unsigned char> upMessage);
 
 private:
     QVBoxLayout *layout;
@@ -38,7 +42,6 @@ private:
     QPushButton *knobButton;
     QPushButton *keyButton;
     QPushButton *saveButton;
-    QComboBox *portComboBox;
     QLineEdit *outputFileLineEdit;
 
     RtMidiIn *midiin;
@@ -50,11 +53,8 @@ private:
 
     void clearMidiMessages();
     int promptUserForKeyChoice(midi::MIDI_Config &config, int keyIndex);
-  
 
     midi::MIDI_Config config;
-
 };
 
-
-#endif // MAINWINDOW_H
+#endif 

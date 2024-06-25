@@ -1,18 +1,14 @@
 #include "mainwindow.h"
+#include "cap.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QInputDialog>
-#include <QThread>
-#include <QTimer>
-#include <thread>
-#include <chrono>
+#include <QFileDialog>
 #include <QDebug>
-#include<QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), midiin(nullptr), done(false) {
-    // Initialize the layout and widgets
     QWidget *centralWidget = new QWidget(this);
     layout = new QVBoxLayout(centralWidget);
 
@@ -35,12 +31,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     setCentralWidget(centralWidget);
 
-    // Connect signals and slots
     connect(setupButton, &QPushButton::clicked, this, &MainWindow::setupMidi);
     connect(choosePortButton, &QPushButton::clicked, this, &MainWindow::chooseMidiPort);
     connect(knobButton, &QPushButton::clicked, this, &MainWindow::handleKnobPress);
     connect(keyButton, &QPushButton::clicked, this, &MainWindow::handleKeyPress);
     connect(saveButton, &QPushButton::clicked, this, &MainWindow::saveConfig);
+
+    knobButton->setEnabled(false);
+    keyButton->setEnabled(false);
 
     // Initialize knobs and keys
     knobs = {
@@ -86,8 +84,10 @@ void MainWindow::setupMidi() {
         midiin = new RtMidiIn();
         midiin->ignoreTypes(false, false, false);
         statusLabel->setText("Status: MIDI setup complete");
+        qDebug() << "MIDI setup complete";
     } catch (RtMidiError &error) {
         QMessageBox::critical(this, "Error", "Could not initialize MIDI device.");
+        qDebug() << "Error initializing MIDI device:" << error.getMessage().c_str();
     }
 }
 
@@ -100,6 +100,7 @@ void MainWindow::chooseMidiPort() {
     unsigned int nPorts = midiin->getPortCount();
     if (nPorts == 0) {
         QMessageBox::information(this, "Information", "No input ports available!");
+        qDebug() << "No input ports available!";
         return;
     }
 
@@ -114,14 +115,10 @@ void MainWindow::chooseMidiPort() {
         int index = ports.indexOf(port);
         midiin->openPort(index);
         statusLabel->setText("Status: MIDI port chosen");
+        knobButton->setEnabled(true);
+        keyButton->setEnabled(true);
+        qDebug() << "MIDI port chosen:" << port;
     }
-}
-
-void MainWindow::clearMidiMessages() {
-    std::vector<unsigned char> message;
-    do {
-        midiin->getMessage(&message);
-    } while (!message.empty());
 }
 
 void MainWindow::handleKnobPress() {
@@ -130,18 +127,29 @@ void MainWindow::handleKnobPress() {
         return;
     }
 
-   for (size_t i = 0; i < knobs.size(); ++i) {
-        QMessageBox::information(this, "Knob Configuration", QString::fromStdString(knobs[i][3]) + "\nTurn Knob Now then press Ok");
-        while(downBytes.empty()) {
-            midiin->getMessage(&downBytes);
+    for (size_t i = 0; i < knobs.size(); ++i) {
+        KeyCaptureDialog dialog(midiin, QString::fromStdString(knobs[i][3]), this);
+        qDebug() << "Opening KeyCaptureDialog for knob configuration:" << QString::fromStdString(knobs[i][3]);
+        if (dialog.exec() == QDialog::Accepted) {
+            if (dialog.isStopped()) {
+                QMessageBox::information(this, "Stopped", "Knob configuration stopped.");
+                qDebug() << "Knob configuration stopped";
+                return;
+            }
+            std::vector<unsigned char> selectedKey = dialog.getSelectedKey();
+            if (!selectedKey.empty()) {
+                config.addCode({ std::stoi(knobs[i][1]), std::stoi(knobs[i][2]) }, midi::Key(selectedKey[0], selectedKey[1], selectedKey[2]));
+                QMessageBox::information(this, "Knob set", "Knob Set");
+                qDebug() << "Knob set with key:" << selectedKey[0] << selectedKey[1] << selectedKey[2];
+            } else {
+                QMessageBox::warning(this, "Warning", "No key selected. Please try again.");
+                qDebug() << "No key selected";
+            }
+        } else if (dialog.isStopped()) {
+            QMessageBox::information(this, "Stopped", "Knob configuration stopped.");
+            qDebug() << "Knob configuration stopped";
+            return;
         }
-        config.addCode({ std::stoi(knobs[i][1]), std::stoi(knobs[i][2]) }, midi::Key(downBytes[0], downBytes[1], downBytes[2]));
-        done = false;
-        
-        QMessageBox::information(this, "Knob set", "Knob Set");
-        std::this_thread::sleep_for(std::chrono::seconds(3));
-        clearMidiMessages();
-        downBytes.clear();
     }
 }
 
@@ -151,80 +159,49 @@ void MainWindow::handleKeyPress() {
         return;
     }
 
-
+    qDebug() << "handleKeyPress called";
     for (size_t i = 0; i < keys.size(); ++i) {
-        QMessageBox::information(this, "Key Configuration", QString::fromStdString(keys[i][2]) + "\nPress Key Now then click Ok");
-
-        downBytes.clear();
-        upBytes.clear();
-        done = false;
-
-        while(downBytes.empty()) {
-            midiin->getMessage(&downBytes);
-        }
-        while(upBytes.empty()) {
-            midiin->getMessage(&upBytes);
-        }
-        if (!downBytes.empty() && !upBytes.empty()) {
-          if(promptUserForKeyChoice(config, i) == 1) {
-            done = true;
+        KeyCaptureDialog dialog(midiin, QString::fromStdString(keys[i][2]), this);
+        qDebug() << "Opening KeyCaptureDialog for key configuration:" << QString::fromStdString(keys[i][2]);
+        if (dialog.exec() == QDialog::Accepted) {
+            if (dialog.isStopped()) {
+                QMessageBox::information(this, "Stopped", "Key configuration stopped.");
+                qDebug() << "Key configuration stopped";
+                return;
+            }
+            std::vector<unsigned char> selectedKey = dialog.getSelectedKey();
+            if (!selectedKey.empty()) {
+                config.addCode({ std::stoi(keys[i][1]), 0 }, midi::Key(selectedKey[0], selectedKey[1], selectedKey[2]));
+                QMessageBox::information(this, "Key set", "Key Set");
+                qDebug() << "Key set with key:" << selectedKey[0] << selectedKey[1] << selectedKey[2];
+            } else {
+                QMessageBox::warning(this, "Warning", "No key selected. Please try again.");
+                qDebug() << "No key selected";
+            }
+        } else if (dialog.isStopped()) {
+            QMessageBox::information(this, "Stopped", "Key configuration stopped.");
+            qDebug() << "Key configuration stopped";
             return;
-          }
-          done = true;
-        }
-        if (!done) {
-            QMessageBox::warning(this, "Warning", "Failed to capture both key down and key up events. Please try again.");
         }
     }
-}
-
-int MainWindow::promptUserForKeyChoice(midi::MIDI_Config &config, int keyIndex) {
-    QMessageBox::information(this, "MIDI Key Pressed", QString("MIDI Key Down - [ %1 %2 %3 ]\nMIDI Key Up - [ %4 %5 %6 ]")
-                             .arg(static_cast<int>(downBytes[0])).arg(static_cast<int>(downBytes[1])).arg(static_cast<int>(downBytes[2]))
-                             .arg(static_cast<int>(upBytes[0])).arg(static_cast<int>(upBytes[1])).arg(static_cast<int>(upBytes[2])));
-
-    int ud = 0;
-    do {
-        QString input = QInputDialog::getText(this, "Key Configuration", "Do you wish to use the Press Down, or Press Up:\n1 - Key Down\n2 - Key Up\n3 - Skip and Write File\n4 - Skip and Continue");
-        ud = input.toInt();
-    } while (ud != 1 && ud != 2 && ud != 3 && ud != 4);
-
-    if (ud == 1 && downBytes.size() >= 3)
-        config.addCode({ std::stoi(keys[keyIndex][1]), 0 }, midi::Key(downBytes[0], downBytes[1], downBytes[2]));
-    else if (ud == 2 && upBytes.size() >= 3)
-        config.addCode({ std::stoi(keys[keyIndex][1]), 0 }, midi::Key(upBytes[0], upBytes[1], upBytes[2]));
-    else if (ud == 3) {
-        saveConfig();
-        return 1;
-    }
-
-    if (!downBytes.empty())
-        downBytes.clear();
-    if (!upBytes.empty())
-        upBytes.clear();
-
-    if (ud == 4) {
-        QMessageBox::information(this, "Key Configuration", "Keycode skipped.");
-        return 0;
-    }
-    QMessageBox::information(this, "Key Configuration", "Keycode added");
-    std::this_thread::sleep_for(std::chrono::seconds(3));
-    clearMidiMessages();
-    return 0;
 }
 
 void MainWindow::saveConfig() {
-    config.write(outputFileLineEdit->text().toStdString());
-    QMessageBox::information(this, "Wrote to current Directory", "Worte Config to Current Directory");
+    QString fileName = QFileDialog::getSaveFileName(this, "Save Config File", outputFileLineEdit->text(), "Config Files (*.midi_cfg);;All Files (*)");
+    if (fileName.isEmpty()) {
+        qDebug() << "Save config canceled";
+        return;
+    }
+    config.write(fileName.toStdString());
+    QMessageBox::information(this, "Config Saved", "Configuration saved to " + fileName);
+    qDebug() << "Configuration saved to:" << fileName;
 }
 
-void MainWindow::onMidiInputCaptured(std::vector<unsigned char> message) {
-    qDebug() << "MIDI message captured: " << QByteArray::fromRawData(reinterpret_cast<const char*>(message.data()), static_cast<int>(message.size())).toHex();
-    
-    if ((message[0] & 0xF0) == 0x80) {  // Note Off event
-        upBytes = message;
-        done = true;
-    } else if ((message[0] & 0xF0) == 0x90) {  // Note On event
-        downBytes = message;
-    }
+void MainWindow::onKnobInputReceived(std::vector<unsigned char> message, int index) {
+    qDebug() << "Knob input received:" << message[0] << message[1] << message[2] << "Index:" << index;
+}
+
+void MainWindow::onKeyInputReceived(std::vector<unsigned char> downMessage, std::vector<unsigned char> upMessage) {
+    qDebug() << "Key down input received:" << downMessage[0] << downMessage[1] << downMessage[2];
+    qDebug() << "Key up input received:" << upMessage[0] << upMessage[1] << upMessage[2];
 }
