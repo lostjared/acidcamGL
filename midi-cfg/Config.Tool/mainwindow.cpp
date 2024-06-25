@@ -198,7 +198,7 @@ void MainWindow::saveConfig() {
     qDebug() << "Configuration saved to:" << fileName;
 #else
     config.write(outputFileLineEdit->text().toStdString());
-    QMessageBox::information(this, "Config Saved", "Configuration saved to " + fileName);
+    QMessageBox::information(this, "Config Saved", "Configuration saved to " + outputFileLineEdit->text());
 #endif
 
 }
