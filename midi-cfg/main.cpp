@@ -42,6 +42,7 @@ std::vector<std::array<std::string, 3>> keys{
     {"GLFW_KEY_SLASH", "47", "Random Shader Toggle"}
 };
 
+/*
 template<typename T>
 bool contains(const std::vector<T>& c, const std::vector<T>& sub) {
     if (sub.empty()) {
@@ -52,7 +53,7 @@ bool contains(const std::vector<T>& c, const std::vector<T>& sub) {
     }
     auto it = std::search(c.begin(), c.end(), sub.begin(), sub.end());
     return it != c.end();
-}
+}*/
 
 void clearMidiMessages() {
     std::vector<unsigned char> message;
@@ -112,7 +113,7 @@ int main(int argc, char** argv) {
         while (!done) {
             std::vector<unsigned char> message;
             midiin->getMessage(&message);
-            if (!message.empty() && contains(bytes, message) == false) {
+            if (!message.empty() /*&& contains(bytes, message) == false*/) {
                 bytes.insert(bytes.end(), message.begin(), message.end());
                 std::cout << "MIDI Key - [ ";
                 for (int q = 0; q < message.size(); ++q)
