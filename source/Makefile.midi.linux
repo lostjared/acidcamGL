@@ -8,7 +8,7 @@ LDFLAGS=`pkg-config glfw3 glew opencv4 acidcam rtmidi --libs`
 	$(CXX) $(CFLAGS) $< -c -o $@
 
 acidcamGL: $(OBJ)
-	$(CXX) -std=c++11 -o acidcamGL.mid $(OBJ) $(LDFLAGS)
+	$(CXX) -std=c++11 -o acidcamGL_midi $(OBJ) $(LDFLAGS)
 
 all: example
 
