@@ -19,8 +19,8 @@ public:
     bool isStopped() const;
 
 private slots:
-    void captureKey();
     void stopKeySelection();
+    void captureKey(const std::vector<unsigned char> &message);
 
 private:
     QVBoxLayout *layout;
@@ -28,10 +28,11 @@ private:
     QListWidget *keyListWidget;
     QPushButton *okButton;
     QPushButton *stopButton;
-
     RtMidiIn *midiin;
-    std::vector<std::vector<unsigned char>> capturedKeys;
     bool stopped;
+    std::vector<std::vector<unsigned char>> capturedKeys;
+
+    static void midiCallback(double deltatime, std::vector<unsigned char> *message, void *userData);
 };
 
 #endif

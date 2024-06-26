@@ -4,6 +4,10 @@
 #include <QTimer>
 #include <QDebug>
 
+#include <QHBoxLayout>
+#include <QMessageBox>
+#include <QDebug>
+
 KeyCaptureDialog::KeyCaptureDialog(RtMidiIn *midiin, const QString& keyDescription, QWidget *parent)
     : QDialog(parent), midiin(midiin), stopped(false) {
     layout = new QVBoxLayout(this);
@@ -25,9 +29,9 @@ KeyCaptureDialog::KeyCaptureDialog(RtMidiIn *midiin, const QString& keyDescripti
     connect(okButton, &QPushButton::clicked, this, &QDialog::accept);
     connect(stopButton, &QPushButton::clicked, this, &KeyCaptureDialog::stopKeySelection);
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &KeyCaptureDialog::captureKey);
-    timer->start(100);
+    // Set up RtMidi callback
+    midiin->setCallback(&KeyCaptureDialog::midiCallback, this);
+    midiin->ignoreTypes(false, false, false);
 
     qDebug() << "KeyCaptureDialog initialized with description:" << keyDescription;
 }
@@ -44,21 +48,24 @@ bool KeyCaptureDialog::isStopped() const {
     return stopped;
 }
 
-void KeyCaptureDialog::captureKey() {
-    std::vector<unsigned char> message;
-    if (midiin->getMessage(&message) != 0 && !message.empty()) {
-        qDebug() << "Key captured:" << message[0] << message[1] << message[2];
-        capturedKeys.push_back(message);
-        QString keyStr = QString("Key: %1 %2 %3")
-            .arg(static_cast<int>(message[0]))
-            .arg(static_cast<int>(message[1]))
-            .arg(static_cast<int>(message[2]));
-        keyListWidget->addItem(keyStr);
-    }
+void KeyCaptureDialog::captureKey(const std::vector<unsigned char> &message) {
+    qDebug() << "Key captured:" << message[0] << message[1] << message[2];
+    capturedKeys.push_back(message);
+    QString keyStr = QString("Key: %1 %2 %3")
+        .arg(static_cast<int>(message[0]))
+        .arg(static_cast<int>(message[1]))
+        .arg(static_cast<int>(message[2]));
+    keyListWidget->addItem(keyStr);
 }
 
 void KeyCaptureDialog::stopKeySelection() {
     qDebug() << "Key selection stopped";
     stopped = true;
     reject();
+}
+
+void KeyCaptureDialog::midiCallback(double deltatime, std::vector<unsigned char> *message, void *userData) {
+    if (message->empty()) return;
+    KeyCaptureDialog *dialog = static_cast<KeyCaptureDialog*>(userData);
+    dialog->captureKey(*message);
 }
