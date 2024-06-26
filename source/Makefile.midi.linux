@@ -14,6 +14,6 @@ all: example
 
 .PHONY: clean
 clean:
-	rm -f acidcamGL *.o
+	rm -f acidcamGL_midi *.o
 install:
-	cp acidcamGL.mid /usr/local/bin
+	cp acidcamGL_midi /usr/local/bin
