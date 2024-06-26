@@ -3,8 +3,10 @@
 #include <QMessageBox>
 #include <QDebug>
 
+bool KeyCaptureDialog::callbackSet = false; // Initialize static member
+
 KeyCaptureDialog::KeyCaptureDialog(RtMidiIn *midiin, const QString& keyDescription, QWidget *parent)
-    : QDialog(parent), midiin(midiin), stopped(false), callbackSet(false) {
+    : QDialog(parent), midiin(midiin), stopped(false) {
     layout = new QVBoxLayout(this);
 
     instructionLabel = new QLabel("<b>" + keyDescription + "</b>", this);
@@ -62,7 +64,7 @@ void KeyCaptureDialog::stopKeySelection() {
     reject();
 }
 
-void KeyCaptureDialog::midiCallback(double deltatime, std::vector<unsigned char> *message, void *userData) {
+void KeyCaptureDialog::midiCallback(double, std::vector<unsigned char> *message, void *userData) {
     if (message->empty()) return;
     KeyCaptureDialog *dialog = static_cast<KeyCaptureDialog*>(userData);
     dialog->captureKey(*message);

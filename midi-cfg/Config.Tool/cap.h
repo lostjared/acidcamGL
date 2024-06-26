@@ -30,10 +30,11 @@ private:
     QPushButton *stopButton;
     RtMidiIn *midiin;
     bool stopped;
-    bool callbackSet;
+    static bool callbackSet; // Static variable to track callback status
     std::vector<std::vector<unsigned char>> capturedKeys;
 
     static void midiCallback(double deltatime, std::vector<unsigned char> *message, void *userData);
 };
+
 
 #endif
