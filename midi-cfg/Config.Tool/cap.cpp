@@ -1,15 +1,10 @@
 #include "cap.h"
 #include <QHBoxLayout>
 #include <QMessageBox>
-#include <QTimer>
-#include <QDebug>
-
-#include <QHBoxLayout>
-#include <QMessageBox>
 #include <QDebug>
 
 KeyCaptureDialog::KeyCaptureDialog(RtMidiIn *midiin, const QString& keyDescription, QWidget *parent)
-    : QDialog(parent), midiin(midiin), stopped(false) {
+    : QDialog(parent), midiin(midiin), stopped(false), callbackSet(false) {
     layout = new QVBoxLayout(this);
 
     instructionLabel = new QLabel("<b>" + keyDescription + "</b>", this);
@@ -29,9 +24,12 @@ KeyCaptureDialog::KeyCaptureDialog(RtMidiIn *midiin, const QString& keyDescripti
     connect(okButton, &QPushButton::clicked, this, &QDialog::accept);
     connect(stopButton, &QPushButton::clicked, this, &KeyCaptureDialog::stopKeySelection);
 
-    // Set up RtMidi callback
-    midiin->setCallback(&KeyCaptureDialog::midiCallback, this);
-    midiin->ignoreTypes(false, false, false);
+    // Set up RtMidi callback, ensuring no other callback is set
+    if (!callbackSet) {
+        midiin->setCallback(&KeyCaptureDialog::midiCallback, this);
+        midiin->ignoreTypes(false, false, false);
+        callbackSet = true;
+    }
 
     qDebug() << "KeyCaptureDialog initialized with description:" << keyDescription;
 }
