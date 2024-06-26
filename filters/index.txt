@@ -582,3 +582,4 @@ cd_zoom_out.glsl
 rainbow_cd.glsl
 rainbow_cd_strobe.glsl
 rainbow_cd_spin.glsl
+rainbow_cd_curtain.glsl
