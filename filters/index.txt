@@ -579,3 +579,5 @@ open_shadow_multi_x2.glsl
 cd.glsl
 cd_zoom.glsl
 cd_zoom_out.glsl
+rainbow_cd.glsl
+rainbow_cd_strobe.glsl
