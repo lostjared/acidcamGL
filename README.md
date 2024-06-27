@@ -227,6 +227,7 @@ How to use the program:
 - `AC_PLUGIN_PATH`: Path to compiled plugins.
 - `AC_CUSTOM_PATH`: Path to custom filter stack text files.
 - `FFMPEG_PATH`: Path to ffmpeg executable.Controls:
+- `AC_MIDI`: Path to midi_cfg file
 
 # Keyboard Input
 
@@ -248,6 +249,10 @@ How to use the program:
 - `[SHIFT]+[SPACE]`: Toggle AutoFilter on and off.
 - `[LEFT]`: Filter index move left.
 - `[RIGHT]`: Filter index move right.
+- `[SHIFT+LEFT]`: Time move backward
+- `[SHIFT+RIGHT]`: Time move forward
+- `[SHIFT+2]`: Time manipulation enabled/disabled
+- `[SHIFT+3]`: Restore to current time
 - `[UP]`: Shader Index move up.
 - `[DOWN]`: Shader Index move down.
 - `[ENTER]`: Jump to currently typed index (type index with number keys at any time).
