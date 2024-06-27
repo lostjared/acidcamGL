@@ -6,13 +6,19 @@
 
 ![ScreenShot2](https://github.com/lostjared/acidcamGL/blob/master/screens/screen_linux.jpg?raw=true "screenshot2")
 
+
 # Motivation
 
 Just to create something that I can use to create fun video and artwork to share online.
 
 # Notes for Windows:
 
+![image](https://github.com/lostjared/acidcamGL/assets/18395951/b4907d23-8ed1-4c48-ade5-eebd1b3d87c4)
+
+
 * The Windows version of this project requires Visual Studio 2919 Runtime download from Microsoft.
+
+* THe Windows version provides a graphical user interface for launching the application.
 
 If downloading the Windows setup be sure to update to the most up-to-date shaders by downloading the project source code
 and copying the files in the filter/ directory into the same directory in the installation folder.
@@ -42,6 +48,8 @@ sudo make -f Makefile.midi install
 ```
 
 To configure your MIDI controller, follow these steps:
+
+![image](https://github.com/lostjared/acidcamGL/assets/18395951/36f95598-20e5-42f9-821b-d6ba8a1c86f3)
 
 - Compile and run the midi-cfg configuration tool in source code sub-directory midi-cfg/ or download windows EXE from releases
 
