@@ -25,6 +25,6 @@ float pingPong(float x, float length) {
 
 void main(void) {
     vec4 tcolor = texture(samp, tc);
-    float time_t = pingPong(time_f, 10.0) + 1.0;
+    float time_t = pingPong(time_f, 10.0) + 2.0;
     color = xor_RGB(tcolor, tcolor * time_t);
 }

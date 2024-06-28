@@ -57,6 +57,6 @@ vec4 blur(sampler2D image, vec2 uv, vec2 resolution) {
 
 void main(void) {
     vec4 tcolor = blur(samp, tc, iResolution);
-    float time_t = pingPong(time_f, 10.0) + 1.0;
+    float time_t = pingPong(time_f, 10.0) + 2.0;
     color = xor_RGB(tcolor, tcolor * time_t);
 }
