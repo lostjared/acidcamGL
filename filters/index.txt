@@ -587,3 +587,4 @@ rainbow_cd_spin.glsl
 rainbow_cd_curtain.glsl
 pastel.glsl
 color_glitch_dark.glsl
+xor_rgb.glsl
