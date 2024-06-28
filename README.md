@@ -6,13 +6,33 @@
 
 ![ScreenShot2](https://github.com/lostjared/acidcamGL/blob/master/screens/screen_linux.jpg?raw=true "screenshot2")
 
+
 # Motivation
 
 Just to create something that I can use to create fun video and artwork to share online.
 
+
+## System Requirements
+
+This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
+Please read this entire document before using the software. On MacOS you may have to give the Terminal or the application privileges to use the webcam and capture the desktop.
+This program requires a lot of RAM. If you wish to run with lower RAM set 
+the size of the memory pool with -8 flag. 
+
+Example:
+
+```bash
+	acidcamGL -d 0 -c 1920x1080 -r 1920x1080 -u 30 -8 200
+```
+
 # Notes for Windows:
 
+![image](https://github.com/lostjared/acidcamGL/assets/18395951/b4907d23-8ed1-4c48-ade5-eebd1b3d87c4)
+
+
 * The Windows version of this project requires Visual Studio 2919 Runtime download from Microsoft.
+
+* THe Windows version provides a graphical user interface for launching the application.
 
 If downloading the Windows setup be sure to update to the most up-to-date shaders by downloading the project source code
 and copying the files in the filter/ directory into the same directory in the installation folder.
@@ -43,6 +63,8 @@ sudo make -f Makefile.midi install
 
 To configure your MIDI controller, follow these steps:
 
+![image](https://github.com/lostjared/acidcamGL/assets/18395951/36f95598-20e5-42f9-821b-d6ba8a1c86f3)
+
 - Compile and run the midi-cfg configuration tool in source code sub-directory midi-cfg/ or download windows EXE from releases
 
 - Use the tool to configure your MIDI controller.
@@ -60,16 +82,6 @@ export AC_MIDI=/Users/jared/acidcamGL/midi.midi_cfg
 Your MIDI controller should now be configured and ready for use with the program.
 Be sure to run the right acidcamGL program the Linux and MacOS Makefiles give the program different names
 
-## System Requirements
-
-This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
-Please read this entire document before using the software. On MacOS you may have to give the Terminal or the application privileges to use the webcam and capture the desktop.
-This program requires a lot of ram. If you wish to run with lower ram set 
-the size of the memory pool with -8 flag. Example:
-
-```bash
-	acidcamGL -d 0 -c 1920x1080 -r 1920x1080 -u 30 -8 200
-```
 # How to compile on macOS:
 
 This project requires libacidcam,GLFW,GLEW,OpenGL,OpenCV,FFmpeg
