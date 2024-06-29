@@ -69,7 +69,11 @@ To configure your MIDI controller, follow these steps:
 
 - Use the tool to configure your MIDI controller.
 
+On Windows:
+
 - Copy the outputted configuration file, midi.midi_cfg, to your application directory.
+
+On Linux/MacOS:
 
 - Set the environment variable by running the following command to point to the location of midi.midi_cfg
 
