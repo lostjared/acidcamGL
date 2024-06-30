@@ -593,3 +593,4 @@ xor_rgb_smoother.glsl
 gblur.glsl
 xor_rgb_dark.glsl
 xor_rgb_dark_2.glsl
+xor_rgb_dark_3.glsl
