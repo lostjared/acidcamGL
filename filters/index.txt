@@ -599,3 +599,4 @@ xor_rgb_dark_4.glsl
 xor_rgb_rainbow_1.glsl
 xor_rgb_rainbow_swirl_limit.glsl
 xor_rgb_dark_rainbow.glsl
+fractal4.glsl
