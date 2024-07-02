@@ -602,3 +602,4 @@ xor_rgb_dark_rainbow.glsl
 fractal4.glsl
 bend.glsl
 pinch.glsl
+bend2.glsl
