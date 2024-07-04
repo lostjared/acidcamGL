@@ -644,10 +644,14 @@ int main(int argc, char **argv) {
     RtAudio audio;
     if (audio.getDeviceCount() < 1) {
         std::cerr << "No audio devices found!" << std::endl;
+#ifdef _WIN32
         system("PAUSE");
+#endif
         return 1;
     }
-
+    else {
+        std::cout << "acidcam: Audio device found...\n";
+    }
     RtAudio::StreamParameters inputParams, outputParams;
     inputParams.deviceId = audio.getDefaultInputDevice();
     inputParams.nChannels = 2;  // Stereo input
@@ -855,7 +859,13 @@ int main(int argc, char **argv) {
         if (audio.isStreamOpen()) audio.closeStream();
         return 1;
     }
+
+    if (audio.isStreamOpen())
+        std::cout << "acidcam: Audio stream opened...\n";
+
 #endif
+
+  
 
     main_window.loop();
     
