@@ -606,3 +606,4 @@ bend2.glsl
 page_turn.glsl
 page_turn2.glsl
 page_turn3.glsl
+tex_fold.glsl
