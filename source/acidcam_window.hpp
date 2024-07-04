@@ -1,3 +1,7 @@
+#ifdef REACTIVE_ENABLED
+#include"RtAudio.h"
+#endif
+
 #include"gl_window.hpp"
 #include"gl_shader.hpp"
 #include"autofilter.hpp"
@@ -22,7 +26,7 @@
 #include<cctype>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
-#define version_info "v1.6.0"
+#define version_info "v1.7.0"
 #ifdef SYPHON_SERVER
 #include"syphon.h"
 #endif
@@ -156,6 +160,15 @@ namespace acidcam {
             stereo_ = true;
             stereo_mode = true;
         }
+
+#ifdef REACTIVE_ENABLED
+
+        float amp = 1.0f;
+
+        void setAmp(float f) {
+            amp = f;
+        }
+#endif
         
         
 #ifdef SPOUT_SERVER
@@ -565,7 +578,7 @@ namespace acidcam {
             if (paused)
                 return;
 
-            if(time_manip == true && time_keys[0]) {
+            if (time_manip == true && time_keys[0]) {
                 if(time_manip_f > 1.0) {
                     time_manip_f -= 0.05;
                     std::cout << "acidcam: Time: " << time_manip_f << " shifted back.\n";
@@ -575,7 +588,6 @@ namespace acidcam {
                     std::cout << "acidcam: Time: " << time_manip_f << " shifted forward.\n";
             }
 
-
             if(restore_value == true) {
                 time_manip_f = timeval;
                 restore_value = false;
@@ -584,6 +596,14 @@ namespace acidcam {
             
             if(time_manip)
                 timeval = time_manip_f;
+
+#ifdef REACTIVE_ENABLED
+            if (time_manip) {
+                time_manip_f += (amp * 100.0);
+                timeval = time_manip_f;
+                std::cout << "acidcam: audio timeval: " << timeval << "\n";
+            }
+#endif
 
 
 
