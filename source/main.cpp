@@ -654,7 +654,7 @@ int main(int argc, char **argv) {
     }
     RtAudio::StreamParameters inputParams, outputParams;
     inputParams.deviceId = audio.getDefaultInputDevice();
-    inputParams.nChannels = 2;  // Stereo input
+    inputParams.nChannels = 1;  // Stereo input
     inputParams.firstChannel = 0;
 
     outputParams.deviceId = audio.getDefaultOutputDevice();
