@@ -2,8 +2,8 @@
 
 OBJ=$(patsubst %.cpp,%.o,$(wildcard *.cpp))
 #OPECV_LIBS= ./static/*a
-CFLAGS= -F. -mmacosx-version-min=10.14 -DSYPHON_SERVER -DMIDI_ENABLED -std=c++11 -O2 `pkg-config glfw3 glew acidcam rtmidi --cflags` -I./macos/include -I.
-LDFLAGS=-mmacosx-version-min=10.14 `pkg-config glfw3 rtmidi --libs` -framework VideoDecodeAcceleration  -lblas -lcblas -lclapack -llapack -lf77lapack -framework CoreVideo -framework CoreMedia -framework OpenGL -framework Cocoa -framework IOKit -framework AVKit -framework AVFoundation  -framework OpenCL  -lbz2  macos/cvlibs/*a -framework Cocoa -framework AppKit -framework Foundation
+CFLAGS= -F. -mmacosx-version-min=10.14 -DSYPHON_SERVER -DMIDI_ENABLED -DREACTIVE_ENABLED -std=c++11 -O2 `pkg-config glfw3 glew acidcam rtmidi rtaudio --cflags` -I./macos/include -I.
+LDFLAGS=-mmacosx-version-min=10.14 `pkg-config glfw3 rtmidi rtaudio --libs` -framework VideoDecodeAcceleration  -lblas -lcblas -lclapack -llapack -lf77lapack -framework CoreVideo -framework CoreMedia -framework OpenGL -framework Cocoa -framework IOKit -framework AVKit -framework AVFoundation  -framework OpenCL  -lbz2  macos/cvlibs/*a -framework Cocoa -framework AppKit -framework Foundation
 
 %.o: %.cpp
 	$(CXX) $(CFLAGS) $< -c -o $@
