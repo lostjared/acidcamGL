@@ -195,6 +195,27 @@ void system_pause() {
 #endif
 }
 
+#ifdef REACTIVE_ENABLED
+float gAmplitude = 0.0f;
+
+int audioCallback(void* outputBuffer, void* inputBuffer, unsigned int nBufferFrames,
+    double streamTime, RtAudioStreamStatus status, void* userData) {
+    if (status) {
+        std::cerr << "Stream underflow detected!" << std::endl;
+    }
+    float* in = static_cast<float*>(inputBuffer);
+    float* out = static_cast<float*>(outputBuffer);
+    float sum = 0.0f;
+    for (unsigned int i = 0; i < nBufferFrames * 2; ++i) { // assuming stereo input
+        sum += std::abs(in[i]);
+        out[i] = in[i]; // Pass-through
+    }
+    gAmplitude = sum / (nBufferFrames * 2);
+    main_window.setAmp(gAmplitude);
+    return 0;
+}
+#endif
+
 
 #ifdef MIDI_ENABLED
 
@@ -619,6 +640,28 @@ int main(int argc, char **argv) {
         acidcam::updateError();
     }
     
+#ifdef REACTIVE_ENABLED
+    RtAudio audio;
+    if (audio.getDeviceCount() < 1) {
+        std::cerr << "No audio devices found!" << std::endl;
+        system("PAUSE");
+        return 1;
+    }
+
+    RtAudio::StreamParameters inputParams, outputParams;
+    inputParams.deviceId = audio.getDefaultInputDevice();
+    inputParams.nChannels = 2;  // Stereo input
+    inputParams.firstChannel = 0;
+
+    outputParams.deviceId = audio.getDefaultOutputDevice();
+    outputParams.nChannels = 2;  // Stereo output
+    outputParams.firstChannel = 0;
+
+    unsigned int sampleRate = 44100;
+    unsigned int bufferFrames = 512;
+
+#endif
+
     cv::VideoWriter writer;
     int camera_mode = 0;
     
@@ -801,7 +844,19 @@ int main(int argc, char **argv) {
         }
         main_window.StereoX(cmd, cw, ch, fps);
     }
-    
+
+
+#ifdef REACTIVE_ENABLED
+    try {
+        audio.openStream(&outputParams, &inputParams, RTAUDIO_FLOAT32, sampleRate, &bufferFrames, &audioCallback);
+        audio.startStream();
+    }
+    catch (...) {
+        if (audio.isStreamOpen()) audio.closeStream();
+        return 1;
+    }
+#endif
+
     main_window.loop();
     
     
@@ -830,6 +885,9 @@ int main(int argc, char **argv) {
 #ifdef MIDI_ENABLED
     midi_cleanup();
     std::cout << "acidcam: Midi shutdown.\n";
+#endif
+#ifdef REACTIVE_ENABLED
+    if (audio.isStreamOpen()) audio.closeStream();
 #endif
     std::cout << "acidcam: exited\n";
 
