@@ -196,6 +196,7 @@ void system_pause() {
 }
 
 #ifdef REACTIVE_ENABLED
+
 float gAmplitude = 0.0f;
 
 int audioCallback(void* outputBuffer, void* inputBuffer, unsigned int nBufferFrames,
@@ -865,21 +866,22 @@ int main(int argc, char **argv) {
         audio.openStream(&outputParams, &inputParams, RTAUDIO_FLOAT32, sampleRate, &bufferFrames, &audioCallback);
         audio.startStream();
     }
-    catch (...) {
+    catch (std::exception &e) {
+        std::cerr << "Standard exception: " << e.what() << std::endl;
         if (audio.isStreamOpen()) audio.closeStream();
         return 1;
     }
+    catch (...) {
+        std::cerr << "Unknown error occurred!" << std::endl;
+        if (audio.isStreamOpen()) audio.closeStream();
+        return 1;
+    }   
+
 
     if (audio.isStreamOpen())
         std::cout << "acidcam: Audio stream opened...\n";
-
 #endif
-
-  
-
     main_window.loop();
-    
-    
     writer.release();
     acidcam::cap.release();
     
