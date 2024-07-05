@@ -891,7 +891,7 @@ namespace acidcam {
             glUniform1i(samp, 0);
             glUniform1i(mat_samp, 1);
             glUniform1f(c_index, (float)index);
-            glUniform1f(c_tf, static_cast<float>(timeval));
+            glUniform1f(c_tf, timeval);
             glUniform4fv(inc_value_pos, 1, glm::value_ptr(inc_value));
             glUniform4fv(inc_value_posx, 1, glm::value_ptr(inc_valuex));
             
