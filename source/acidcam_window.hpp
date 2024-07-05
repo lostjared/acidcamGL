@@ -599,7 +599,7 @@ namespace acidcam {
 
 #ifdef REACTIVE_ENABLED
             if (time_manip) {
-                time_manip_f += (amp * 100.0);
+                time_manip_f += (amp * 30.0);
                 timeval = time_manip_f;
                 std::cout << "acidcam: audio timeval: " << timeval << "\n";
             }
