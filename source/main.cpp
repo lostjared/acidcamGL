@@ -865,6 +865,9 @@ int main(int argc, char **argv) {
     try {
         audio.openStream(&outputParams, &inputParams, RTAUDIO_FLOAT32, sampleRate, &bufferFrames, &audioCallback);
         audio.startStream();
+
+         if (audio.isStreamOpen())
+            std::cout << "acidcam: Audio stream opened...\n";
     }
     catch (std::exception &e) {
         std::cerr << "Standard exception: " << e.what() << std::endl;
@@ -877,9 +880,6 @@ int main(int argc, char **argv) {
         return 1;
     }   
 
-
-    if (audio.isStreamOpen())
-        std::cout << "acidcam: Audio stream opened...\n";
 #endif
     main_window.loop();
     writer.release();

@@ -594,6 +594,9 @@ namespace acidcam {
                 std::cout << "acidcam: Restored time value to current.\n";
             }
             
+            if(std::isnan(time_manip_f) || std::isinf(time_manip_f))
+                time_manip_f = 1.0;
+
             if(time_manip)
                 timeval = time_manip_f;
 
