@@ -653,8 +653,11 @@ int main(int argc, char **argv) {
         std::cout << "acidcam: Audio device found...\n";
     }
     RtAudio::StreamParameters inputParams, outputParams;
+    unsigned int inputDeviceId = audio.getDefaultInputDevice();
+    unsigned int outputDeviceId = audio.getDefaultOutputDevice();
+
     inputParams.deviceId = audio.getDefaultInputDevice();
-    inputParams.nChannels = 2;  
+    inputParams.nChannels = 1;  
     inputParams.firstChannel = 0;
 
     outputParams.deviceId = audio.getDefaultOutputDevice();
@@ -663,6 +666,11 @@ int main(int argc, char **argv) {
 
     unsigned int sampleRate = 44100;
     unsigned int bufferFrames = 512;
+
+    std::vector<unsigned int> sampleRates = audio.getDeviceInfo(inputDeviceId).sampleRates;
+    if (std::find(sampleRates.begin(), sampleRates.end(), sampleRate) == sampleRates.end()) {
+        sampleRate = sampleRates[0]; // Choose the first supported sample rate
+    }
 
 #endif
 

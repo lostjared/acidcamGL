@@ -128,7 +128,7 @@ namespace acidcam {
         bool af_enabled = false;
         std::string material_file;
         bool time_manip = false;
-        float time_manip_f = 1.0f;
+        double time_manip_f = 1.0;
         bool time_keys[2];
         bool restore_value = false;
     public:
@@ -572,8 +572,8 @@ namespace acidcam {
                 std::cout << "acidcam: Stereo mode enabled...\n";
         }
         
-        bool bInitialized = false;
-        
+       bool bInitialized = false;
+
         virtual void update(double timeval) override {
             if (paused)
                 return;
@@ -604,6 +604,7 @@ namespace acidcam {
                 std::cout << "acidcam: audio timeval: " << timeval << "\n";
             }
 #endif
+
 
 
 
@@ -890,7 +891,7 @@ namespace acidcam {
             glUniform1i(samp, 0);
             glUniform1i(mat_samp, 1);
             glUniform1f(c_index, (float)index);
-            glUniform1f(c_tf, timeval);
+            glUniform1f(c_tf, static_cast<float>(timeval));
             glUniform4fv(inc_value_pos, 1, glm::value_ptr(inc_value));
             glUniform4fv(inc_value_posx, 1, glm::value_ptr(inc_valuex));
             
