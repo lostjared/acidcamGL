@@ -128,6 +128,7 @@ namespace acidcam {
         bool af_enabled = false;
         std::string material_file;
         bool time_manip = false;
+        bool audio_enabled = false;
         double time_manip_f = 1.0;
         bool time_keys[2];
         bool restore_value = false;
@@ -601,10 +602,10 @@ namespace acidcam {
                 timeval = time_manip_f;
 
 #ifdef REACTIVE_ENABLED
-            if (time_manip) {
+            if (audio_enabled) {
                 time_manip_f += (amp * 50.0);
                 timeval = time_manip_f;
-                std::cout << "acidcam: audio timeval: " << timeval << "\n";
+                std::cout << "acidcam: audio amp + time: " << timeval << "\n";
             }
 #endif
 
@@ -1100,6 +1101,7 @@ namespace acidcam {
                         time_keys[1] = true;
                         time_keys[0] = false;
                         break;
+
                     }
                 }
             }
@@ -1137,6 +1139,16 @@ namespace acidcam {
                     case GLFW_KEY_3:
                         if(mode == GLFW_MOD_SHIFT) {
                             restore_value = true;
+                        }
+                        break;
+                    case GLFW_KEY_4:
+                        if(mode == GLFW_MOD_SHIFT) {
+                            audio_enabled = !audio_enabled;
+                            if(audio_enabled) {
+                                std::cout << "acidcm: audio reacitivty enabled.\n";
+                            } else {
+                                std::cout << "acidcam: audio reacitvity disabled.\n";
+                            }
                         }
                         break;
                     case GLFW_KEY_SEMICOLON:
