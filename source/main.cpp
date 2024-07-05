@@ -122,6 +122,7 @@ std::string outstr_arr[] = {
     "    [SHIFT]+1 - Stereo Mode toggle On/Off",
     "    [SHIFT]+2 - Toggle Time Control On / Off ",
     "    [SHIFT]+3 - Restore Time Value ",
+    "    [SHIFT]+4 - Enable Audio Reacitivty (if supported)",
     "    [SHIFT]+[LEFT] - Time control move backard",
     "    [SHIFT]+[RIGHT] - TIme control move forward",
     "    [UP] - Shader Index move up",
