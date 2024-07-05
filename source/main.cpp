@@ -657,7 +657,7 @@ int main(int argc, char **argv) {
     unsigned int outputDeviceId = audio.getDefaultOutputDevice();
 
     inputParams.deviceId = audio.getDefaultInputDevice();
-    inputParams.nChannels = 1;  
+    inputParams.nChannels = 2;  
     inputParams.firstChannel = 0;
 
     outputParams.deviceId = audio.getDefaultOutputDevice();
@@ -669,9 +669,11 @@ int main(int argc, char **argv) {
 
     std::vector<unsigned int> sampleRates = audio.getDeviceInfo(inputDeviceId).sampleRates;
     if (std::find(sampleRates.begin(), sampleRates.end(), sampleRate) == sampleRates.end()) {
-        sampleRate = sampleRates[0]; // Choose the first supported sample rate
+        sampleRate =  48000;
+        if(std::find(sampleRates.begin(), sampleRates.end(), sampleRate) == sampleRates.end()) {
+            sampleRate = sampleRates[0]; // Choose the first supported sample rate
+        }
     }
-
 #endif
 
     cv::VideoWriter writer;
