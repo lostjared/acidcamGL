@@ -19,7 +19,7 @@ Please read this entire document before using the software. On MacOS you may hav
 This program requires a lot of RAM. If you wish to run with lower RAM set 
 the size of the memory pool with -8 flag. 
 
-Note: Video files you use with the program their resolution must be a power of two.
+Note: Video files you use with the program their resolution must be even numbered.
 
 Example:
 
