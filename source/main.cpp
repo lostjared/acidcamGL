@@ -926,10 +926,13 @@ int main(int argc, char** argv) {
 
 #ifdef MIDI_ENABLED
     midi_cleanup();
-    std::cout << "acidcam: Midi shutdown.\n";
+    std::cout << "acidcam: MIDI shutdown.\n";
 #endif
 #ifdef REACTIVE_ENABLED
-    if (enable_audio_ex && audio.isStreamOpen()) audio.closeStream();
+    if (enable_audio_ex && audio.isStreamOpen()) {
+         audio.closeStream();
+         std::cout << "acidcam: Audio stream closed.\n";
+    }
 #endif
     std::cout << "acidcam: exited\n";
 
