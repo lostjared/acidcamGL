@@ -49,10 +49,16 @@ C:\Program Files\LostSideDead\acidcamGL\acidcamGL\acidcamGL_x64\filters
 
 # Requirements
 
-Update: To compile in MIDU/Audio support (this is still in the progress of development) install rtmidi and rtaudio on Debian They are called:
+To enable MIDU/Audio support you need to install rtmidi and rtaudio on Debian. The packages are named:
 
- librtmidi-dev
- librtaudio-dev
+librtmidi-dev
+librtaudio-devv
+
+You can find the repos for these libraries on GitHub here:
+
+rtmidi: https://github.com/thestk/rtmidi
+
+rtaudio: https://github.com/thestk/rtaudio
 
 ```bash
 make -f Makefile.midi.linux
