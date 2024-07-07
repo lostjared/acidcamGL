@@ -49,9 +49,10 @@ C:\Program Files\LostSideDead\acidcamGL\acidcamGL\acidcamGL_x64\filters
 
 # Requirements
 
-Update: To compile in MIDI support (this is still in the progress of development) install rtmidi on Debian its called:
+Update: To compile in MIDU/Audio support (this is still in the progress of development) install rtmidi and rtaudio on Debian They are called:
 
  librtmidi-dev
+ librtaudio-dev
 
 ```bash
 make -f Makefile.midi.linux
