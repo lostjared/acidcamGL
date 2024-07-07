@@ -271,6 +271,7 @@ How to use the program:
 - `[SHIFT+RIGHT]`: Time move forward
 - `[SHIFT+2]`: Time manipulation enabled/disabled
 - `[SHIFT+3]`: Restore to current time
+- `[SHIFT+4]`: Toggle on or off Audio Reactivity if compile din
 - `[UP]`: Shader Index move up.
 - `[DOWN]`: Shader Index move down.
 - `[ENTER]`: Jump to currently typed index (type index with number keys at any time).
