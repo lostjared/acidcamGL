@@ -165,9 +165,10 @@ namespace acidcam {
 #ifdef REACTIVE_ENABLED
 
         float amp = 1.0f;
-
-        void setAmp(float f) {
+        float amp_sense = 2.0f;
+        void setAmp(float f, float s) {
             amp = f;
+            amp_sense = s;
         }
 #endif
         
@@ -603,7 +604,7 @@ namespace acidcam {
 
 #ifdef REACTIVE_ENABLED
             if (audio_enabled) {
-                time_manip_f += (amp * 50.0);
+                time_manip_f += (amp * amp_sense);
                 timeval = time_manip_f;
                 std::cout << "acidcam: audio amp + time: " << timeval << "\n";
             }

@@ -84,6 +84,7 @@ std::string outstr_arr[] = {
     "    -3 Plugin Path",
     "    -9 Number of threads",
     "    -8 Set Max Allocated Frames",
+    "    -V Reactivity Sensitivity",
     "    -y Disable Audio",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
     "    --list display capture device list",
@@ -200,6 +201,7 @@ void system_pause() {
 #ifdef REACTIVE_ENABLED
 
 float gAmplitude = 0.0f;
+float amp_sense = 2.0f;
 
 int audioCallback(void* outputBuffer, void* inputBuffer, unsigned int nBufferFrames,
     double streamTime, RtAudioStreamStatus status, void* userData) {
@@ -214,7 +216,7 @@ int audioCallback(void* outputBuffer, void* inputBuffer, unsigned int nBufferFra
         out[i] = in[i]; // Pass-through
     }
     gAmplitude = sum / (nBufferFrames * 2);
-    main_window.setAmp(gAmplitude);
+    main_window.setAmp(gAmplitude, amp_sense);
     return 0;
 }
 #endif
@@ -358,8 +360,14 @@ int main(int argc, char** argv) {
     std::string custom_index;
     bool enable_audio_ex = true;
 
-    while ((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:y")) != -1) {
+    while ((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:yV:")) != -1) {
         switch (opt) {
+        case 'V':
+        #ifdef REACTIVE_ENABLED
+            if(optarg != NULL)
+                amp_sense = atof(optarg);
+        #endif
+            break;
         case 'y':
             enable_audio_ex = false;
             break;
