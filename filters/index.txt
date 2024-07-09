@@ -607,6 +607,8 @@ page_turn.glsl
 page_turn2.glsl
 page_turn3.glsl
 tex_fold.glsl
+glitch_boil.glsl
+glitch_boil2.glsl
 react.glsl
 react2.glsl
 react3.glsl
@@ -623,3 +625,4 @@ react13.glsl
 react14.glsl
 react15.glsl
 react16.glsl
+react17.glsl
