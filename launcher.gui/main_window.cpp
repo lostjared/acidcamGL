@@ -298,6 +298,32 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     auto_set->setStyleSheet(style_info);
     auto_set->setGeometry(330, 135+40+35+35+35+35+offset_y, 100, 30);
     
+    audio_disable = new QCheckBox(tr("Disable Audio"), this);
+    audio_disable->setStyleSheet(style_info);
+    audio_disable->setGeometry(440,135+40+35+35+35+35+offset_y, 200, 30);
+    
+    QLabel *sense_txt = new QLabel(tr("Audio Sensitivity:"), this);
+    sense_txt->setStyleSheet(style_info);
+    sense_txt->setGeometry(550+100,135+40+35+35+35+35+offset_y,200, 30);
+    
+    audio_sense = new QLineEdit("25.0",this);
+    audio_sense->setStyleSheet(style_info);
+    audio_sense->setGeometry(660+170,135+40+35+35+35+35+offset_y,50, 30);
+    QLabel *chan_txt = new QLabel(tr("Input Channels:"), this);
+    chan_txt->setStyleSheet(style_info);
+    chan_txt->setGeometry(660+170+60,135+40+35+35+35+35+offset_y,200,30);
+
+    audio_channel = new QLineEdit("2", this);
+    audio_channel->setStyleSheet(style_info);
+    audio_channel->setGeometry(660+170+60+150,135+40+35+35+35+35+offset_y,50, 30);
+ 
+    connect(audio_channel, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+    connect(audio_sense, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
+
+    connect(audio_disable, SIGNAL(clicked()), this, SLOT(setAudioDisable()));
+    
+
+    
     connect(auto_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
     connect(auto_set, SIGNAL(clicked()), this, SLOT(setAutoFilter()));
@@ -533,6 +559,17 @@ void MainWindow::setPlaylistPath() {
     updateCommand();
 }
 
+void MainWindow::setAudioDisable() {
+    if(audio_disable->isChecked()) {
+        audio_sense->setEnabled(false);
+        audio_channel->setEnabled(false);
+    } else {
+        audio_sense->setEnabled(true);
+        audio_channel->setEnabled(true);
+    }
+    updateCommand();
+}
+
 void MainWindow::setAutoFilter() {
     QString dir_path = settings->value("dir_path4", "").toString();
     QString name = QFileDialog::getOpenFileName(this,tr("Open Autofilter"), dir_path, tr("Autofilter Files (*.af)"));
@@ -726,6 +763,13 @@ void MainWindow::updateCommand() {
     
     if(custom_on->isChecked() && custom_file->text() != "") {
         cmd_list << "-W" << QString("\"") + custom_file->text() + "\"";
+    }
+    
+    if(audio_disable->isChecked()) {
+        cmd_list << "-y";
+    } else {
+        cmd_list << "-V" << audio_sense->text();
+        cmd_list << "-I" << audio_channel->text();
     }
     
     QString buf;

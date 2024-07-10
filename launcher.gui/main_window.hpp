@@ -2,7 +2,7 @@
 #ifndef __MAIN_WINDOW_H_
 #define __MAIN_WINDOW_H_
 
-#define GUI_VERSION "1.1.0"
+#define GUI_VERSION "1.2.0"
 
 #include<QMainWindow>
 #include<QTextEdit>
@@ -51,6 +51,7 @@ public slots:
     void load();
     void save();
     QString getShaderPath();
+    void setAudioDisable();
 signals:
     void LogString(const QString &text);
 private:
@@ -96,6 +97,9 @@ private:
     QLineEdit *custom_file;
     QPushButton *custom_set;
     QCheckBox *video_repeat;
+    QCheckBox *audio_disable;
+    QLineEdit *audio_sense;
+    QLineEdit *audio_channel;
     std::vector<FILE*> fptr;
     QSettings *settings;
     QMenu *file_menu,*help_menu, *run_menu;
