@@ -359,9 +359,18 @@ int main(int argc, char** argv) {
     std::string autofilter_file;
     std::string custom_index;
     bool enable_audio_ex = true;
+#ifdef REACTIVE_ENABLED
+    int input_channels = 2;
+#endif
 
-    while ((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:yV:")) != -1) {
+    while ((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:yV:I:")) != -1) {
         switch (opt) {
+        case 'I':
+#ifdef REACTIVE_ENABLED
+        if(optarg != NULL)
+            input_channels = atoi(optarg);
+#endif    
+         break;
         case 'V':
         #ifdef REACTIVE_ENABLED
             if(optarg != NULL)
@@ -683,9 +692,8 @@ int main(int argc, char** argv) {
         unsigned int outputDeviceId = audio.getDefaultOutputDevice();
 
         inputParams.deviceId = audio.getDefaultInputDevice();
-        inputParams.nChannels = 2;
+        inputParams.nChannels = input_channels;
         inputParams.firstChannel = 0;
-
         outputParams.deviceId = audio.getDefaultOutputDevice();
         outputParams.nChannels = 2;
         outputParams.firstChannel = 0;
@@ -889,6 +897,10 @@ int main(int argc, char** argv) {
 #ifdef REACTIVE_ENABLED
 
     if (enable_audio_ex) {
+
+        std::cout << "acidcam: Setting input channels to: " << input_channels << "\n";
+        std::cout << "acidcam: Setting sample rate to: " << sampleRate << "\n";
+
         try {
             audio.openStream(&outputParams, &inputParams, RTAUDIO_FLOAT32, sampleRate, &bufferFrames, &audioCallback);
             audio.startStream();
