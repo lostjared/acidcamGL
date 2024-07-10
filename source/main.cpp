@@ -84,6 +84,7 @@ std::string outstr_arr[] = {
     "    -3 Plugin Path",
     "    -9 Number of threads",
     "    -8 Set Max Allocated Frames",
+    "    -I Set Number of Channels for Input Device",
     "    -V Reactivity Sensitivity",
     "    -y Disable Audio",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
