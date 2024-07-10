@@ -202,7 +202,7 @@ void system_pause() {
 #ifdef REACTIVE_ENABLED
 
 float gAmplitude = 0.0f;
-float amp_sense = 2.0f;
+float amp_sense = 25.0f;
 
 int audioCallback(void* outputBuffer, void* inputBuffer, unsigned int nBufferFrames,
     double streamTime, RtAudioStreamStatus status, void* userData) {
