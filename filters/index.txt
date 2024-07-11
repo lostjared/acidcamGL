@@ -630,3 +630,4 @@ react17.glsl
 react18.glsl
 react19.glsl
 surround.glsl
+sum.glsl
