@@ -71,7 +71,6 @@ void main() {
     float time_x = pingPong(time_f, 5.0) + 2.0;
     vec4 b_tex = blur(samp, tc, iResolution);
 
-    // Check the value of sum and use mix or xor_RGB accordingly
     if (sum.r + sum.g + sum.b > 1.5) {
         color = mix(sin(b_tex * time_t), sin(sum * time_x), 0.5);
     } else {
