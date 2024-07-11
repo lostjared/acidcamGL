@@ -321,8 +321,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(audio_sense, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
 
     connect(audio_disable, SIGNAL(clicked()), this, SLOT(setAudioDisable()));
-    
-
+    audio_disable->setChecked(true);
+    audio_channel->setEnabled(false);
+    audio_sense->setEnabled(false);
     
     connect(auto_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     
