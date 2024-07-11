@@ -368,15 +368,15 @@ int main(int argc, char** argv) {
         switch (opt) {
         case 'I':
 #ifdef REACTIVE_ENABLED
-        if(optarg != NULL)
-            input_channels = atoi(optarg);
+            if (optarg != NULL)
+                input_channels = atoi(optarg);
 #endif    
-         break;
+            break;
         case 'V':
-        #ifdef REACTIVE_ENABLED
-            if(optarg != NULL)
+#ifdef REACTIVE_ENABLED
+            if (optarg != NULL)
                 amp_sense = atof(optarg);
-        #endif
+#endif
             break;
         case 'y':
             enable_audio_ex = false;
@@ -682,9 +682,9 @@ int main(int argc, char** argv) {
         std::cout << "acidcam: Audio device found...\n";
     }
 
-        unsigned int sampleRate = 44100;
-        unsigned int bufferFrames = 512;
-        RtAudio::StreamParameters inputParams, outputParams;
+    unsigned int sampleRate = 44100;
+    unsigned int bufferFrames = 512;
+    RtAudio::StreamParameters inputParams, outputParams;
 
 
     if (enable_audio_ex) {
@@ -692,18 +692,25 @@ int main(int argc, char** argv) {
         unsigned int inputDeviceId = audio.getDefaultInputDevice();
         unsigned int outputDeviceId = audio.getDefaultOutputDevice();
 
-        inputParams.deviceId = audio.getDefaultInputDevice();
-        inputParams.nChannels = input_channels;
-        inputParams.firstChannel = 0;
-        outputParams.deviceId = audio.getDefaultOutputDevice();
-        outputParams.nChannels = 2;
-        outputParams.firstChannel = 0;
+        if (inputDeviceId == 0 || outputDeviceId == 0) {
+            std::cout << "acidcam: No Input or Output device found...\n";
+            enable_audio_ex = false;
+            return 1;
+        }
+        else {
+            inputParams.deviceId = audio.getDefaultInputDevice();
+            inputParams.nChannels = input_channels;
+            inputParams.firstChannel = 0;
+            outputParams.deviceId = audio.getDefaultOutputDevice();
+            outputParams.nChannels = 2;
+            outputParams.firstChannel = 0;
 
-        std::vector<unsigned int> sampleRates = audio.getDeviceInfo(inputDeviceId).sampleRates;
-        if (std::find(sampleRates.begin(), sampleRates.end(), sampleRate) == sampleRates.end()) {
-            sampleRate = 48000;
+            std::vector<unsigned int> sampleRates = audio.getDeviceInfo(inputDeviceId).sampleRates;
             if (std::find(sampleRates.begin(), sampleRates.end(), sampleRate) == sampleRates.end()) {
-                sampleRate = sampleRates[0]; // Choose the first supported sample rate
+                sampleRate = 48000;
+                if (std::find(sampleRates.begin(), sampleRates.end(), sampleRate) == sampleRates.end()) {
+                    sampleRate = sampleRates[0]; // Choose the first supported sample rate
+                }
             }
         }
     }
@@ -951,8 +958,8 @@ int main(int argc, char** argv) {
 #endif
 #ifdef REACTIVE_ENABLED
     if (enable_audio_ex && audio.isStreamOpen()) {
-         audio.closeStream();
-         std::cout << "acidcam: Audio stream closed.\n";
+        audio.closeStream();
+        std::cout << "acidcam: Audio stream closed.\n";
     }
 #endif
     std::cout << "acidcam: exited\n";
