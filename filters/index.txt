@@ -631,3 +631,4 @@ react18.glsl
 react19.glsl
 surround.glsl
 sum.glsl
+shift.glsl
