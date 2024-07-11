@@ -49,7 +49,7 @@ float pingPong(float x, float length) {
 vec4 colorRotate(vec4 color) {
     ivec4 col = ivec4(color * 255);
     for(int i = 0; i < 3; ++i) {
-        col[i] = col[i]%255;
+        col[i] = col[i]%0xFF;
     }
     return vec4(col/255.0);
 }
