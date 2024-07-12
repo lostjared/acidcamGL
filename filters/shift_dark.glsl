@@ -60,3 +60,4 @@ void main() {
     float time_t =  pingPong(time_f, 7.0) + 2.0;
     color = sin(colorRotate(col * value) * time_t);
 }
+
