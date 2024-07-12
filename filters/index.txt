@@ -632,3 +632,4 @@ react19.glsl
 surround.glsl
 sum.glsl
 shift.glsl
+shift_dark.glsl
