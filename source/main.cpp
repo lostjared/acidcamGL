@@ -87,6 +87,7 @@ std::string outstr_arr[] = {
     "    -I Set Number of Channels for Input Device",
     "    -V Reactivity Sensitivity",
     "    -y Disable Audio",
+    "    -O for file mode do not copy audio frrom original file",
     "    --mux outputted_file source_file [ Mux audio (copy audio) ]",
     "    --list display capture device list",
     "    --rotate src output",
