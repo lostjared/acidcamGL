@@ -360,12 +360,17 @@ int main(int argc, char** argv) {
     std::string autofilter_file;
     std::string custom_index;
     bool enable_audio_ex = true;
+    bool stop_audio_mux = false;
+
 #ifdef REACTIVE_ENABLED
     int input_channels = 2;
 #endif
 
-    while ((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:yV:I:")) != -1) {
+    while ((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:yV:I:O")) != -1) {
         switch (opt) {
+        case 'O':
+            stop_audio_mux = true;
+            break;
         case 'I':
 #ifdef REACTIVE_ENABLED
             if (optarg != NULL)
@@ -948,7 +953,7 @@ int main(int argc, char** argv) {
     else if (ffmpeg_enabled)
         std::cout << "acidcam: wrote file with ffmpeg: [" << output_file << "]\n";
 
-    if (camera_mode == 1 && ffmpeg_enabled) {
+    if (camera_mode == 1 && ffmpeg_enabled && stop_audio_mux == false) {
         mux_audio_ac(output_file, filename);
     }
 
