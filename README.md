@@ -242,6 +242,10 @@ How to use the program:
 - `-3 <Plugin Path>`: Specify the plugin path.
 - `-9 <Number of threads>`: Set the number of threads for processing.
 - `-8 <Set Max Allocated Frames>`: Set the maximum number of allocated frames.
+- `-I <Set Number of Input Channels>`: Set the number of input channels.
+- `-V <Set Sensitivity of input>`: Set the Sensitivity of Input Reaction.
+- `-y <Disable Audio>`: Disable Audio Input for Reacitvity
+- `-O <Disable copy of audio track>`: Disable copying of original audio track for file mode
 - `--mux <outputted_file source_file>`: Mux audio (copy audio) from the source file to the outputted file.
 - `--list`: Display the list of available capture devices.
 - `--rotate <src output>`: Rotate the source video and output.
