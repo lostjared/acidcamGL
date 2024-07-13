@@ -633,3 +633,4 @@ surround.glsl
 sum.glsl
 shift.glsl
 shift_dark.glsl
+dissolve.glsl
