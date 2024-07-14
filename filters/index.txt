@@ -634,4 +634,6 @@ sum.glsl
 shift.glsl
 shift_dark.glsl
 particle_1.glsl
+echo_sin_particle.glsl
 echo_sin.glsl
+
