@@ -638,3 +638,4 @@ echo_sin_particle.glsl
 echo_sin.glsl
 rainbow_blur.glsl
 rainbow_spiral.glsl
+rainbow_spiral_loose.glsl
