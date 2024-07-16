@@ -52,23 +52,19 @@ vec4 blur(sampler2D image, vec2 uv, vec2 resolution) {
                                     1.5, 2.5, 3.0, 3.5, 4.0, 4.0, 3.5, 3.0, 2.5, 1.5,
                                     1.0, 2.0, 2.5, 3.0, 3.5, 3.5, 3.0, 2.5, 2.0, 1.0,
                                     0.5, 1.0, 1.5, 2.0, 2.5, 2.5, 2.0, 1.5, 1.0, 0.5);
-
     for (int i = 0; i < 100; i++) {
         kernel[i] = kernelVals[i];
     }
-
     float kernelSum = 0.0;
     for (int i = 0; i < 100; i++) {
         kernelSum += kernel[i];
     }
-
     for (int x = -5; x <= 4; ++x) {
         for (int y = -5; y <= 4; ++y) {
             vec2 offset = vec2(float(x), float(y)) * texelSize;
             result += texture(image, uv + offset) * kernel[(y + 5) * 10 + (x + 5)];
         }
     }
-
     return result / kernelSum;
 }
 
@@ -77,33 +73,18 @@ void main(void) {
     uv.y *= iResolution.y / iResolution.x;
     float r = length(uv);
     float interval = abs(sin(time_f * 0.1)) * 10.0 + 5.0;
-    
-    
-    
-    
     float time_t = pingPong(time_f, interval) + 2.0;
-    
     float theta = atan(uv.y, uv.x);
-    
     theta = tan(theta * time_t);
-    
     float direction = sign(sin(time_f * 0.25));
     theta += direction * (time_f * 2.0 + r * 5.0);
-
-    
     vec2 spiralUV = mat2(cos(theta), -sin(theta), sin(theta), cos(theta)) * uv;
-  
     spiralUV = sin(spiralUV * time_t);
-    
     float mixFactor = (sin(time_f * 0.5) + 1.0) * 0.5;
     uv = mix(uv, spiralUV, mixFactor);
-    
     vec3 rainbow_color = rainbow(uv.x + uv.y + time_f);
-    
     vec4 blurred_color = blur(samp, tc, iResolution);
     vec3 blended_color = mix(blurred_color.rgb, rainbow_color, 0.5);
     vec3 final_color = sin(blended_color * time_t);
-    
-     
     color = vec4(final_color, 1.0);
 }
