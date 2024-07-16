@@ -641,3 +641,4 @@ rainbow_spiral.glsl
 rainbow_spiral_loose.glsl
 rainbow_spiral_rev.glsl
 rainbow_spiral_rev2.glsl
+edge_pencil.glsl
