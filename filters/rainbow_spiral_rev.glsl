@@ -89,8 +89,6 @@ void main(void) {
     float direction = sign(sin(time_f * 0.05));
     float theta = atan(uv.y, uv.x);
     theta += direction * (time_f * 2.0 + r * 5.0);
-    
-    // Change direction based on time
     vec2 spiralDirection = vec2(sin(time_f * 0.1), cos(time_f * 0.1));
     uv = mat2(cos(theta), -sin(theta), sin(theta), cos(theta)) * uv;
     uv += spiralDirection * time_f * 0.1;
