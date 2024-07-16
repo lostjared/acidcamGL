@@ -399,6 +399,10 @@ xorsheet_2.glsl
 brighten.glsl
 brighten_rev.glsl
 star.glsl
+edge_pencil.glsl
+edge_black.glsl
+edge_rainbow.glsl
+edge_fill.glsl
 nl.glsl
 rainbow_left.glsl
 rainbow_top.glsl
@@ -641,7 +645,3 @@ rainbow_spiral.glsl
 rainbow_spiral_loose.glsl
 rainbow_spiral_rev.glsl
 rainbow_spiral_rev2.glsl
-edge_pencil.glsl
-edge_black.glsl
-edge_rainbow.glsl
-edge_fill.glsl
