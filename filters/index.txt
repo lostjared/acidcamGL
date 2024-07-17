@@ -322,6 +322,7 @@ material_ripple_out.glsl
 material_rainbow_fade.glsl
 material_xor_rgb_1.glsl
 material_xor_rgb_smooth.glsl
+material_shift_dark.glsl
 acidcolor.glsl
 acid_color2.glsl
 negative_xor_strobe.glsl
