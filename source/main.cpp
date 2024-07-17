@@ -265,6 +265,21 @@ void the_callback(std::vector<unsigned char>* message) {
 }
 #endif
 
+std::string to_lower(const std::string &s) {
+    std::string temp;
+    for(size_t i = 0; i < s.length(); ++i){
+        temp += tolower(s[i]);
+    }
+    return temp;
+}
+
+bool is_file_image(const std::string &f) {
+    std::string lf = to_lower(f);
+    if(lf.find(".png") != std::string::npos || lf.find(".jpg") != std::string::npos || lf.find(".tiff") != std::string::npos || lf.find(".bmp") != std::string::npos)
+        return true;
+    return false;
+}
+
 int main(int argc, char** argv) {
     atexit(system_pause);
     if (argc == 1) {
@@ -726,7 +741,24 @@ int main(int argc, char** argv) {
     int camera_mode = 0;
 
     if (screen_mode == false) {
-        if (filename.length() == 0) {
+        if(filename.length() != 0 && is_file_image(filename) == true) {
+
+            cv::Mat input_file = cv::imread(filename);
+            if(!input_file.empty()) {
+                std::cout << "acidcam: Loading from Image: " << filename << "\n";
+            } else {
+                std::cout << "acidcam: Could not load image: " << filename << "\n";
+                acidcam::updateError();
+            }
+            main_window.setImageMode(input_file, fps);
+            cw = input_file.cols;
+            ch = input_file.rows;
+            camera_mode = 1;
+            if (res_w == 0 && res_h == 0) {
+                w = cw;
+                h = ch;
+            }
+        } else if (filename.length() == 0) {
 #ifdef _WIN32
             acidcam::cap.open(device, cv::CAP_DSHOW);
 #else
@@ -784,9 +816,10 @@ int main(int argc, char** argv) {
     }
     if (screen_mode)
         main_window.enableScreenMode(true, screen_x, screen_y, cw, ch);
+    
     if (filename.length() == 0)
         main_window.setVideoMode(false, 0);
-    else
+    else if(is_file_image(filename) == false)
         main_window.setVideoMode(true, fps);
 
     std::cout << "acidcam: Acid Cam Filter Library Version: " << ac::getVersion() << "\n";
@@ -954,7 +987,7 @@ int main(int argc, char** argv) {
     else if (ffmpeg_enabled)
         std::cout << "acidcam: wrote file with ffmpeg: [" << output_file << "]\n";
 
-    if (camera_mode == 1 && ffmpeg_enabled && stop_audio_mux == false) {
+    if (is_file_image(filename) == false && camera_mode == 1 && ffmpeg_enabled && stop_audio_mux == false) {
         mux_audio_ac(output_file, filename);
     }
 

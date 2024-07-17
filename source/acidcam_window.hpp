@@ -190,7 +190,14 @@ namespace acidcam {
             return true;
         }
 #endif
-        
+        cv::Mat image_file;
+        bool image_mode = false;
+        void setImageMode(const cv::Mat &m, int f) {
+            image_file = m.clone();
+            image_mode = true;
+            fps = f;
+        }
+
         void setVideoMode(bool b, int f) {
             video_mode = b;
             fps = f;
@@ -279,8 +286,15 @@ namespace acidcam {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
             cv::Mat frame;
-            if(!cap.isOpened()) {
+            if(image_mode == true) {
+                    frame = image_file.clone();
+                    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame.cols, frame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, frame.ptr());
+                    sx = frame.cols;
+                    sy = frame.rows;
+            } else if(!cap.isOpened()) {
                 return;
             } else {
                 cap.read(frame);
@@ -691,10 +705,11 @@ namespace acidcam {
             
             cv::Mat frame;
             
-            
-            if (screen_mode == false) {
+             if(image_mode == true) {
+               frame = image_file.clone();        
+            } else if (screen_mode == false) {
                 if(stereo_ == false) {
-                    if (!cap.read(frame)) {
+                   if (!cap.read(frame)) {
                         if (repeat == true && repeat_filename.length() > 0) {
                             cap.open(repeat_filename);
                             if (cap.isOpened()) {
