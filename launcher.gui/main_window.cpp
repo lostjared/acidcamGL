@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mode_select->setStyleSheet(style_info);
     mode_select->setGeometry(60, 60+offset_y, 200, 25);
     mode_select->addItem(tr("Capture Device"));
-    mode_select->addItem(tr("Video File"));
+    mode_select->addItem(tr("Input File"));
 #ifdef __APPLE__
     mode_select->addItem(tr("Screen Capture"));
 #endif
@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     select_filters->setStyleSheet(style_info);
     select_filters->setGeometry(15+140+10+250+20, 60+25+10+offset_y,100,30);
     select_video = new QPushButton(tr("Select"), this);
-    QLabel *select_temp1 = new QLabel(tr("Select Video: "), this);
+    QLabel *select_temp1 = new QLabel(tr("Select Input: "), this);
     select_temp1->setGeometry(5+15+140+10+250+20+60+25+10+5, 60+offset_y, 125, 20);
     select_video->setStyleSheet(style_info);
     select_video->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+5, 60+offset_y, 100, 30);
@@ -201,6 +201,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     start_sec = new QLineEdit(tr("0"), this);
     start_sec->setStyleSheet(style_info);
     start_sec->setGeometry(335+210, 135+35+offset_y, 100, 30);
+
+    QLabel *max_lbl = new QLabel(tr("Max Frames: "), this);
+    max_lbl->setGeometry(335+315, 135+35+offset_y, 100, 30);
+    max_lbl->setStyleSheet(style_info);
+
+    max_frames = new QLineEdit(tr("500"), this);
+    max_frames->setGeometry(335+420,135+35+offset_y,  100, 30);
+    max_frames->setStyleSheet(style_info);
+    
+    connect(max_frames, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(monitor_, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(start_shader, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(start_filter, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
@@ -528,7 +538,7 @@ void MainWindow::selectPath() {
 
 void MainWindow::setMatPath() {
     QString dir_path = settings->value("dir_path2", "").toString();
-    QString name = QFileDialog::getOpenFileName(this,tr("Open Video/Image"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
+    QString name = QFileDialog::getOpenFileName(this,tr("Open Video/Image"), dir_path, tr("Image/Video Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
     if(name.length() > 0) {
         material_filename->setText(name);
         std::string val = name.toStdString();
@@ -617,7 +627,7 @@ void MainWindow::setCustomFile() {
 
 void MainWindow::selectVideo() {
     QString dir_path = settings->value("dir_path6", "").toString();
-    QString name = QFileDialog::getOpenFileName(this,tr("Open Video"), dir_path, tr("Image Files (*.mov *.mp4 *.mkv *.avi *.m4v)"));
+    QString name = QFileDialog::getOpenFileName(this,tr("Open Video"), dir_path, tr("Image/Video Files (*.mov *.mp4 *.mkv *.avi *.m4v *.jpg *.png *.bmp *.tif)"));
     if(name.length() > 0) {
         std::string val = name.toStdString();
         auto pos = val.rfind("/");
@@ -772,7 +782,7 @@ void MainWindow::updateCommand() {
         cmd_list << "-V" << audio_sense->text();
         cmd_list << "-I" << audio_channel->text();
     }
-    
+    cmd_list << "-8"  << max_frames->text();
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
         buf += cmd_list.at(i) + " ";

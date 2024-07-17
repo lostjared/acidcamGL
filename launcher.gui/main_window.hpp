@@ -2,7 +2,7 @@
 #ifndef __MAIN_WINDOW_H_
 #define __MAIN_WINDOW_H_
 
-#define GUI_VERSION "1.2.0"
+#define GUI_VERSION "1.3.0"
 
 #include<QMainWindow>
 #include<QTextEdit>
@@ -100,6 +100,7 @@ private:
     QCheckBox *audio_disable;
     QLineEdit *audio_sense;
     QLineEdit *audio_channel;
+    QLineEdit *max_frames;
     std::vector<FILE*> fptr;
     QSettings *settings;
     QMenu *file_menu,*help_menu, *run_menu;
