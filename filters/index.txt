@@ -649,3 +649,4 @@ rotate_xyz.glsl
 rotate_xyz_zoom.glsl
 skinny.glsl
 fat.glsl
+fat-slow.glsl
