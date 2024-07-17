@@ -647,3 +647,5 @@ rainbow_spiral_rev.glsl
 rainbow_spiral_rev2.glsl
 rotate_xyz.glsl
 rotate_xyz_zoom.glsl
+skinny.glsl
+fat.glsl
