@@ -713,8 +713,12 @@ int main(int argc, char** argv) {
         unsigned int inputDeviceId = audio.getDefaultInputDevice();
         unsigned int outputDeviceId = audio.getDefaultOutputDevice();
 
-        if (inputDeviceId == 0 || outputDeviceId == 0) {
-            std::cout << "acidcam: No Input or Output device found...\n";
+        if (inputDeviceId == 0) {
+            std::cout << "acidcam: No Input device found...\n";
+            enable_audio_ex = false;
+            return 1;
+        } else if (outputDeviceId == 0) {
+            std::cout << "acidcam: No Output device found...\n";
             enable_audio_ex = false;
             return 1;
         }
