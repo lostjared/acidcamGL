@@ -650,3 +650,7 @@ rotate_xyz_zoom.glsl
 skinny.glsl
 fat.glsl
 fat-slow.glsl
+fat-red.glsl
+fat-green.glsl
+fat-blue.glsl
+fat-rgb.glsl
