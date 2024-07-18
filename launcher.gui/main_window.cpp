@@ -684,9 +684,6 @@ void MainWindow::updateCommand() {
                 }
             }
         }
-        if(fps->text() != "") {
-            cmd_list << "-u" << fps->text();
-        }
     } else if(mode_select->currentIndex()==1) {
         device_edit->setEnabled(false);
         
@@ -783,6 +780,11 @@ void MainWindow::updateCommand() {
         cmd_list << "-I" << audio_channel->text();
     }
     cmd_list << "-8"  << max_frames->text();
+
+    if(fps->text() != "") {
+        cmd_list << "-u" << fps->text();
+    }
+
     QString buf;
     for(int i = 0; i < cmd_list.size(); ++i) {
         buf += cmd_list.at(i) + " ";
