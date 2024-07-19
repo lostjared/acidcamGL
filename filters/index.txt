@@ -659,3 +659,4 @@ fat-rgb.glsl
 fold.glsl
 fold-mirror.glsl
 glitch-react.glsl
+glitch-react-color.glsl

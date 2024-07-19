@@ -10,6 +10,11 @@ float rand(vec2 co) {
     return fract(sin(dot(co.xy, vec2(12.9898,78.233))) * 43758.5453);
 }
 
+float pingPong(float x, float length) {
+    float modVal = mod(x, length * 2.0);
+    return modVal <= length ? modVal : length * 2.0 - modVal;
+}
+
 vec2 glitchEffect(vec2 uv, float timeAmp) {
     float time = floor(timeAmp);
     float amp = fract(timeAmp);
@@ -23,5 +28,6 @@ vec2 glitchEffect(vec2 uv, float timeAmp) {
 void main(void) {
     vec2 uv = tc;
     uv = glitchEffect(uv, time_f);
-    color = texture(samp, uv);
+    float time_t = pingPong(time_f, 10.0) + 2.0;
+    color = sin(texture(samp, uv) * time_t);
 }
