@@ -660,3 +660,4 @@ fold.glsl
 fold-mirror.glsl
 glitch-react.glsl
 glitch-react-color.glsl
+spiral-aura.glsl
