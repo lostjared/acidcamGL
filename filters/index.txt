@@ -656,3 +656,5 @@ fat-red.glsl
 fat-green.glsl
 fat-blue.glsl
 fat-rgb.glsl
+fold.glsl
+fold-mirror.glsl
