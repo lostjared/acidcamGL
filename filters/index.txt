@@ -663,3 +663,5 @@ glitch-react-color.glsl
 spiral-aura.glsl
 old-film.glsl
 old-film-water.glsl
+mirror_dir.glsl
+mirror_half_dir.glsl
