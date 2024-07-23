@@ -19,13 +19,9 @@ void main(void) {
     } else {
         uv.x = mix(0.5 + abs(uv.x - 0.5), uv.x, abs(foldAmount));
     }
-    
     vec2 translate = vec2(sin(time_f * 2.0), cos(time_f * 2.0)) * 0.25;
     uv += translate * foldAmount;
-
-    if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) {
-        color = vec4(0.0, 0.0, 0.0, 1.0);
-    } else {
-        color = texture(samp, uv);
-    }
+    uv = (uv - 0.5) * 1.5 + 0.5;
+    uv = clamp(uv, 0.0, 1.0);
+    color = texture(samp, uv);
 }
