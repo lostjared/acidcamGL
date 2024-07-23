@@ -13,7 +13,14 @@ vec3 getRainbowColor(float position) {
     return vec3(r, g, b);
 }
 
+float pingPong(float x, float length) {
+    float modVal = mod(x, length * 2.0);
+    return modVal <= length ? modVal : length * 2.0 - modVal;
+}
+
+
 void main(void) {
+    float time_t = pingPong(time_f, 10.0) + 2.0;
     float wave = sin(tc.y * 10.0 + time_f) * 0.05;
     vec2 new_tc = vec2(tc.x + wave, tc.y);
     vec4 texColor = texture(samp, new_tc);
@@ -22,7 +29,8 @@ void main(void) {
     float spiralPosY = tc.x * sin(time_f) + tc.y * cos(time_f);
     
     float rainbowPos = sqrt(spiralPosX * spiralPosX + spiralPosY * spiralPosY) * 10.0 + time_f * 5.0;
-    vec3 rainbowColor = getRainbowColor(rainbowPos);
     
-    color = vec4(mix(texColor.rgb, rainbowColor, 0.5), texColor.a);
+    vec3 rainbowColor = getRainbowColor(sin(rainbowPos * time_t));
+    
+    color = sin(vec4(mix(texColor.rgb, rainbowColor, 0.5), texColor.a) * time_t);
 }
