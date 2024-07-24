@@ -670,3 +670,4 @@ mirror-spiral-f.glsl
 fold-fov.glsl
 fold-spin.glsl
 fold-water.glsl
+rainbow-touch.glsl
