@@ -5,9 +5,9 @@ in vec2 tc;
 uniform sampler2D samp;
 uniform float time_f;
 uniform vec2 iResolution;
-uniform float alpha_r; // Random value for red channel
-uniform float alpha_g; // Random value for green channel
-uniform float alpha_b; // Random value for blue channel
+uniform float alpha_r;
+uniform float alpha_g;
+uniform float alpha_b;
 
 vec4 xor_RGB(vec4 icolor, vec4 source) {
     ivec3 int_color;
