@@ -671,3 +671,4 @@ fold-fov.glsl
 fold-spin.glsl
 fold-water.glsl
 rainbow-touch.glsl
+color-max.glsl
