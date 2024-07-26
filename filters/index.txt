@@ -677,3 +677,4 @@ mirror-twist.glsl
 mirror-twist-sin.glsl
 mirror-in.glsl
 composite.glsl
+rainbow.banding.glsl
