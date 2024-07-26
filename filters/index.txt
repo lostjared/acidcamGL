@@ -679,3 +679,4 @@ mirror-in.glsl
 composite.glsl
 rainbow.banding.glsl
 analog.glsl
+sing.glsl
