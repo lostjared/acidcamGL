@@ -681,3 +681,4 @@ rainbow.banding.glsl
 analog.glsl
 sing.glsl
 scramble.glsl
+scramble-2.glsl
