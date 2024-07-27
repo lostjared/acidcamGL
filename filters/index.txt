@@ -680,3 +680,4 @@ composite.glsl
 rainbow.banding.glsl
 analog.glsl
 sing.glsl
+scramble.glsl
