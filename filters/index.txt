@@ -685,3 +685,4 @@ scramble-2.glsl
 scramble-3.glsl
 vhs.glsl
 vhs-palette.glsl
+glitchy.glsl
