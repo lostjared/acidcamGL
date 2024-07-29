@@ -687,3 +687,4 @@ vhs.glsl
 vhs-palette.glsl
 glitchy.glsl
 magic.glsl
+magic-2.glsl
