@@ -690,3 +690,4 @@ magic.glsl
 magic-2.glsl
 stardust.glsl
 glitch-noise.glsl
+glitch-no-noise.glsl
