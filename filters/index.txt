@@ -698,3 +698,4 @@ recep-2.glsl
 grayscale.glsl
 negative.glsl
 radial.glsl
+pixels.glsl
