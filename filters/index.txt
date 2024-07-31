@@ -699,3 +699,4 @@ grayscale.glsl
 negative.glsl
 radial.glsl
 pixels.glsl
+heat-wave.glsl
