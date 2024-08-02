@@ -706,3 +706,4 @@ crystal.glsl
 crystal-2.glsl
 crystal-3.glsl
 crystal-4.glsl
+af_scale.glsl
