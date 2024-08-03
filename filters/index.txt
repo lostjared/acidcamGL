@@ -708,3 +708,4 @@ crystal-3.glsl
 crystal-4.glsl
 af_scale.glsl
 af_scale2.glsl
+echo-pingpong.glsl
