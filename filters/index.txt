@@ -711,3 +711,4 @@ af_scale2.glsl
 echo-pingpong.glsl
 echo-pingpong_c.glsl
 sepia.glsl
+snes.glsl
