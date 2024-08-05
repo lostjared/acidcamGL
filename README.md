@@ -19,7 +19,11 @@ Please read this entire document before using the software. On MacOS you may hav
 This program requires a lot of RAM. If you wish to run with lower RAM set 
 the size of the memory pool with -8 flag. 
 
-Note: Video files you use with the program their resolution must be even numbered.
+Note: The resolutions of video files you use with the program must be even numbered.
+
+Also for Live video from a Webcam or Capture Device, the best way to save the video is to use OBS. It is a free program
+that allows you to capture data from your desktop (running Acid Cam) and stream it online or save it to a file. 
+Check it out at https://obsproject.com/
 
 Example:
 
