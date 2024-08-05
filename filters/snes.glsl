@@ -8,7 +8,7 @@ uniform vec2 iResolution;
 
 void main(void) {
     vec2 uv = tc;
-    float pixelSize = 0.01;
+    float pixelSize = 0.005;
     uv = floor(uv / pixelSize) * pixelSize;
     vec4 texColor = texture(samp, uv);
     vec3 paletteColor = floor(texColor.rgb * 31.0) / 31.0;
