@@ -1,6 +1,6 @@
 # acidcamGL
 
-![ScreenShot](https://github.com/lostjared/acidcamGL/blob/master/screens/acgl.jpg "windows screenshot")
+![obsfullscreen](https://github.com/user-attachments/assets/36770089-3f3b-4b73-bc8b-8e58bcde7e66)
 
 ![ScreenShot1](https://github.com/lostjared/acidcamGL/blob/master/screens/ac.mac.jpg?raw=true "screenshot1")
 
