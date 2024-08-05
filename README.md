@@ -19,17 +19,17 @@ Please read this entire document before using the software. On MacOS you may hav
 This program requires a lot of RAM. If you wish to run with lower RAM set 
 the size of the memory pool with -8 flag. 
 
-Note: The resolutions of video files you use with the program must be even numbered.
-
-Also for Live video from a Webcam or Capture Device, the best way to save the video is to use OBS (Open Broadcaster Software). It is a free program
-that allows you to capture data from your desktop (running Acid Cam) and stream it online or save it to a file. 
-Check it out.
-
 Example:
 
 ```bash
 	acidcamGL -d 0 -c 1920x1080 -r 1920x1080 -u 30 -8 200
 ```
+
+Note: The resolutions of video files you use with the program must be even numbered.
+
+Also for Live video from a Webcam or Capture Device, the best way to save the video is to use OBS (Open Broadcaster Software). It is a free program
+that allows you to capture data from your desktop (running Acid Cam) and stream it online or save it to a file. 
+Check it out.
 
 # Notes for Windows:
 
