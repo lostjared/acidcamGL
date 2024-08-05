@@ -21,9 +21,9 @@ the size of the memory pool with -8 flag.
 
 Note: The resolutions of video files you use with the program must be even numbered.
 
-Also for Live video from a Webcam or Capture Device, the best way to save the video is to use OBS. It is a free program
+Also for Live video from a Webcam or Capture Device, the best way to save the video is to use OBS (Open Broadcaster Software). It is a free program
 that allows you to capture data from your desktop (running Acid Cam) and stream it online or save it to a file. 
-Check it out at https://obsproject.com/
+Check it out.
 
 Example:
 
