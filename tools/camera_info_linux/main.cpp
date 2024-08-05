@@ -36,7 +36,7 @@ void print_device_info(const char* device) {
 int main(int argc, char **argv) {
 
     if(argc != 2) 
-        return;
+        return 0;
     const int max_devices = atoi(argv[1]);
     for (int i = 0; i < max_devices; ++i) {
         std::string device = "/dev/video" + std::to_string(i);
