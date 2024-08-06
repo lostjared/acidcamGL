@@ -11,8 +11,12 @@ void main(void) {
     uv -= 0.5 * iResolution;
     float dist = length(uv);
     float angle = atan(uv.y, uv.x);
+    
     float wave = sin(dist * 10.0 - time_f * 5.0 + angle * 5.0);
     wave = sin(wave * time_f);
+    
     vec4 texColor = texture(samp, tc);
+    
     color = texColor * (0.5 + 0.5 * wave);
 }
+
