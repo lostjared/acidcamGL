@@ -714,3 +714,4 @@ sepia.glsl
 snes.glsl
 cwave.glsl
 cwave2.glsl
+cripple.glsl
