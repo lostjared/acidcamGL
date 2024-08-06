@@ -715,3 +715,4 @@ snes.glsl
 cwave.glsl
 cwave2.glsl
 cripple.glsl
+cripple2.glsl
