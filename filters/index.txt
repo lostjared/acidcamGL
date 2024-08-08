@@ -724,3 +724,4 @@ tripple2.glsl
 triwavedistort.glsl
 tridim.glsl
 zoom_pulse.glsl
+zoom_pulse2.glsl
