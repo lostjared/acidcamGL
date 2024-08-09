@@ -726,3 +726,4 @@ tridim.glsl
 zoom_pulse.glsl
 zoom_pulse2.glsl
 zoom_pulse3.glsl
+cxripple.glsl
