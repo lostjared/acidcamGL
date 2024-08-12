@@ -729,3 +729,4 @@ zoom_pulse3.glsl
 cxripple.glsl
 crt.glsl
 tv_show.glsl
+c_ripple.glsl
