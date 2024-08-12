@@ -730,3 +730,4 @@ cxripple.glsl
 crt.glsl
 tv_show.glsl
 c_ripple.glsl
+spiral_wave_1.glsl
