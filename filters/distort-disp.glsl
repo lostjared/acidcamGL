@@ -18,5 +18,5 @@ void main() {
         tc.y + sin(time_f * 2.0) * 0.02
     );
     distortedTC.x += displacement / iResolution.x;
-    color = texture(samp, distortedTC);
+    color = texture(samp, sin(distortedTC * time_f));
 }
