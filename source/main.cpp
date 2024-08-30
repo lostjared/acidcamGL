@@ -265,17 +265,17 @@ void the_callback(std::vector<unsigned char>* message) {
 }
 #endif
 
-std::string to_lower(const std::string &s) {
+std::string to_lower(const std::string& s) {
     std::string temp;
-    for(size_t i = 0; i < s.length(); ++i){
+    for (size_t i = 0; i < s.length(); ++i) {
         temp += tolower(s[i]);
     }
     return temp;
 }
 
-bool is_file_image(const std::string &f) {
+bool is_file_image(const std::string& f) {
     std::string lf = to_lower(f);
-    if(lf.find(".png") != std::string::npos || lf.find(".jpg") != std::string::npos || lf.find(".tiff") != std::string::npos || lf.find(".bmp") != std::string::npos)
+    if (lf.find(".png") != std::string::npos || lf.find(".jpg") != std::string::npos || lf.find(".tiff") != std::string::npos || lf.find(".bmp") != std::string::npos)
         return true;
     return false;
 }
@@ -315,7 +315,16 @@ int main(int argc, char** argv) {
 
 #ifdef MIDI_ENABLED
 #ifdef _WIN32
-    const char* m_p = "midi.midi_cfg";
+    const char* m_p;
+    char* px;
+    size_t lenx;
+    errno_t errx = _dupenv_s(&px, &lenx, "AC_MIDI");
+    if (lenx > 0)
+        m_p = px;
+    else
+        m_p = "midi.midi_cfg";
+
+    std::cout << "acidcam:  MIDI config path: " << m_p << "\n";
 #else
     const char* m_p = getenv("AC_MIDI");
     if (m_p == NULL) {
@@ -717,7 +726,8 @@ int main(int argc, char** argv) {
             std::cout << "acidcam: No Input device found...\n";
             enable_audio_ex = false;
             return 1;
-        } else if (outputDeviceId == 0) {
+        }
+        else if (outputDeviceId == 0) {
             std::cout << "acidcam: No Output device found...\n";
             enable_audio_ex = false;
             return 1;
@@ -745,12 +755,13 @@ int main(int argc, char** argv) {
     int camera_mode = 0;
 
     if (screen_mode == false) {
-        if(filename.length() != 0 && is_file_image(filename) == true) {
+        if (filename.length() != 0 && is_file_image(filename) == true) {
 
             cv::Mat input_file = cv::imread(filename);
-            if(!input_file.empty()) {
+            if (!input_file.empty()) {
                 std::cout << "acidcam: Loading from Image: " << filename << "\n";
-            } else {
+            }
+            else {
                 std::cout << "acidcam: Could not load image: " << filename << "\n";
                 acidcam::updateError();
             }
@@ -762,7 +773,8 @@ int main(int argc, char** argv) {
                 w = cw;
                 h = ch;
             }
-        } else if (filename.length() == 0) {
+        }
+        else if (filename.length() == 0) {
 #ifdef _WIN32
             acidcam::cap.open(device, cv::CAP_DSHOW);
 #else
@@ -820,10 +832,10 @@ int main(int argc, char** argv) {
     }
     if (screen_mode)
         main_window.enableScreenMode(true, screen_x, screen_y, cw, ch);
-    
+
     if (filename.length() == 0)
         main_window.setVideoMode(false, 0);
-    else if(is_file_image(filename) == false)
+    else if (is_file_image(filename) == false)
         main_window.setVideoMode(true, fps);
 
     std::cout << "acidcam: Acid Cam Filter Library Version: " << ac::getVersion() << "\n";
