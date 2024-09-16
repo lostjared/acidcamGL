@@ -739,3 +739,4 @@ pong-atan3.glsl
 distort-disp.glsl
 ripple_ppong.glsl
 warp_ppong.glsl
+gptswirl.glsl
