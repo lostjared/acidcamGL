@@ -31,6 +31,6 @@ void main(void) {
     vec4 texColor = texture(samp, uv);
     float hue = mod(angle / (2.0 * 3.14159265) + time_f * 0.1, 1.0);
     vec3 rainbow = hue2rgb(hue);
-    color = vec4(texColor.rgb * rainbow, texColor.a);
+    color = vec4(texColor.rgb * rainbow, 2.0);
 }
 
