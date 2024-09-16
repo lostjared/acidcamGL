@@ -740,3 +740,6 @@ distort-disp.glsl
 ripple_ppong.glsl
 warp_ppong.glsl
 gptswirl.glsl
+gptswirl2.glsl
+gptsmooth.glsl
+gptsmooth2.glsl
