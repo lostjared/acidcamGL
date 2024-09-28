@@ -743,3 +743,4 @@ gptswirl.glsl
 gptswirl2.glsl
 gptsmooth.glsl
 gptsmooth2.glsl
+putty.glsl
