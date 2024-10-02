@@ -745,3 +745,5 @@ gptsmooth.glsl
 gptsmooth2.glsl
 putty.glsl
 ice.glsl
+radial_distortion.glsl
+radial_distortion2.glsl
