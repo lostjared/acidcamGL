@@ -752,3 +752,4 @@ kscopic.glsl
 sweb.glsl
 pong_tex.glsl
 atan-bowl.glsl
+prism.glsl
