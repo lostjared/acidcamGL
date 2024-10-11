@@ -755,3 +755,4 @@ atan-bowl.glsl
 prism.glsl
 gpt_echo.glsl
 grainbow.glsl
+srainbow.glsl
