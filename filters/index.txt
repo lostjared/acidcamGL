@@ -754,3 +754,4 @@ pong_tex.glsl
 atan-bowl.glsl
 prism.glsl
 gpt_echo.glsl
+grainbow.glsl
