@@ -756,3 +756,4 @@ prism.glsl
 gpt_echo.glsl
 grainbow.glsl
 srainbow.glsl
+ripple_prism.glsl
