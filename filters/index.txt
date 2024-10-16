@@ -761,3 +761,4 @@ rainbow_rip_prism.glsl
 plasma_prism.glsl
 ripple_cycle_prism.glsl
 ripple_cycle2.glsl
+ripple_cycle_circle.glsl
