@@ -758,3 +758,4 @@ grainbow.glsl
 srainbow.glsl
 ripple_prism.glsl
 rainbow_rip_prism.glsl
+plasma_prism.glsl
