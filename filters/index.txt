@@ -764,3 +764,4 @@ ripple_cycle2.glsl
 ripple_cycle_circle.glsl
 cane.glsl
 water_prism.glsl
+echo_s.glsl
