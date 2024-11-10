@@ -773,3 +773,4 @@ gboil.glsl
 gsupercool.glsl
 gsupercool2.glsl
 gkalei.glsl
+ggrad.glsl
