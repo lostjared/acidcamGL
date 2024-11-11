@@ -774,3 +774,4 @@ gsupercool.glsl
 gsupercool2.glsl
 gkalei.glsl
 ggrad.glsl
+echo_g.glsl
