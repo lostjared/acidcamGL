@@ -776,3 +776,4 @@ gkalei.glsl
 ggrad.glsl
 echo_g.glsl
 gt_rotate.glsl
+g_drum.glsl
