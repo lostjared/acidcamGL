@@ -780,3 +780,4 @@ g_drum.glsl
 heartthrob.glsl
 heartthrob2.glsl
 sine_time.glsl
+sine_grad.glsl
