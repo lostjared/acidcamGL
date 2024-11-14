@@ -782,3 +782,4 @@ heartthrob2.glsl
 sine_time.glsl
 sine_grad.glsl
 sine_grad2.glsl
+sine_grad3.glsl
