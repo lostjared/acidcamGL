@@ -787,3 +787,4 @@ sine_grad4.glsl
 sine_grad5.glsl
 sine_grad6.glsl
 sine_grad7.glsl
+sine_ripple.glsl
