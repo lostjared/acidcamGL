@@ -790,3 +790,4 @@ sine_grad7.glsl
 sine_ripple.glsl
 sine_swirl.glsl
 cosine_swirl.glsl
+xor_sine_swirl.glsl
