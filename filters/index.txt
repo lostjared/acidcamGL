@@ -793,3 +793,4 @@ cosine_swirl.glsl
 xor_sine_swirl.glsl
 sine1.glsl
 sine2.glsl
+delic.glsl
