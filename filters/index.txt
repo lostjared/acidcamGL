@@ -798,3 +798,5 @@ sin_delic.glsl
 pulse1.glsl
 distortf.glsl
 distortf2.glsl
+distortf3.glsl
+distortf4.glsl
