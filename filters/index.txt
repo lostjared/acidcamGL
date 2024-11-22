@@ -807,3 +807,5 @@ rgbt.glsl
 gxor.glsl
 gxor2.glsl
 gghost.glsl
+gtrail.glsl
+gtrail2.glsl
