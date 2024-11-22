@@ -804,3 +804,4 @@ mb.glsl
 glitchf.glsl
 sbrv.glsl
 rgbt.glsl
+gxor.glsl
