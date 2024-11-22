@@ -806,3 +806,4 @@ sbrv.glsl
 rgbt.glsl
 gxor.glsl
 gxor2.glsl
+gghost.glsl
