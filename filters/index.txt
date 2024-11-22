@@ -809,3 +809,4 @@ gxor2.glsl
 gghost.glsl
 gtrail.glsl
 gtrail2.glsl
+genergy.glsl
