@@ -814,3 +814,5 @@ gaura.glsl
 gmir.glsl
 gmir2.glsl
 mirdmd.glsl
+mirdmdr.glsl
+mirdmdrcolor.glsl
