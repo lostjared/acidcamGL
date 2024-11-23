@@ -816,3 +816,8 @@ gmir2.glsl
 mirdmd.glsl
 mirdmdr.glsl
 mirdmdrcolor.glsl
+mirdmdrspeed.glsl
+mirdmdrmatch.glsl
+mirdmd1.glsl
+mirdmdt.glsl
+mirrorg.glsl
