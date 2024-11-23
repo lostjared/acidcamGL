@@ -38,3 +38,4 @@ void main() {
     vec3 finalAura = auraGlow * auraStrength;
     color = vec4(sin(finalAura * (pingPong(time_f, 8.0) + 2.0)), 0.5 * texColor.a);
 }
+

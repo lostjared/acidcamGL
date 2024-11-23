@@ -812,3 +812,5 @@ gtrail2.glsl
 genergy.glsl
 gaura.glsl
 gmir.glsl
+gmir2.glsl
+mirdmd.glsl
