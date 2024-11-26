@@ -821,3 +821,5 @@ mirdmdrmatch.glsl
 mirdmd1.glsl
 mirdmdt.glsl
 mirrorg.glsl
+gvortex.glsl
+gfs.glsl
