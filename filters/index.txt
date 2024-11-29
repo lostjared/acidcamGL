@@ -825,3 +825,4 @@ gvortex.glsl
 gfs.glsl
 wspiral.glsl
 wlight.glsl
+light_pulse.glsl
