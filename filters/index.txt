@@ -823,3 +823,4 @@ mirdmdt.glsl
 mirrorg.glsl
 gvortex.glsl
 gfs.glsl
+wspiral.glsl
