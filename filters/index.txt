@@ -824,3 +824,4 @@ mirrorg.glsl
 gvortex.glsl
 gfs.glsl
 wspiral.glsl
+wlight.glsl
