@@ -828,3 +828,4 @@ wlight.glsl
 light_pulse.glsl
 color_flux.glsl
 color_flux_whirl.glsl
+whirlx.glsl
