@@ -834,3 +834,4 @@ lineinlineout.glsl
 dys.glsl
 echo_rgb1.glsl
 dmdc.glsl
+mirror_c.glsl
