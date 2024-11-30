@@ -833,3 +833,4 @@ alpha_sin_os.glsl
 lineinlineout.glsl
 dys.glsl
 echo_rgb1.glsl
+dmdc.glsl
