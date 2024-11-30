@@ -839,3 +839,4 @@ mirror_8.glsl
 mirror_r8.glsl
 mirror_r4.glsl
 mirror_b.glsl
+mirror_p.glsl
