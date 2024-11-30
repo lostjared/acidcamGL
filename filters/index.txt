@@ -836,3 +836,6 @@ echo_rgb1.glsl
 dmdc.glsl
 mirror_c.glsl
 mirror_8.glsl
+mirror_r8.glsl
+mirror_r4.glsl
+mirror_b.glsl
