@@ -844,3 +844,4 @@ mirror_rad.glsl
 4rand.glsl
 4ac_rand.glsl
 8huri.glsl
+huri.glsl
