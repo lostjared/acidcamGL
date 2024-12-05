@@ -7,6 +7,12 @@ uniform sampler2D samp;
 uniform float time_f;
 uniform vec2 iResolution;
 
+float pingPong(float x, float length) {
+    float modVal = mod(x, length * 2.0);
+    return modVal <= length ? modVal : length * 2.0 - modVal;
+}
+
+
 vec4 adjustHue(vec4 color, float angle) {
     float U = cos(angle);
     float W = sin(angle);
@@ -30,9 +36,9 @@ void main() {
     vec2 uv = (tc - 0.5) * iResolution / min(iResolution.x, 
 iResolution.y);
     float dist = length(uv);
-    float ripple = sin(dist * 12.0 - time_f * 10.0) * exp(-dist * 4.0);
+    float ripple = sin(dist * 12.0 - pingPong(time_f, 10.0) * 10.0) * exp(-dist * 4.0);
     vec4 sampledColor = texture(samp, tc + ripple * 0.01);
-    float hueShift = time_f * ripple * 2.0;
+    float hueShift = pingPong(time_f, 10.0) * ripple * 2.0;
     color = adjustHue(sampledColor, hueShift);
 }
 
