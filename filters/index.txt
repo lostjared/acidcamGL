@@ -848,3 +848,6 @@ huri.glsl
 huri1.glsl
 huri2.glsl
 huri3.glsl
+huriz.glsl
+hurixyz.glsl
+rhue.glsl
