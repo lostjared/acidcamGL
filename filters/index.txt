@@ -854,3 +854,4 @@ rhue.glsl
 chue.glsl
 dhue.glsl
 o1-hue.glsl
+color_swirl-o1.glsl
