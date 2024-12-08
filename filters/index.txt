@@ -856,3 +856,4 @@ dhue.glsl
 o1-hue.glsl
 color_swirl-o1.glsl
 color_swirl_sin.glsl
+color_swirl_c.glsl
