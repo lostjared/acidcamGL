@@ -862,3 +862,5 @@ color_l.glsl
 color_w.glsl
 color_w2.glsl
 g_ufo.glsl
+g_swirl.glsl
+comb.glsl
