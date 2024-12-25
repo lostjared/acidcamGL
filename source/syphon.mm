@@ -1,5 +1,5 @@
 #include "syphon.h"
-#include<GL/glew.h>
+#include <glad/glad.h>
 #ifdef SYPHON_SERVER
 #import <Syphon/Syphon.h>
 #import<AGL/agl.h>

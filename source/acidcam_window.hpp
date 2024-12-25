@@ -39,7 +39,7 @@ extern void ScreenGrabRect(int x, int y, int w, int h, cv::Mat &frame);
 #endif
 #include"ffmpeg_write.h"
 #ifdef _WIN32
-#define SPOUT_SERVER
+//#define SPOUT_SERVER
 #endif
 
 #ifdef SPOUT_SERVER
