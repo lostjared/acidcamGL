@@ -866,3 +866,4 @@ g_swirl.glsl
 comb.glsl
 ripple_a.glsl
 comb3.glsl
+frac_mir.glsl
