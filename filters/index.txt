@@ -869,3 +869,7 @@ comb3.glsl
 frac_mir.glsl
 rand_blocks.glsl
 random_resize.glsl
+tremor1.glsl
+tremor2.glsl
+tremor3.glsl
+tremor4.glsl
