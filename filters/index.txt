@@ -873,3 +873,5 @@ tremor1.glsl
 tremor2.glsl
 tremor3.glsl
 tremor4.glsl
+diagsquare.glsl
+diagsquarecircle.glsl
