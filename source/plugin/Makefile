@@ -393,7 +393,7 @@ all:
 	make -C rect_size_rand install
 	make -C rect_size2 install
 	make -C line_effect_down_v2 install
-	make -C line_effect_down_V4 install
+	make -C line_effect_down_v4 install
 	make -C line_effect_down_v5 install
 	make -C line_effect_down_v6 install
 clean:
