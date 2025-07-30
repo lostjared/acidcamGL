@@ -29,6 +29,7 @@ private:
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void closeEvent(QCloseEvent *) override;
 public slots:
     void launchProgram();
     void LogMessage(const QString &text);

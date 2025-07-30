@@ -671,6 +671,16 @@ void MainWindow::textChanged_device(const QString &) {
     updateCommand();
 }
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+    if (acidcam_process->state() == QProcess::Running) {
+        acidcam_process->terminate();
+        if (!acidcam_process->waitForFinished(10000)) {
+            acidcam_process->kill(); 
+        }
+    }
+    QMainWindow::closeEvent(event); 
+}
+
 void MainWindow::comboChanged_mode(int) {
     updateCommand();
 }
