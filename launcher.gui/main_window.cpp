@@ -451,7 +451,7 @@ void MainWindow::save() {
 }
 
 QString MainWindow::getShaderPath() {
-    QString pwd = QDir().currentPath();
+    QString pwd = QCoreApplication::applicationFilePath();
 #ifdef __APPLE__
     pwd = application_path;
     std::string f = pwd.toStdString();
@@ -472,9 +472,10 @@ void MainWindow::launchProgram() {
     Log(tr("\nacidcamGL Launcher - Executing ...\n"));
     QString cmd_string;
 #ifdef __APPLE__
-    cmd_string = "acidcamGL ";
+    QString exePath = QCoreApplication::applicationFilePath();
+    cmd_string = exe{ath + "/acidcamGL ";
 #else
-    cmd_string = "/usr/local/bin/acidcamGL ";
+    cmd_string ="acidcamGL ";
 #endif
     if(options_window->exec_enable->isChecked())
         cmd_string = options_window->exec_path->text() + " ";
@@ -510,7 +511,8 @@ void MainWindow::launchProgram() {
     QStringList arguments;
 
 #ifdef __APPLE__
-    program = "acidcamGL";
+    QString exePath = QCoreApplication::applicationFilePath();
+    program = exePath + "/acidcamGL";
 #else
     program = "/usr/local/bin/acidcamGL";
 #endif
