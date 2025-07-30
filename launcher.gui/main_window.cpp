@@ -451,17 +451,9 @@ void MainWindow::save() {
 }
 
 QString MainWindow::getShaderPath() {
-    QString pwd = QCoreApplication::applicationFilePath();
-#ifdef __APPLE__
-    pwd = application_path;
-    std::string f = pwd.toStdString();
-    auto pos = f.rfind("launcher");
-    if(pos != std::string::npos) {
-        f = f.substr(0, pos);
-        pwd = f.c_str();
-    }
-#endif
-    return pwd;
+    QFileInfo fi(QCoreApplication::applicationFilePath());
+    QString exeDir = fi.absolutePath();
+    return exeDir;
 }
 
 
