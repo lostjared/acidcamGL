@@ -3,7 +3,7 @@
 
 #ifdef __APPLE__
 #include<mach-o/dyld.h>
-#include<libgen.H>
+#include<libgen.h>
 #include<limits.h>
 #include<stdint.h>
 #endif
