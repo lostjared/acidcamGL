@@ -24,13 +24,9 @@ int client_main() {
 }
 
 void sendString(const std::string &text) {
-    if(sockfd > 0 && text.length()>0) {
-        ssize_t bytesRead;
-        char buf[BUF_SIZE];
-        if(write(sockfd, text.c_str(), text.length()) != text.length())
-            error("partial write", false);
-        
-    }
+    printf("%s", text.c_str());
+    fflush(stdout);
+    fflush(stdin);
 }
 
 void error(const std::string &text, bool err_no) {
