@@ -9,28 +9,12 @@ void error(const std::string &text, bool err_no = true);
 int sockfd;
 
 int client_main() {
-    sockaddr_un addr;
-    sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
-    if(sockfd == -1)
-        error("socket");
-    
-    memset(&addr, 0, sizeof(sockaddr_un));
-    addr.sun_family = AF_UNIX;
-    strncpy(addr.sun_path, SOCK_PATH, sizeof(addr.sun_path) -1);
-    
-    if(connect(sockfd, (sockaddr *)&addr, sizeof(sockaddr_un)) == -1)
-        error("connect");
     return 0;
 }
 
 void sendString(const std::string &text) {
-    if(sockfd > 0 && text.length()>0) {
-        ssize_t bytesRead;
-        char buf[BUF_SIZE];
-        if(write(sockfd, text.c_str(), text.length()) != text.length())
-            error("partial write", false);
-        
-    }
+    printf("%s", text.c_str());
+    fflush(stdout);
 }
 
 void error(const std::string &text, bool err_no) {
