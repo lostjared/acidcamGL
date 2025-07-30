@@ -32,7 +32,7 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
     char exePath[PATH_MAX];
     uint32_t size = sizeof(exePath);
     if (_NSGetExecutablePath(exePath, &size) != 0)
-        return ""; // error
+        ffmpeg_path="ffmpeg";
 
     // Get directory
     std::string dir = dirname(exePath);
