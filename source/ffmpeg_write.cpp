@@ -1,5 +1,10 @@
 
-#include "ffmpeg_write.h"
+#include "ffmpeg_write.h
+
+#ifdef __APPLE__
+#include<mmach-o/dyld.h>
+#endif
+
 #include<sstream>
 #include<fstream>
 #ifndef _WIN32
@@ -20,6 +25,18 @@ int stdout_save;
 
 FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const char *dst_res, const char *fps, const char *crf) {
     
+#ifdef__APPLE__
+    char exePath[PATH_MAX];
+    uint32_t size = sizeof(exePath);
+    if (_NSGetExecutablePath(exePath, &size) != 0)
+        return ""; // error
+
+    // Get directory
+    std::string dir = dirname(exePath);
+    ffmpeg_path dir + "/" + filename;
+#endif
+
+
     std::string tag;
     if(std::string(codec)=="libx265")
         tag = "-tag:v hvc1";
