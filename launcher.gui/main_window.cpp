@@ -18,7 +18,7 @@
 
 QThread *threadx;
 ServerThread *tv;
-QString application_path = "/Applications/acidcamGL";
+QString application_path = "";
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     int offset_y = 25;
