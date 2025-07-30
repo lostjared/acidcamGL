@@ -473,7 +473,7 @@ void MainWindow::launchProgram() {
     QString cmd_string;
 #ifdef __APPLE__
     QString exePath = QCoreApplication::applicationFilePath();
-    cmd_string = exe{ath + "/acidcamGL ";
+    cmd_string = exePath + "/acidcamGL ";
 #else
     cmd_string ="acidcamGL ";
 #endif
