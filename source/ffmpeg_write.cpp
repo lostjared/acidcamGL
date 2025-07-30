@@ -2,8 +2,11 @@
 #include "ffmpeg_write.h
 
 #ifdef __APPLE__
-#include<mmach-o/dyld.h>
+#include<mach-o/dyld.h>
+#inclue<libgen.H>
+#include<limits.h>
 #endif
+
 
 #include<sstream>
 #include<fstream>
