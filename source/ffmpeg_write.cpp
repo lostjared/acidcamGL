@@ -3,8 +3,9 @@
 
 #ifdef __APPLE__
 #include<mach-o/dyld.h>
-#inclue<libgen.H>
+#include<libgen.H>
 #include<limits.h>
+#include<stdint.h>
 #endif
 
 
@@ -28,7 +29,9 @@ int stdout_save;
 
 FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const char *dst_res, const char *fps, const char *crf) {
     
-#ifdef__APPLE__
+
+    #ifdef __APPLE__
+
     char exePath[PATH_MAX];
     uint32_t size = sizeof(exePath);
     if (_NSGetExecutablePath(exePath, &size) != 0)
@@ -37,7 +40,8 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
     // Get directory
     std::string dir = dirname(exePath);
     ffmpeg_path = dir + "/" + filename;
-#endif
+
+    #endif
 
 
     std::string tag;
