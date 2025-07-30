@@ -36,7 +36,7 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
 
     // Get directory
     std::string dir = dirname(exePath);
-    ffmpeg_path dir + "/" + filename;
+    ffmpeg_path = dir + "/" + filename;
 #endif
 
 
