@@ -25,7 +25,7 @@ else()
 message(STATUS "Debug Mode")
 list(APPEND COMPILER_FLAGS "-g")
 endif()
-
+set(CMAKE_INSTALL_RPATH "/usr/local/lib")
 find_package(OpenCV REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
