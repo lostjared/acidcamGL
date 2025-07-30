@@ -511,7 +511,7 @@ void MainWindow::launchProgram() {
     QStringList arguments;
 
 #ifdef __APPLE__
-    QString exePath = QCoreApplication::applicationFilePath();
+    exePath = QCoreApplication::applicationFilePath();
     program = exePath + "/acidcamGL";
 #else
     program = "/usr/local/bin/acidcamGL";
