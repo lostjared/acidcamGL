@@ -672,7 +672,7 @@ void MainWindow::textChanged_device(const QString &) {
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-    if (acidcam_process->state() == QProcess::Running) {
+    if (acidcam_process != nullptr && acidcam_process->state() == QProcess::Running) {
         acidcam_process->terminate();
         if (!acidcam_process->waitForFinished(10000)) {
             acidcam_process->kill(); 
