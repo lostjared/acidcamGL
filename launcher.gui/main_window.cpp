@@ -1,4 +1,3 @@
-
 #include"main_window.hpp"
 #include<cstdio>
 #include<iostream>
@@ -110,7 +109,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     select_temp1->setStyleSheet(style_info);
     select_path_text = new QLineEdit("", this);
     select_path_text->setStyleSheet(style_info);
-    select_path_text->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5, 60+25+10+offset_y, 150, 25);
+    select_path_text->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270, 60+25+10+offset_y, 150, 25);
     connect(select_path_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(select_video_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(select_path, SIGNAL(clicked()), this, SLOT(selectPath()));
@@ -469,40 +468,70 @@ QString MainWindow::getShaderPath() {
     return pwd;
 }
 
+
+QProcess *acidcam_process = nullptr;
+
+// Modify launchProgram()
 void MainWindow::launchProgram() {
     Log(tr("\nacidcamGL Launcher - Executing ...\n"));
-    std::string value = command->text().toStdString();
-    QString tvalue;
-    QTextStream stream(&tvalue);
-    stream << "launcher: executing shell command: " << value.c_str() << "\n";
-    QString program;
-    QStringList arguments;
-    Log(tvalue);
-    tvalue = "";
     QString cmd_string;
 #ifdef __APPLE__
-    //cmd_string = "/Applications/acidcamGL/acidcamGL.app/Contents/MacOS/acidcamGL ";
-    cmd_string = "acidcamGL "; // todo: set application path
-#else
     cmd_string = "acidcamGL ";
+#else
+    cmd_string = "/usr/local/bin/acidcamGL ";
 #endif
     if(options_window->exec_enable->isChecked())
         cmd_string = options_window->exec_path->text() + " ";
-    
+
     cmd_string += command->text();
-    
-#if defined(__APPLE__) || defined(__linux__)
-    FILE *fptr_ = popen(cmd_string.toStdString().c_str(), "r");
-    if(!fptr_) {
-        std::cerr << "Error could not launch process...\n";
+
+    // Kill previous process if running
+    if (acidcam_process && acidcam_process->state() != QProcess::NotRunning) {
+        acidcam_process->kill();
+        acidcam_process->waitForFinished();
+        delete acidcam_process;
+        acidcam_process = nullptr;
     }
-    fptr.push_back(fptr_);
-#elif defined(_WIN32)
-    std::thread e([=]() {
-        system(cmd_string.toStdString().c_str());
+
+    acidcam_process = new QProcess(this);
+
+    // Connect output signals
+    connect(acidcam_process, &QProcess::readyReadStandardOutput, this, [this]() {
+        QByteArray data = acidcam_process->readAllStandardOutput();
+        command_stdout->append(QString::fromLocal8Bit(data));
     });
-    e.detach();
+    connect(acidcam_process, &QProcess::readyReadStandardError, this, [this]() {
+        QByteArray data = acidcam_process->readAllStandardError();
+        command_stdout->append(QString::fromLocal8Bit(data));
+    });
+    connect(acidcam_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+            this, [this](int exitCode, QProcess::ExitStatus status) {
+        command_stdout->append(tr("\nProcess finished with exit code %1\n").arg(exitCode));
+    });
+
+    // Start process
+    QString program;
+    QStringList arguments;
+
+#ifdef __APPLE__
+    program = "acidcamGL";
+#else
+    program = "/usr/local/bin/acidcamGL";
 #endif
+
+    if(options_window->exec_enable->isChecked())
+        program = options_window->exec_path->text();
+
+    arguments = QProcess::splitCommand(command->text());
+
+    acidcam_process->start(program, arguments);
+
+    if (!acidcam_process->waitForStarted(3000)) {
+        command_stdout->append(tr("Error: Could not start acidcamGL process.\n"));
+        command_stdout->append(tr("QProcess error: %1").arg(acidcam_process->errorString()));
+        command_stdout->append(tr("Program: %1").arg(program));
+        command_stdout->append(tr("Arguments: %1").arg(arguments.join(" ")));
+    }
 }
 
 void MainWindow::Log(const QString &text) {

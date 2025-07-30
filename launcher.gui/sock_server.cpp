@@ -13,6 +13,7 @@ int sockfd;
 extern ServerThread *tv;
 
 int sock_server() {
+    return 0;
     sockaddr_un addr;
     int clientfd;
     tv->Log("\nlauncher: IPC Server Starting...\n");
@@ -77,7 +78,5 @@ ServerThread::ServerThread() {
 }
 
 void ServerThread::process() {
-#ifndef _WIN32
-    sock_server();
-#endif
+
 }
