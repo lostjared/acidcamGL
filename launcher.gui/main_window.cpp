@@ -41,9 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     mode_select->setGeometry(60, 60+offset_y, 200, 25);
     mode_select->addItem(tr("Capture Device"));
     mode_select->addItem(tr("Input File"));
-#ifdef __APPLE__
-    mode_select->addItem(tr("Screen Capture"));
-#endif
+
     connect(mode_select, SIGNAL(currentIndexChanged(int)), this, SLOT(comboChanged_mode(int)));
     QLabel *temp2;
     temp2 = new QLabel(tr("Device Index: "), this);
@@ -77,9 +75,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     syphon_enabled->setStyleSheet(style_info);
     syphon_enabled->setGeometry(5+15+140+10+250+20+60+25+10+5+125+5+150+100+10, 60+offset_y, 200, 30);
     connect(syphon_enabled, SIGNAL(clicked()), this, SLOT(updateCommand()));
-#ifndef __APPLE__
     syphon_enabled->hide();
-#endif
     
     video_repeat = new QCheckBox(tr("Repeat"), this);
     video_repeat->setStyleSheet(style_info);
