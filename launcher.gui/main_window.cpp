@@ -96,7 +96,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(select_filters, SIGNAL(clicked()), this, SLOT(selectShaders()));
     connect(select_video, SIGNAL(clicked()),this, SLOT(selectVideo()));
     threadx->start();
-    QLabel *select_temp2 = new QLabel(tr("Set Path: "), this);
+   QLabel *select_temp2 = new QLabel(tr("Set Path: "), this);
     select_temp2->setStyleSheet(style_info);
     select_temp2->setGeometry(5+15+140+10+250+20+60+25+10+5, 60+25+10+offset_y,100,30);
     select_path = new QPushButton(tr("Select"), this);
@@ -105,7 +105,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     select_temp1->setStyleSheet(style_info);
     select_path_text = new QLineEdit("", this);
     select_path_text->setStyleSheet(style_info);
-    select_path_text->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5+270, 60+25+10+offset_y, 150, 25);
+    select_path_text->setGeometry(10+5+15+10+125+250+20+60+25+10+5+125+5+5, 60+25+10+offset_y, 150, 25);
     connect(select_path_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(select_video_text, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(select_path, SIGNAL(clicked()), this, SLOT(selectPath()));
@@ -128,7 +128,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     connect(custom_file, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(custom_set, SIGNAL(clicked()), this, SLOT(setCustomFile()));
-    
     enable_cam = new QCheckBox(tr("Camera Resolution: "), this);
     enable_cam->setStyleSheet(style_info);
     enable_cam->setGeometry(15, 60+25+10+40+offset_y, 200, 25);
