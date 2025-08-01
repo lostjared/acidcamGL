@@ -12,6 +12,10 @@
 Just to create something that I can use to create fun video and artwork to share online.
 
 
+# macOS Apple Silicon download:
+
+Downlaod for ARM64 macOS 10.5+ https://lostsidedead.biz/download/acidcam/
+
 ## System Requirements
 
 This project requires a system with a good enough graphics card to be running OpenGL 3.3 or greater. It will not work on lower specs.
