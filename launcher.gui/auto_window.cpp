@@ -2,7 +2,7 @@
 #include"auto_window.hpp"
 #include<fstream>
 #include<QFileDialog>
-
+#include<QTextStream>
 
 Auto::Auto(QWidget *parent) : QDialog(parent) {
     setFixedSize(640, 440);
