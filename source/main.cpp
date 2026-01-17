@@ -783,6 +783,8 @@ int main(int argc, char** argv) {
         else if (filename.length() == 0) {
 #ifdef _WIN32
             acidcam::cap.open(device, cv::CAP_DSHOW);
+#elif defined(__linux__)
+            acidcam::cap.open(device, cv::CAP_V4L2);
 #else
             acidcam::cap.open(device);
 #endif
@@ -790,14 +792,15 @@ int main(int argc, char** argv) {
                 std::cout << "acidcam: Could not open capture device...\n";
                 acidcam::updateError();
             }
-            acidcam::cap.set(cv::CAP_PROP_FRAME_WIDTH, cw);
-            acidcam::cap.set(cv::CAP_PROP_FRAME_HEIGHT, ch);
+            acidcam::cap.set(cv::CAP_PROP_BUFFERSIZE, 1);
+            acidcam::cap.set(cv::CAP_PROP_FRAME_WIDTH, w);
+            acidcam::cap.set(cv::CAP_PROP_FRAME_HEIGHT, h);
+            acidcam::cap.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M','J','P','G'));
             acidcam::cap.set(cv::CAP_PROP_FPS, fps);
-            cw = acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH);
-            ch = acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+            w = static_cast<int>(acidcam::cap.get(cv::CAP_PROP_FRAME_WIDTH));
+            h = static_cast<int>(acidcam::cap.get(cv::CAP_PROP_FRAME_HEIGHT));
             fps = acidcam::cap.get(cv::CAP_PROP_FPS);
             camera_mode = 0;
-
         }
         else {
             acidcam::cap.open(filename);

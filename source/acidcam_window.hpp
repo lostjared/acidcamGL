@@ -1663,9 +1663,7 @@ namespace acidcam {
             file.close();
             std::cout << "acidcam: Loaded " << shaders.size() << " Shaders...\n";
         }
-        
-        // cube
-        
+
         float cameraX, cameraY, cameraZ;
         float cube_x, cube_y, cube_z;
         glm::mat4 r_mat;
