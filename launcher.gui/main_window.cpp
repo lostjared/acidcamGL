@@ -473,7 +473,6 @@ void MainWindow::launchProgram() {
 
     cmd_string += command->text();
 
-    // Kill previous process if running
     if (acidcam_process && acidcam_process->state() != QProcess::NotRunning) {
         acidcam_process->kill();
         acidcam_process->waitForFinished();
@@ -483,21 +482,27 @@ void MainWindow::launchProgram() {
 
     acidcam_process = new QProcess(this);
 
-    // Connect output signals
     connect(acidcam_process, &QProcess::readyReadStandardOutput, this, [this]() {
         QByteArray data = acidcam_process->readAllStandardOutput();
-        command_stdout->append(QString::fromLocal8Bit(data));
+        QTextCursor cursor = command_stdout->textCursor();
+        cursor.movePosition(QTextCursor::End);
+        command_stdout->setTextCursor(cursor);
+        command_stdout->insertPlainText(QString::fromLocal8Bit(data));
+        command_stdout->ensureCursorVisible();
     });
     connect(acidcam_process, &QProcess::readyReadStandardError, this, [this]() {
         QByteArray data = acidcam_process->readAllStandardError();
-        command_stdout->append(QString::fromLocal8Bit(data));
+        QTextCursor cursor = command_stdout->textCursor();
+        cursor.movePosition(QTextCursor::End);
+        command_stdout->setTextCursor(cursor);
+        command_stdout->insertPlainText(QString::fromLocal8Bit(data));
+        command_stdout->ensureCursorVisible();
     });
     connect(acidcam_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-            this, [this](int exitCode, QProcess::ExitStatus status) {
+            this, [this](int exitCode, QProcess::ExitStatus) {
         command_stdout->append(tr("\nProcess finished with exit code %1\n").arg(exitCode));
     });
 
-    // Start process
     QString program;
     QStringList arguments;
 
@@ -506,7 +511,7 @@ QFileInfo fi(QCoreApplication::applicationFilePath());
 QString exeDir = fi.absolutePath();
 program = exeDir + "/acidcamGL";
 #else
-    program = "/usr/local/bin/acidcamGL";
+    program = "acidcamGL";
 #endif
 
     if(options_window->exec_enable->isChecked())
