@@ -559,14 +559,15 @@ namespace acidcam {
             }
 #if defined(__APPLE__) || defined(__linux__)
             if(redirect != 0) {
-                static int frame = 1;
+                static unsigned long long frame = 1;
                 int total = cap.get(cv::CAP_PROP_FRAME_COUNT);
-                if((frame%fps*20)==0 && fps > 0) {
+                if(fps > 0 && (frame % static_cast<unsigned long long>(fps * 20)) == 0) {
                     std::ostringstream stream;
-                    stream << "acidcam: wrote frame: " << frame << "/" << total << "/" << (frame/fps) << " seconds...\n";
+                    stream << "acidcam: wrote frame: " << frame << "/" << total << "/" << (frame / static_cast<unsigned long long>(fps)) << " seconds...\n";
                     sendString(stream.str());
                 }
                 ++frame;
+                if(frame > 9000000000000000000ULL) frame = 1;
             }
 #endif
         }
@@ -593,6 +594,13 @@ namespace acidcam {
         virtual void update(double timeval) override {
             if (paused)
                 return;
+
+            // Wrap timeval to prevent floating point precision loss after very long runtimes
+            // Wrap at 86400 seconds (24 hours) to maintain precision
+            const double TIME_WRAP = 86400.0;
+            if(timeval > TIME_WRAP) {
+                timeval = fmod(timeval, TIME_WRAP);
+            }
 
             if (time_manip == true && time_keys[0]) {
                 if(time_manip_f > 1.0) {
@@ -656,8 +664,8 @@ namespace acidcam {
             glClearDepth(1.0);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
-            if (rand_shader == true)
-                program = shaders[rand() % (shaders.size() - 1)];
+            if (rand_shader == true && shaders.size() > 1)
+                program = shaders[rand() % shaders.size()];
             
             
             program.useProgram();
@@ -752,7 +760,7 @@ namespace acidcam {
             }
             
             if (playback_mode && list_enabled) {
-                static int playback_index = 0;
+                static size_t playback_index = 0;
                 static int frame_time = 0;
                 static int current_timeout = p_timeout;
                 ++frame_time;
@@ -763,11 +771,12 @@ namespace acidcam {
                 }
                 if (frame_time > p_timeout)
                     frame_time = 0;
-                if (playback_index > var_list.size()) {
+                if (playback_index >= var_list.size()) {
                     playback_index = 0;
                     sortPlaylist();
                 }
-                index = var_list[playback_index];
+                if(!var_list.empty())
+                    index = var_list[playback_index];
             }
             
             if (video_mode == false && stereo_) {
@@ -933,9 +942,26 @@ namespace acidcam {
             glDrawArrays(GL_TRIANGLES, 0, 6);
 #endif
             
-            if (shader_list_enabled) {
-                for (int i = 0; i < shader_list.size(); ++i) {
-                    // not sure how to do this
+            if (shader_list_enabled && !shader_list.empty()) {
+                for (size_t i = 0; i < shader_list.size(); ++i) {
+                    int shader_idx = shader_list[i];
+                    if (shader_idx >= 0 && shader_idx < static_cast<int>(shaders.size())) {
+                        ShaderProgram &pass_program = shaders[shader_idx];
+                        pass_program.useProgram();
+                        GLuint pass_mv_loc = glGetUniformLocation(pass_program.id(), "mv_matrix");
+                        GLuint pass_proj_loc = glGetUniformLocation(pass_program.id(), "proj_matrix");
+                        GLuint pass_samp = glGetUniformLocation(pass_program.id(), "samp");
+                        GLuint pass_tf = glGetUniformLocation(pass_program.id(), "time_f");
+                        GLuint pass_alpha = glGetUniformLocation(pass_program.id(), "alpha_value");
+                        GLuint pass_res = glGetUniformLocation(pass_program.id(), "iResolution");
+                        glUniformMatrix4fv(pass_mv_loc, 1, GL_FALSE, glm::value_ptr(mv_mat));
+                        glUniformMatrix4fv(pass_proj_loc, 1, GL_FALSE, glm::value_ptr(p_mat));
+                        glUniform1i(pass_samp, 0);
+                        glUniform1f(pass_tf, timeval);
+                        glUniform1f(pass_alpha, alpha);
+                        glUniform2f(pass_res, width, height);
+                        glDrawArrays(GL_TRIANGLES, 0, 6);
+                    }
                 }
             }
             
@@ -947,18 +973,15 @@ namespace acidcam {
                 writeFrame();
 #ifdef SPOUT_SERVER
             if (!bInitialized) {
-                // Create the sender
+                
                 bInitialized = spoutsender->CreateSender("acidcamGL", window_width, window_height);
             }
             
             if (bInitialized) {
                 
-                if (window_width > 0 && window_height > 0) { // protect against user minimize
-                    // Grab the screen into the local spout texture
+                if (window_width > 0 && window_height > 0) {
                     glBindTexture(GL_TEXTURE_2D, senderTexture);
                     glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, window_width, window_height);
-                    glBindTexture(GL_TEXTURE_2D, 0);
-                    // Send the texture out for all receivers to use
                     spoutsender->SendTexture(senderTexture, GL_TEXTURE_2D, window_width, window_height);
                 }
             }

@@ -281,6 +281,12 @@ bool is_file_image(const std::string& f) {
 }
 
 int main(int argc, char** argv) {
+    // Enable unbuffered output so text appears immediately in launcher window
+    std::cout << std::unitbuf;
+    std::cerr << std::unitbuf;
+    setvbuf(stdout, NULL, _IONBF, 0);
+    setvbuf(stderr, NULL, _IONBF, 0);
+    
     atexit(system_pause);
     if (argc == 1) {
 #if defined(SYPHON_SERVER)
