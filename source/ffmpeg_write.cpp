@@ -45,11 +45,49 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
 
 
     std::string tag;
-    if(std::string(codec)=="libx265")
+    std::string preset_opts;
+    std::string codec_str(codec);
+    
+    if(codec_str=="libx265")
         tag = "-tag:v hvc1";
     
+    // Hardware accelerated codec configurations
+    if(codec_str=="h264_nvenc") {
+        preset_opts = "-preset fast -rc vbr -cq ";
+        preset_opts += crf;
+    } else if(codec_str=="hevc_nvenc") {
+        preset_opts = "-preset fast -rc vbr -cq ";
+        preset_opts += crf;
+        tag = "-tag:v hvc1";
+    } else if(codec_str=="h264_videotoolbox") {
+        preset_opts = "-q:v ";
+        preset_opts += crf;
+    } else if(codec_str=="hevc_videotoolbox") {
+        preset_opts = "-q:v ";
+        preset_opts += crf;
+        tag = "-tag:v hvc1";
+    } else if(codec_str=="h264_qsv") {
+        preset_opts = "-q ";
+        preset_opts += crf;
+    } else if(codec_str=="hevc_qsv") {
+        preset_opts = "-q ";
+        preset_opts += crf;
+        tag = "-tag:v hvc1";
+    } else if(codec_str=="h264_amf") {
+        preset_opts = "-qp_p ";
+        preset_opts += crf;
+    } else if(codec_str=="hevc_amf") {
+        preset_opts = "-qp_p ";
+        preset_opts += crf;
+        tag = "-tag:v hvc1";
+    } else {
+        // Software codecs use CRF
+        preset_opts = "-crf ";
+        preset_opts += crf;
+    }
+    
     std::ostringstream stream;
-    stream << ffmpeg_path << " -y -s " << dst_res << " -pixel_format bgr24 -f rawvideo -r " << fps << " -i pipe: -vcodec " << codec << " -pix_fmt yuv420p " <<  tag << " -crf " << crf << " " <<  output;
+    stream << ffmpeg_path << " -y -s " << dst_res << " -pixel_format bgr24 -f rawvideo -r " << fps << " -i pipe: -vcodec " << codec << " -pix_fmt yuv420p " << preset_opts << " " << tag << " " << output;
     
     std::cout<<"acidcam: " << stream.str() << "\n";
     

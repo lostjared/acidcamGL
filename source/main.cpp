@@ -78,6 +78,7 @@ std::string outstr_arr[] = {
     "    -v version",
     "    -4 enable ffmpeg x264 support",
     "    -5 enable ffmpeg x265 support",
+    "    -E encode codec (h264_nvenc, hevc_nvenc, h264_videotoolbox, hevc_videotoolbox, h264_qsv, hevc_qsv, h264_amf, hevc_amf)",
     "    -m crf for x265 for video mode",
     "    -1 for ffmpeg path",
     "    -7 for video start offset in seconds.",
@@ -397,7 +398,7 @@ int main(int argc, char** argv) {
     int input_channels = 2;
 #endif
 
-    while ((opt = getopt(argc, argv, "A:s:6:3:21:a:45m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:yV:I:O")) != -1) {
+    while ((opt = getopt(argc, argv, "A:s:6:3:21:a:45E:m:w:xN:X:qBU:W:GYPT:C:Z:H:S:M:Fhbgu:p:i:c:r:Rd:fhvj:snlk:e:L:o:tQ:7:9:8:yV:I:O")) != -1) {
         switch (opt) {
         case 'O':
             stop_audio_mux = true;
@@ -476,6 +477,13 @@ int main(int argc, char** argv) {
         case '5':
             ffmpeg_enabled = true;
             ff_codec = "libx265";
+            break;
+        case 'E':
+            if (optarg != NULL) {
+                ffmpeg_enabled = true;
+                ff_codec = optarg;
+                std::cout << "acidcam: Using hardware codec: " << ff_codec << "\n";
+            }
             break;
         case 'm':
             crf = optarg;

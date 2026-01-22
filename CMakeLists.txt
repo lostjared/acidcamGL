@@ -34,6 +34,7 @@ else()
 endif()
 
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+# Standard RPATH for /usr/local
 set(CMAKE_INSTALL_RPATH "/usr/local/lib;/usr/lib")
 
 include(CheckIncludeFileCXX)
@@ -45,14 +46,13 @@ message(STATUS "--- Checking Dependencies ---")
 
 set(OpenCV_FOUND FALSE)
 
-message(STATUS "Looking for OpenCV in /usr first...")
+# OpenCV Search Strategy
+message(STATUS "Looking for OpenCV...")
 set(OpenCV_DIR_HINTS
+    /usr/local/lib/cmake/opencv4
     /usr/lib/cmake/opencv4
-    /usr/lib/cmake/opencv
     /usr/share/opencv4
-    /usr/share/opencv
     /usr/lib64/cmake/opencv4
-    /usr/lib64/cmake/opencv
 )
 
 foreach(hint ${OpenCV_DIR_HINTS})
@@ -60,91 +60,31 @@ foreach(hint ${OpenCV_DIR_HINTS})
         set(OpenCV_DIR "${hint}")
         find_package(OpenCV QUIET CONFIG)
         if(OpenCV_FOUND)
-            message(STATUS "Found OpenCV ${OpenCV_VERSION} in /usr: ${OpenCV_DIR}")
+            message(STATUS "Found OpenCV ${OpenCV_VERSION} at: ${OpenCV_DIR}")
             break()
         endif()
     endif()
 endforeach()
 
 if(NOT OpenCV_FOUND)
-    message(STATUS "OpenCV not found in /usr, checking other locations...")
-    set(OpenCV_DIR_FALLBACK
-        /usr/local/lib/cmake/opencv4
-        /usr/local/share/opencv4
-        /opt/opencv/lib/cmake/opencv4
-        $ENV{HOME}/opencv/lib/cmake/opencv4
-    )
-    
-    foreach(hint ${OpenCV_DIR_FALLBACK})
-        if(EXISTS "${hint}" AND NOT OpenCV_FOUND)
-            set(OpenCV_DIR "${hint}")
-            find_package(OpenCV QUIET CONFIG)
-            if(OpenCV_FOUND)
-                message(STATUS "Found OpenCV ${OpenCV_VERSION} in: ${OpenCV_DIR}")
-                break()
-            endif()
-        endif()
-    endforeach()
-endif()
-
-if(NOT OpenCV_FOUND)
     unset(OpenCV_DIR CACHE)
     find_package(OpenCV REQUIRED)
 endif()
 
-if(OpenCV_FOUND)
-    message(STATUS "OpenCV Version: ${OpenCV_VERSION}")
-    message(STATUS "OpenCV Include Dirs: ${OpenCV_INCLUDE_DIRS}")
-    message(STATUS "OpenCV Libraries: ${OpenCV_LIBS}")
-else()
-    message(FATAL_ERROR "OpenCV not found! Please install OpenCV development packages.")
-endif()
+message(STATUS "OpenCV Libraries: ${OpenCV_LIBS}")
 
 check_include_file_cxx("opencv2/opencv.hpp" HAVE_OPENCV_HPP)
 if(NOT HAVE_OPENCV_HPP)
     set(CMAKE_REQUIRED_INCLUDES ${OpenCV_INCLUDE_DIRS})
     check_include_file_cxx("opencv2/opencv.hpp" HAVE_OPENCV_HPP_WITH_PATH)
-    if(NOT HAVE_OPENCV_HPP_WITH_PATH)
-        message(WARNING "opencv2/opencv.hpp header not found directly, but OpenCV package was found.")
-    endif()
 endif()
 
 set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
-if(OpenGL_FOUND)
-    message(STATUS "OpenGL Found")
-    message(STATUS "OpenGL Include Dir: ${OPENGL_INCLUDE_DIR}")
-    message(STATUS "OpenGL Libraries: ${OPENGL_LIBRARIES}")
-    message(STATUS "OpenGL Version: ${OPENGL_VERSION}")
-    
-    if(TARGET OpenGL::GL)
-        message(STATUS "Using modern OpenGL::GL target")
-    endif()
-else()
-    message(FATAL_ERROR "OpenGL not found! Please install OpenGL development packages.")
-endif()
-
-check_include_file("GL/glew.h" HAVE_GLEW_H)
-check_include_file("GL/gl.h" HAVE_GL_H)
-if(NOT HAVE_GL_H)
-    check_include_file("OpenGL/gl.h" HAVE_OPENGL_GL_H)  # macOS
-    if(NOT HAVE_OPENGL_GL_H)
-        message(WARNING "OpenGL header (GL/gl.h) not found directly.")
-    endif()
-endif()
+message(STATUS "OpenGL Found")
 
 find_package(glfw3 REQUIRED)
-if(glfw3_FOUND)
-    message(STATUS "GLFW3 Found")
-else()
-    message(FATAL_ERROR "GLFW3 not found! Please install GLFW3 development packages.")
-endif()
-
-check_include_file("GLFW/glfw3.h" HAVE_GLFW3_H)
-if(NOT HAVE_GLFW3_H)
-    set(CMAKE_REQUIRED_INCLUDES "/usr/include;/usr/local/include")
-    check_include_file("GLFW/glfw3.h" HAVE_GLFW3_H_ALT)
-endif()
+message(STATUS "GLFW3 Found")
 
 find_package(PkgConfig REQUIRED)
 if(PKG_CONFIG_FOUND)
@@ -155,39 +95,43 @@ endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-if(Threads_FOUND)
-    message(STATUS "Threads library found")
-else()
-    message(FATAL_ERROR "Threads library not found!")
-endif()
 
-check_include_file("pthread.h" HAVE_PTHREAD_H)
-if(NOT HAVE_PTHREAD_H)
-    message(WARNING "pthread.h header not found!")
-endif()
+# ------------------------------------------------------------------
+# LIBACIDCAM CONFIGURATION
+# ------------------------------------------------------------------
 
-find_package(acidcam QUIET PATHS /usr/local)
-if(NOT acidcam_FOUND)
-    pkg_check_modules(acidcam QUIET acidcam)
-endif()
+# Ensure we check PkgConfig first
+pkg_check_modules(acidcam REQUIRED acidcam)
 
 if(acidcam_FOUND)
     message(STATUS "acidcam library found")
     message(STATUS "acidcam Include Dirs: ${acidcam_INCLUDE_DIRS}")
-    message(STATUS "acidcam Library Dirs: ${acidcam_LIBRARY_DIRS}")
+    message(STATUS "acidcam Libraries: ${acidcam_LIBRARIES}")
 else()
-    message(FATAL_ERROR "acidcam library not found! Please install libacidcam.")
+    # Fallback: Manual search in /usr/local/lib
+    message(STATUS "PkgConfig failed, trying manual search in /usr/local...")
+    find_library(ACIDCAM_LIB_MANUAL NAMES acidcam PATHS /usr/local/lib /usr/lib)
+    find_path(ACIDCAM_INC_MANUAL NAMES acidcam/ac.h PATHS /usr/local/include /usr/include)
+
+    if(ACIDCAM_LIB_MANUAL AND ACIDCAM_INC_MANUAL)
+        set(acidcam_LIBRARIES ${ACIDCAM_LIB_MANUAL})
+        set(acidcam_INCLUDE_DIRS ${ACIDCAM_INC_MANUAL})
+        message(STATUS "Found acidcam manually: ${ACIDCAM_LIB_MANUAL}")
+    else()
+        message(FATAL_ERROR "acidcam library not found! Checked pkg-config and /usr/local/lib.")
+    endif()
 endif()
 
 set(GLM_INCLUDE_DIR "")
 if(EXISTS "${CMAKE_SOURCE_DIR}/source/glm/glm.hpp")
     set(GLM_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/source")
-    message(STATUS "Using bundled GLM from: ${GLM_INCLUDE_DIR}")
+    message(STATUS "Using bundled GLM")
 else()
     check_include_file_cxx("glm/glm.hpp" HAVE_SYSTEM_GLM)
     if(HAVE_SYSTEM_GLM)
         message(STATUS "Using system GLM")
     else()
+        # Look in standard locations only
         foreach(glm_path "/usr/include" "/usr/local/include")
             if(EXISTS "${glm_path}/glm/glm.hpp")
                 set(GLM_INCLUDE_DIR "${glm_path}")
@@ -195,9 +139,6 @@ else()
                 break()
             endif()
         endforeach()
-        if(NOT GLM_INCLUDE_DIR AND NOT HAVE_SYSTEM_GLM)
-            message(WARNING "GLM headers not found in system or source tree!")
-        endif()
     endif()
 endif()
 
@@ -205,28 +146,13 @@ if(NOT EXISTS "${CMAKE_SOURCE_DIR}/source/src/glad.c")
     message(FATAL_ERROR "GLAD source file not found at ${CMAKE_SOURCE_DIR}/source/src/glad.c")
 endif()
 
-if(NOT EXISTS "${CMAKE_SOURCE_DIR}/source/include/glad/glad.h")
-    message(WARNING "GLAD header might not be in expected location.")
-endif()
 message(STATUS "Using bundled GLAD library")
 
 check_library_exists(dl dlopen "" HAVE_LIBDL)
-if(HAVE_LIBDL)
-    message(STATUS "Dynamic loading library (dl) found")
-endif()
 
 message(STATUS "")
 message(STATUS "--- Dependency Check Complete ---")
 message(STATUS "")
-
-
-if(TARGET OpenGL::GL)
-    set(GL_LIB OpenGL::GL)
-    message(STATUS "Configured to use modern OpenGL::GL target")
-else()
-    set(GL_LIB ${OPENGL_gl_LIBRARY})
-    message(STATUS "Warning: Using legacy OpenGL library (${OPENGL_gl_LIBRARY})")
-endif()
 
 add_library(glad STATIC ${CMAKE_SOURCE_DIR}/source/src/glad.c)
 target_include_directories(glad PRIVATE ${CMAKE_SOURCE_DIR}/source/include)
@@ -243,6 +169,7 @@ set(ACIDCAMGL_SOURCES
     ${CMAKE_SOURCE_DIR}/source/stereo.cpp
 )
 
+# Standardized Include Directories
 set(ACIDCAMGL_INCLUDE_DIRS
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/source
@@ -257,6 +184,7 @@ if(GLM_INCLUDE_DIR)
     list(APPEND ACIDCAMGL_INCLUDE_DIRS ${GLM_INCLUDE_DIR})
 endif()
 
+# Standardized Link Directories
 set(ACIDCAMGL_LINK_DIRS
     ${acidcam_LIBRARY_DIRS}
     /usr/lib
@@ -266,6 +194,7 @@ set(ACIDCAMGL_LINK_DIRS
 add_executable(acidcamGL ${ACIDCAMGL_SOURCES})
 target_include_directories(acidcamGL PRIVATE ${ACIDCAMGL_INCLUDE_DIRS})
 target_link_directories(acidcamGL PRIVATE ${ACIDCAMGL_LINK_DIRS})
+
 target_link_libraries(acidcamGL 
     PRIVATE
         Threads::Threads
@@ -273,18 +202,18 @@ target_link_libraries(acidcamGL
         OpenGL::GL
         glad
         ${OpenCV_LIBS}
-        acidcam
+        ${acidcam_LIBRARIES}
         ${CMAKE_DL_LIBS}
 )
 
 target_compile_options(acidcamGL PRIVATE ${COMPILER_FLAGS})
 install(TARGETS acidcamGL DESTINATION bin)
+
 message(STATUS "")
 message(STATUS "============================================")
 message(STATUS "Configuration Summary:")
 message(STATUS "  Project: ${PROJECT_NAME} v${ACIDCAMGL_VERSION}")
 message(STATUS "  Build Type: ${CMAKE_BUILD_TYPE}")
-message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
 message(STATUS "  Install Prefix: ${CMAKE_INSTALL_PREFIX}")
-message(STATUS "  OpenCV Version: ${OpenCV_VERSION}")
+message(STATUS "  Acidcam Lib: ${acidcam_LIBRARIES}")
 message(STATUS "============================================")
