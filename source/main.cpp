@@ -78,7 +78,7 @@ std::string outstr_arr[] = {
     "    -v version",
     "    -4 enable ffmpeg x264 support",
     "    -5 enable ffmpeg x265 support",
-    "    -E encode codec (h264_nvenc, hevc_nvenc, h264_videotoolbox, hevc_videotoolbox, h264_qsv, hevc_qsv, h264_amf, hevc_amf)",
+    "    -E encode codec (h264_nvenc, hevc_nvenc, av1_nvenc, h264_videotoolbox, hevc_videotoolbox, h264_qsv, hevc_qsv, av1_qsv, h264_amf, hevc_amf)",
     "    -m crf for x265 for video mode",
     "    -1 for ffmpeg path",
     "    -7 for video start offset in seconds.",

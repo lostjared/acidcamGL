@@ -51,7 +51,6 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
     if(codec_str=="libx265")
         tag = "-tag:v hvc1";
     
-    // Hardware accelerated codec configurations
     if(codec_str=="h264_nvenc") {
         preset_opts = "-preset fast -rc vbr -cq ";
         preset_opts += crf;
@@ -59,6 +58,9 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
         preset_opts = "-preset fast -rc vbr -cq ";
         preset_opts += crf;
         tag = "-tag:v hvc1";
+    } else if(codec_str=="av1_nvenc") {
+        preset_opts = "-preset fast -rc vbr -cq ";
+        preset_opts += crf;
     } else if(codec_str=="h264_videotoolbox") {
         preset_opts = "-q:v ";
         preset_opts += crf;
@@ -73,6 +75,9 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
         preset_opts = "-q ";
         preset_opts += crf;
         tag = "-tag:v hvc1";
+    } else if(codec_str=="av1_qsv") {
+        preset_opts = "-q ";
+        preset_opts += crf;
     } else if(codec_str=="h264_amf") {
         preset_opts = "-qp_p ";
         preset_opts += crf;
@@ -80,8 +85,15 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
         preset_opts = "-qp_p ";
         preset_opts += crf;
         tag = "-tag:v hvc1";
+    } else if(codec_str=="h264_cuda" || codec_str=="hevc_cuda") {
+        preset_opts = "-cq ";
+        preset_opts += crf;
+        if(codec_str=="hevc_cuda") tag = "-tag:v hvc1";
+    } else if(codec_str=="h264_dxva2" || codec_str=="hevc_d3d11va") {
+        preset_opts = "-crf ";
+        preset_opts += crf;
+        if(codec_str=="hevc_d3d11va") tag = "-tag:v hvc1";
     } else {
-        // Software codecs use CRF
         preset_opts = "-crf ";
         preset_opts += crf;
     }
