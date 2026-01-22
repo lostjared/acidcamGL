@@ -100,27 +100,41 @@ find_package(Threads REQUIRED)
 # LIBACIDCAM CONFIGURATION
 # ------------------------------------------------------------------
 
-# Ensure we check PkgConfig first
-pkg_check_modules(acidcam REQUIRED acidcam)
+# First try to find acidcam using CMake config files (modern approach)
+find_package(acidcam CONFIG QUIET)
 
 if(acidcam_FOUND)
-    message(STATUS "acidcam library found")
-    message(STATUS "acidcam Include Dirs: ${acidcam_INCLUDE_DIRS}")
-    message(STATUS "acidcam Libraries: ${acidcam_LIBRARIES}")
+    message(STATUS "Found acidcam via CMake config")
+    message(STATUS "acidcam version: ${acidcam_VERSION}")
 else()
-    # Fallback: Manual search in /usr/local/lib
-    message(STATUS "PkgConfig failed, trying manual search in /usr/local...")
-    find_library(ACIDCAM_LIB_MANUAL NAMES acidcam PATHS /usr/local/lib /usr/lib)
-    find_path(ACIDCAM_INC_MANUAL NAMES acidcam/ac.h PATHS /usr/local/include /usr/include)
-
-    if(ACIDCAM_LIB_MANUAL AND ACIDCAM_INC_MANUAL)
-        set(acidcam_LIBRARIES ${ACIDCAM_LIB_MANUAL})
-        set(acidcam_INCLUDE_DIRS ${ACIDCAM_INC_MANUAL})
-        message(STATUS "Found acidcam manually: ${ACIDCAM_LIB_MANUAL}")
+    # Fallback to PkgConfig for older installations
+    message(STATUS "CMake config not found, trying PkgConfig...")
+    pkg_check_modules(acidcam QUIET acidcam)
+    
+    if(acidcam_FOUND)
+        message(STATUS "Found acidcam via PkgConfig")
     else()
-        message(FATAL_ERROR "acidcam library not found! Checked pkg-config and /usr/local/lib.")
+        # Final fallback: Manual search in standard locations
+        message(STATUS "PkgConfig failed, trying manual search...")
+        find_library(ACIDCAM_LIB_MANUAL NAMES acidcam PATHS /usr/local/lib /usr/lib NO_DEFAULT_PATH)
+        find_path(ACIDCAM_INC_MANUAL NAMES acidcam/ac.h PATHS /usr/local/include /usr/include NO_DEFAULT_PATH)
+
+        if(ACIDCAM_LIB_MANUAL AND ACIDCAM_INC_MANUAL)
+            set(acidcam_LIBRARIES ${ACIDCAM_LIB_MANUAL})
+            set(acidcam_INCLUDE_DIRS ${ACIDCAM_INC_MANUAL})
+            message(STATUS "Found acidcam manually: ${ACIDCAM_LIB_MANUAL}")
+        else()
+            message(FATAL_ERROR "acidcam library not found! Install libacidcam or set CMAKE_PREFIX_PATH to the installation directory.")
+        endif()
     endif()
 endif()
+
+if(NOT DEFINED acidcam_INCLUDE_DIRS)
+    message(STATUS "acidcam Include Dirs: ${acidcam_INCLUDE_DIRS}")
+else()
+    message(STATUS "acidcam Include Dirs: (provided by target)")
+endif()
+message(STATUS "acidcam Libraries: ${acidcam_LIBRARIES}")
 
 set(GLM_INCLUDE_DIR "")
 if(EXISTS "${CMAKE_SOURCE_DIR}/source/glm/glm.hpp")
@@ -195,16 +209,31 @@ add_executable(acidcamGL ${ACIDCAMGL_SOURCES})
 target_include_directories(acidcamGL PRIVATE ${ACIDCAMGL_INCLUDE_DIRS})
 target_link_directories(acidcamGL PRIVATE ${ACIDCAMGL_LINK_DIRS})
 
-target_link_libraries(acidcamGL 
-    PRIVATE
-        Threads::Threads
-        glfw
-        OpenGL::GL
-        glad
-        ${OpenCV_LIBS}
-        ${acidcam_LIBRARIES}
-        ${CMAKE_DL_LIBS}
-)
+if(TARGET acidcam::acidcam)
+    # Use the proper CMake target if available
+    target_link_libraries(acidcamGL 
+        PRIVATE
+            Threads::Threads
+            glfw
+            OpenGL::GL
+            glad
+            ${OpenCV_LIBS}
+            acidcam::acidcam
+            ${CMAKE_DL_LIBS}
+    )
+else()
+    # Fallback for manual or PkgConfig-based discovery
+    target_link_libraries(acidcamGL 
+        PRIVATE
+            Threads::Threads
+            glfw
+            OpenGL::GL
+            glad
+            ${OpenCV_LIBS}
+            ${acidcam_LIBRARIES}
+            ${CMAKE_DL_LIBS}
+    )
+endif()
 
 target_compile_options(acidcamGL PRIVATE ${COMPILER_FLAGS})
 install(TARGETS acidcamGL DESTINATION bin)
