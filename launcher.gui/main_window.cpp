@@ -218,6 +218,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     record_type->setGeometry(125, 135+40+35+offset_y, 100, 30);
     record_type->addItem("x264");
     record_type->addItem("x265");
+    record_type->addItem("nvenc");
+    record_type->addItem("qsv");
+    record_type->addItem("amf");
+    record_type->addItem("videotoolbox");
     
     codec_select = new QComboBox(this);
     codec_select->setStyleSheet(style_info);
@@ -225,12 +229,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     codec_select->addItem("Software");
     codec_select->addItem("h264_nvenc");
     codec_select->addItem("hevc_nvenc");
-    codec_select->addItem("h264_videotoolbox");
-    codec_select->addItem("hevc_videotoolbox");
+    codec_select->addItem("av1_nvenc");
     codec_select->addItem("h264_qsv");
     codec_select->addItem("hevc_qsv");
+    codec_select->addItem("av1_qsv");
     codec_select->addItem("h264_amf");
     codec_select->addItem("hevc_amf");
+    codec_select->addItem("h264_videotoolbox");
+    codec_select->addItem("hevc_videotoolbox");
+    codec_select->addItem("h264_cuda");
+    codec_select->addItem("hevc_cuda");
+    codec_select->addItem("h264_dxva2");
+    codec_select->addItem("hevc_d3d11va");
     connect(codec_select, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCommand()));
     
     record_name = new QLineEdit(tr(""), this);
@@ -787,24 +797,22 @@ void MainWindow::updateCommand() {
     
     if(record_video->isChecked() && record_name->text() != "") {
         int codec_idx = codec_select->currentIndex();
+        QString hw_codec = "";
         
         if(codec_idx == 0) {
-            // Software codec selection
             if(record_type->currentIndex() == 0) {
                 cmd_list << "-4";
             } else {
                 cmd_list << "-5";
             }
         } else {
-            // Hardware codec selection
-            QString hw_codec = codec_select->currentText();
+            hw_codec = codec_select->currentText();
             cmd_list << "-E" << hw_codec;
         }
         
         cmd_list << "-o";
-        cmd_list << QString("\"") + record_name->text() + "\"";
-        cmd_list << "-m";
-        cmd_list << record_crf->text();
+        cmd_list << QString("\"") + record_name->text() + "\"";  
+        cmd_list << "-m" << record_crf->text();
     }
     
     if(material_filename->text() != "") {
