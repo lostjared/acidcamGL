@@ -24,6 +24,7 @@
 #include<chrono>
 #include<algorithm>
 #include<cctype>
+#include<cmath>
 #include"keymap.hpp"
 #include"ipc_client.hpp"
 #define version_info "v1.9.0"
@@ -303,12 +304,12 @@ namespace acidcam {
                 sy = frame.rows;
             }
 #ifdef SPOUT_SERVER
-            spoutsender = GetSpout(); // Create a Spout sender object from the SpoutLibary dll
+            spoutsender = GetSpout(); 
             if (!spoutsender) {
                 MessageBoxA(NULL, "Load Spout library failed", "Spout Sender", MB_ICONERROR);
                 exit(0);
             }
-            senderTexture = 0; // make sure the ID is zero for the first time
+            senderTexture = 0; 
             INIT_TEXTURE(senderTexture, window_width, window_height);
 #endif
         }
@@ -484,6 +485,7 @@ namespace acidcam {
         void takeSnapshot() {
             static int index = 0;
             ++index;
+            if(index > 999999) index = 1; 
             cv::Mat flipped;
             readFrame(flipped);
             time_t t = time(0);
@@ -567,7 +569,7 @@ namespace acidcam {
                     sendString(stream.str());
                 }
                 ++frame;
-                if(frame > 9000000000000000000ULL) frame = 1;
+                if(frame > 1000000000000ULL) frame = 1; 
             }
 #endif
         }
@@ -595,8 +597,6 @@ namespace acidcam {
             if (paused)
                 return;
 
-            // Wrap timeval to prevent floating point precision loss after very long runtimes
-            // Wrap at 86400 seconds (24 hours) to maintain precision
             const double TIME_WRAP = 86400.0;
             if(timeval > TIME_WRAP) {
                 timeval = fmod(timeval, TIME_WRAP);
@@ -620,6 +620,11 @@ namespace acidcam {
             
             if(std::isnan(time_manip_f) || std::isinf(time_manip_f))
                 time_manip_f = 1.0;
+
+            const double TIME_MANIP_WRAP = 86400.0; 
+            if(time_manip_f > TIME_MANIP_WRAP) {
+                time_manip_f = fmod(time_manip_f, TIME_MANIP_WRAP);
+            }
 
             if(time_manip)
                 timeval = time_manip_f;
@@ -916,11 +921,17 @@ namespace acidcam {
                     }
                 }
             }
+        
+            for(int i = 0; i < 4; ++i) {
+                if(optx[i] > 1000.0f) optx[i] = 1000.0f;
+                else if(optx[i] < -1000.0f) optx[i] = -1000.0f;
+                if(std::isnan(optx[i]) || std::isinf(optx[i])) optx[i] = 0.5f;
+            }
             
             glUniform1i(samp, 0);
             glUniform1i(mat_samp, 1);
             glUniform1f(c_index, (float)index);
-            glUniform1f(c_tf, timeval);
+            glUniform1f(c_tf, static_cast<float>(timeval));
             glUniform4fv(inc_value_pos, 1, glm::value_ptr(inc_value));
             glUniform4fv(inc_value_posx, 1, glm::value_ptr(inc_valuex));
             
@@ -1435,6 +1446,12 @@ namespace acidcam {
                     case GLFW_KEY_T:
                         optx = glm::vec4(0.5, 0.5, 0.5, 0.5);
                         break;
+                    case GLFW_KEY_BACKSPACE:
+                        for(int i = 0; i < 4; ++i) {
+                            if(optx[i] > 1000.0f) optx[i] = 1000.0f;
+                            if(optx[i] < -1000.0f) optx[i] = -1000.0f;
+                        }
+                        break;
                     case GLFW_KEY_PAGE_UP: {
                         stored_position = index;
                         stored_var_position = var_index;
@@ -1679,7 +1696,7 @@ namespace acidcam {
             color_alpha_g = 0.2;
             color_alpha_b = 0.3;
             
-            GLfloat vertices[] = { -1.0f, -1.0f, 1.0f, // front face
+            GLfloat vertices[] = { -1.0f, -1.0f, 1.0f, 
                 1.0f, 1.0f, 1.0f,
                 -1.0f, 1.0f, 1.0f,
                 
@@ -1889,9 +1906,10 @@ namespace acidcam {
             cameraZ += -5.0f;
             v_mat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, cameraY, -cameraZ));
             m_mat = glm::translate(glm::mat4(1.0f),glm::vec3(0.0f,0.0f,0.0f));
-            r_mat = glm::rotate(glm::mat4(1.0f), 1.75f*(float)timeval,glm::vec3(0.0f, 1.0f, 0.0f));
-            r_mat = glm::rotate(r_mat, 1.75f*(float)timeval,glm::vec3(1.0f, 0.0f, 0.0f));
-            r_mat = glm::rotate(r_mat, 1.75f*(float)timeval, glm::vec3(0.0f, 0.0f, 1.0f));
+            float rot_angle = static_cast<float>(fmod(1.75 * timeval, 2.0 * M_PI));
+            r_mat = glm::rotate(glm::mat4(1.0f), rot_angle, glm::vec3(0.0f, 1.0f, 0.0f));
+            r_mat = glm::rotate(r_mat, rot_angle, glm::vec3(1.0f, 0.0f, 0.0f));
+            r_mat = glm::rotate(r_mat, rot_angle, glm::vec3(0.0f, 0.0f, 1.0f));
             
             m_mat = m_mat * r_mat;
             mv_mat = v_mat * m_mat;
@@ -1974,12 +1992,21 @@ namespace acidcam {
                 }
             }
             
+            const double TIME_WRAP = 86400.0;
+            if(timeval > TIME_WRAP) {
+                timeval = fmod(timeval, TIME_WRAP);
+            }
             
+            for(int i = 0; i < 4; ++i) {
+                if(optx[i] > 1000.0f) optx[i] = 1000.0f;
+                else if(optx[i] < -1000.0f) optx[i] = -1000.0f;
+                if(std::isnan(optx[i]) || std::isinf(optx[i])) optx[i] = 0.5f;
+            }
             
             glUniform1i(samp, 0);
             glUniform1i(mat_samp, 1);
             glUniform1f(c_index, (float)index);
-            glUniform1f(c_tf, timeval);
+            glUniform1f(c_tf, static_cast<float>(timeval));
 
             glUniform4fv(inc_value_pos, 1, glm::value_ptr(inc_value));
             glUniform4fv(inc_value_posx, 1, glm::value_ptr(inc_valuex));
