@@ -79,6 +79,7 @@ private:
     QLineEdit *start_sec;
     QCheckBox *record_video;
     QComboBox *record_type;
+    QComboBox *codec_select;
     QLineEdit *record_name;
     QLineEdit *record_crf;
     QPushButton *record_set;

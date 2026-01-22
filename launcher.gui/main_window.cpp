@@ -218,18 +218,33 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     record_type->setGeometry(125, 135+40+35+offset_y, 100, 30);
     record_type->addItem("x264");
     record_type->addItem("x265");
+    
+    codec_select = new QComboBox(this);
+    codec_select->setStyleSheet(style_info);
+    codec_select->setGeometry(230, 135+40+35+offset_y, 140, 30);
+    codec_select->addItem("Software");
+    codec_select->addItem("h264_nvenc");
+    codec_select->addItem("hevc_nvenc");
+    codec_select->addItem("h264_videotoolbox");
+    codec_select->addItem("hevc_videotoolbox");
+    codec_select->addItem("h264_qsv");
+    codec_select->addItem("hevc_qsv");
+    codec_select->addItem("h264_amf");
+    codec_select->addItem("hevc_amf");
+    connect(codec_select, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCommand()));
+    
     record_name = new QLineEdit(tr(""), this);
     record_name->setStyleSheet(style_info);
-    record_name->setGeometry(240, 135+40+35+offset_y, 250, 30);
+    record_name->setGeometry(380, 135+40+35+offset_y, 250, 30);
     record_set = new QPushButton(tr("Select"), this);
     record_set->setStyleSheet(style_info);
-    record_set->setGeometry(240+260, 135+40+35+offset_y,100,30);
+    record_set->setGeometry(380+260, 135+40+35+offset_y,100,30);
     QLabel *crf_lbl = new QLabel(tr("CRF"), this);
     crf_lbl->setStyleSheet(style_info);
-    crf_lbl->setGeometry(240+260+110, 135+40+35+offset_y, 100, 30);
+    crf_lbl->setGeometry(380+260+110, 135+40+35+offset_y, 100, 30);
     record_crf = new QLineEdit(tr("22"), this);
     record_crf->setStyleSheet(style_info);
-    record_crf->setGeometry(240+260+40+110, 135+40+35+offset_y, 100, 30);
+    record_crf->setGeometry(380+260+40+110, 135+40+35+offset_y, 100, 30);
     
     connect(record_crf, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
     connect(record_name, SIGNAL(editingFinished()), this, SLOT(updateCommand()));
@@ -424,6 +439,7 @@ void MainWindow::load() {
         fps->setText(settings->value("opt_fps", "0").toString());
         record_crf->setText(settings->value("opt_crf", "22").toString());
         enable_bpm->setText(settings->value("opt_bpm", "60").toString());
+        codec_select->setCurrentIndex(settings->value("opt_codec", 0).toInt());
     }
 }
 
@@ -446,6 +462,7 @@ void MainWindow::save() {
         settings->setValue("opt_fps", fps->text());
         settings->setValue("opt_crf", record_crf->text());
         settings->setValue("opt_bpm", enable_bpm->text());
+        settings->setValue("opt_codec", codec_select->currentIndex());
     }
 }
 
@@ -769,11 +786,21 @@ void MainWindow::updateCommand() {
         cmd_list << "-7" << start_sec->text();
     
     if(record_video->isChecked() && record_name->text() != "") {
-        if(record_type->currentIndex() == 0) {
-            cmd_list << "-4";
+        int codec_idx = codec_select->currentIndex();
+        
+        if(codec_idx == 0) {
+            // Software codec selection
+            if(record_type->currentIndex() == 0) {
+                cmd_list << "-4";
+            } else {
+                cmd_list << "-5";
+            }
         } else {
-            cmd_list << "-5";
+            // Hardware codec selection
+            QString hw_codec = codec_select->currentText();
+            cmd_list << "-E" << hw_codec;
         }
+        
         cmd_list << "-o";
         cmd_list << QString("\"") + record_name->text() + "\"";
         cmd_list << "-m";
