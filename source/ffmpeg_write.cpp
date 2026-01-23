@@ -43,7 +43,6 @@ FILE *open_ffmpeg(const char *output, const char *codec, const char *res, const 
 
     #endif
 
-
     std::string tag;
     std::string preset_opts;
     std::string codec_str(codec);
