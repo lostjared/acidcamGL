@@ -35,17 +35,25 @@ set(CMAKE_INSTALL_RPATH "/usr/local/lib;/usr/lib")
 message(STATUS "")
 message(STATUS "--- Checking Dependencies ---")
 
-# Find Qt6
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent Network)
-if(Qt6_FOUND)
+# Find Qt6 or Qt5
+find_package(Qt6 COMPONENTS Core Gui Widgets Concurrent Network QUIET)
+if(NOT Qt6_FOUND)
+    find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets Concurrent Network)
+    set(QT_VERSION_MAJOR 5)
+    message(STATUS "Qt5 Found")
+    message(STATUS "  Qt5Core: ${Qt5Core_LIBRARIES}")
+    message(STATUS "  Qt5Gui: ${Qt5Gui_LIBRARIES}")
+    message(STATUS "  Qt5Widgets: ${Qt5Widgets_LIBRARIES}")
+    message(STATUS "  Qt5Concurrent: ${Qt5Concurrent_LIBRARIES}")
+    message(STATUS "  Qt5Network: ${Qt5Network_LIBRARIES}")
+else()
+    set(QT_VERSION_MAJOR 6)
     message(STATUS "Qt6 Found")
     message(STATUS "  Qt6Core: ${Qt6Core_LIBRARIES}")
     message(STATUS "  Qt6Gui: ${Qt6Gui_LIBRARIES}")
     message(STATUS "  Qt6Widgets: ${Qt6Widgets_LIBRARIES}")
     message(STATUS "  Qt6Concurrent: ${Qt6Concurrent_LIBRARIES}")
     message(STATUS "  Qt6Network: ${Qt6Network_LIBRARIES}")
-else()
-    message(FATAL_ERROR "Qt6 not found! Please install Qt6 development packages.")
 endif()
 
 # Find Threads
@@ -90,22 +98,29 @@ add_executable(acidcamGL_launcher
 target_include_directories(acidcamGL_launcher
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${Qt6Core_INCLUDE_DIRS}
-        ${Qt6Gui_INCLUDE_DIRS}
-        ${Qt6Widgets_INCLUDE_DIRS}
-        ${Qt6Concurrent_INCLUDE_DIRS}
-        ${Qt6Network_INCLUDE_DIRS}
 )
 
-target_link_libraries(acidcamGL_launcher
-    PRIVATE
-        Qt6::Core
-        Qt6::Gui
-        Qt6::Widgets
-        Qt6::Concurrent
-        Qt6::Network
-        Threads::Threads
-)
+if(QT_VERSION_MAJOR EQUAL 6)
+    target_link_libraries(acidcamGL_launcher
+        PRIVATE
+            Qt6::Core
+            Qt6::Gui
+            Qt6::Widgets
+            Qt6::Concurrent
+            Qt6::Network
+            Threads::Threads
+    )
+else()
+    target_link_libraries(acidcamGL_launcher
+        PRIVATE
+            Qt5::Core
+            Qt5::Gui
+            Qt5::Widgets
+            Qt5::Concurrent
+            Qt5::Network
+            Threads::Threads
+    )
+endif()
 
 target_compile_options(acidcamGL_launcher PRIVATE ${COMPILER_FLAGS})
 install(TARGETS acidcamGL_launcher DESTINATION bin RENAME launcher)
