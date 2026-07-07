@@ -34,7 +34,7 @@ find_package(Threads REQUIRED)
 
 
 # Standard Dependencies
-pkg_check_modules(OPENCV REQUIRED opencv4)
+pkg_search_module(OPENCV_PC REQUIRED opencv5 opencv4)
 pkg_check_modules(GLFW REQUIRED glfw3)
 pkg_check_modules(ACIDCAM REQUIRED acidcam)
 
@@ -86,7 +86,7 @@ add_definitions(-DNO_SCREEN_GRAB)
 target_include_directories(acidcamGL PRIVATE 
     ./include
     ./source/include
-    ${OPENCV_INCLUDE_DIRS}
+    ${OPENCV_PC_INCLUDE_DIRS}
     ${GLFW_INCLUDE_DIRS}
     ${ACIDCAM_INCLUDE_DIRS}
     ${RTMIDI_INCLUDE_DIRS}
@@ -99,7 +99,7 @@ target_link_libraries(acidcamGL PRIVATE
     glad
     Threads::Threads
     OpenGL::GL
-    ${OPENCV_LIBRARIES}
+    ${OPENCV_PC_LIBRARIES}
     ${GLFW_LIBRARIES}
     ${ACIDCAM_LIBRARIES}
     ${RTMIDI_LIBRARIES}
