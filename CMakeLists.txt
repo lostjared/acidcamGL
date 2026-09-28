@@ -100,6 +100,14 @@ source/plugin-program.cpp
 source/stereo.cpp
 )
 
+if(WIN32)
+    set_target_properties(acidcamGL PROPERTIES WIN32_EXECUTABLE TRUE)
+    if(MSVC)
+        # Use the existing main() entry point with the Windows GUI subsystem.
+        set_property(TARGET acidcamGL APPEND_STRING PROPERTY LINK_FLAGS " /ENTRY:mainCRTStartup")
+    endif()
+endif()
+
 if(MSVC)
     target_sources(acidcamGL PRIVATE source/acidcamGL-Visual.Studio/getopt.cpp)
 endif()

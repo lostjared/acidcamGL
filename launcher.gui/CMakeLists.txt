@@ -95,6 +95,10 @@ add_executable(acidcamGL_launcher
     ${LAUNCHER_GUI_RESOURCES}
 )
 
+if(WIN32)
+    set_target_properties(acidcamGL_launcher PROPERTIES WIN32_EXECUTABLE TRUE)
+endif()
+
 target_include_directories(acidcamGL_launcher
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
