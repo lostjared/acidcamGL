@@ -9,7 +9,7 @@
 #include"glm/gtc/type_ptr.hpp"
 #include"glm/gtc/matrix_transform.hpp"
 #ifdef _WIN32
-#include"getopt.h"
+#include"acidcamGL-Visual.Studio/getopt.h"
 #include"ac.h"
 #else
 #include"acidcam/ac.h"

@@ -39,6 +39,20 @@ Check it out.
 
 # Notes for Windows:
 
+To build with MSVC from an x64 Visual Studio developer terminal, use:
+
+```powershell
+cmake --preset windows-release
+cmake --build --preset windows-release
+```
+
+The preset uses Release, Ninja, `C:/acmx/prefix` for libacidcam, and the
+vcpkg toolchain at `C:/vcpkg/scripts/buildsystems/vcpkg.cmake` for the
+installed `x64-windows` OpenCV, GLFW, RtMidi, and RtAudio packages.
+The executable is written to `build/acidcamGL.exe`.
+If reusing a build directory configured without this toolchain, run
+`cmake --fresh --preset windows-release` once (requires CMake 3.24 or newer).
+
 ![image](https://github.com/lostjared/acidcamGL/assets/18395951/b4907d23-8ed1-4c48-ade5-eebd1b3d87c4)
 
 
